@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Github | My Octopress Blog]]></title>
   <link href="http://youkochan.github.io/blog/categories/github/atom.xml" rel="self"/>
   <link href="http://youkochan.github.io/"/>
-  <updated>2014-08-15T23:40:33+08:00</updated>
+  <updated>2014-08-15T23:51:31+08:00</updated>
   <id>http://youkochan.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[静态博客搭建]]></title>
-    <link href="http://youkochan.github.io/blog/2014/08/15/jing-tai-bo-ke-da-jian/"/>
+    <link href="http://youkochan.github.io/blog/2014/08/15/githubda-jian-jing-tai-bo-ke/"/>
     <updated>2014-08-15T20:42:57+08:00</updated>
-    <id>http://youkochan.github.io/blog/2014/08/15/jing-tai-bo-ke-da-jian</id>
+    <id>http://youkochan.github.io/blog/2014/08/15/githubda-jian-jing-tai-bo-ke</id>
     <content type="html"><![CDATA[<p>总结一下最近这几天折腾的博客搭建吧(github+octopress)</p>
 
 <h3>环境</h3>
