@@ -4,7 +4,7 @@
   <title><![CDATA[Youkochan's Blog]]></title>
   <link href="http://youkochan.github.io/atom.xml" rel="self"/>
   <link href="http://youkochan.github.io/"/>
-  <updated>2014-08-16T00:21:26+08:00</updated>
+  <updated>2014-08-16T00:27:16+08:00</updated>
   <id>http://youkochan.github.io/</id>
   <author>
     <name><![CDATA[Youkochan]]></name>
@@ -12,6 +12,15 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Good Night]]></title>
+    <link href="http://youkochan.github.io/blog/2014/08/16/good-night/"/>
+    <updated>2014-08-16T00:25:17+08:00</updated>
+    <id>http://youkochan.github.io/blog/2014/08/16/good-night</id>
+    <content type="html"><![CDATA[<h3>good night</h3>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[静态博客搭建]]></title>

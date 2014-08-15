@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>http://youkochan.github.io/blog/2014/08/16/good-night/</loc>
+    <lastmod>2014-08-16T00:25:17+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://youkochan.github.io/blog/2014/08/15/githubda-jian-jing-tai-bo-ke/</loc>
     <lastmod>2014-08-15T20:42:57+08:00</lastmod>
     <priority>0.8</priority>
@@ -11,21 +17,21 @@
   
   <url>
     <loc>http://youkochan.github.io/</loc>
-    <lastmod>2014-08-16T00:21:26+08:00</lastmod>
+    <lastmod>2014-08-16T00:27:16+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://youkochan.github.io/blog/archives/</loc>
-    <lastmod>2014-08-16T00:21:26+08:00</lastmod>
+    <lastmod>2014-08-16T00:27:16+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://youkochan.github.io/posts/</loc>
-    <lastmod>2014-08-16T00:21:26+08:00</lastmod>
+    <lastmod>2014-08-16T00:27:16+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
