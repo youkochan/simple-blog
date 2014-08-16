@@ -4,7 +4,7 @@
   <title><![CDATA[Youkochan's Blog]]></title>
   <link href="http://youkochan.github.io/atom.xml" rel="self"/>
   <link href="http://youkochan.github.io/"/>
-  <updated>2014-08-16T01:58:07+08:00</updated>
+  <updated>2014-08-16T13:21:37+08:00</updated>
   <id>http://youkochan.github.io/</id>
   <author>
     <name><![CDATA[Youkochan]]></name>
@@ -19,33 +19,6 @@
     <updated>2014-08-16T01:56:34+08:00</updated>
     <id>http://youkochan.github.io/blog/2014/08/16/da-wan-shang-de-kai-xin-si-liao</id>
     <content type="html"><![CDATA[<p>哈哈真是开心死我了, 大晚上改正了octopress模板里面的错误, 妈妈再也不用担心我在Github上提问没人理我了23333333, 哈哈解决了问题就睡觉~ 真是嗨森~</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Test2]]></title>
-    <link href="http://youkochan.github.io/blog/2014/08/16/test2/"/>
-    <updated>2014-08-16T01:53:56+08:00</updated>
-    <id>http://youkochan.github.io/blog/2014/08/16/test2</id>
-    <content type="html"><![CDATA[
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Test1]]></title>
-    <link href="http://youkochan.github.io/blog/2014/08/16/test1/"/>
-    <updated>2014-08-16T01:46:06+08:00</updated>
-    <id>http://youkochan.github.io/blog/2014/08/16/test1</id>
-    <content type="html"><![CDATA[
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Good Night]]></title>
-    <link href="http://youkochan.github.io/blog/2014/08/16/good-night/"/>
-    <updated>2014-08-16T00:25:17+08:00</updated>
-    <id>http://youkochan.github.io/blog/2014/08/16/good-night</id>
-    <content type="html"><![CDATA[<h3>good night</h3>
 ]]></content>
   </entry>
   
