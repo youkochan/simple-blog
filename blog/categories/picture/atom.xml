@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: picture | Youkochan's Blog]]></title>
+  <link href="http://youkochan.github.io/blog/categories/picture/atom.xml" rel="self"/>
+  <link href="http://youkochan.github.io/"/>
+  <updated>2014-08-16T20:04:32+08:00</updated>
+  <id>http://youkochan.github.io/</id>
+  <author>
+    <name><![CDATA[Youkochan]]></name>
+    <email><![CDATA[iyeqing@icloud.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[我来测试发下图片]]></title>
+    <link href="http://youkochan.github.io/blog/2014/08/16/wo-lai-ce-shi-fa-xia-tu-pian/"/>
+    <updated>2014-08-16T19:58:00+08:00</updated>
+    <id>http://youkochan.github.io/blog/2014/08/16/wo-lai-ce-shi-fa-xia-tu-pian</id>
+    <content type="html"><![CDATA[<p><img src="http://f0.topit.me/0/f3/5a/11348166698c85af30l.jpg" alt="pic1" /></p>
+]]></content>
+  </entry>
+  
+</feed>
