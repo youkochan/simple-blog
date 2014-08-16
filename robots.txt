@@ -1,4 +1,4 @@
-User-agent: *
-Disallow: 
+# www.robotstxt.org/
+# http://code.google.com/web/controlcrawlindex/
 
-Sitemap: http://youkochan.github.io/sitemap.xml 
+User-agent: *

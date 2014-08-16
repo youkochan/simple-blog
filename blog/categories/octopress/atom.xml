@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Octopress | Youkochan's Blog]]></title>
+  <title><![CDATA[Category: octopress | Youkochan's Blog]]></title>
   <link href="http://youkochan.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://youkochan.github.io/"/>
-  <updated>2014-08-16T13:21:37+08:00</updated>
+  <updated>2014-08-16T13:33:55+08:00</updated>
   <id>http://youkochan.github.io/</id>
   <author>
     <name><![CDATA[Youkochan]]></name>
