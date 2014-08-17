@@ -4,7 +4,7 @@
   <title><![CDATA[Y.Q.'s Blog]]></title>
   <link href="http://youkochan.github.io/atom.xml" rel="self"/>
   <link href="http://youkochan.github.io/"/>
-  <updated>2014-08-17T10:51:20+08:00</updated>
+  <updated>2014-08-17T10:56:32+08:00</updated>
   <id>http://youkochan.github.io/</id>
   <author>
     <name><![CDATA[Youkochan]]></name>
@@ -23,14 +23,18 @@
 <!--more-->
 
 
-<p>步骤：<br/>
-1. 强制关机重启，开机时按住 command+s 进入单用户模式；
-2. 输入/sbin/mount空格-uaw，回车；
-3. 输入rm空格/var/db/.AppleSetupDone，回车；
-4. 输入reboot，回车；
-5. 系统重启后会进入创建新用户向导，简单配置即可，因为是临时用户，无需apple ID，无需同步；
-6. 进入系统后，下载搜狗输入法dmg安装包，然后打开dmg，卸载输入法；
-7. 注销，重新进入原先的那个用户，删除刚临时创建的用户。完成。</p>
+<p>步骤：</p>
+
+<ol>
+<li>强制关机重启，开机时按住 command+s 进入单用户模式；</li>
+<li>输入/sbin/mount空格-uaw，回车；</li>
+<li>输入rm空格/var/db/.AppleSetupDone，回车；</li>
+<li>输入reboot，回车；</li>
+<li>系统重启后会进入创建新用户向导，简单配置即可，因为是临时用户，无需apple ID，无需同步；</li>
+<li>进入系统后，下载搜狗输入法dmg安装包，然后打开dmg，卸载输入法；</li>
+<li>注销，重新进入原先的那个用户，删除刚临时创建的用户。完成。</li>
+</ol>
+
 
 <p>由于我在装搜狗输入法时很机智地留下了dmg包中的卸载app，于是只要登录新用户接着运行之即可。</p>
 
