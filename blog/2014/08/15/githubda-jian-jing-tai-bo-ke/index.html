@@ -172,8 +172,7 @@ gem source -r http://rubygems.org/
 
 <h3>octopress配置</h3>
 
-<p>首先下载最新版的octopress: github <a href="https://github.com/imathis/octopress">https://github.com/imathis/octopress</a>, 下载安装的教程可以参见网页的readme文件.<br/>
-命令如下:</p>
+<p>首先下载最新版的octopress: github <a href="https://github.com/imathis/octopress">https://github.com/imathis/octopress</a>, 下载安装的教程可以参见网页的readme文件.命令如下:</p>
 
 <pre><code>git clone git://github.com/imathis/octopress.git ~/octopress
 cd octopress
@@ -196,8 +195,9 @@ rake install
 <pre><code>ssh-keygen -t rsa -C username
 </code></pre>
 
-<p>按照提示完成后, .ssh目录下应该有id_rsa及id_rsa.pub这两个文件, 打开id_rsa.pub, cmd+a, cmd+c, 复制下来.<br/>
-打开这个网址<a href="https://github.com/settings/ssh">https://github.com/settings/ssh</a>,
+<p>按照提示完成后, .ssh目录下应该有<code>id_rsa</code>及<code>id_rsa.pub</code>这两个文件, 打开<code>id_rsa.pub</code>, <code>cmd+a</code>, <code>cmd+c</code>, 复制下来.</p>
+
+<p>打开这个网址<a href="https://github.com/settings/ssh">https://github.com/settings/ssh</a>,
 add ssh key, title随便写, key的话就把刚刚id_rsa.pub内的东西黏贴进去. add, 搞定233333.</p>
 
 <h3>发布到github</h3>
@@ -226,7 +226,31 @@ rake deploy     # 发布HTML页面
 
 <h3>扩展功能</h3>
 
-<p>喵~等下写~</p>
+<p>octopress可以使用大量模板来迅速搭建一个比较个性的个人博客，网上主题的安装实质上是用主题内的<code>source</code>以及<code>sass</code>文件夹来替换原有的<code>source</code>以及<code>sass</code>文件夹。我是从这里找的主题：</p>
+
+<p><a href="https://github.com/imathis/octopress/wiki/3rd-Party-Octopress-Themes">3rd Party Octopress Themes </a></p>
+
+<p>具体主题安装指令详见各个主题的readme。</p>
+
+<p>我使用的主题叫做<a href="https://github.com/sevenadrian/foxslide.git">foxslide</a>，并对其进行了一些修改。</p>
+
+<ul>
+<li>去掉了国内用不上的instagram以及twitter功能</li>
+<li>去掉了过于装比的github repositories功能</li>
+<li>增加了国内评论功能</li>
+<li>增加了人人链接，微博链接以及staeam链接</li>
+<li>修改了date.html解决了主题不能显示文章日期的问题</li>
+</ul>
+
+
+<p>嘛，还有一些别的小细节上的修改，
+比如
+* 自带主题在除开主页的页面进行上下滚动时会有明显卡顿，轻微强迫症患者表示这我不能忍，于是修改了css。
+* github在不翻墙的情况下连接速度比较慢，于是把博客背景等图片内容移到了网上，比较明显地提高了访问速度。</p>
+
+<h3>总结</h3>
+
+<p>之后发现有意思的东西还会继续加进去，不过现在的功能基本已经满足了日常需求。通过这几天折腾也大致弄清楚了主题各个文件之间的关系，以后再添加也不会很难。</p>
 </div>
 
 
