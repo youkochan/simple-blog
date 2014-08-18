@@ -4,7 +4,7 @@
   <title><![CDATA[Y.Q.'s Blog]]></title>
   <link href="http://youkochan.github.io/atom.xml" rel="self"/>
   <link href="http://youkochan.github.io/"/>
-  <updated>2014-08-18T12:31:46+08:00</updated>
+  <updated>2014-08-18T12:34:43+08:00</updated>
   <id>http://youkochan.github.io/</id>
   <author>
     <name><![CDATA[Youkochan]]></name>
@@ -12,24 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[test2]]></title>
-    <link href="http://youkochan.github.io/blog/2014/08/18/test2/"/>
-    <updated>2014-08-18T12:31:39+08:00</updated>
-    <id>http://youkochan.github.io/blog/2014/08/18/test2</id>
-    <content type="html"><![CDATA[
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[test1]]></title>
-    <link href="http://youkochan.github.io/blog/2014/08/18/test1/"/>
-    <updated>2014-08-18T12:31:33+08:00</updated>
-    <id>http://youkochan.github.io/blog/2014/08/18/test1</id>
-    <content type="html"><![CDATA[
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[解决博客加载过慢的问题]]></title>
@@ -79,15 +61,6 @@
 <p>由于我在装搜狗输入法时很机智地留下了dmg包中的卸载app，于是只要登录新用户接着运行之即可。</p>
 
 <p>via：<a href="http://www.v2ex.com/t/116066">http://www.v2ex.com/t/116066</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[我来测试发下图片]]></title>
-    <link href="http://youkochan.github.io/blog/2014/08/16/wo-lai-ce-shi-fa-xia-tu-pian/"/>
-    <updated>2014-08-16T19:58:00+08:00</updated>
-    <id>http://youkochan.github.io/blog/2014/08/16/wo-lai-ce-shi-fa-xia-tu-pian</id>
-    <content type="html"><![CDATA[<p><img src="http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/11348166698c85af30l_zpsef05086d.jpg" alt="pic1" /></p>
 ]]></content>
   </entry>
   
