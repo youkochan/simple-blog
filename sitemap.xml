@@ -21,12 +21,6 @@
   </url>
   
   <url>
-    <loc>http://youkochan.github.io/blog/2014/08/16/da-wan-shang-de-kai-xin-si-liao/</loc>
-    <lastmod>2014-08-16T01:56:34+08:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
     <loc>http://youkochan.github.io/blog/2014/08/15/githubda-jian-jing-tai-bo-ke/</loc>
     <lastmod>2014-08-15T20:42:57+08:00</lastmod>
     <priority>0.8</priority>
@@ -35,14 +29,14 @@
   
   <url>
     <loc>http://youkochan.github.io/blog/archives/</loc>
-    <lastmod>2014-08-18T12:21:50+08:00</lastmod>
+    <lastmod>2014-08-18T12:24:02+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://youkochan.github.io/</loc>
-    <lastmod>2014-08-18T12:21:50+08:00</lastmod>
+    <lastmod>2014-08-18T12:24:02+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
