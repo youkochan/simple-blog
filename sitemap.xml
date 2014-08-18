@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>http://youkochan.github.io/blog/2014/08/18/jie-jue-bo-ke-jia-zai-guo-man-de-wen-ti/</loc>
+    <lastmod>2014-08-18T12:02:21+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://youkochan.github.io/blog/2014/08/17/sougou-bug/</loc>
     <lastmod>2014-08-17T10:43:46+08:00</lastmod>
     <priority>0.8</priority>
@@ -29,14 +35,14 @@
   
   <url>
     <loc>http://youkochan.github.io/blog/archives/</loc>
-    <lastmod>2014-08-18T11:58:17+08:00</lastmod>
+    <lastmod>2014-08-18T12:21:50+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://youkochan.github.io/</loc>
-    <lastmod>2014-08-18T11:58:17+08:00</lastmod>
+    <lastmod>2014-08-18T12:21:50+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
