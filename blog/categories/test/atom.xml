@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: test | Y.Q.'s Blog]]></title>
+  <link href="http://youkochan.github.io/blog/categories/test/atom.xml" rel="self"/>
+  <link href="http://youkochan.github.io/"/>
+  <updated>2014-08-31T13:36:38+08:00</updated>
+  <id>http://youkochan.github.io/</id>
+  <author>
+    <name><![CDATA[Youkochan]]></name>
+    <email><![CDATA[iyeqing@icloud.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[test]]></title>
+    <link href="http://youkochan.github.io/blog/2014/08/31/test/"/>
+    <updated>2014-08-31T13:34:52+08:00</updated>
+    <id>http://youkochan.github.io/blog/2014/08/31/test</id>
+    <content type="html"><![CDATA[<p>test1</p>
+
+<!--more-->
+
+]]></content>
+  </entry>
+  
+</feed>
