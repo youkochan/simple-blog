@@ -3,14 +3,8 @@
   
   
   <url>
-    <loc>http://youkochan.github.io/blog/2014/09/16/fuckyou/</loc>
-    <lastmod>2014-09-16T23:07:26+08:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>http://youkochan.github.io/blog/2014/08/31/test/</loc>
-    <lastmod>2014-08-31T13:34:52+08:00</lastmod>
+    <loc>http://youkochan.github.io/blog/2014/09/21/qi-xing-%5Bnil%5Dmiao-feng-shan/</loc>
+    <lastmod>2014-09-21T20:39:02+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
@@ -41,14 +35,14 @@
   
   <url>
     <loc>http://youkochan.github.io/blog/archives/</loc>
-    <lastmod>2014-09-16T23:07:43+08:00</lastmod>
+    <lastmod>2014-09-22T00:05:59+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://youkochan.github.io/</loc>
-    <lastmod>2014-09-16T23:07:43+08:00</lastmod>
+    <lastmod>2014-09-22T00:05:59+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
