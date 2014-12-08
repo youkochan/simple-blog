@@ -1,127 +1,93 @@
 
-<!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="utf-8">
-  <title>静态博客搭建 - Y.Q.'s Blog</title>
-  <meta name="author" content="Youkochan">
-  <link rel="author" href="humans.txt">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
-  
+	<meta charset="utf-8">
+	<title>静态博客搭建 - Y.Q.'s Blog</title>
+    <meta name="author" content="Youkochan">
     
-  
-  <meta name="description" content=" 总结一下最近这几天折腾的博客搭建吧(github+octopress) ">
-  
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="总结一下最近这几天折腾的博客搭建吧(github+octopress) 环境 OS: OS X Yosemite 10.10
+Ruby: ruby 2.0.0p481 (2014-05-08 revision 45883)
+git: git version 1.8.5.2 (Apple Git- &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
-  <link rel="canonical" href="http://youkochan.github.io/blog/2014/08/15/githubda-jian-jing-tai-bo-ke/">
-  <link href="/favicon.png" rel="icon">
-  <link href='http://fonts.googleapis.com/css?family=Cantarell' rel='stylesheet' type='text/css'>
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="Y.Q.'s Blog" type="application/atom+xml">
-  <meta name="og:type" content="website" />
-  <meta name="og:site_name" content="Y.Q.'s Blog" />
-  <meta name="og:title" content="静态博客搭建" />
-  <meta name="og:description" content=" 总结一下最近这几天折腾的博客搭建吧(github+octopress) " />
-  <meta name="og:url" content="http://youkochan.github.io/blog/2014/08/15/githubda-jian-jing-tai-bo-ke/"/>
-  <meta name="url" content="http://youkochan.github.io/blog/2014/08/15/githubda-jian-jing-tai-bo-ke/">
-  
-  <meta name="subject" content="githuboctopress"/>
-  <meta name="category" content="githuboctopress"/>
-  
-  <meta name="distribution" content="global">
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+	<link href="/atom.xml" rel="alternate" title="Y.Q.'s Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
 
-  
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <script src="/javascripts/ajaxify.js"></script>
+   
+    
+    
 
 </head>
 
-<body   >
-  <nav role="navigation"><div class="navbar">
-  <div class="navbar-inner">
-    <a class="brand" href="/">Y.Q.'s Blog</a>
-    <ul class="nav">
-      <li><a href="/">Home</a></li>
-      <li><a href="/blog/archives">Archives</a></li>
-    </ul>
-    <ul class="nav" data-subscription="rss">
-      <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-      
-    </ul>
-      
-    <form class="navbar-form" action="https://www.google.com/search" method="get">
-      <fieldset role="search">
-        <input type="hidden" name="q" value="site:youkochan.github.io" />
-        <input class="span2" type="text" name="q" results="0" placeholder="Search"/>
-      </fieldset>
-    </form>
-      
-    
-  </div>
-</div>
-</nav>
-  <div class="wrapper_single">
-    <div class="container">
-      <div class="row">
-        <article class="span8 offset2" role="article">
-          <div class="article-format">
 
-  <header>
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        Youkochan
+    </div>
+</h1>
+<br>
+
+<ul id="social-links" style="text-align:center">
+  
+  <!-- GitHub -->
+  <li>
+  <a href="https://github.com/youkochan" class="github" title="Github"></a>
+  </li>
+  
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+    <li><a href="/atom.xml">RSS</a></li>
     
-      
-        <h1 class="entry-title">静态博客搭建</h1>
-      
-    
-    
-      <p class="meta">
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
         
-  
-
-
-  
-    <span class="byline author vcard">by <span class="fn">Youkochan</span></span>
-  
-
- - 
-        
+</ul>
 
 
 
 
+</header>
 
-
-
-
-  
-
-
-<time datetime="2014-08-15T20:42:57+08:00" pubdate data-updated="true"></time> - 
-        
-
-posted in
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/github/'>github</a>, <a class='category' href='/blog/categories/octopress/'>octopress</a>
-  
-</span>
-
-
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>总结一下最近这几天折腾的博客搭建吧(github+octopress)</p>
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        <article class="post">
+	<h2 class="title">静态博客搭建</h2>
+	<div class="entry-content"><p>总结一下最近这几天折腾的博客搭建吧(github+octopress)</p>
 
 <!--more-->
 
@@ -236,176 +202,56 @@ rake deploy     # 发布HTML页面
 <p>之后发现有意思的东西还会继续加进去，不过现在的功能基本已经满足了日常需求。通过这几天折腾也大致弄清楚了主题各个文件之间的关系，以后再添加也不会很难。</p>
 </div>
 
+<div class="meta">
+	
+</div>
+</article>
 
-
-
-
-
-  <footer>
-    <p class="meta">
-      
-  
-
-
-  
-    <span class="byline author vcard">by <span class="fn">Youkochan</span></span>
-  
-
- - 
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-15T20:42:57+08:00" pubdate data-updated="true"></time> - 
-      
-
-posted in
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/github/'>github</a>, <a class='category' href='/blog/categories/octopress/'>octopress</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  
-  
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
 </div>
 
-    
-    
-    
-      <a class="pull-right" href="/blog/2014/08/17/sougou-bug/" title="Next Post: 解决Yousemite下搜狗BUG">解决Yousemite下搜狗BUG &raquo;</a>
-    
-  </footer>
 
-</div>
 
-          
-        </article>
-      </div>
     </div>
-  </div>
-  <div id="footer-widgets">
-  <div class="container">
-    <div class="row">
-  <div class="span3">
-    <h2>recent posts</h2>
-    <ul class="recent_posts">
-      
-        <li>
-          <a href="/blog/2014/10/07/qi-xing-%5Bnil%5Dguo-qing/">骑行－国庆</a>
-        </li>
-      
-        <li>
-          <a href="/blog/2014/09/21/qi-xing-miao-feng-shan/">骑行－妙峰山</a>
-        </li>
-      
-        <li>
-          <a href="/blog/2014/08/21/ke-mu-er-shun-li-yi-ba-tong-guo/">科目二顺利一把通过~</a>
-        </li>
-      
-        <li>
-          <a href="/blog/2014/08/18/jie-jue-bo-ke-jia-zai-guo-man-de-wen-ti/">解决博客加载过慢的问题</a>
-        </li>
-      
-        <li>
-          <a href="/blog/2014/08/17/sougou-bug/">解决Yousemite下搜狗BUG</a>
-        </li>
-      
-    </ul>
-    <h2><a href="/blog/archives">archives</a></h2>
-  </div>
-  <div class="span3">
-    
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2014
 
-  </div>
-  <div class="span4">
-    
-
-  </div>
-  <div class="span2">
-    <h2>found on</h2>
-
-<a href="https://github.com/youkochan/" rel="tooltip" title="Github"><img class="social_icon" title="Github" alt="github icon" src="/images/glyphicons_381_github.png"></a>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<a href="http://steamcommunity.com/id/kanochan" rel="tooltip" title="Steam"><img class="social_icon" title="Steam" alt="Steam icon" src="/images/glyphicons_983_steam.png"></a>
-
-
-
-
-
-
-
-
-
-<h2>contact at</h2>
-<a href="mailto:iyeqing@icloud.com">iyeqing@icloud.com</a>
-
-
-  </div>
+    Youkochan
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
 </div>
 
-  </div>
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+<!-- end toload --> 
 </div>
-<footer class="footer">
-  <div class="container">
-    <p class="pull-left">
-  <a href="/">Y.Q.'s Blog</a>
-  - Copyright &copy; 2014 - Youkochan
-</p>
-<p class="pull-right">
-  <span>Powered by <a href="http://octopress.org/">Octopress</a>.</span>
-  
-    <span>Designed by <a href="http://www.AdrianArtiles.com">Adrian Artiles</a>.</span>
-  
-</p>
-
-  </div>
-</footer>
-
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
-<script>window.jQuery || document.write('<script src="/javascripts/libs/jquery-1.7.2.min.js" type="text/javascript"><\/script>')</script>
-<script src="/javascripts/libs/bootstrap.min.js" type="text/javascript"></script>
-<script src="/javascripts/jquery.tweet.js" type="text/javascript"></script>
-<script src="/javascripts/jquery.instagram.js" type="text/javascript"></script>
-<script src="/javascripts/libs/jquery.masonry.min.js" type="text/javascript"></script>
-<script src="/javascripts/custom.js" type="text/javascript"></script>
-
-
-
-
-
-
-
-
-
-
-
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
 </body>
 </html>
