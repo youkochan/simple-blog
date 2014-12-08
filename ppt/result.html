@@ -1,0 +1,522 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+*{margin:0;padding:0;}
+body {
+	font:13.34px helvetica,arial,freesans,clean,sans-serif;
+	color:black;
+	line-height:1.4em;
+	padding: 0.7em;
+}
+p {
+	margin:1em 0;
+	line-height:1.5em;
+}
+
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
+
+input[type=text],input[type=password],input[type=image],textarea{font:99% helvetica,arial,freesans,sans-serif;}
+select,option{padding:0 .25em;}
+optgroup{margin-top:.5em;}
+pre,code{font:12px Monaco,"Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace;}
+pre {
+	margin:1em 0;
+	font-size:12px;
+	background-color:#fff;
+	border:1px solid #ddd;
+	padding:5px;
+	line-height:1.5em;
+	color:#444;
+	overflow:auto;
+	-webkit-box-shadow:rgba(0,0,0,0.07) 0 1px 2px inset;
+	-webkit-border-radius:3px;
+	-moz-border-radius:3px;border-radius:3px;
+}
+pre code {
+	padding:0;
+	font-size:12px;
+	background-color:#fff;
+	border:none;
+}
+code {
+	font-size:12px;
+	background-color:#f8f8ff;
+	color:#444;
+	padding:0 .2em;
+	border:1px solid #dedede;
+}
+img{border:0;max-width:100%;}
+abbr{border-bottom:none;}
+a{color:#4183c4;text-decoration:none;}
+a:hover{text-decoration:underline;}
+a code,a:link code,a:visited code{color:#4183c4;}
+h2,h3{margin:1em 0;}
+h1,h2,h3,h4,h5,h6{border:0;}
+h1{font-size:190%;padding-top:.5em;padding-bottom:.5em;text-align: center;}
+/*h1:first-child{margin-top:0;padding-top:.25em;border-top:none;}*/
+h2{font-size:150%;margin-top:.5em;padding-top:.5em;padding-bottom:.5em;}
+h3{margin-top:1em;padding-top:.25em;padding-bottom:.25em;}
+h4{margin-top:1em;padding-top:.25em;padding-bottom:.25em;}
+h5{margin-top:1em;padding-top:.25em;padding-bottom:.25em;}
+
+hr{border:1px solid #ddd;}
+ul{margin:1em 0 1em 2em;}
+ol{margin:1em 0 1em 2em;}
+ul li,ol li{margin-top:.5em;margin-bottom:.5em;}
+ul ul,ul ol,ol ol,ol ul{margin-top:0;margin-bottom:0;}
+blockquote{margin:1em 0;border-left:5px solid #ddd;padding-left:.6em;color:#555;}
+dt{font-weight:bold;margin-left:1em;}
+dd{margin-left:2em;margin-bottom:1em;}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:0 auto;
+    }
+}
+@media print {
+	table, pre {
+		page-break-inside: avoid;
+	}
+	pre {
+		word-wrap: break-word;
+	}
+}
+</style>
+<title>数据可视化调研成果</title>
+
+</head>
+<body>
+<h1>数据可视化调研成果</h1>
+
+<h2>数据可视化总体概念</h2>
+
+<h3>概述</h3>
+
+<p>　　数据可视化主要旨在借助于图形化手段，清晰有效地传达与沟通信息。但是，这并不就意味着，数据可视化就一定因为要实现其功能用途而令人感到枯燥乏味，或者是为了看上去绚丽多彩而显得极端复杂。为了有效地传达思想概念，美学形式与功能需要齐头并进，通过直观地传达关键的方面与特征，从而实现对于相当稀疏而又复杂的数据集的深入洞察。然而，设计人员往往并不能很好地把握设计与功能之间的平衡，从而创造出华而不实的数据可视化形式，无法达到其主要目的，也就是传达与沟通信息。</p>
+
+<p>　　数据可视化与信息图形、信息可视化、科学可视化以及统计图形密切相关。当前，在研究、教学和开发领域，数据可视化乃是一个极为活跃而又关键的方面。“数据可视化”这条术语实现了成熟的科学可视化领域与较年轻的信息可视化领域的统一。</p>
+
+<p>　　二十世纪90年代初期，人们发起了一个新的，称为“信息可视化”的研究领域，旨在为许多应用领域之中对于抽象的异质性数据集的分析工作提供支持。因此，目前人们正在逐渐接受这个同时涵盖<strong>科学可视化</strong>与<strong>信息可视化</strong>领域的新生术语“数据可视化”。</p>
+
+<p>　　自那时起，数据可视化就是一个处于不断演变之中的概念，其边界在不断地扩大；因而，最好是对其加以宽泛的定义。数据可视化指的是技术上较为高级的技术方法，而这些技术方法允许利用图形、图像处理、计算机视觉以及用户界面，通过表达、建模以及对立体、表面、属性以及动画的显示，对数据加以可视化解释。与立体建模之类的特殊技术方法相比，数据可视化所涵盖的技术方法要广泛得多。</p>
+
+<h3>科学可视化</h3>
+
+<p>　　科学可视化（英语：scientific visualization 或 scientific visualisation）是科学之中的一个跨学科研究与应用领域，主要关注的是三维现象的可视化，如建筑学、气象学、医学或生物学方面的各种系统。重点在于对体、面以及光源等等的逼真渲染，或许甚至还包括某种动态（时间）成分。</p>
+
+<p>　　科学可视化侧重于利用计算机图形学来创建视觉图像，从而帮助人们理解那些采取错综复杂而又往往规模庞大的数字呈现形式的科学概念或结果。</p>
+
+<p>　　科学可视化方面的主题：</p>
+
+<ul>
+<li>计算机动画 - 计算机动画是利用计算机创建动态图像的艺术、方法、技术和科学</li>
+<li>计算机模拟 - 指计算机程序或计算机网络试图对于特定系统模型的模拟</li>
+<li>信息可视化 - 信息可视化集中关注的是创建以直观的方式传达抽象信息的手段和方法</li>
+<li>界面技术与感知 - 界面技术与感知所要揭示的就是，新的界面以及对于基本感知（perception）问题的深入理解，将会如何为科学可视化领域创造新的机遇。</li>
+<li>表面与立体渲染 - 渲染是指利用计算机程序，依据模型生成图像的过程</li>
+<li>立体可视化 - 立体可视化（volume visualization），又称为体视化或三维可视化，研究的是一套旨在实现在无须数学上表达另一面（背面）的情况下查看对象的技术方法</li>
+</ul>
+
+
+<p>　　科学可视化方面的应用：</p>
+
+<ul>
+<li>自然科学 - 恒星的形成，引力波，大型恒星的超新星爆炸，三维分子结构的渲染等</li>
+<li>地理学与生态学 － 地形地貌的渲染，龙卷风的分布，气候的可视化等</li>
+<li>形式科学 － 表面形貌，曲线图，图像标注，散点图等</li>
+<li>应用科学 － 保时捷911模型，YF-17 飞机制图，城市的渲染，城市轨道交通图等</li>
+</ul>
+
+
+<h3>信息可视化</h3>
+
+<p>　　信息可视化（英文：Information visualization）是一个跨学科领域，旨在研究大规模非数值型信息资源的视觉呈现，如软件系统之中众多的文件或者一行行的程序代码，以及利用图形图像方面的技术与方法，帮助人们理解和分析数据。与科学可视化相比，信息可视化则侧重于抽象数据集，如非结构化文本或者高维空间当中的点（这些点并不具有固有的二维或三维几何结构）。</p>
+
+<p>　　同时，目前在信息界所面临的最大挑战是信息爆炸，即所谓的 “大数据”（Big Data）。如前所述，信息可视化是建立在数据基础上的。要想从海量数据中获取有用的知识，信息可视化还必须借助于近10年取得长足进步的机器学习和数据挖掘（包括文本挖掘和图挖掘） 的方法，以及自然语言处理技术。</p>
+
+<p>　　具体的技术与方法包括：</p>
+
+<ul>
+<li>分支图（系统发育）</li>
+<li>色彩字母表</li>
+<li>树状图（分类）</li>
+<li>信息可视化参考模型</li>
+<li>图形绘制</li>
+<li>晕轮法</li>
+<li>双曲树</li>
+<li>多维尺度分析</li>
+<li>问题求解环境</li>
+<li>矩阵式树状结构绘图法</li>
+</ul>
+
+
+<p>　　信息可视化网址：</p>
+
+<ul>
+<li>http://coolinfographics.blogspot.com/</li>
+<li>http://www.visualcomplexity.com/vc/</li>
+<li>http://projects.flowingdata.com/</li>
+<li>http://infosthetics.com/</li>
+<li>http://www.tuyansuo.com/</li>
+</ul>
+
+
+<h2>相关资料</h2>
+
+<h3>相关会议 &amp;&amp; 实验室</h3>
+
+<p>会议：</p>
+
+<ul>
+<li>IEEE Information Visualization (InfoVis);</li>
+<li>IEEE Visual Analytics Science and Technology (VAST);</li>
+<li>Pacific Visualization (PacificVis);</li>
+<li>European Visualization (EuroVis);</li>
+<li>Visual Information Communication and Interaction (VINCI)</li>
+</ul>
+
+
+<p>实验室：</p>
+
+<ul>
+<li><a href="http://www.evl.uic.edu/location">电子可视化实验室（Electronic Visualization Laboratory, EVL）</a></li>
+<li><a href="http://svs.gsfc.nasa.gov">美国国家航空航天局戈达德科学可视化工作室（NASA Goddard Scientific Visualization Studio）</a></li>
+</ul>
+
+
+<h3>资源网页</h3>
+
+<ul>
+<li><a href="http://www.cad.zju.edu.cn/home/vagblog/vispapers.html">http://www.cad.zju.edu.cn/home/vagblog/vispapers.html</a></li>
+<li><a href="http://vis.pku.edu.cn/blog/">北京大学可视分析博客</a></li>
+<li><a href="http://vis.pku.edu.cn/wiki/start">北大可视分析 Viswiki</a></li>
+<li><a href="http://vis.pku.edu.cn/wiki/publication/start">北大信息可视化相关论文</a></li>
+<li><a href="http://vis.pku.edu.cn/weibova/weiboevents/">北京大学 PKUVIS 微博可视分析工具</a></li>
+<li><a href="http://www.cad.zju.edu.cn/home/vagblog/">浙江大学可视化分析小组博客</a></li>
+<li><a href="http://zh.wikipedia.org/wiki/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96">数据可视化，维基百科</a></li>
+<li><a href="http://zh.wikipedia.org/wiki/%E4%BF%A1%E6%81%AF%E5%8F%AF%E8%A7%86%E5%8C%96">信息可视化，维基百科</a></li>
+</ul>
+
+
+<h3>IEEE Scientific Visualization</h3>
+
+<h4>2013 papers</h4>
+
+<p>Submitted: 126 Accepted: 34 Acceptance Rate: 27%</p>
+
+<ol>
+<li>Volume &amp; Surface Modeling <em>体以及面的建模</em>
+
+<ul>
+<li>Fast Blending Scheme for Molecular Surface Representation<br/>
+<strong>设计了一种混合模型，解决了原有高斯模型表现效果不佳、而溶剂被排斥模型复杂性高的问题。模型复杂度为线性复杂度，表现效果却达到了接近溶剂被排斥模型的效果。</strong></li>
+<li>Detecting Symmetry in Scalar Fields Using Augmented Extremum Graphs</li>
+<li>Fast Generation of Virtual X-ray Images for Reconstruction of 3D Anatomy</li>
+</ul>
+</li>
+<li>Uncertainty &amp; Multivariate Analysis <em>不确定性与多变量分析</em>
+
+<ul>
+<li>An Information-Aware Framework for Exploring Multivariate Data Sets<br/>
+<strong>提出了一种多变量数据集探索的信息感知模型</strong></li>
+<li>Efficient Local Statistical Analysis via Integral Histograms with Discrete Wavelet Transform</li>
+<li>Characterizing and Visualizing Predictive Uncertainty in Numerical Ensembles Through Bayesian Model Averaging</li>
+<li>Contour Boxplots: A Method for Characterizing Uncertainty in Feature Sets from Simulation Ensembles</li>
+<li>Uncertainty Quantification in Linear Interpolation for Isosurface Extraction</li>
+</ul>
+</li>
+<li>Vector &amp; Flow Visualization <em>向量以及流可视化</em>
+
+<ul>
+<li>[HONORABLE MENTION] Adaptive Refinement of the Flow Map Using Sparse Samples</li>
+<li>[BEST PAPER]Comparative Visual Analysis of Lagrangian Transport in CFD Ensembles</li>
+<li>Visualization of Morse Connection Graphs for Topologically Rich 2D Vector Fields</li>
+<li>Semi-Automatic Vortex Extraction in 4D PC-MRI Cardiac Blood Flow Data using Line Predicates</li>
+<li>Coupled Ensemble Flow Line Advection and Analysis</li>
+</ul>
+</li>
+<li>Navigation, Interaction &amp; Evaluation <em>导航，交互以及评估</em>
+
+<ul>
+<li>[HONORABLE MENTION]Design by Dragging: An Interface for Creative Forward and Inverse Design with Simulation Ensembles</li>
+<li>A Multi-Criteria Approach to Camera Motion Design for Volume Data Animation</li>
+<li>A Lightweight Tangible 3D Interface for Interactive Visualization of Thin Fiber Structures</li>
+<li>Evaluation of Static and Dynamic Visualization Training Approaches for Users with Different Spatial Abilities</li>
+<li>A Systematic Review on the Practice of Evaluating Visualizations</li>
+</ul>
+</li>
+<li>Biomedical Visualization <em>生物学可视化</em>
+
+<ul>
+<li>Interactive Patient-Specific Vascular Modeling with Sweep Surfaces</li>
+<li>Area-Preservation Mapping using Optimal Mass Transport</li>
+<li>Vessel Visualization using Curved Surface Reformation<br/>
+<strong>提出了一种血管可视化方法</strong></li>
+<li>Colon Flattening Using Heat Diffusion Riemannian Metric</li>
+<li>ConnectomeExplorer: Query-Guided Visual Analysis of Large Volumetric Neuroscience Data</li>
+</ul>
+</li>
+<li>Visualization Systems <em>可视化系统</em>
+
+<ul>
+<li>ManyVis: Multiple Applications in an Integrated Visualization Environment</li>
+<li>Acuity-Driven Gigapixel Visualization</li>
+<li>An Exploration Framework to Identify and Track Movement of Cloud Systems<br/>
+<strong>设计了一个用以研究印度洋赤道附近的马登-朱利安振荡现象的系统</strong></li>
+<li>MObjects. A Novel Method for the Visualization and Interactive Exploration of Defects in Industrial XCT Data</li>
+<li>GRACE: A Visual Comparison Framework for Integrated Spatial and Non-Spatial Geriatric Data</li>
+</ul>
+</li>
+<li>Volume Rendering <em>体绘制</em>
+
+<ul>
+<li>Noise-Based Volume Rendering for the Visualization of Multivariate Volumetric Data<br/>
+<strong>提出了一种针对多元立体数据的可视化的一种基于噪声的体绘制方式</strong></li>
+<li>[HONORABLE MENTION] Ambient Volume Scattering<br/>
+<strong>提出了一种超新星模拟的模型</strong></li>
+<li>Lighting Design for Globally Illuminated Volume Rendering<br/>
+<strong>提出了一种针对全局照明体绘制的一种光线设计方式</strong></li>
+</ul>
+</li>
+</ol>
+
+
+<h3>IEEE Information Visualization (IEEE InfoVis)</h3>
+
+<h4>2013 papers</h4>
+
+<p>Submitted: 151 Accepted: 38 Acceptance Rate: 25%</p>
+
+<ol>
+<li>Ordinal &amp; Categorical Data</li>
+<li>Perception &amp; Cognition</li>
+<li>Defining the Design Space</li>
+<li>Storytelling &amp; Presentation</li>
+<li>Systems &amp; Sets</li>
+<li>Application Areas</li>
+<li>Time, Trees &amp; Graphs</li>
+<li>High-Dimensional Data</li>
+</ol>
+
+
+<h3>PKU VIS 所发的论文</h3>
+
+<h4>2014 papers</h4>
+
+<ul>
+<li><p>Advection-based Sparse Data Management for Visualizing Unsteady Flow<br/>
+<strong>提出了一种平流行方案用于管理流场数据，从而使得其更高效且更易测量（？）</strong></p></li>
+<li><p>Visual Exploration of Sparse Traffic Trajectory Data<br/>
+<strong>对于稀疏交通轨迹数据的可视化探索，提出了一个可视化分析系统，用于探索某些特定点记录下的稀疏交通轨迹数据。最终可以通过系统，分析交通点的交通拥堵情况与是如何与邻近的交通路线以及邻近路线选择相关联的</strong></p></li>
+<li><p>FLDA: Latent Dirichlet Allocation Based Unsteady Flow Analysis<br/>
+<strong>FLDA：基于LDA主题模型的非定常流场分析，将LDA主题模型引入到流场分析中，利用流场主题这一抽象层，基于迹线来对流场进行分析</strong></p></li>
+<li><p>iVisDesigner: Expressive Interactive Design of Information Visualizations<br/>
+<strong>iVisDesigner：一种生动的信息可视化交互设计交互，是一个基于web的系统，能够使用户能够交互地完成很多复杂数据的可视化工作，使用了html5+d3.js</strong></p></li>
+<li><p>Visual Analysis of Public Utility Service Problems in a Metropolis<br/>
+<strong>大都市公共服务问题可视化分析，由于多维度以及多变量，以及参与人数目多，公共服务问题是一个相当复杂的问题。因此，公共服务问题的可视化也是一个难点。因此这篇文章基于公共管理的主要任务，提出了一个可视化分析的过程。同时也提出了一个聚合方法，将大量问题转化为清事件并提供可视化，使得决策者能更好地做出决定。</strong></p></li>
+<li><p>OCEANS - Online Collaborative Explorative Analysis on Network Security<br/>
+<strong>OCEANS提供了一个多层次的可视化展示，如时间总览，IP连接，以及详细连接。参与者能够通过这些可视化接口来提交自己的发现，也可以引用其他人的发现。总的来说也就是对于一些信息做了图表展示，并且结果可以共享，属于可视化工具一类。</strong></p></li>
+<li><p>Scalable Lagrangian-based Attribute Space Projection for Multivariate Unsteady Flow Data<br/>
+<strong>针对多元非定长流数据的可变拉格朗日属性空间投影（？？？），</strong></p></li>
+<li><p>Seismic Structure Extraction Based on Multi-scale Sensitivity Analysis<br/>
+<strong>通过转移方程的多尺度敏感来对于地理结构组成进行交互式可视化（？）</strong></p></li>
+<li><p>Transfer Function Map<br/>
+<strong>传递函数地图（？），不知道在讲什么</strong></p></li>
+<li><p>WeiboEvents: A Crowd Sourcing Weibo Visual Analytic System<br/>
+<strong>介绍了北京大学可视化小组的作品weiboEvents，是一个基于微博的传播分析工具，<a href="http://vis.pku.edu.cn/weibova/weiboevents/">链接</a>，里面一些绘图的方式可以学习一下</strong></p></li>
+<li><p>Urban Trajectory Timeline Visualization<br/>
+<strong>城市轨迹时间轴可视化，将轨迹转化为时间线，自然地展示时间。除了简单地展示随着时间的属性差异，也更进一步提出了一些展示时空特性的新颖的时间轴。</strong></p></li>
+<li><p>Visual Analysis of Uncertainty in Trajectories<br/>
+<strong>对于轨迹中不确定性的可视化分析</strong></p></li>
+</ul>
+
+
+<h4>2013 papers</h4>
+
+<ul>
+<li><p>Dimension Projection-Matrix/Tree: Interactive Subspace Visual Exploration and Analysis of High Dimensional Data <br/>
+<strong>尺寸投影矩阵／树：针对高维数据的交互子空间可视化探索与分析</strong></p></li>
+<li><p>Coupled Ensemble Flow Line Advection and Analysis<br/>
+<strong>全球气候模式GEOS-5的集合模拟数据风场比较可视化</strong></p></li>
+<li><p>Visual Traffic Jam Analysis Based on Trajectory Data<br/>
+<strong>介绍了一个功能强大的可视化交通堵塞分析系统，用户可以很方便地根据自身需求使用不同的条件来寻找交通堵塞的路段，并对其进行分析。使用的数据基于GPS定位。</strong></p></li>
+<li><p>Local WYSIWYG Volume Visualization<br/>
+<strong>CT扫描数据的“所见即所得”体可视化，系统提供了“所见即所得(WYSIWYG, What You See Is What You Get)”的体数据可视化方法。用户通过在体 绘制图像上手绘的方式对可视化结果进行修改,以浏览和理解体数据的内部信息,并且为用户提供了一整套 工具,包括改变颜色、能见度、对比度、亮度以及数据图层的浏览探索</strong></p></li>
+<li><p>MLMD: Multi-Layered Visualization for Multi-Dimensional Data<br/>
+<strong>提出了一种3D空间中针对多维数据的多层次的可视化方式</strong></p></li>
+<li><p>PIWI: Visually Exploring Graphs Based on Their Community Structure<br/>
+<strong>根据图的群落结构直观地对图进行探索分析（？）</strong></p></li>
+<li><p>Design and Application of PKU Scientific Visualization System<br/>
+<strong>PKUVIS科学可视化系统设计与应用，设计并实现了一套科学可视化系统,它不仅可以支持常见的数据类型和 可视化方法,还集成了最新的一些研究工作。分布式的软件架构也使得功能易于扩展。这一系统可以广泛应用于 气候、环境、地质、生物、医学等应用领域。</strong></p></li>
+<li><p>Volume Rendering Algorithm Based on Simplified Parallel Domain Traversal<br/>
+<strong>基于一种简化的并行域遍历方法的体绘制算法，介绍了基于一种简化的并行域遍历方法（称为DStep）的光线投射体绘制算法，利用三维标量数据产生二维图片。由于使用了并行计算方法，整个计算过程的速度得以大大加快。</strong></p></li>
+<li><p>Edge Bundling in Information Visualization<br/>
+<strong>在信息可视化中的边缘捆绑，简要介绍了视觉混乱问题的可视化（不知所云）</strong></p></li>
+<li><p>Information Visualization and Visual Analytics: Challenges and Opportunities<br/>
+<strong>信息可视化和可视分析: 挑战与机遇</strong></p></li>
+</ul>
+
+
+<h4>2012 papers</h4>
+
+<ul>
+<li>Intelligent Graph Layout Using Many People's Input</li>
+<li>Scalable Multivariate Volume Visualization and Analysis based on Dimension Projection and Parallel Coordinates</li>
+<li>Interference Microscopy Volume Illustration for Biomedical Data</li>
+<li>Human Identification Using Temporal Information Preserving Gait Template</li>
+<li>Multi-operator Image Retargeting with Automatic Integration of Direct and Indirect Seam Carving</li>
+<li>Treemap Visualization</li>
+<li>Transfer Functions for Volume Visualization: State-of-the-Art</li>
+</ul>
+
+
+<h4>2011 papers</h4>
+
+<ul>
+<li>WYSIWYG (What You See is What You Get) Volume Visualization</li>
+<li>Multi-Dimensional Transfer Function Design based on Flexible Dimension Projection Embedded in Parallel Coordinates</li>
+<li>TripVista: Triple Perspective Visual Trajectory Analytics and Its Application on Microscopic Traffic Data at a Road Intersection</li>
+</ul>
+
+
+<h4>2010 papers</h4>
+
+<ul>
+<li>Scalable Multi-variate Analytics of Seismic and Satellite-based Observational Data</li>
+<li>Chrono-Gait Image: A Novel Temporal Template for Gait Recognition</li>
+<li>Interactive Local Clustering Operations In Parallel Coordinates</li>
+</ul>
+
+
+<h4>2009 papers</h4>
+
+<ul>
+<li>Scattering Points in Parallel Coordinates</li>
+<li>Interactive Visual Optimization and Analysis for RFID Benchmarking</li>
+<li>Splatting the Lines in Parallel Coordinates</li>
+<li>Interactive Super-resolution through Neighbor Embedding</li>
+</ul>
+
+
+<h4>2008 papers</h4>
+
+<ul>
+<li>Visual Clustering in Parallel Coordinates</li>
+<li>Energy-Based Hierarchical Edge Clustering of Graphs</li>
+<li>A Novel Visualization System for Expressive Facial Motion Data Exploration</li>
+<li>An Efficient System for Creating Synthetic InSAR Images From Simulations</li>
+<li>Modeling and Visualization of Tsunamis</li>
+<li>High Quality Texture Mapping and Rendering of Point-Models ［无PDF］</li>
+</ul>
+
+
+<h4>before 2008</h4>
+
+<ul>
+<li>Visualization of High Dynamic Range Data in Geosciences</li>
+<li>HDR VolVis: High Dynamic Range Volume Visualization</li>
+<li>Perceptually Guided Rendering of Textured Point-based Models</li>
+<li>Integrating Mesh and Meshfree Methods for Physics-Based Fracture and Debris Cloud Simulation</li>
+<li>Procedural Image Processing for Visualization</li>
+<li>High Dynamic Range Volume Visualization</li>
+<li>Stippling and Silhouettes Rendering in Geometry-Image Space</li>
+<li>Volume Cutout</li>
+<li>Geometry Completion and Detail Generation by Texture Synthesis</li>
+<li>Sketch-based Segmentation of Scanned Outdoor Environment Models</li>
+<li>Illustrating Surfaces in Volume</li>
+<li>Interactive Silhouette Rendering for Point-Based Models</li>
+<li>Hybrid Forward Resampling and Volume Rendering</li>
+<li>INSPIRE: An Interactive Image Assisted Non-Photorealistic Rendering System</li>
+</ul>
+
+
+<h3>相关工具</h3>
+
+<p>数据可视化资源导航网站</p>
+
+<p><a href="http://selection.datavisualization.ch">http://selection.datavisualization.ch</a></p>
+
+<p>上述网址中，可视化图表工具类较多。以下工具大部分没有亲自使用过，不知道实际效果如何。</p>
+
+<h4>prefuse</h4>
+
+<p><a href="http://prefuse.org">http://prefuse.org</a></p>
+
+<p>一个通过Web呈现的数据可视化工具包。prefuse（字母全部小写）是用Java写的，那是一种编译型语言，而且可视化程序要在浏览器中通过Java插件运行。（注意，Java和JavaScript是完全不一样的语言，尽管名字上类似。）prefuse是当时一个突破性的应用，它首次让没有多少经验的编程人员，能够实现基于Web的可视化展示。有了prefuse之后，Web上的数据可视化就成了小事一桩。</p>
+
+<h4>flare</h4>
+
+<p><a href="http://flare.prefuse.org">http://flare.prefuse.org</a></p>
+
+<p>这是一个类似的工具包，编程语言是ActionScript，就是说可以通过浏览器中的Flash Player来查看可视化结果。与prefuse类似，Flare也依赖浏览器插件。Flare虽然是一个巨大的进步，但随着浏览器的发展，可视化显然不通过插件（而只利用浏览器原生特性）也能实现了。</p>
+
+<h4>TextArc</h4>
+
+<p><a href="http://textarc.org">http://textarc.org</a></p>
+
+<p>A TextArc is a visual represention of a text—the entire text (twice!) on a single page. A funny combination of an index, concordance, and summary; it uses the viewer's eye to help uncover meaning. Here are more detailed overviews of the interactive work and the prints.</p>
+
+<h4>Raphaël</h4>
+
+<p>Raphaël is a small JavaScript library that should simplify your work with vector graphics on the web</p>
+
+<p><a href="http://raphaeljs.com">Raphaël : http://raphaeljs.com</a></p>
+
+<h4>Gephi</h4>
+
+<p>Gephi is an interactive visualization and exploration platform for all kinds of networks and complex systems, dynamic and hierarchical graphs.</p>
+
+<p><a href="https://gephi.github.io">Gephi : https://gephi.github.io</a></p>
+
+<h4>Axiis</h4>
+
+<p>基于 Flex 的数据可视化工具，准确、表现丰富。</p>
+
+<p><a href="http://www.axiis.org">Axiis : http://www.axiis.org</a></p>
+
+<h4>Chronoscope</h4>
+
+<p>对于海量数据的可视化，这个工具值得一试，包含一个 JavaScript API ，可以同 Google 的电子表格，iGoogle 以及开放社会网络集成。</p>
+
+<p><a href="http://sourceforge.net/projects/chronoscope/">Chronoscope : http://sourceforge.net/projects/chronoscope/</a></p>
+
+<h4>Flex</h4>
+
+<p>Flex 内置图表控件，可以快速生各种效果的图表，使用类似 SVG 的 FXG 技术。</p>
+
+<p><a href="http://www.adobe.com/devnet.html">Chronoscope : http://www.adobe.com/devnet.html</a></p>
+
+<h4>We Feel Fine</h4>
+
+<p><a href="http://www.wefeelfine.org/index.html">We Feel Fine</a>（我们感觉很好）根据来自大量blog的统计结果，表现了人类的感情。</p>
+
+<p>译注:（这是一个骇人的项目。。从2005年8月，该项目组从大量页面上记录人类的感情。每个几分钟，系统就会搜索世界上新近发布的blog里包含“我觉得”或“我的感觉”这类短语的文章，记录包含这些短语的句子，并计算出里面c所包含的情绪，是悲伤、快乐、沮丧。这些信息和作者的社会结构、年龄、性别、地理位置以及当时当地的天气一起被保留下来。</p>
+
+<p>这个包含了数百万人感情的数据库，每天新增15000~2000条记录，并提供了一系列有趣的接口用于查询和做数据挖掘。</p>
+
+<p>上图中的粒子系统是通过接口生成的可视化形式之一，抽取了1500条数据，每条数据是一个粒子，代表每个人的一种情绪。颜色对应情绪类型，比如幸福是亮黄色，悲伤是深蓝色，愤怒是红色，平静的感情是浅绿色。每个粒子的大小和表达情绪的语句的长度关联。）</p>
+</body>
+</html>
