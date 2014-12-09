@@ -5,8 +5,8 @@
     <description></description>
     <link>http://youkochan.github.io/</link>
     <atom:link href="http://youkochan.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 09 Dec 2014 16:49:21 +0800</pubDate>
-    <lastBuildDate>Tue, 09 Dec 2014 16:49:21 +0800</lastBuildDate>
+    <pubDate>Tue, 09 Dec 2014 17:29:10 +0800</pubDate>
+    <lastBuildDate>Tue, 09 Dec 2014 17:29:10 +0800</lastBuildDate>
     <generator>Jekyll v2.5.2</generator>
     
       <item>
@@ -368,7 +368,7 @@ add ssh key, title随便写, key的话就把刚刚id_rsa.pub内的东西黏贴�
 
 &lt;p&gt;终端输入&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;rake generate   # 生成HTML页面
+&lt;pre&gt;&lt;code&gt;rake generate   # 生成HTML页面  
 rake deploy     # 发布HTML页面
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -412,7 +412,7 @@ rake deploy     # 发布HTML页面
         
         <category>github</category>
         
-        <category>octopress</category>
+        <category>blog</category>
         
         
       </item>
