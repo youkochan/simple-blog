@@ -12,10 +12,9 @@ if ($(window).width() <= 1280) {
 
 // Variables
     tag1       = $('.pl__all'),
-    tag2       = $('.life'),
-    tag3       = $('.bike'),
-    tag4       = $('.mac'),
-    tag5       = $('.xxx');
+    tag2       = $('.bike'),
+    tag3       = $('.life'),
+    tag4       = $('.blog');
 var sidebar    = $('#sidebar'),
     container  = $('#post'),
     content    = $('#pjax'),
@@ -29,7 +28,7 @@ var clickHandler = function(k) {
     window['tag'+k].delay(50).fadeIn(350);
   }
 };
-for (var i = 1; i <= 5; i++) {
+for (var i = 1; i <= 4; i++) {
   $('#js-label' + i).on('click', clickHandler(i));
 }
 

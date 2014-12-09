@@ -1,21 +1,21 @@
 <?xml version="1.0"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Y.Q.'s Blog</title>
-    <link>youkochan.github.io</link>
-    <atom:link href="youkochan.github.io/rss.xml" rel="self" type="application/rss+xml" />
-    <description>Just blog!</description>
-    <language>zh-cn</language>
-    <pubDate>Tue, 09 Dec 2014 00:43:29 +0800</pubDate>
-    <lastBuildDate>Tue, 09 Dec 2014 00:43:29 +0800</lastBuildDate>
+    <title>place_your_blog_title_here</title>
+    <link>place_your_blog_url_here</link>
+    <atom:link href="place_your_blog_url_here/rss.xml" rel="self" type="application/rss+xml" />
+    <description>place_your_blog_description_here</description>
+    <language>place_your_blog_language_here</language>
+    <pubDate>Tue, 09 Dec 2014 14:20:27 +0800</pubDate>
+    <lastBuildDate>Tue, 09 Dec 2014 14:20:27 +0800</lastBuildDate>
 
     
     <item>
       <title>骑行－国庆</title>
-      <link>place_your_blog_url_here/bike/2014/10/07/qi-xing-%5Bnil%5Dguo-qing.html</link>
+      <link>place_your_blog_url_here/2014/10/07/qi-xing-%5Bnil%5Dguo-qing.html</link>
       <pubDate>07 Oct 2014</pubDate>
-      <author>Youkochan</author>
-      <guid>place_your_blog_url_here/bike/2014/10/07/qi-xing-[nil]guo-qing</guid>
+      <author>place_your_name_here</author>
+      <guid>place_your_blog_url_here/2014/10/07/qi-xing-[nil]guo-qing</guid>
       <description>&lt;p&gt;这几天趁着国庆闲着无事，又不想在宿舍浪费时间，于是和文兄以及崔神跑了趟河北。&lt;/p&gt;
 
 &lt;!--more--&gt;
@@ -125,10 +125,10 @@
     
     <item>
       <title>骑行－妙峰山</title>
-      <link>place_your_blog_url_here/bike/2014/09/21/qi-xing-miao-feng-shan.html</link>
+      <link>place_your_blog_url_here/2014/09/21/qi-xing-miao-feng-shan.html</link>
       <pubDate>21 Sep 2014</pubDate>
-      <author>Youkochan</author>
-      <guid>place_your_blog_url_here/bike/2014/09/21/qi-xing-miao-feng-shan</guid>
+      <author>place_your_name_here</author>
+      <guid>place_your_blog_url_here/2014/09/21/qi-xing-miao-feng-shan</guid>
       <description>&lt;p&gt;首先盗图一张，作者崔神。毕竟川藏大神，照个照片都这么有水准。
 接下来简要说说今儿骑行。&lt;/p&gt;
 
@@ -224,10 +224,10 @@
     
     <item>
       <title>科目二顺利一把通过~</title>
-      <link>place_your_blog_url_here/life/2014/08/21/ke-mu-er-shun-li-yi-ba-tong-guo.html</link>
+      <link>place_your_blog_url_here/2014/08/21/ke-mu-er-shun-li-yi-ba-tong-guo.html</link>
       <pubDate>21 Aug 2014</pubDate>
-      <author>Youkochan</author>
-      <guid>place_your_blog_url_here/life/2014/08/21/ke-mu-er-shun-li-yi-ba-tong-guo</guid>
+      <author>place_your_name_here</author>
+      <guid>place_your_blog_url_here/2014/08/21/ke-mu-er-shun-li-yi-ba-tong-guo</guid>
       <description>&lt;p&gt;今儿个顺利通过科目二考试，一个假期耽误了好多，还好考完了科目二。剩下的寒假弄完吧，之后的几天可以准备准备开学咯～😄
 &lt;!--more--&gt;&lt;/p&gt;
 </description>
@@ -235,10 +235,10 @@
     
     <item>
       <title>解决博客加载过慢的问题</title>
-      <link>place_your_blog_url_here/blog/2014/08/18/jie-jue-bo-ke-jia-zai-guo-man-de-wen-ti.html</link>
+      <link>place_your_blog_url_here/2014/08/18/jie-jue-bo-ke-jia-zai-guo-man-de-wen-ti.html</link>
       <pubDate>18 Aug 2014</pubDate>
-      <author>Youkochan</author>
-      <guid>place_your_blog_url_here/blog/2014/08/18/jie-jue-bo-ke-jia-zai-guo-man-de-wen-ti</guid>
+      <author>place_your_name_here</author>
+      <guid>place_your_blog_url_here/2014/08/18/jie-jue-bo-ke-jia-zai-guo-man-de-wen-ti</guid>
       <description>&lt;p&gt;最近几天继续捣鼓博客的时候发现一个问题，就是“博客打开速度太慢了”。平时我在电脑上网是挂着翻墙软件的，于是打开速度还可以。后来给easy同学测试的时候怎么打都打不开，并且手机端排版也有点问题。于是就尝试解决了一下这些问题。&lt;/p&gt;
 
 &lt;!--more--&gt;
@@ -256,10 +256,10 @@
     
     <item>
       <title>解决Yousemite下搜狗BUG</title>
-      <link>place_your_blog_url_here/mac/2014/08/17/sougou-bug.html</link>
+      <link>place_your_blog_url_here/2014/08/17/sougou-bug.html</link>
       <pubDate>17 Aug 2014</pubDate>
-      <author>Youkochan</author>
-      <guid>place_your_blog_url_here/mac/2014/08/17/sougou-bug</guid>
+      <author>place_your_name_here</author>
+      <guid>place_your_blog_url_here/2014/08/17/sougou-bug</guid>
       <description>&lt;p&gt;今天学完车回来忽然发现电脑开机后就会卡死在选择用户的界面，一开始以为是磁盘问题，于是按&lt;code&gt;command＋R&lt;/code&gt;开机用磁盘工具捣鼓了一番，结果没有用。后来百度了几分钟发现是Yousemite与搜狗输入法之间不太兼容的原因（毕竟测试版），于是按照网上的教程进行了一些修改。&lt;/p&gt;
 
 &lt;!--more--&gt;
@@ -284,10 +284,10 @@
     
     <item>
       <title>静态博客搭建</title>
-      <link>place_your_blog_url_here/blog/2014/08/15/githubda-jian-jing-tai-bo-ke.html</link>
+      <link>place_your_blog_url_here/2014/08/15/githubda-jian-jing-tai-bo-ke.html</link>
       <pubDate>15 Aug 2014</pubDate>
-      <author>Youkochan</author>
-      <guid>place_your_blog_url_here/blog/2014/08/15/githubda-jian-jing-tai-bo-ke</guid>
+      <author>place_your_name_here</author>
+      <guid>place_your_blog_url_here/2014/08/15/githubda-jian-jing-tai-bo-ke</guid>
       <description>&lt;p&gt;总结一下最近这几天折腾的博客搭建吧(github+octopress)&lt;/p&gt;
 
 &lt;!--more--&gt;
