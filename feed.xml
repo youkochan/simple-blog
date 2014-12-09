@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Your awesome title</title>
-    <description>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
-</description>
-    <link>http://yourdomain.com/</link>
-    <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 09 Dec 2014 14:20:27 +0800</pubDate>
-    <lastBuildDate>Tue, 09 Dec 2014 14:20:27 +0800</lastBuildDate>
+    <title>Y.Q.&#39;s Blog</title>
+    <description></description>
+    <link>http://youkochan.github.io/</link>
+    <atom:link href="http://youkochan.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Tue, 09 Dec 2014 16:49:21 +0800</pubDate>
+    <lastBuildDate>Tue, 09 Dec 2014 16:49:21 +0800</lastBuildDate>
     <generator>Jekyll v2.5.2</generator>
     
       <item>
@@ -118,8 +117,8 @@
 &lt;p&gt;［明日再写］&lt;/p&gt;
 </description>
         <pubDate>Tue, 07 Oct 2014 22:27:16 +0800</pubDate>
-        <link>http://yourdomain.com/2014/10/07/qi-xing-%5Bnil%5Dguo-qing.html</link>
-        <guid isPermaLink="true">http://yourdomain.com/2014/10/07/qi-xing-%5Bnil%5Dguo-qing.html</guid>
+        <link>http://youkochan.github.io/2014/10/07/qi-xing-%5Bnil%5Dguo-qing.html</link>
+        <guid isPermaLink="true">http://youkochan.github.io/2014/10/07/qi-xing-%5Bnil%5Dguo-qing.html</guid>
         
         <category>life</category>
         
@@ -222,8 +221,8 @@
 
 </description>
         <pubDate>Sun, 21 Sep 2014 20:39:02 +0800</pubDate>
-        <link>http://yourdomain.com/2014/09/21/qi-xing-miao-feng-shan.html</link>
-        <guid isPermaLink="true">http://yourdomain.com/2014/09/21/qi-xing-miao-feng-shan.html</guid>
+        <link>http://youkochan.github.io/2014/09/21/qi-xing-miao-feng-shan.html</link>
+        <guid isPermaLink="true">http://youkochan.github.io/2014/09/21/qi-xing-miao-feng-shan.html</guid>
         
         <category>life</category>
         
@@ -238,8 +237,8 @@
 &lt;!--more--&gt;&lt;/p&gt;
 </description>
         <pubDate>Thu, 21 Aug 2014 19:33:34 +0800</pubDate>
-        <link>http://yourdomain.com/2014/08/21/ke-mu-er-shun-li-yi-ba-tong-guo.html</link>
-        <guid isPermaLink="true">http://yourdomain.com/2014/08/21/ke-mu-er-shun-li-yi-ba-tong-guo.html</guid>
+        <link>http://youkochan.github.io/2014/08/21/ke-mu-er-shun-li-yi-ba-tong-guo.html</link>
+        <guid isPermaLink="true">http://youkochan.github.io/2014/08/21/ke-mu-er-shun-li-yi-ba-tong-guo.html</guid>
         
         <category>life</category>
         
@@ -262,8 +261,8 @@
 &lt;p&gt;至此，博客打开的速度就有了一个质的提升。&lt;/p&gt;
 </description>
         <pubDate>Mon, 18 Aug 2014 12:02:21 +0800</pubDate>
-        <link>http://yourdomain.com/2014/08/18/jie-jue-bo-ke-jia-zai-guo-man-de-wen-ti.html</link>
-        <guid isPermaLink="true">http://yourdomain.com/2014/08/18/jie-jue-bo-ke-jia-zai-guo-man-de-wen-ti.html</guid>
+        <link>http://youkochan.github.io/2014/08/18/jie-jue-bo-ke-jia-zai-guo-man-de-wen-ti.html</link>
+        <guid isPermaLink="true">http://youkochan.github.io/2014/08/18/jie-jue-bo-ke-jia-zai-guo-man-de-wen-ti.html</guid>
         
         <category>octopress</category>
         
@@ -293,8 +292,8 @@
 &lt;p&gt;via：&lt;a href=&quot;http://www.v2ex.com/t/116066&quot;&gt;http://www.v2ex.com/t/116066&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Sun, 17 Aug 2014 10:43:46 +0800</pubDate>
-        <link>http://yourdomain.com/2014/08/17/sougou-bug.html</link>
-        <guid isPermaLink="true">http://yourdomain.com/2014/08/17/sougou-bug.html</guid>
+        <link>http://youkochan.github.io/2014/08/17/sougou-bug.html</link>
+        <guid isPermaLink="true">http://youkochan.github.io/2014/08/17/sougou-bug.html</guid>
         
         <category>mac</category>
         
@@ -408,8 +407,8 @@ rake deploy     # 发布HTML页面
 &lt;p&gt;之后发现有意思的东西还会继续加进去，不过现在的功能基本已经满足了日常需求。通过这几天折腾也大致弄清楚了主题各个文件之间的关系，以后再添加也不会很难。&lt;/p&gt;
 </description>
         <pubDate>Fri, 15 Aug 2014 20:42:57 +0800</pubDate>
-        <link>http://yourdomain.com/2014/08/15/githubda-jian-jing-tai-bo-ke.html</link>
-        <guid isPermaLink="true">http://yourdomain.com/2014/08/15/githubda-jian-jing-tai-bo-ke.html</guid>
+        <link>http://youkochan.github.io/2014/08/15/githubda-jian-jing-tai-bo-ke.html</link>
+        <guid isPermaLink="true">http://youkochan.github.io/2014/08/15/githubda-jian-jing-tai-bo-ke.html</guid>
         
         <category>github</category>
         
