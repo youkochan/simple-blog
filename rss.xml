@@ -6,9 +6,38 @@
     <atom:link href="http://youkochan.github.io/rss.xml" rel="self" type="application/rss+xml" />
     <description>Simple Blog</description>
     <language>zh-cn</language>
-    <pubDate>Tue, 09 Dec 2014 19:07:02 +0800</pubDate>
-    <lastBuildDate>Tue, 09 Dec 2014 19:07:02 +0800</lastBuildDate>
+    <pubDate>Wed, 10 Dec 2014 18:48:29 +0800</pubDate>
+    <lastBuildDate>Wed, 10 Dec 2014 18:48:29 +0800</lastBuildDate>
 
+    
+    <item>
+      <title>网站结构分析v1版以及v2版</title>
+      <link>http://youkochan.github.io//js/2014/12/10/site-analyse-v1.html</link>
+      <pubDate>10 Dec 2014</pubDate>
+      <author>Youkochan</author>
+      <guid>http://youkochan.github.io//js/2014/12/10/site-analyse-v1</guid>
+      <description>&lt;p&gt;在宿舍学习javascript的时候有了一个想法，既然最近不是得探索探索可视化之类的东西，平日浏览的网页结构不应该也可以可视化出来么？&lt;/p&gt;
+
+&lt;p&gt;抱着这个想法，就琢磨了一下。&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;javascript&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+	&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;script&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setAttribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;src&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.vx.js&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementsByTagName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;head&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;appendChild&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;代码采用javascript实现，具体使用方式为，打开浏览器，输入以上代码（有的浏览器不支持自动将空格转化为％20需手动替换一下，vx替换成v1或者v2）&lt;/p&gt;
+
+&lt;p&gt;待解决&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;现在还太丑&lt;/li&gt;
+  &lt;li&gt;借鉴了d3某图，有需要的话可以自己设计。&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>骑行－国庆</title>

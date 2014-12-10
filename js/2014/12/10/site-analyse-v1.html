@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <!--[if lte IE 9]><meta http-equiv="refresh" content="0;url=/ie.html"><![endif]-->
 
-    <title>科目二顺利一把通过~</title>
+    <title>网站结构分析v1版以及v2版</title>
     <meta name="description" content="">
 
     <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
@@ -65,16 +65,34 @@
     <div id="post">
       <div id="pjax">
         <article id="post__content">
-  <h1 id="post__title" data-identifier="20140821">科目二顺利一把通过~</h1>
-  <p>今儿个顺利通过科目二考试，一个假期耽误了好多，还好考完了科目二。剩下的寒假弄完吧，之后的几天可以准备准备开学咯～😄
-<!--more--></p>
+  <h1 id="post__title" data-identifier="20141210">网站结构分析v1版以及v2版</h1>
+  <p>在宿舍学习javascript的时候有了一个想法，既然最近不是得探索探索可视化之类的东西，平日浏览的网页结构不应该也可以可视化出来么？</p>
+
+<p>抱着这个想法，就琢磨了一下。</p>
+
+<!--more-->
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+	<span class="nx">script</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span>
+	<span class="nx">script</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;src&#39;</span><span class="p">,</span><span class="s1">&#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.vx.js&#39;</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">script</span><span class="p">);</span>
+<span class="p">})();</span></code></pre></div>
+
+<p>代码采用javascript实现，具体使用方式为，打开浏览器，输入以上代码（有的浏览器不支持自动将空格转化为％20需手动替换一下，vx替换成v1或者v2）</p>
+
+<p>待解决</p>
+
+<ul>
+  <li>现在还太丑</li>
+  <li>借鉴了d3某图，有需要的话可以自己设计。</li>
+</ul>
 
 </article> <!-- end #post__content -->
 
 <div id="post__share">
-  <a id="icon-twitter" class="fontello" href="https://twitter.com/intent/tweet?url=place_your_url_here/2014/08/21/ke-mu-er-shun-li-yi-ba-tong-guo.html&text=科目二顺利一把通过~" target="_blank"></a>
+  <a id="icon-twitter" class="fontello" href="https://twitter.com/intent/tweet?url=place_your_url_here/js/2014/12/10/site-analyse-v1.html&text=网站结构分析v1版以及v2版" target="_blank"></a>
   <a id="icon-cc" class="fontello" href="http://creativecommons.org/licenses/by-nc-sa/3.0" target="_blank"></a>
-  <a id="icon-weibo" class="fontello" href="http://v.t.sina.com.cn/share/share.php?url=place_your_url_here/2014/08/21/ke-mu-er-shun-li-yi-ba-tong-guo.html&title=科目二顺利一把通过~" target="_blank"></a>
+  <a id="icon-weibo" class="fontello" href="http://v.t.sina.com.cn/share/share.php?url=place_your_url_here/js/2014/12/10/site-analyse-v1.html&title=网站结构分析v1版以及v2版" target="_blank"></a>
 </div> <!-- end #post__share -->
 
 <div id="disqus_thread">
