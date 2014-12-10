@@ -6,12 +6,12 @@
     <atom:link href="http://youkochan.github.io/rss.xml" rel="self" type="application/rss+xml" />
     <description>Simple Blog</description>
     <language>zh-cn</language>
-    <pubDate>Wed, 10 Dec 2014 23:42:20 +0800</pubDate>
-    <lastBuildDate>Wed, 10 Dec 2014 23:42:20 +0800</lastBuildDate>
+    <pubDate>Thu, 11 Dec 2014 00:11:55 +0800</pubDate>
+    <lastBuildDate>Thu, 11 Dec 2014 00:11:55 +0800</lastBuildDate>
 
     
     <item>
-      <title>网站结构分析v1版以及v2版</title>
+      <title>js网站结构分析</title>
       <link>http://youkochan.github.io//js/2014/12/10/site-analyse-v1.html</link>
       <pubDate>10 Dec 2014</pubDate>
       <author>Youkochan</author>
@@ -35,6 +35,24 @@
 &lt;ul&gt;
   &lt;li&gt;现在还太丑&lt;/li&gt;
   &lt;li&gt;借鉴了d3某图，有需要的话可以自己设计。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;section&quot;&gt;12-11 00:07 更新&lt;/h3&gt;
+
+&lt;p&gt;完成v3版本后兴奋地到处去试，结果试到知乎时出了点小问题，加载脚本时报错&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;[Error] Refused to load the script ‘http://127.0.0.1:4000/assets/bookmarklet/siteAnalyse.v3.js’ because it violates the following Content Security Policy directive: “script-src *.zhihu.com *.google-analytics.com ‘unsafe-eval’”.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;查询了一下后，发现报这个错是因为知乎在响应头中设置了Content-Security-Policy字段，参数之外的js文件都会被禁止，好像暂时没找到什么好的解决方式。&lt;/p&gt;
+
+&lt;p&gt;待解决&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;可以写一个loading来缓解枯燥的等待时间&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>

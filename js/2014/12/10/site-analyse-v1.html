@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <!--[if lte IE 9]><meta http-equiv="refresh" content="0;url=/ie.html"><![endif]-->
 
-    <title>网站结构分析v1版以及v2版</title>
+    <title>js网站结构分析</title>
     <meta name="description" content="">
 
     <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
@@ -37,8 +37,8 @@
 
         <nav id="pl__container">
         
-          <!--a class="js pl__all" href="/js/2014/12/10/site-analyse-v1.html"><span class="pl__circle"></span><span class="pl__title">网站结构分析v1版以及v2版</span><span class="pl__date">Dec 2014</span></a-->
-          <a class=" pl__all" href="/js/2014/12/10/site-analyse-v1.html"><span class="pl__circle"></span><span class="pl__title">网站结构分析v1版以及v2版</span><span class="pl__date">Dec 2014</span></a>
+          <!--a class="js pl__all" href="/js/2014/12/10/site-analyse-v1.html"><span class="pl__circle"></span><span class="pl__title">js网站结构分析</span><span class="pl__date">Dec 2014</span></a-->
+          <a class=" pl__all" href="/js/2014/12/10/site-analyse-v1.html"><span class="pl__circle"></span><span class="pl__title">js网站结构分析</span><span class="pl__date">Dec 2014</span></a>
         
           <!--a class=" pl__all" href="/2014/10/07/qi-xing-%5Bnil%5Dguo-qing.html"><span class="pl__circle"></span><span class="pl__title">骑行－国庆</span><span class="pl__date">Oct 2014</span></a-->
           <a class="life bike  pl__all" href="/2014/10/07/qi-xing-%5Bnil%5Dguo-qing.html"><span class="pl__circle"></span><span class="pl__title">骑行－国庆</span><span class="pl__date">Oct 2014</span></a>
@@ -65,7 +65,7 @@
     <div id="post">
       <div id="pjax">
         <article id="post__content">
-  <h1 id="post__title" data-identifier="20141210">网站结构分析v1版以及v2版</h1>
+  <h1 id="post__title" data-identifier="20141210">js网站结构分析</h1>
   <p>在宿舍学习javascript的时候有了一个想法，既然最近不是得探索探索可视化之类的东西，平日浏览的网页结构不应该也可以可视化出来么？</p>
 
 <p>抱着这个想法，就琢磨了一下。</p>
@@ -87,12 +87,30 @@
   <li>借鉴了d3某图，有需要的话可以自己设计。</li>
 </ul>
 
+<hr />
+
+<h3 id="section">12-11 00:07 更新</h3>
+
+<p>完成v3版本后兴奋地到处去试，结果试到知乎时出了点小问题，加载脚本时报错</p>
+
+<blockquote>
+  <p>[Error] Refused to load the script ‘http://127.0.0.1:4000/assets/bookmarklet/siteAnalyse.v3.js’ because it violates the following Content Security Policy directive: “script-src *.zhihu.com *.google-analytics.com ‘unsafe-eval’”.</p>
+</blockquote>
+
+<p>查询了一下后，发现报这个错是因为知乎在响应头中设置了Content-Security-Policy字段，参数之外的js文件都会被禁止，好像暂时没找到什么好的解决方式。</p>
+
+<p>待解决</p>
+
+<ul>
+  <li>可以写一个loading来缓解枯燥的等待时间</li>
+</ul>
+
 </article> <!-- end #post__content -->
 
 <div id="post__share">
-  <a id="icon-twitter" class="fontello" href="https://twitter.com/intent/tweet?url=place_your_url_here/js/2014/12/10/site-analyse-v1.html&text=网站结构分析v1版以及v2版" target="_blank"></a>
+  <a id="icon-twitter" class="fontello" href="https://twitter.com/intent/tweet?url=place_your_url_here/js/2014/12/10/site-analyse-v1.html&text=js网站结构分析" target="_blank"></a>
   <a id="icon-cc" class="fontello" href="http://creativecommons.org/licenses/by-nc-sa/3.0" target="_blank"></a>
-  <a id="icon-weibo" class="fontello" href="http://v.t.sina.com.cn/share/share.php?url=place_your_url_here/js/2014/12/10/site-analyse-v1.html&title=网站结构分析v1版以及v2版" target="_blank"></a>
+  <a id="icon-weibo" class="fontello" href="http://v.t.sina.com.cn/share/share.php?url=place_your_url_here/js/2014/12/10/site-analyse-v1.html&title=js网站结构分析" target="_blank"></a>
 </div> <!-- end #post__share -->
 
 <div id="disqus_thread">
