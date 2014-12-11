@@ -236,11 +236,11 @@
     }
 
     document.head.appendChild(loadingStyle);
-    
+
     var span = document.createElement("span");
-    span.class = "loading style-3";
+    span.className = "loading style-3";
     document.body.appendChild(span);
 
-	loadScript('http://youkochan.github.io/assets/js/d3/d3.min.js', afterLoad);
+	loadScript('http://d3js.org/d3.v3.min.js', afterLoad);
 })();
 

@@ -88,6 +88,12 @@
 
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="nx">script</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span><span class="nx">script</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;src&#39;</span><span class="p">,</span><span class="s1">&#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v3.js&#39;</span><span class="p">);</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">script</span><span class="p">);})();</span></code></pre></div>
 
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="nx">script</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span><span class="nx">script</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;src&#39;</span><span class="p">,</span><span class="s1">&#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v4.js&#39;</span><span class="p">);</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">script</span><span class="p">);})();</span></code></pre></div>
+
+<hr />
+
+<h3 id="section">第一次更新</h3>
+
 <p>待解决</p>
 
 <ul>
@@ -97,7 +103,7 @@
 
 <hr />
 
-<h3 id="section">12-11 00:07 更新</h3>
+<h3 id="section-1">12-11 00:07 更新</h3>
 
 <p>完成v3版本后兴奋地到处去试，结果试到知乎时出了点小问题，加载脚本时报错</p>
 
@@ -115,11 +121,23 @@
 
 <hr />
 
-<h3 id="section-1">12-11 11:05 更新</h3>
+<h3 id="section-2">12-11 11:05 更新</h3>
 
 <p>网上了解了一下CSP后发现上述问题比较无解，没有一个好的方法能让所有人都能在有CSP的网页上执行js代码，于是暂时先不管这些了，准备更新LOADING等。</p>
 
 <p><a href="http://www.zhihu.com/question/23640710/">如何绕过知乎对Bookmarklet跨域添加的script的限制</a></p>
+
+<hr />
+
+<h3 id="section-3">12-11 12:54 更新</h3>
+
+<p>完成了v4版本，增加了loading画面</p>
+
+<p>待解决</p>
+
+<ul>
+  <li>css文件等可以从外部加载</li>
+</ul>
 
 
 </article> <!-- end #post__content -->
