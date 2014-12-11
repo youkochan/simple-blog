@@ -5,8 +5,8 @@
     <description></description>
     <link>http://youkochan.github.io/</link>
     <atom:link href="http://youkochan.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 11 Dec 2014 12:57:38 +0800</pubDate>
-    <lastBuildDate>Thu, 11 Dec 2014 12:57:38 +0800</lastBuildDate>
+    <pubDate>Thu, 11 Dec 2014 14:20:41 +0800</pubDate>
+    <lastBuildDate>Thu, 11 Dec 2014 14:20:41 +0800</lastBuildDate>
     <generator>Jekyll v2.5.2</generator>
     
       <item>
@@ -86,11 +86,11 @@
 
 </description>
         <pubDate>Wed, 10 Dec 2014 18:40:09 +0800</pubDate>
-        <link>http://youkochan.github.io/js/2014/12/10/site-analyse-v1.html</link>
-        <guid isPermaLink="true">http://youkochan.github.io/js/2014/12/10/site-analyse-v1.html</guid>
-        
+        <link>http://youkochan.github.io/2014/12/10/site-analyse-v1.html</link>
+        <guid isPermaLink="true">http://youkochan.github.io/2014/12/10/site-analyse-v1.html</guid>
         
         <category>js</category>
+        
         
       </item>
     

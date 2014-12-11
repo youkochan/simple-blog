@@ -14,7 +14,8 @@ if ($(window).width() <= 1280) {
     tag1       = $('.pl__all'),
     tag2       = $('.bike'),
     tag3       = $('.life'),
-    tag4       = $('.blog');
+    tag4       = $('.blog'),
+    tag5       = $('.js');
 var sidebar    = $('#sidebar'),
     container  = $('#post'),
     content    = $('#pjax'),
@@ -28,7 +29,7 @@ var clickHandler = function(k) {
     window['tag'+k].delay(50).fadeIn(350);
   }
 };
-for (var i = 1; i <= 4; i++) {
+for (var i = 1; i <= 5; i++) {
   $('#js-label' + i).on('click', clickHandler(i));
 }
 
