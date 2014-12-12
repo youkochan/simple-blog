@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <!--[if lte IE 9]><meta http-equiv="refresh" content="0;url=/ie.html"><![endif]-->
 
-    <title>Y.Q.'s Blog</title>
+    <title>js网站结构分析-后续</title>
     <meta name="description" content="">
 
     <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
@@ -69,8 +69,44 @@
     <div id="post">
       <div id="pjax">
         <article id="post__content">
-  <h1 id="post__title">Welcome</h1>
+  <h1 id="post__title" data-identifier="20141212">js网站结构分析-后续</h1>
+  <p>昨天睡觉前通过使用ajax＋eval＋heroku成功绕过了Content-Security-Policy</p>
+
+<p>代码如下：</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+	<span class="kd">var</span> <span class="nx">xhr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+	<span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;get&quot;</span><span class="p">,</span><span class="s2">&quot;https://safe-cliffs-9960.herokuapp.com/siteAnalyse.v5.php&quot;</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span>
+	<span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+	<span class="nb">eval</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+<span class="p">})();</span></code></pre></div>
+
+<p>或在浏览器直接输入</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="kd">var</span><span class="o">%</span><span class="mi">20</span><span class="nx">xhr</span><span class="o">%</span><span class="mi">20</span><span class="o">=%</span><span class="mi">20</span><span class="k">new</span><span class="o">%</span><span class="mi">20</span><span class="nx">XMLHttpRequest</span><span class="p">();</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;get&quot;</span><span class="p">,</span><span class="s2">&quot;https://safe-cliffs-9960.herokuapp.com/siteAnalyse.v5.php&quot;</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span><span class="nb">eval</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);})();</span></code></pre></div>
+
+<p>缺点：</p>
+
+<ul>
+  <li>heroku云服务器速度慢死了次奥，下次看看国内有木有</li>
+</ul>
+
+<!--more-->
+
 </article> <!-- end #post__content -->
+
+<div id="post__share">
+  <a id="icon-twitter" class="fontello" href="https://twitter.com/intent/tweet?url=place_your_url_here/2014/12/12/site-analyse-v5.html&text=js网站结构分析-后续" target="_blank"></a>
+  <a id="icon-cc" class="fontello" href="http://creativecommons.org/licenses/by-nc-sa/3.0" target="_blank"></a>
+  <a id="icon-weibo" class="fontello" href="http://v.t.sina.com.cn/share/share.php?url=place_your_url_here/2014/12/12/site-analyse-v5.html&title=js网站结构分析-后续" target="_blank"></a>
+</div> <!-- end #post__share -->
+
+<div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink" target="_blank">Loading Disqus comments...</a>
+</div> <!-- end #disqus_thread -->
+
+<p id="copyright">Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a>&nbsp;&nbsp;|&nbsp;&nbsp;Theme <a href="https://github.com/P233/3-Jekyll" target="_blank">3-Jekyll</a></p>
       </div> <!-- end #pjax -->
 
       <div id="post__toc-trigger">

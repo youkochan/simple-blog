@@ -1,44 +1,15 @@
+<?php
+  header('Access-Control-Allow-Origin: *');
+?>
 /**
- * ver: 0.4
+ * ver: 0.5
  * by youkochan
  *
  * 分析网页整体结构，加入图形化功能，加入loading
- * 
+ * 将d3js的加载换成了ajax
  */
 
 (function youkochan(){
-	function loadScript(sScriptSrc, callbackfunction)   
-	{
-		//gets document head element  
-		var oHead = document.getElementsByTagName('head')[0];  
-    	if(oHead) 
-    	{  
-    		//creates a new script tag        
-    		var oScript = document.createElement('script');  
-        	
-        	//adds src and type attribute to script tag  
-        	oScript.setAttribute('src',sScriptSrc);  
-        	oScript.setAttribute('type','text/javascript');  
-        	
-        	//calling a function after the js is loaded (IE)  
-        	var loadFunction = function()  
-            {
-            	if (this.readyState == 'complete' || this.readyState == 'loaded')  
-            	{  
-                    callbackfunction();   
-                }  
-            };  
-        	
-        	oScript.onreadystatechange = loadFunction;  
-        	
-        	//calling a function after the js is loaded (Firefox)  
-       		oScript.onload = callbackfunction;  
-
-        	//append the script tag to document head element          
-        	oHead.appendChild(oScript);  
-    	}  
-	}  
-
 	function clearAllNode(parentNode) {
 		while (parentNode.firstChild) {
 			var oldNode = parentNode.removeChild(parentNode.firstChild);
@@ -190,8 +161,8 @@
 
 		if(node.childNodes != null){
 			var children = new Array();
-			for(var i=0, len=node.childNodes.length; i<= len-1; i++){
-				if(node.childNodes[i].nodeType != 3){ // not text node
+			for(var i=0, len=node.childNodes.length; i <= len-1; i++){
+				if(node.childNodes[i].nodeType != 3) { // not text node
 					children.push(buildData(node.childNodes[i]));
 				}
 			}
@@ -220,27 +191,39 @@
 
 	}
 
-	var oldBody = document.body;
-    var data = buildData(oldBody);
-    
-    clearAllNode(document.body);
-    clearAllNode(document.head);
+  var oldBody = document.body;
+  var data = buildData(oldBody);
 
-    var loadingStyle = document.createElement('style');
-    loadingStyle.type = "text/css";
+  clearAllNode(document.body);
+  clearAllNode(document.head);
 
-    try{
-        loadingStyle.appendChild(document.createTextNode(".loading {display: inline-block;margin: 5em;border-width: 30px;border-radius: 50%;-webkit-animation: spin 1s linear infinite;-moz-animation: spin 1s linear infinite;-o-animation: spin 1s linear infinite; animation: spin 1s linear infinite;} .style-1 {border-style: solid;border-color: #444 transparent;}.style-2 {border-style: double;border-color: #444 transparent;}.style-3 {border-style: double;border-color: #444 #fff #fff;}@-webkit-keyframes spin {100% { -webkit-transform: rotate(359deg); }}@-moz-keyframes spin {100% { -moz-transform: rotate(359deg); }}@-o-keyframes spin {100% { -moz-transform: rotate(359deg); }}@keyframes spin {100% { transform: rotate(359deg); }}html {background: #eee url('http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/billie_holiday.png');text-align: center;}"));
-    } catch (ex) {
-        loadingStyle.styleSheet.cssText = ".loading {display: inline-block;margin: 5em;border-width: 30px;border-radius: 50%;-webkit-animation: spin 1s linear infinite;-moz-animation: spin 1s linear infinite;-o-animation: spin 1s linear infinite; animation: spin 1s linear infinite;} .style-1 {border-style: solid;border-color: #444 transparent;}.style-2 {border-style: double;border-color: #444 transparent;}.style-3 {border-style: double;border-color: #444 #fff #fff;}@-webkit-keyframes spin {100% { -webkit-transform: rotate(359deg); }}@-moz-keyframes spin {100% { -moz-transform: rotate(359deg); }}@-o-keyframes spin {100% { -moz-transform: rotate(359deg); }}@keyframes spin {100% { transform: rotate(359deg); }}html {background: #eee url('http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/billie_holiday.png');text-align: center;}";
+  var loadingStyle = document.createElement('style');
+  loadingStyle.type = "text/css";
+
+  try{
+    loadingStyle.appendChild(document.createTextNode(".loading {display: inline-block;margin: 5em;border-width: 30px;border-radius: 50%;-webkit-animation: spin 1s linear infinite;-moz-animation: spin 1s linear infinite;-o-animation: spin 1s linear infinite; animation: spin 1s linear infinite;} .style-1 {border-style: solid;border-color: #444 transparent;}.style-2 {border-style: double;border-color: #444 transparent;}.style-3 {border-style: double;border-color: #444 #fff #fff;}@-webkit-keyframes spin {100% { -webkit-transform: rotate(359deg); }}@-moz-keyframes spin {100% { -moz-transform: rotate(359deg); }}@-o-keyframes spin {100% { -moz-transform: rotate(359deg); }}@keyframes spin {100% { transform: rotate(359deg); }}html {background: #eee url('http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/billie_holiday.png');text-align: center;}"));
+  } catch (ex) {
+    loadingStyle.styleSheet.cssText = ".loading {display: inline-block;margin: 5em;border-width: 30px;border-radius: 50%;-webkit-animation: spin 1s linear infinite;-moz-animation: spin 1s linear infinite;-o-animation: spin 1s linear infinite; animation: spin 1s linear infinite;} .style-1 {border-style: solid;border-color: #444 transparent;}.style-2 {border-style: double;border-color: #444 transparent;}.style-3 {border-style: double;border-color: #444 #fff #fff;}@-webkit-keyframes spin {100% { -webkit-transform: rotate(359deg); }}@-moz-keyframes spin {100% { -moz-transform: rotate(359deg); }}@-o-keyframes spin {100% { -moz-transform: rotate(359deg); }}@keyframes spin {100% { transform: rotate(359deg); }}html {background: #eee url('http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/billie_holiday.png');text-align: center;}";
+  }
+
+  document.head.appendChild(loadingStyle);
+  var span = document.createElement("span");
+  span.className = "loading style-3";
+  document.body.appendChild(span);
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("get","https://safe-cliffs-9960.herokuapp.com/getD3.php",true); // 异步加载
+  xhr.onreadystatechange = function() {  
+    if (xhr.readyState == 4) {
+      if (( xhr.status >= 200 && xhr.status < 300) || xhr.status == 304 ){
+        eval(xhr.responseText);
+        afterLoad();
+      }
+      else{
+        alert("加载所需要库文件失败！");
+      }
     }
-
-    document.head.appendChild(loadingStyle);
-
-    var span = document.createElement("span");
-    span.className = "loading style-3";
-    document.body.appendChild(span);
-
-	loadScript('http://d3js.org/d3.v3.min.js', afterLoad);
+  };
+  xhr.send(null);
 })();
 

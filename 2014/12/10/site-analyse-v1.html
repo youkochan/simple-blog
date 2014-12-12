@@ -38,6 +38,9 @@
 
         <nav id="pl__container">
         
+          <!--a class=" pl__all" href="/2014/12/12/site-analyse-v5.html"><span class="pl__circle"></span><span class="pl__title">js网站结构分析-后续</span><span class="pl__date">Dec 2014</span></a-->
+          <a class="js  pl__all" href="/2014/12/12/site-analyse-v5.html"><span class="pl__circle"></span><span class="pl__title">js网站结构分析-后续</span><span class="pl__date">Dec 2014</span></a>
+        
           <!--a class=" pl__all" href="/2014/12/10/site-analyse-v1.html"><span class="pl__circle"></span><span class="pl__title">js网站结构分析</span><span class="pl__date">Dec 2014</span></a-->
           <a class="js  pl__all" href="/2014/12/10/site-analyse-v1.html"><span class="pl__circle"></span><span class="pl__title">js网站结构分析</span><span class="pl__date">Dec 2014</span></a>
         
@@ -91,6 +94,8 @@
 
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="nx">script</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span><span class="nx">script</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;src&#39;</span><span class="p">,</span><span class="s1">&#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v4.js&#39;</span><span class="p">);</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">script</span><span class="p">);})();</span></code></pre></div>
 
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="k">try</span><span class="p">{</span><span class="nx">script</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span><span class="nx">script</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;src&#39;</span><span class="p">,</span><span class="s1">&#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v4.js&#39;</span><span class="p">);</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">script</span><span class="p">);}</span><span class="k">catch</span><span class="p">(</span><span class="nx">ex</span><span class="p">){</span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;ERROR&quot;</span><span class="p">)}})();</span></code></pre></div>
+
 <hr />
 
 <h3 id="section">第一次更新</h3>
@@ -140,6 +145,33 @@
   <li>css文件等可以从外部加载</li>
 </ul>
 
+<hr />
+
+<h3 id="section-4">12-11 22:35 更新</h3>
+
+<p>自从完成v4版本后，还是在纠结CSP的问题。重新看了一下知乎上提及的ajax + eval方式，即：</p>
+
+<blockquote>
+  <p>使用XMLHttpRequest加载js文件，再使用eval执行文件内容。不过这样需要修改你的responseHeader以支持跨域：{‘Access-Control-Allow-Origin’: ‘*’}。</p>
+</blockquote>
+
+<p>即，自己搭建服务器，通过ajax请求自己的服务器中的js文件，然后手动将响应头的Access-Control-Allow-Origin替换为*，即为所有网站都能访问。通过以上方式，绕过了CSP的限制。</p>
+
+<p>如果不设置响应头就会报以下错误（以知乎上使用为例）</p>
+
+<blockquote>
+  <p>No ‘Access-Control-Allow-Origin’ header is present on the requested resource. Origin ‘http://www.zhihu.com’ is therefore not allowed access.</p>
+</blockquote>
+
+<p>HTTP 头的设置方法有很多，http://enable-cors.org/这篇文章里对各种服务器和语言的设置都有详细的介绍，下面我们主要介绍Apache和PHP里的设置方法。</p>
+
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+	<span class="nb">header</span><span class="p">(</span><span class="s2">&quot;Access-Control-Allow-Origin:*&quot;</span><span class="p">);</span>
+<span class="cp">?&gt;</span><span class="x"></span></code></pre></div>
+
+<p>以上的配置的含义是允许任何域发起的请求都可以获取当前服务器的数据。当然，这样有很大的危险性，恶意站点可能通过XSS攻击我们的服务器。所以我们应该尽量有针对性的对限制安全的来源。</p>
+
+<p>了解了以上一些后觉得没必要花时间纠结在使用bookmarklet方式来获取网页结构了。这一些折腾后对于之前不太理解的东西有了更深入的了解吧。</p>
 
 </article> <!-- end #post__content -->
 
