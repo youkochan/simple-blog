@@ -6,8 +6,8 @@
     <atom:link href="http://youkochan.github.io/rss.xml" rel="self" type="application/rss+xml" />
     <description>Simple Blog</description>
     <language>zh-cn</language>
-    <pubDate>Mon, 22 Dec 2014 10:32:55 +0800</pubDate>
-    <lastBuildDate>Mon, 22 Dec 2014 10:32:55 +0800</lastBuildDate>
+    <pubDate>Mon, 22 Dec 2014 10:37:41 +0800</pubDate>
+    <lastBuildDate>Mon, 22 Dec 2014 10:37:41 +0800</lastBuildDate>
 
     
     <item>
@@ -56,8 +56,8 @@
 
 &lt;p&gt;使用了V2EX网友的PHP虚拟空间，真是快！楼主好人！&lt;/p&gt;
 
-&lt;p&gt;```js
-javascript:(function(){var%20xhr%20=%20new%20XMLHttpRequest();xhr.open(&quot;get&quot;,&quot;http://youkochan.daohe.org/tools/siteAnalyse.v5.php&quot;,false);xhr.send(null);eval(xhr.responseText);})();&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;js&quot;&gt;javascript:(function(){var%20xhr%20=%20new%20XMLHttpRequest();xhr.open(&quot;get&quot;,&quot;http://youkochan.daohe.org/tools/siteAnalyse.v5.php&quot;,false);xhr.send(null);eval(xhr.responseText);})();
+&lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     
