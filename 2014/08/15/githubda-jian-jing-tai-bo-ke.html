@@ -74,13 +74,16 @@
 
 <!--more-->
 
-<h3 id="section">环境</h3>
+
+<h3>环境</h3>
+
 <ul>
-  <li>OS:	 OS X Yosemite 10.10</li>
-  <li>Ruby:	 ruby 2.0.0p481 (2014-05-08 revision 45883)</li>
-  <li>git:	 git version 1.8.5.2 (Apple Git-48)</li>
-  <li>xcode: xcode command line tool</li>
+<li>OS:    OS X Yosemite 10.10</li>
+<li>Ruby:  ruby 2.0.0p481 (2014-05-08 revision 45883)</li>
+<li>git:   git version 1.8.5.2 (Apple Git-48)</li>
+<li>xcode: xcode command line tool</li>
 </ul>
+
 
 <p>环境配置上面纠结了我很长时间, octopress要求最低ruby版本为1.9.3, mac自带版本为2.0.0, 可以直接使用. 可是由于之前对ruby一无所知, 所以在环境配置上出现了许多乱七八糟的问题. 最后发现是由于ruby的默认的源<a href="http://rubygems.org/">http://rubygems.org/</a>经常不稳定, 于是可以通过淘宝镜像来配置源. 代码如下:</p>
 
@@ -95,10 +98,12 @@ gem source -r http://rubygems.org/
 
 <p>git在mac os也是自带的, 到此, 我们便完成了静态博客的环境配置.</p>
 
-<h3 id="github">github配置</h3>
+<h3>github配置</h3>
+
 <p>首先你需要一个github账号(废话), 然后在你的账号设置中, 选择新建一个repository. 注, 新建的repository的名字必须为(yourname).github.com, 此处的yourname为你想要的域名. 此时, github的配置告一段落.</p>
 
-<h3 id="octopress">octopress配置</h3>
+<h3>octopress配置</h3>
+
 <p>首先下载最新版的octopress: github <a href="https://github.com/imathis/octopress">https://github.com/imathis/octopress</a>, 下载安装的教程可以参见网页的readme文件.命令如下:</p>
 
 <pre><code>git clone git://github.com/imathis/octopress.git ~/octopress
@@ -115,7 +120,8 @@ rake install
 
 <p>便可以通过<code>localhost:4000</code>来预览你的博客(需要保证你的4000端口不被占用)</p>
 
-<h3 id="github-1">关联github</h3>
+<h3>关联github</h3>
+
 <p>创建密匙(若.ssh目录下已经有密匙可以跳过)</p>
 
 <pre><code>ssh-keygen -t rsa -C username
@@ -126,13 +132,14 @@ rake install
 <p>打开这个网址<a href="https://github.com/settings/ssh">https://github.com/settings/ssh</a>,
 add ssh key, title随便写, key的话就把刚刚id_rsa.pub内的东西黏贴进去. add, 搞定233333.</p>
 
-<h3 id="github-2">发布到github</h3>
+<h3>发布到github</h3>
+
 <p>终端输入</p>
 
 <pre><code>rake setup_github_pages
 </code></pre>
 
-<p>会要求你输入github仓库的地址, 此时把之前创建的repository的地址输入即可. 如git@github.com:your_username/your_username.github.io.git</p>
+<p>会要求你输入github仓库的地址, 此时把之前创建的repository的地址输入即可. 如git@github.com:yourusername/yourusername.github.io.git</p>
 
 <p>终端输入</p>
 
@@ -140,7 +147,7 @@ add ssh key, title随便写, key的话就把刚刚id_rsa.pub内的东西黏贴�
 rake deploy     # 发布HTML页面
 </code></pre>
 
-<p>到此, 你就可以在你的(yourname).github.com看到你的博客啦(当然, 什么都没写的话什么都没有的, 而且自带主题真是…搓).</p>
+<p>到此, 你就可以在你的(yourname).github.com看到你的博客啦(当然, 什么都没写的话什么都没有的, 而且自带主题真是...搓).</p>
 
 <p>终端输入</p>
 
@@ -149,7 +156,8 @@ rake deploy     # 发布HTML页面
 
 <p>这样会在<code>source/_post</code>目录下生成一个Markdown文件, 利用Markdown编辑软件或者文本编辑软件即可修改. 修改完后输入上面发布以及生成页面的指令便可以发布你刚刚写的blog到github上啦~~</p>
 
-<h3 id="section-1">扩展功能</h3>
+<h3>扩展功能</h3>
+
 <p>octopress可以使用大量模板来迅速搭建一个比较个性的个人博客，网上主题的安装实质上是用主题内的<code>source</code>以及<code>sass</code>文件夹来替换原有的<code>source</code>以及<code>sass</code>文件夹。我是从这里找的主题：</p>
 
 <p><a href="https://github.com/imathis/octopress/wiki/3rd-Party-Octopress-Themes">3rd Party Octopress Themes </a></p>
@@ -159,19 +167,21 @@ rake deploy     # 发布HTML页面
 <p>我使用的主题叫做<a href="https://github.com/sevenadrian/foxslide.git">foxslide</a>，并对其进行了一些修改。</p>
 
 <ul>
-  <li>去掉了国内用不上的instagram以及twitter功能</li>
-  <li>去掉了过于装比的github repositories功能</li>
-  <li>增加了国内评论功能</li>
-  <li>增加了人人链接，微博链接以及staeam链接</li>
-  <li>修改了date.html解决了主题不能显示文章日期的问题</li>
+<li>去掉了国内用不上的instagram以及twitter功能</li>
+<li>去掉了过于装比的github repositories功能</li>
+<li>增加了国内评论功能</li>
+<li>增加了人人链接，微博链接以及staeam链接</li>
+<li>修改了date.html解决了主题不能显示文章日期的问题</li>
 </ul>
+
 
 <p>嘛，还有一些别的小细节上的修改，
 比如
 * 自带主题在除开主页的页面进行上下滚动时会有明显卡顿，轻微强迫症患者表示这我不能忍，于是修改了css。
 * github在不翻墙的情况下连接速度比较慢，于是把博客背景等图片内容移到了网上，比较明显地提高了访问速度。</p>
 
-<h3 id="section-2">总结</h3>
+<h3>总结</h3>
+
 <p>之后发现有意思的东西还会继续加进去，不过现在的功能基本已经满足了日常需求。通过这几天折腾也大致弄清楚了主题各个文件之间的关系，以后再添加也不会很难。</p>
 
 </article> <!-- end #post__content -->

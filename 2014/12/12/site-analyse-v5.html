@@ -72,36 +72,46 @@
   <h1 id="post__title" data-identifier="20141212">js网站结构分析-后续</h1>
   <p>昨天睡觉前通过使用ajax＋eval＋heroku成功绕过了Content-Security-Policy</p>
 
+<!--more-->
+
+
 <p>代码如下：</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-	<span class="kd">var</span> <span class="nx">xhr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
-	<span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;get&quot;</span><span class="p">,</span><span class="s2">&quot;https://safe-cliffs-9960.herokuapp.com/siteAnalyse.v5.php&quot;</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span>
-	<span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
-	<span class="nb">eval</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
-<span class="p">})();</span></code></pre></div>
+<pre><code class="js">javascript:(function(){
+    var xhr = new XMLHttpRequest();
+    xhr.open("get","https://safe-cliffs-9960.herokuapp.com/siteAnalyse.v5.php",false);
+    xhr.send(null);
+    eval(xhr.responseText);
+})();
+</code></pre>
 
 <p>或在浏览器直接输入</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="kd">var</span><span class="o">%</span><span class="mi">20</span><span class="nx">xhr</span><span class="o">%</span><span class="mi">20</span><span class="o">=%</span><span class="mi">20</span><span class="k">new</span><span class="o">%</span><span class="mi">20</span><span class="nx">XMLHttpRequest</span><span class="p">();</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;get&quot;</span><span class="p">,</span><span class="s2">&quot;https://safe-cliffs-9960.herokuapp.com/siteAnalyse.v5.php&quot;</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span><span class="nb">eval</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);})();</span></code></pre></div>
+<pre><code class="js">javascript:(function(){var%20xhr%20=%20new%20XMLHttpRequest();xhr.open("get","https://safe-cliffs-9960.herokuapp.com/siteAnalyse.v5.php",false);xhr.send(null);eval(xhr.responseText);})();
+</code></pre>
 
 <p>缺点：</p>
 
 <ul>
-  <li>heroku云服务器速度慢死了次奥，下次看看国内有木有</li>
+<li>heroku云服务器速度慢死了次奥，下次看看国内有木有</li>
 </ul>
 
-<hr />
 
-<h3 id="section">12-12 22:02 更新</h3>
+<h3>12-12 22:02 更新</h3>
 
 <p>使用了openshift服务器，服务器速度<strike>明显</strike>提升了很多，(￣▽￣)，代码如下</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="kd">var</span><span class="o">%</span><span class="mi">20</span><span class="nx">xhr</span><span class="o">%</span><span class="mi">20</span><span class="o">=%</span><span class="mi">20</span><span class="k">new</span><span class="o">%</span><span class="mi">20</span><span class="nx">XMLHttpRequest</span><span class="p">();</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;get&quot;</span><span class="p">,</span><span class="s2">&quot;https://php-youkochan.rhcloud.com/siteAnalyse.v5.php&quot;</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span><span class="nb">eval</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);})();</span></code></pre></div>
+<pre><code class="js">javascript:(function(){var%20xhr%20=%20new%20XMLHttpRequest();xhr.open("get","https://php-youkochan.rhcloud.com/siteAnalyse.v5.php",false);xhr.send(null);eval(xhr.responseText);})();
+</code></pre>
 
 <p>(其实也就稍微快那么一点。。。还是得买买买)</p>
 
-<!--more-->
+<h3>12-22 10:30 更新</h3>
+
+<p>使用了V2EX网友的PHP虚拟空间，真是快！楼主好人！</p>
+
+<p>```js
+javascript:(function(){var%20xhr%20=%20new%20XMLHttpRequest();xhr.open("get","http://youkochan.daohe.org/tools/siteAnalyse.v5.php",false);xhr.send(null);eval(xhr.responseText);})();</p>
 
 </article> <!-- end #post__content -->
 

@@ -6,8 +6,8 @@
     <atom:link href="http://youkochan.github.io/rss.xml" rel="self" type="application/rss+xml" />
     <description>Simple Blog</description>
     <language>zh-cn</language>
-    <pubDate>Fri, 12 Dec 2014 22:41:59 +0800</pubDate>
-    <lastBuildDate>Fri, 12 Dec 2014 22:41:59 +0800</lastBuildDate>
+    <pubDate>Mon, 22 Dec 2014 10:32:55 +0800</pubDate>
+    <lastBuildDate>Mon, 22 Dec 2014 10:32:55 +0800</lastBuildDate>
 
     
     <item>
@@ -18,36 +18,46 @@
       <guid>http://youkochan.github.io//2014/12/12/site-analyse-v5</guid>
       <description>&lt;p&gt;昨天睡觉前通过使用ajax＋eval＋heroku成功绕过了Content-Security-Policy&lt;/p&gt;
 
+&lt;!--more--&gt;
+
+
 &lt;p&gt;代码如下：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;javascript&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
-	&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;xhr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;XMLHttpRequest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-	&lt;span class=&quot;nx&quot;&gt;xhr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;get&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;https://safe-cliffs-9960.herokuapp.com/siteAnalyse.v5.php&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-	&lt;span class=&quot;nx&quot;&gt;xhr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-	&lt;span class=&quot;nb&quot;&gt;eval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xhr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;responseText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;})();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code class=&quot;js&quot;&gt;javascript:(function(){
+    var xhr = new XMLHttpRequest();
+    xhr.open(&quot;get&quot;,&quot;https://safe-cliffs-9960.herokuapp.com/siteAnalyse.v5.php&quot;,false);
+    xhr.send(null);
+    eval(xhr.responseText);
+})();
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;或在浏览器直接输入&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;javascript&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xhr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=%&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;XMLHttpRequest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xhr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;get&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;https://safe-cliffs-9960.herokuapp.com/siteAnalyse.v5.php&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xhr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;eval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xhr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;responseText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);})();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code class=&quot;js&quot;&gt;javascript:(function(){var%20xhr%20=%20new%20XMLHttpRequest();xhr.open(&quot;get&quot;,&quot;https://safe-cliffs-9960.herokuapp.com/siteAnalyse.v5.php&quot;,false);xhr.send(null);eval(xhr.responseText);})();
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;缺点：&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;heroku云服务器速度慢死了次奥，下次看看国内有木有&lt;/li&gt;
+&lt;li&gt;heroku云服务器速度慢死了次奥，下次看看国内有木有&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;hr /&gt;
 
-&lt;h3 id=&quot;section&quot;&gt;12-12 22:02 更新&lt;/h3&gt;
+&lt;h3&gt;12-12 22:02 更新&lt;/h3&gt;
 
 &lt;p&gt;使用了openshift服务器，服务器速度&lt;strike&gt;明显&lt;/strike&gt;提升了很多，(￣▽￣)，代码如下&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;javascript&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xhr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=%&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;XMLHttpRequest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xhr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;get&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;https://php-youkochan.rhcloud.com/siteAnalyse.v5.php&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xhr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;eval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xhr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;responseText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);})();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code class=&quot;js&quot;&gt;javascript:(function(){var%20xhr%20=%20new%20XMLHttpRequest();xhr.open(&quot;get&quot;,&quot;https://php-youkochan.rhcloud.com/siteAnalyse.v5.php&quot;,false);xhr.send(null);eval(xhr.responseText);})();
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;(其实也就稍微快那么一点。。。还是得买买买)&lt;/p&gt;
 
-&lt;!--more--&gt;
+&lt;h3&gt;12-22 10:30 更新&lt;/h3&gt;
+
+&lt;p&gt;使用了V2EX网友的PHP虚拟空间，真是快！楼主好人！&lt;/p&gt;
+
+&lt;p&gt;```js
+javascript:(function(){var%20xhr%20=%20new%20XMLHttpRequest();xhr.open(&quot;get&quot;,&quot;http://youkochan.daohe.org/tools/siteAnalyse.v5.php&quot;,false);xhr.send(null);eval(xhr.responseText);})();&lt;/p&gt;
 </description>
     </item>
     
@@ -63,98 +73,92 @@
 
 &lt;!--more--&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;javascript&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
-	&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;script&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-	&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setAttribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;src&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.vx.js&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-	&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementsByTagName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;head&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;appendChild&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;})();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;javascript:(function(){
+    script=document.createElement(&#39;script&#39;);
+    script.setAttribute(&#39;src&#39;,&#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.vx.js&#39;);
+document.getElementsByTagName(&#39;head&#39;)[0].appendChild(script);
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;代码采用javascript实现，具体使用方式为，打开浏览器，输入以上代码（有的浏览器不支持自动将空格转化为％20需手动替换一下，vx替换成v1或者v2）&lt;/p&gt;
 
-&lt;p&gt;或者复制以下代码在浏览器运行（版本 v1，v2，v3 … vn）&lt;/p&gt;
+&lt;p&gt;或者复制以下代码在浏览器运行（版本 v1，v2，v3 ... vn）&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;javascript&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;script&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setAttribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;src&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v1.js&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementsByTagName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;head&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;appendChild&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);})();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;javascript:(function(){script=document.createElement(&#39;script&#39;);script.setAttribute(&#39;src&#39;,&#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v1.js&#39;);document.getElementsByTagName(&#39;head&#39;)[0].appendChild(script);})();
+&lt;/code&gt;&lt;/pre&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;javascript&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;script&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setAttribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;src&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v2.js&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementsByTagName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;head&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;appendChild&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);})();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;javascript:(function(){script=document.createElement(&#39;script&#39;);script.setAttribute(&#39;src&#39;,&#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v2.js&#39;);document.getElementsByTagName(&#39;head&#39;)[0].appendChild(script);})();
+&lt;/code&gt;&lt;/pre&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;javascript&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;script&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setAttribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;src&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v3.js&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementsByTagName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;head&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;appendChild&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);})();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;javascript:(function(){script=document.createElement(&#39;script&#39;);script.setAttribute(&#39;src&#39;,&#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v3.js&#39;);document.getElementsByTagName(&#39;head&#39;)[0].appendChild(script);})();
+&lt;/code&gt;&lt;/pre&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;javascript&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;script&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setAttribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;src&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v4.js&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementsByTagName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;head&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;appendChild&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);})();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;javascript:(function(){script=document.createElement(&#39;script&#39;);script.setAttribute(&#39;src&#39;,&#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v4.js&#39;);document.getElementsByTagName(&#39;head&#39;)[0].appendChild(script);})();
+&lt;/code&gt;&lt;/pre&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;javascript&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;script&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setAttribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;src&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v4.js&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementsByTagName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;head&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;appendChild&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);}&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;ERROR&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)}})();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;javascript:(function(){try{script=document.createElement(&#39;script&#39;);script.setAttribute(&#39;src&#39;,&#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v4.js&#39;);document.getElementsByTagName(&#39;head&#39;)[0].appendChild(script);}catch(ex){alert(&quot;ERROR&quot;)}})();
+&lt;/code&gt;&lt;/pre&gt;
 
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;section&quot;&gt;第一次更新&lt;/h3&gt;
+&lt;h3&gt;第一次更新&lt;/h3&gt;
 
 &lt;p&gt;待解决&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;现在还太丑&lt;/li&gt;
-  &lt;li&gt;借鉴了d3某图，有需要的话可以自己设计。&lt;/li&gt;
+&lt;li&gt;现在还太丑&lt;/li&gt;
+&lt;li&gt;借鉴了d3某图，有需要的话可以自己设计。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;hr /&gt;
 
-&lt;h3 id=&quot;section-1&quot;&gt;12-11 00:07 更新&lt;/h3&gt;
+&lt;h3&gt;12-11 00:07 更新&lt;/h3&gt;
 
 &lt;p&gt;完成v3版本后兴奋地到处去试，结果试到知乎时出了点小问题，加载脚本时报错&lt;/p&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;[Error] Refused to load the script ‘http://127.0.0.1:4000/assets/bookmarklet/siteAnalyse.v3.js’ because it violates the following Content Security Policy directive: “script-src *.zhihu.com *.google-analytics.com ‘unsafe-eval’”.&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;blockquote&gt;&lt;p&gt;[Error] Refused to load the script &#39;http://127.0.0.1:4000/assets/bookmarklet/siteAnalyse.v3.js&#39; because it violates the following Content Security Policy directive: &quot;script-src &lt;em&gt;.zhihu.com &lt;/em&gt;.google-analytics.com &#39;unsafe-eval&#39;&quot;.&lt;/p&gt;&lt;/blockquote&gt;
 
-&lt;p&gt;查询了一下后，发现报这个错是因为知乎在响应头中设置了Content-Security-Policy字段，参数之外的js文件都会被禁止，好像暂时没找到什么好的解决方式。&lt;/p&gt;
+&lt;p&gt;查询了一下后，发现报这个错是因为知乎在响应头中设置了ContentSecurityPolicy字段，参数之外的js文件都会被禁止，好像暂时没找到什么好的解决方式。&lt;/p&gt;
 
 &lt;p&gt;待解决&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;可以写一个loading来缓解枯燥的等待时间&lt;/li&gt;
+&lt;li&gt;可以写一个loading来缓解枯燥的等待时间。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;hr /&gt;
 
-&lt;h3 id=&quot;section-2&quot;&gt;12-11 11:05 更新&lt;/h3&gt;
+&lt;h3&gt;12-11 11:05 更新&lt;/h3&gt;
 
 &lt;p&gt;网上了解了一下CSP后发现上述问题比较无解，没有一个好的方法能让所有人都能在有CSP的网页上执行js代码，于是暂时先不管这些了，准备更新LOADING等。&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;http://www.zhihu.com/question/23640710/&quot;&gt;如何绕过知乎对Bookmarklet跨域添加的script的限制&lt;/a&gt;&lt;/p&gt;
 
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;section-3&quot;&gt;12-11 12:54 更新&lt;/h3&gt;
+&lt;h3&gt;12-11 12:54 更新&lt;/h3&gt;
 
 &lt;p&gt;完成了v4版本，增加了loading画面&lt;/p&gt;
 
 &lt;p&gt;待解决&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;css文件等可以从外部加载&lt;/li&gt;
+&lt;li&gt;css文件等可以从外部加载&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;hr /&gt;
 
-&lt;h3 id=&quot;section-4&quot;&gt;12-11 22:35 更新&lt;/h3&gt;
+&lt;h3&gt;12-11 22:35 更新&lt;/h3&gt;
 
 &lt;p&gt;自从完成v4版本后，还是在纠结CSP的问题。重新看了一下知乎上提及的ajax + eval方式，即：&lt;/p&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;使用XMLHttpRequest加载js文件，再使用eval执行文件内容。不过这样需要修改你的responseHeader以支持跨域：{‘Access-Control-Allow-Origin’: ‘*’}。&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;blockquote&gt;&lt;p&gt;使用XMLHttpRequest加载js文件，再使用eval执行文件内容。不过这样需要修改你的responseHeader以支持跨域：{&#39;Access-Control-Allow-Origin&#39;: &#39;*&#39;}。&lt;/p&gt;&lt;/blockquote&gt;
 
 &lt;p&gt;即，自己搭建服务器，通过ajax请求自己的服务器中的js文件，然后手动将响应头的Access-Control-Allow-Origin替换为*，即为所有网站都能访问。通过以上方式，绕过了CSP的限制。&lt;/p&gt;
 
 &lt;p&gt;如果不设置响应头就会报以下错误（以知乎上使用为例）&lt;/p&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;No ‘Access-Control-Allow-Origin’ header is present on the requested resource. Origin ‘http://www.zhihu.com’ is therefore not allowed access.&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;blockquote&gt;&lt;p&gt;No &#39;Access-Control-Allow-Origin&#39; header is present on the requested resource. Origin &#39;http://www.zhihu.com is therefore not allowed access.&lt;/p&gt;&lt;/blockquote&gt;
 
 &lt;p&gt;HTTP 头的设置方法有很多，http://enable-cors.org/这篇文章里对各种服务器和语言的设置都有详细的介绍，下面我们主要介绍Apache和PHP里的设置方法。&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
-	&lt;span class=&quot;nb&quot;&gt;header&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Access-Control-Allow-Origin:*&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code class=&quot;php&quot;&gt;&amp;lt;?php
+    header(&quot;Access-Control-Allow-Origin:*&quot;);
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;以上的配置的含义是允许任何域发起的请求都可以获取当前服务器的数据。当然，这样有很大的危险性，恶意站点可能通过XSS攻击我们的服务器。所以我们应该尽量有针对性的对限制安全的来源。&lt;/p&gt;
 
@@ -172,105 +176,111 @@
 
 &lt;!--more--&gt;
 
-&lt;h3 id=&quot;section&quot;&gt;基本情况&lt;/h3&gt;
 
-&lt;p&gt;时间：2014-10-3～2014－10-7&lt;br /&gt;
-地点：北京－延庆－赤城－延庆－怀柔&lt;br /&gt;
-人物：我，文兄，崔神&lt;br /&gt;
-距离：382km&lt;br /&gt;
+&lt;h3&gt;基本情况&lt;/h3&gt;
+
+&lt;p&gt;时间：2014-10-3～2014－10-7&lt;br/&gt;
+地点：北京－延庆－赤城－延庆－怀柔&lt;br/&gt;
+人物：我，文兄，崔神&lt;br/&gt;
+距离：382km&lt;br/&gt;
 &lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6111_zpsf5c9493c.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;section-1&quot;&gt;行程&lt;/h3&gt;
+&lt;h3&gt;行程&lt;/h3&gt;
 
-&lt;h4 id=&quot;section-2&quot;&gt;第一天&lt;/h4&gt;
+&lt;h4&gt;第一天&lt;/h4&gt;
 
-&lt;p&gt;早饭肯德基。天气预报说是要下雨、结果就下了几点零星小雨。出了北邮一直向北、走G6辅路。一路上看到高速公路上各种堵车、辅路也不例外。 &lt;br /&gt;
-不过穿梭在各种堵的车辆之中感觉巨爽。我们首先到了居庸关（好吧其实这是我第一次到长城）、居庸关后就是连续的爬坡、最纠结的是辅路上也依旧堵满了车、有时候自行车都难以跻身过去。 &lt;br /&gt;
+&lt;p&gt;早饭肯德基。天气预报说是要下雨、结果就下了几点零星小雨。出了北邮一直向北、走G6辅路。一路上看到高速公路上各种堵车、辅路也不例外。 &lt;br/&gt;
+不过穿梭在各种堵的车辆之中感觉巨爽。我们首先到了居庸关（好吧其实这是我第一次到长城）、居庸关后就是连续的爬坡、最纠结的是辅路上也依旧堵满了车、有时候自行车都难以跻身过去。 &lt;br/&gt;
 &lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6132_zps712611fb.jpg&quot; alt=&quot;&quot; /&gt;
-一段山路后终于到达了八达岭、感受到了国庆人流的恶意。&lt;br /&gt;
+一段山路后终于到达了八达岭、感受到了国庆人流的恶意。&lt;br/&gt;
 &lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6163_zpsca2513ca.jpg&quot; alt=&quot;&quot; /&gt;
-以及车流的恶意。（好吧这些车其实都是堵着不动的） 
-&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6157_zps59aa21d3.jpg&quot; alt=&quot;&quot; /&gt; 
-到达八达岭镇后换了S216来到了延庆城区、第一晚就在这里过夜了。到了之后找了一个便宜住宿地方、休整了一下以后出门去延庆的沃尔玛买了明儿需要的东西。 &lt;br /&gt;
+以及车流的恶意。（好吧这些车其实都是堵着不动的）
+&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6157_zps59aa21d3.jpg&quot; alt=&quot;&quot; /&gt;
+到达八达岭镇后换了S216来到了延庆城区、第一晚就在这里过夜了。到了之后找了一个便宜住宿地方、休整了一下以后出门去延庆的沃尔玛买了明儿需要的东西。 &lt;br/&gt;
 &lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6166_zpsad245d16.jpg&quot; alt=&quot;&quot; /&gt;
 第一天基本没有什么特别的地方、总行程81km。作为出行的第一天不算很累、还是挺轻松的。明天的路程很是艰险、距离大概95km、爬升将近900米。&lt;/p&gt;
 
-&lt;h4 id=&quot;section-3&quot;&gt;第二天&lt;/h4&gt;
-&lt;p&gt;从住地出发、沿途买了火烧加豆浆作为早点、以及栗子作为储备食物。不得不说火烧性价比比肯德基高多了、还好吃。三个人加起来也就20多。接着沿着X011一直走、途经一个小公园以及世界葡萄博览会。 &lt;br /&gt;
-然后沿着S217一直走到了G110路口，然后便开始沿着X012开始爬坡、在山脚买了水之后就开始了苦逼爬坡之行。 &lt;br /&gt;
-这次爬坡苦逼之处就在于空气湿度特别大、没事就下一阵雨、而每次我们穿好雨衣后几分钟雨又停了。整段路骑得特别艰难。 &lt;br /&gt;
+&lt;h4&gt;第二天&lt;/h4&gt;
+
+&lt;p&gt;从住地出发、沿途买了火烧加豆浆作为早点、以及栗子作为储备食物。不得不说火烧性价比比肯德基高多了、还好吃。三个人加起来也就20多。接着沿着X011一直走、途经一个小公园以及世界葡萄博览会。 &lt;br/&gt;
+然后沿着S217一直走到了G110路口，然后便开始沿着X012开始爬坡、在山脚买了水之后就开始了苦逼爬坡之行。 &lt;br/&gt;
+这次爬坡苦逼之处就在于空气湿度特别大、没事就下一阵雨、而每次我们穿好雨衣后几分钟雨又停了。整段路骑得特别艰难。 &lt;br/&gt;
 爬坡过程中没走几步就发现了一个果园、看上去特别好吃。可惜栅栏太高且有恶犬、最终还是无奈放弃。然后还看到了一只小松鼠、可惜被我们吓跑了。骑行过程中还经过了松山水库、路边的峭壁上也贴满了红色的叶子、看起来感觉不错。可能是山里气温的原因、很多树木都开始变黄变红了、而越往上这种秋意越浓。要是再过一段时间来看肯定会是更加美的一幅画卷。
-&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6198_zpsacbc1266.jpg&quot; alt=&quot;&quot; /&gt; &lt;br /&gt;
-沿着X012继续往上、就到了松山国家自然保护区、我们在景区门口休整了一段时间、补充好了能量再继续爬坡。&lt;br /&gt;
+&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6198_zpsacbc1266.jpg&quot; alt=&quot;&quot; /&gt; &lt;br/&gt;
+沿着X012继续往上、就到了松山国家自然保护区、我们在景区门口休整了一段时间、补充好了能量再继续爬坡。&lt;br/&gt;
 &lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6208_zps1a5c272e.jpg&quot; alt=&quot;&quot; /&gt;
-往上的过程中、岩壁越来越陡峭、山体也越来越高、骑车行走在这种环境中有一种说不出的感受、山势的陡峭让人望而生畏、而身边流淌的小溪又给人一种轻松愉悦的感受。总之虽然肢体上很累、但心情却是愉悦的。 &lt;br /&gt;
-继续往上、云层越来越近，偶尔能看到云隙后湛蓝的天空、而水汽也越来越厚、手套都被水汽浸湿了。而这时又开始了一阵一阵的阵雨。于是我们找了个拐角、披上雨衣、继续蹬。 &lt;br /&gt;
-再往上伴着阵阵雷声以及稀疏的雨点拐过几个山头、忽然看到了云层后的蓝天、瞬间有种得到救赎的感觉、觉得终于快到了。于是每个人都加快了步伐。虽然后来才发现、还早。&lt;br /&gt;
+往上的过程中、岩壁越来越陡峭、山体也越来越高、骑车行走在这种环境中有一种说不出的感受、山势的陡峭让人望而生畏、而身边流淌的小溪又给人一种轻松愉悦的感受。总之虽然肢体上很累、但心情却是愉悦的。 &lt;br/&gt;
+继续往上、云层越来越近，偶尔能看到云隙后湛蓝的天空、而水汽也越来越厚、手套都被水汽浸湿了。而这时又开始了一阵一阵的阵雨。于是我们找了个拐角、披上雨衣、继续蹬。 &lt;br/&gt;
+再往上伴着阵阵雷声以及稀疏的雨点拐过几个山头、忽然看到了云层后的蓝天、瞬间有种得到救赎的感觉、觉得终于快到了。于是每个人都加快了步伐。虽然后来才发现、还早。&lt;br/&gt;
 &lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6236_zps5e7fd923.jpg&quot; alt=&quot;&quot; /&gt;
-再拐过很多个山头后、发现了一块空地、有几辆车停着、空地边缘有条小道、小道末端是个观景亭。这时、乌云散去、阳光直射、山涧中升起雾气、云层中投射出阳光、简直仙境一般。同行小伙伴皆呼“值了！”。而此时此刻的感受、难以用语言描述、仿佛这是天公给予我们的褒奖。&lt;br /&gt;
+再拐过很多个山头后、发现了一块空地、有几辆车停着、空地边缘有条小道、小道末端是个观景亭。这时、乌云散去、阳光直射、山涧中升起雾气、云层中投射出阳光、简直仙境一般。同行小伙伴皆呼“值了！”。而此时此刻的感受、难以用语言描述、仿佛这是天公给予我们的褒奖。&lt;br/&gt;
 &lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6245_zpsc9806dc6.jpg&quot; alt=&quot;&quot; /&gt;
-再往上大约半小时爬坡、便到了此行的最高海拔处，闫家坪村、完成了大概900m的爬升、爬坡公里数为30km。而峪口前后完全是两幅画面：前方阳光明媚、村庄错落有致、道路平坦缓下坡；而后方云雾袅绕、烟雨朦胧、山路凶险。真给人一种柳暗花明之感。&lt;br /&gt;
+再往上大约半小时爬坡、便到了此行的最高海拔处，闫家坪村、完成了大概900m的爬升、爬坡公里数为30km。而峪口前后完全是两幅画面：前方阳光明媚、村庄错落有致、道路平坦缓下坡；而后方云雾袅绕、烟雨朦胧、山路凶险。真给人一种柳暗花明之感。&lt;br/&gt;
 &lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6263_zps40e5941a.jpg&quot; alt=&quot;&quot; /&gt;
-峪口后是一段1km左右的急下坡、接下来都是缓下坡。骑下坡路的感觉轻松愉快、加上阳光明媚风景优美、一路上感觉特别好。我们在路过的村子买了点水后、找了一块能晒太阳的草地，开始吃东西、也就是午餐肉。在这种空气好的地方晒着太阳吃着东西、瞬间感觉来之前的疲劳一扫而空。&lt;br /&gt;
+峪口后是一段1km左右的急下坡、接下来都是缓下坡。骑下坡路的感觉轻松愉快、加上阳光明媚风景优美、一路上感觉特别好。我们在路过的村子买了点水后、找了一块能晒太阳的草地，开始吃东西、也就是午餐肉。在这种空气好的地方晒着太阳吃着东西、瞬间感觉来之前的疲劳一扫而空。&lt;br/&gt;
 &lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6266_zps449413db.jpg&quot; alt=&quot;&quot; /&gt;
-后来沿着S241以及S353、在骑行大概60km后，大约在晚上七点左右到达了下一站：后城。然后在后城镇唯一（？）的旅店落脚。之所以我认为是唯一呢、主要还是因为好像所有来后城的骑行者都是来的这一家。&lt;br /&gt;
+后来沿着S241以及S353、在骑行大概60km后，大约在晚上七点左右到达了下一站：后城。然后在后城镇唯一（？）的旅店落脚。之所以我认为是唯一呢、主要还是因为好像所有来后城的骑行者都是来的这一家。&lt;br/&gt;
 &lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6282_zps22e148b6.jpg&quot; alt=&quot;&quot; /&gt;
-不过不得不说、住宿条件特别便宜：15一个人。我们直接三个人每人20包了一个五人间，被子什么的还算暖和、并且一个房间给你放了很多床被子、我就自己盖了两床。再说说吃的、吃的东西性价比也很赞！点了四个菜、就一个羊肉25、其他的都是10块左右、还不要钱似的给的分量超级足、还有茄子特别好吃、饭也给了超级多！一大碗！大概有北京四小碗那么多。然后我们几个就感慨这离北京也没多远怎么性价比差这么多！然后吃晚饭我们找老板结账、老板说忙不过来、先不结账了、等下去你们房间结账。结果到我们睡觉也没来。不过！老板娘真是眼神太不好使、竟然把我认成了妹纸。 &lt;br /&gt;
+不过不得不说、住宿条件特别便宜：15一个人。我们直接三个人每人20包了一个五人间，被子什么的还算暖和、并且一个房间给你放了很多床被子、我就自己盖了两床。再说说吃的、吃的东西性价比也很赞！点了四个菜、就一个羊肉25、其他的都是10块左右、还不要钱似的给的分量超级足、还有茄子特别好吃、饭也给了超级多！一大碗！大概有北京四小碗那么多。然后我们几个就感慨这离北京也没多远怎么性价比差这么多！然后吃晚饭我们找老板结账、老板说忙不过来、先不结账了、等下去你们房间结账。结果到我们睡觉也没来。不过！老板娘真是眼神太不好使、竟然把我认成了妹纸。 &lt;br/&gt;
 总之今天这一段路程能说是最难的一段了、后面基本没有这么长的爬坡。熬过了这一段，感觉整个人都是动都不想动的状态。不过一路上领略到的风景、真的让我们这段苦逼旅程值了。&lt;/p&gt;
 
-&lt;h4 id=&quot;section-4&quot;&gt;第三天&lt;/h4&gt;
-&lt;p&gt;今天大家睡了个懒觉、睡到了9点才起床。一翻刷牙洗漱后、吃了个馒头咸菜、再在旅店老板处买了几个肉夹馍带身上、大概10点、就开始了今天的爬石头之旅。&lt;br /&gt;
-虽然住的地方一眼就能看到大石头，但实际要骑车上去的话、需要走山路绕到石头的另一边，才能登上石头顶。于是我们在一边问路一边走的过程中开始了摸索上山。这段时间崔神的逮人就问的技能发挥出了巨大作用。不过沿途的人都还挺热情、都在认真指路、有个大哥还亲自带我们到了路口。&lt;br /&gt;
+&lt;h4&gt;第三天&lt;/h4&gt;
+
+&lt;p&gt;今天大家睡了个懒觉、睡到了9点才起床。一翻刷牙洗漱后、吃了个馒头咸菜、再在旅店老板处买了几个肉夹馍带身上、大概10点、就开始了今天的爬石头之旅。&lt;br/&gt;
+虽然住的地方一眼就能看到大石头，但实际要骑车上去的话、需要走山路绕到石头的另一边，才能登上石头顶。于是我们在一边问路一边走的过程中开始了摸索上山。这段时间崔神的逮人就问的技能发挥出了巨大作用。不过沿途的人都还挺热情、都在认真指路、有个大哥还亲自带我们到了路口。&lt;br/&gt;
 一开始我们是沿着大石头的东边山路前进。一路上有石头的岩壁、以及岩壁下的溪水相伴，感觉十分惬意。不过随着路程的增加，大石头渐渐消失在我们的视野中。此时此刻我们有点迷茫了、想找个人问路也是半天遇不到一个人、也有点不敢往前走的感觉，怕走错。
-&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6303_zpsc6f219ae.jpg&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
-后来还是硬着头皮继续沿着水泥路向前。而随着路程的增加坡路变得越来越陡。有些路段实在难以骑车爬上、推着自行车都觉得累。不过路上景色很不错。山上的树叶都透出了浓浓的秋意、一块儿红，一块儿黄，天空伴着朵朵白云，空气清新，非常之使人心旷神怡。&lt;br /&gt;
-大约几个小时的爬坡后、我们来到了一个晒满高粱的大平地、这就是水泥路的终点、由此开始到登顶就已经完全是泥土路面了。而且由于雨水以及车辆的原因，路面坑坑洼洼，非常难走，还混着各种碎石块。经过某泥潭时还不小心踩了一脚泥。&lt;br /&gt;
-一路骑骑走走，大概1.7km的泥土坡后、我们来到了一个路口，由此左拐就是一段下坡路，而这段下坡路也是泥泞伴有大量碎石，而坡道旁基本就是山崖（现在想想这段路真是特别危险）。通过这一大段下坡后，就到了一片开阔的斜坡。而这个斜坡、就是我们的目的地—后城赤壁顶。此时此刻、我们就已经到达了这块大石头的顶部。而由巨石往下看到的起伏的山脉、整齐的农田、错落的梯田、小镇整齐的一两层小房，尽收眼底。此时此刻的景色兼职不能用文字语言描述，特别是我们在大约五个多小时艰苦爬坡后终于登顶了，激动之情真是无以言表。&lt;br /&gt;
+&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6303_zpsc6f219ae.jpg&quot; alt=&quot;&quot; /&gt;&lt;br/&gt;
+后来还是硬着头皮继续沿着水泥路向前。而随着路程的增加坡路变得越来越陡。有些路段实在难以骑车爬上、推着自行车都觉得累。不过路上景色很不错。山上的树叶都透出了浓浓的秋意、一块儿红，一块儿黄，天空伴着朵朵白云，空气清新，非常之使人心旷神怡。&lt;br/&gt;
+大约几个小时的爬坡后、我们来到了一个晒满高粱的大平地、这就是水泥路的终点、由此开始到登顶就已经完全是泥土路面了。而且由于雨水以及车辆的原因，路面坑坑洼洼，非常难走，还混着各种碎石块。经过某泥潭时还不小心踩了一脚泥。&lt;br/&gt;
+一路骑骑走走，大概1.7km的泥土坡后、我们来到了一个路口，由此左拐就是一段下坡路，而这段下坡路也是泥泞伴有大量碎石，而坡道旁基本就是山崖（现在想想这段路真是特别危险）。通过这一大段下坡后，就到了一片开阔的斜坡。而这个斜坡、就是我们的目的地—后城赤壁顶。此时此刻、我们就已经到达了这块大石头的顶部。而由巨石往下看到的起伏的山脉、整齐的农田、错落的梯田、小镇整齐的一两层小房，尽收眼底。此时此刻的景色兼职不能用文字语言描述，特别是我们在大约五个多小时艰苦爬坡后终于登顶了，激动之情真是无以言表。&lt;br/&gt;
 &lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6361_zpsd5372b46.jpg&quot; alt=&quot;&quot; /&gt;
-在斜坡附近拍照休息了一些时间后、我们把自行车放在下面，徒步走上最后的顶点。因为后面的坡路都快超过45度了，推车都无法上。一路上路也越来越窄后来只能一边拨开灌木丛一边往前走。登顶后，我们在顶部又拍了一些照片。说实话，站在顶端大风吹着，总有一种随时会把人吹下悬崖的感觉。作为今天被崔神确诊的恐高症患者、药不能停、在顶端停留了大概20分钟后我们就开始了返程之旅。&lt;br /&gt;
+在斜坡附近拍照休息了一些时间后、我们把自行车放在下面，徒步走上最后的顶点。因为后面的坡路都快超过45度了，推车都无法上。一路上路也越来越窄后来只能一边拨开灌木丛一边往前走。登顶后，我们在顶部又拍了一些照片。说实话，站在顶端大风吹着，总有一种随时会把人吹下悬崖的感觉。作为今天被崔神确诊的恐高症患者、药不能停、在顶端停留了大概20分钟后我们就开始了返程之旅。&lt;br/&gt;
 &lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6393_zps644f70d5.jpg&quot; alt=&quot;&quot; /&gt;
-我们还是原路返回，所以首先经过那个路况奇差的坡道。这时其实出现了一个情况、想想都觉得特别后怕。我的后轮可能在之前的小放坡过程中受到了一些强烈颠簸导致了后轮快拆松开了、我在骑的过程中感觉到不对劲就下车检查了一下。要是再继续骑下去可能骑着骑着车子后轮就直接脱离车子了。后果想想都觉得可怕。&lt;br /&gt;
-经过了这段上坡、我们到达了岔路口。由此开始土路放坡。一路上死捏着刹车、因为路实在是太颠簸、坡度也大，一不小心速度就飙上去了。但风在耳边的呼啸、手感受到的震感、以及曲曲折折的急下坡、让人感觉非常非常刺激。接近2km的土路下坡没几分钟就骑完了，小伙伴们纷纷呼过瘾。后来的水泥路放坡一路也很赞，伴着浅浅落下的夕阳，树木、花草、自行车，都被拉出了长长的影子。一路上最高速度大概达到了46km/s、文兄比较猛，达到了50km/s。&lt;br /&gt;
-回到住处、休整、晚饭。饭后天已经黑了，回房间的过程中看到了后城赤壁上空闪烁的北斗七星以及正北方的北极星，可惜手机没发照、单反也没有三脚架，只能把此景映入脑海。&lt;br /&gt;
+我们还是原路返回，所以首先经过那个路况奇差的坡道。这时其实出现了一个情况、想想都觉得特别后怕。我的后轮可能在之前的小放坡过程中受到了一些强烈颠簸导致了后轮快拆松开了、我在骑的过程中感觉到不对劲就下车检查了一下。要是再继续骑下去可能骑着骑着车子后轮就直接脱离车子了。后果想想都觉得可怕。&lt;br/&gt;
+经过了这段上坡、我们到达了岔路口。由此开始土路放坡。一路上死捏着刹车、因为路实在是太颠簸、坡度也大，一不小心速度就飙上去了。但风在耳边的呼啸、手感受到的震感、以及曲曲折折的急下坡、让人感觉非常非常刺激。接近2km的土路下坡没几分钟就骑完了，小伙伴们纷纷呼过瘾。后来的水泥路放坡一路也很赞，伴着浅浅落下的夕阳，树木、花草、自行车，都被拉出了长长的影子。一路上最高速度大概达到了46km/s、文兄比较猛，达到了50km/s。&lt;br/&gt;
+回到住处、休整、晚饭。饭后天已经黑了，回房间的过程中看到了后城赤壁上空闪烁的北斗七星以及正北方的北极星，可惜手机没发照、单反也没有三脚架，只能把此景映入脑海。&lt;br/&gt;
 今天一天的行程总共才大约30km，但强度真的不小。土路和碎石增加了艰难，却给了克服了这些艰难的我们更大的喜悦。一路上收获的美景也数不胜数，千言万语汇成两个字：“值了”。&lt;/p&gt;
 
-&lt;h4 id=&quot;section-5&quot;&gt;第四天&lt;/h4&gt;
-&lt;p&gt;早上从后城出发，临行前老板娘还给了我们一些火烧和馒头当干粮还硬是不收钱。我们在旅店门口合了个影后就开始了漫漫赶路之旅。&lt;br /&gt;
+&lt;h4&gt;第四天&lt;/h4&gt;
+
+&lt;p&gt;早上从后城出发，临行前老板娘还给了我们一些火烧和馒头当干粮还硬是不收钱。我们在旅店门口合了个影后就开始了漫漫赶路之旅。&lt;br/&gt;
 &lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6435_zps4df55b8a.jpg&quot; alt=&quot;&quot; /&gt;
-向东沿着S353一路缓下坡，一路上由于比较早，刚刚开始还有点冷，后来动起来就没那么冷了。向东没走多久就到了北京界，到了北京界瞬间道路就变好了，不得不说还是大帝都有钱。再继续走，就到了白河堡水库，又称为燕山天池。水库是北京水源之一，来水库边野营的人也不少，有人还在湖边垂钓。&lt;br /&gt;
+向东沿着S353一路缓下坡，一路上由于比较早，刚刚开始还有点冷，后来动起来就没那么冷了。向东没走多久就到了北京界，到了北京界瞬间道路就变好了，不得不说还是大帝都有钱。再继续走，就到了白河堡水库，又称为燕山天池。水库是北京水源之一，来水库边野营的人也不少，有人还在湖边垂钓。&lt;br/&gt;
 &lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6449_zps3b9d4aa9.jpg&quot; alt=&quot;&quot; /&gt;
-继续东行，在岔路口沿着S309，朝着千家店镇进发。这时我们便进入了白河峡谷。峡谷两边都是高耸的山峦，河谷地水流不大，毕竟北方缺水，有的地方甚至看不到水的迹象。河谷中生长着大量整齐的杨树，整齐的玉米地，还有零星的几件农房。&lt;br /&gt;
-而我们在经过百合峡谷某个弯道时也发生了一件小插曲：崔神的自行车链条在骑车时断掉了，拐弯时直接被甩出了车身。不过我们几个反而特别兴奋，因为这么逗比的事儿真是少见是吧诶嘿嘿嘿嘿。&lt;br /&gt;
+继续东行，在岔路口沿着S309，朝着千家店镇进发。这时我们便进入了白河峡谷。峡谷两边都是高耸的山峦，河谷地水流不大，毕竟北方缺水，有的地方甚至看不到水的迹象。河谷中生长着大量整齐的杨树，整齐的玉米地，还有零星的几件农房。&lt;br/&gt;
+而我们在经过百合峡谷某个弯道时也发生了一件小插曲：崔神的自行车链条在骑车时断掉了，拐弯时直接被甩出了车身。不过我们几个反而特别兴奋，因为这么逗比的事儿真是少见是吧诶嘿嘿嘿嘿。&lt;br/&gt;
 &lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6452_zps1fd8e6be.jpg&quot; alt=&quot;&quot; /&gt;
 休整好车子，继续前进。河谷风非常大，因此虽然是缓下坡，常常也会因为风力太大而蹬得十分吃力。在山的阴影时也能感受到刺骨的寒风。
-&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6461_zpsdf14351a.jpg&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
-在河谷经过若干桥后、来到了延庆国家地质公园，从这里开始就是被称为百里画廊的一段路。这边主要是各种各样的石头，岩层，一路走来风景都不错。可惜没有时间静下来仔细了解其中的内容。我们于是走马观花地欣赏着公路两旁的景色。&lt;br /&gt;
-继续前进时，由于道路施工，走错了一小段路，后来绕道了正道上。&lt;br /&gt;
-再走了没多久来到了千家店镇。在镇上吃了午饭，饭后离开时饭店大妈对我们一顿吐槽对面餐馆，我们听了半天总结出来的就是：对面饭店生意好抢了大妈生意，大妈很不开心。不过还是有收获的，至少学到了“勺”这个新姿势。&lt;br /&gt;
-从千家店离开的时候，发现了一片花海，感觉很不错。驻足观看的游人也很多，不过令人惋惜的是有的花被破坏地挺严重。要是人人都爱护的话会更美。&lt;br /&gt;
+&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6461_zpsdf14351a.jpg&quot; alt=&quot;&quot; /&gt;&lt;br/&gt;
+在河谷经过若干桥后、来到了延庆国家地质公园，从这里开始就是被称为百里画廊的一段路。这边主要是各种各样的石头，岩层，一路走来风景都不错。可惜没有时间静下来仔细了解其中的内容。我们于是走马观花地欣赏着公路两旁的景色。&lt;br/&gt;
+继续前进时，由于道路施工，走错了一小段路，后来绕道了正道上。&lt;br/&gt;
+再走了没多久来到了千家店镇。在镇上吃了午饭，饭后离开时饭店大妈对我们一顿吐槽对面餐馆，我们听了半天总结出来的就是：对面饭店生意好抢了大妈生意，大妈很不开心。不过还是有收获的，至少学到了“勺”这个新姿势。&lt;br/&gt;
+从千家店离开的时候，发现了一片花海，感觉很不错。驻足观看的游人也很多，不过令人惋惜的是有的花被破坏地挺严重。要是人人都爱护的话会更美。&lt;br/&gt;
 &lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6484_zps11a55601.jpg&quot; alt=&quot;&quot; /&gt;
-接下来又是一段时间的赶路。路上看了夕阳、风车，过了隧道、大桥。由于我们想最后一天少走点路早点回学校，于是原计划今天只需要走到汤河口，最后多走了15km到达了琉璃庙镇。在镇上找到了一家便宜又实惠的住宿、三人间一晚80，床也干净也软，还能放下自行车。感觉是这几天住的最好的一次了。&lt;br /&gt;
+接下来又是一段时间的赶路。路上看了夕阳、风车，过了隧道、大桥。由于我们想最后一天少走点路早点回学校，于是原计划今天只需要走到汤河口，最后多走了15km到达了琉璃庙镇。在镇上找到了一家便宜又实惠的住宿、三人间一晚80，床也干净也软，还能放下自行车。感觉是这几天住的最好的一次了。&lt;br/&gt;
 &lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6498_zps4a2b4462.jpg&quot; alt=&quot;&quot; /&gt;
 &lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6502_zpsb7e8ecbb.jpg&quot; alt=&quot;&quot; /&gt;
 总的来说、今天主要任务就是赶路，景色都是走马观花。不过在峡谷以及百里画廊中骑车也有种独特的韵味。110km+的起伏下坡路，加上风势猛烈，也不是一段轻松的旅途。想想明儿就能回学校还有点小激动呢哈哈。&lt;/p&gt;
 
-&lt;h4 id=&quot;section-6&quot;&gt;第五天&lt;/h4&gt;
-&lt;p&gt;今天是返程的一天。在住地啃完包子喝完豆浆，就踏上了返程之旅。&lt;br /&gt;
-从琉璃庙出发，沿着G111亿只走到S310，便开始了爬坡。山脚下大妈告诉我们有5km，实际只过了3km的上坡后就开始了长时间的下坡。&lt;br /&gt;
-下坡下到一个叫云梦仙境的景点时又开始了上坡。这一段路的特点就是起起伏伏几段上坡和下坡，幸好上坡路不是特别长。云梦仙境这里还有很多老大爷在用毛笔作画，还有个叫鬼谷庐的牌坊，后面是上山的阶梯。不过我们没有上去，继续埋头爬坡。 
+&lt;h4&gt;第五天&lt;/h4&gt;
+
+&lt;p&gt;今天是返程的一天。在住地啃完包子喝完豆浆，就踏上了返程之旅。&lt;br/&gt;
+从琉璃庙出发，沿着G111亿只走到S310，便开始了爬坡。山脚下大妈告诉我们有5km，实际只过了3km的上坡后就开始了长时间的下坡。&lt;br/&gt;
+下坡下到一个叫云梦仙境的景点时又开始了上坡。这一段路的特点就是起起伏伏几段上坡和下坡，幸好上坡路不是特别长。云梦仙境这里还有很多老大爷在用毛笔作画，还有个叫鬼谷庐的牌坊，后面是上山的阶梯。不过我们没有上去，继续埋头爬坡。
 &lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6517_zps9014f2db.jpg&quot; alt=&quot;&quot; /&gt;
 爬坡一路上也遇到了不少景色，我们走走停停大概下午一点多左右到达了石城镇，在这里吃了一顿农家饭。饭菜味道相当不错，大娘大爷也很热情。
-&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6521_zps6b4632fc.jpg&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
-饭后，沿着S205，又是一大段起伏路后开始了放坡，放坡一段时间后就经过了密云水库。&lt;br /&gt;
-密云水库之后没多久就到了密云城区。&lt;br /&gt;
+&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6521_zps6b4632fc.jpg&quot; alt=&quot;&quot; /&gt;&lt;br/&gt;
+饭后，沿着S205，又是一大段起伏路后开始了放坡，放坡一段时间后就经过了密云水库。&lt;br/&gt;
+密云水库之后没多久就到了密云城区。&lt;br/&gt;
 &lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6543_zpsc387a848.jpg&quot; alt=&quot;&quot; /&gt;
-不过此时我们几个都比较累，并且赶时间回去忙事情，回去的路上也再也没有什么非常值得一看的东西，继续骑车当人肉净化机也对身体不好（这么多理由！），于是我们想着坐980公交直接回北京。&lt;br /&gt;
-结果到了公交始发站才发现这里排满了长龙，并且公交的侧行李箱不让放车（有的说让，但是必须出示自己车子的发票证明是自己的车子， 否则不让）。于是我们陷入了两难。&lt;br /&gt;
-这时候周边的一些黑车司机开始和我们商量，经过一番权衡车子的安全以及费用，最后我们3人包下了一个小面包车回京，350大洋。 
-&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6545_zps4762c6a5.jpg&quot; alt=&quot;&quot; /&gt; 
+不过此时我们几个都比较累，并且赶时间回去忙事情，回去的路上也再也没有什么非常值得一看的东西，继续骑车当人肉净化机也对身体不好（这么多理由！），于是我们想着坐980公交直接回北京。&lt;br/&gt;
+结果到了公交始发站才发现这里排满了长龙，并且公交的侧行李箱不让放车（有的说让，但是必须出示自己车子的发票证明是自己的车子， 否则不让）。于是我们陷入了两难。&lt;br/&gt;
+这时候周边的一些黑车司机开始和我们商量，经过一番权衡车子的安全以及费用，最后我们3人包下了一个小面包车回京，350大洋。
+&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6545_zps4762c6a5.jpg&quot; alt=&quot;&quot; /&gt;
 总的来说今天的收获就是：以后出门骑车一定要带发票。还有，在崇山峻岭中放坡，虽然很刺激，不过确实还是挺危险的，安全一定要放在第一位。今天的旅程也算给这几天的折腾画下了一个句号。&lt;/p&gt;
 
-&lt;h3 id=&quot;section-7&quot;&gt;总结&lt;/h3&gt;
+&lt;h3&gt;总结&lt;/h3&gt;
+
 &lt;p&gt;［明日再写］&lt;/p&gt;
 </description>
     </item>
@@ -286,24 +296,28 @@
 
 &lt;!--more--&gt;
 
+
 &lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/IMG_0053_zpsd72d7c7e.jpg&quot; alt=&quot;pic1&quot; /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;section&quot;&gt;基本信息&lt;/h3&gt;
-&lt;p&gt;时间：2014-9-21&lt;br /&gt;
-地点：妙峰山&lt;br /&gt;
-人物：我，文兄，崔神&lt;br /&gt;
-距离：128km（21km上坡）&lt;br /&gt;
-升降：1030m（软件是这么说的，我也没百度）&lt;br /&gt;
-食物：  &lt;/p&gt;
+&lt;h3&gt;基本信息&lt;/h3&gt;
+
+&lt;p&gt;时间：2014-9-21&lt;br/&gt;
+地点：妙峰山&lt;br/&gt;
+人物：我，文兄，崔神&lt;br/&gt;
+距离：128km（21km上坡）&lt;br/&gt;
+升降：1030m（软件是这么说的，我也没百度）&lt;br/&gt;
+食物：&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;早餐：小笼包，虾皮汤&lt;/li&gt;
-  &lt;li&gt;午餐：农家饭（差评）&lt;/li&gt;
-  &lt;li&gt;晚饭：黄焖鸡&lt;/li&gt;
-  &lt;li&gt;零食：士力架两条，皮蛋一只，卤蛋一只，榨菜一包，海带丝一包，德福巧克力若干块，巧乐滋一枚，龙须牛肉一包，梨一只，肉松饼两枚。（。。。。这么一看还挺多的）&lt;/li&gt;
+&lt;li&gt;早餐：小笼包，虾皮汤&lt;/li&gt;
+&lt;li&gt;午餐：农家饭（差评）&lt;/li&gt;
+&lt;li&gt;晚饭：黄焖鸡&lt;/li&gt;
+&lt;li&gt;零食：士力架两条，皮蛋一只，卤蛋一只，榨菜一包，海带丝一包，德福巧克力若干块，巧乐滋一枚，龙须牛肉一包，梨一只，肉松饼两枚。（。。。。这么一看还挺多的）&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;section-1&quot;&gt;经历&lt;/h3&gt;
+
+&lt;h3&gt;经历&lt;/h3&gt;
+
 &lt;p&gt;早上6点50准时起床，洗个漱吃个饭就到了8点。崔神在北邮西门拍下了上图之后，我们便开始了这次的妙峰山（人肉空气净化）之行。&lt;/p&gt;
 
 &lt;p&gt;北邮至山脚的这段路木有什么亮点，唯一的亮点就是我们还走错路了。本来准备直接走阜成门往西走，结果还走过头一大截，最后结果就是我们多走了大概3km的路程。如下图：&lt;/p&gt;
@@ -333,10 +347,8 @@
 
 &lt;p&gt;而崔神在这段路一直用崔深名言激励我们：&lt;/p&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;前面大约1km就有村子就可以吃饭了！
-前面500米就有地方吃东西了！&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;blockquote&gt;&lt;p&gt;前面大约1km就有村子就可以吃饭了！
+前面500米就有地方吃东西了！&lt;/p&gt;&lt;/blockquote&gt;
 
 &lt;p&gt;不得不说要是没有崔神一直给我们画饼要想上这么一段还真是难啊～&lt;/p&gt;
 
@@ -370,7 +382,6 @@
 &lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/IMG_0034_zps1b1c6dd0.jpg&quot; alt=&quot;pic11&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;return 0;&lt;/p&gt;
-
 </description>
     </item>
     
@@ -380,8 +391,10 @@
       <pubDate>21 Aug 2014</pubDate>
       <author>Youkochan</author>
       <guid>http://youkochan.github.io//2014/08/21/ke-mu-er-shun-li-yi-ba-tong-guo</guid>
-      <description>&lt;p&gt;今儿个顺利通过科目二考试，一个假期耽误了好多，还好考完了科目二。剩下的寒假弄完吧，之后的几天可以准备准备开学咯～😄
-&lt;!--more--&gt;&lt;/p&gt;
+      <description>&lt;p&gt;今儿个顺利通过科目二考试，一个假期耽误了好多，还好考完了科目二。剩下的寒假弄完吧，之后的几天可以准备准备开学咯～😄&lt;/p&gt;
+
+&lt;!--more--&gt;
+
 </description>
     </item>
     
@@ -394,6 +407,8 @@
       <description>&lt;p&gt;最近几天继续捣鼓博客的时候发现一个问题，就是“博客打开速度太慢了”。平时我在电脑上网是挂着翻墙软件的，于是打开速度还可以。后来给easy同学测试的时候怎么打都打不开，并且手机端排版也有点问题。于是就尝试解决了一下这些问题。&lt;/p&gt;
 
 &lt;!--more--&gt;
+
+
 &lt;p&gt;打开浏览器，审查元素，盒模型，调整margin以及padding等，将修改后的代码加入&lt;code&gt;source/index.html&lt;/code&gt;。虽然这种办法比较傻，没有去修改本质的css文件，但是还是很简单粗暴的。（其实就是懒是吧2333）&lt;/p&gt;
 
 &lt;p&gt;打开浏览器，审查元素，时间线，刷新，观察。发现有一些请求css资源以及一些js一直加载不出来。&lt;/p&gt;
@@ -416,19 +431,21 @@
 
 &lt;!--more--&gt;
 
-&lt;p&gt;步骤：  &lt;/p&gt;
+
+&lt;p&gt;步骤：&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;强制关机重启，开机时按住 command+s 进入单用户模式；&lt;/li&gt;
-  &lt;li&gt;输入/sbin/mount空格-uaw，回车； &lt;/li&gt;
-  &lt;li&gt;输入rm空格/var/db/.AppleSetupDone，回车； &lt;/li&gt;
-  &lt;li&gt;输入reboot，回车； &lt;/li&gt;
-  &lt;li&gt;系统重启后会进入创建新用户向导，简单配置即可，因为是临时用户，无需apple ID，无需同步； &lt;/li&gt;
-  &lt;li&gt;进入系统后，下载搜狗输入法dmg安装包，然后打开dmg，卸载输入法； &lt;/li&gt;
-  &lt;li&gt;注销，重新进入原先的那个用户，删除刚临时创建的用户。完成。&lt;/li&gt;
+&lt;li&gt;强制关机重启，开机时按住 command+s 进入单用户模式；&lt;/li&gt;
+&lt;li&gt;输入/sbin/mount空格-uaw，回车；&lt;/li&gt;
+&lt;li&gt;输入rm空格/var/db/.AppleSetupDone，回车；&lt;/li&gt;
+&lt;li&gt;输入reboot，回车；&lt;/li&gt;
+&lt;li&gt;系统重启后会进入创建新用户向导，简单配置即可，因为是临时用户，无需apple ID，无需同步；&lt;/li&gt;
+&lt;li&gt;进入系统后，下载搜狗输入法dmg安装包，然后打开dmg，卸载输入法；&lt;/li&gt;
+&lt;li&gt;注销，重新进入原先的那个用户，删除刚临时创建的用户。完成。&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;由于我在装搜狗输入法时很机智地留下了dmg包中的卸载app，于是只要登录新用户接着运行之即可。  &lt;/p&gt;
+
+&lt;p&gt;由于我在装搜狗输入法时很机智地留下了dmg包中的卸载app，于是只要登录新用户接着运行之即可。&lt;/p&gt;
 
 &lt;p&gt;via：&lt;a href=&quot;http://www.v2ex.com/t/116066&quot;&gt;http://www.v2ex.com/t/116066&lt;/a&gt;&lt;/p&gt;
 </description>
@@ -444,13 +461,16 @@
 
 &lt;!--more--&gt;
 
-&lt;h3 id=&quot;section&quot;&gt;环境&lt;/h3&gt;
+
+&lt;h3&gt;环境&lt;/h3&gt;
+
 &lt;ul&gt;
-  &lt;li&gt;OS:	 OS X Yosemite 10.10&lt;/li&gt;
-  &lt;li&gt;Ruby:	 ruby 2.0.0p481 (2014-05-08 revision 45883)&lt;/li&gt;
-  &lt;li&gt;git:	 git version 1.8.5.2 (Apple Git-48)&lt;/li&gt;
-  &lt;li&gt;xcode: xcode command line tool&lt;/li&gt;
+&lt;li&gt;OS:    OS X Yosemite 10.10&lt;/li&gt;
+&lt;li&gt;Ruby:  ruby 2.0.0p481 (2014-05-08 revision 45883)&lt;/li&gt;
+&lt;li&gt;git:   git version 1.8.5.2 (Apple Git-48)&lt;/li&gt;
+&lt;li&gt;xcode: xcode command line tool&lt;/li&gt;
 &lt;/ul&gt;
+
 
 &lt;p&gt;环境配置上面纠结了我很长时间, octopress要求最低ruby版本为1.9.3, mac自带版本为2.0.0, 可以直接使用. 可是由于之前对ruby一无所知, 所以在环境配置上出现了许多乱七八糟的问题. 最后发现是由于ruby的默认的源&lt;a href=&quot;http://rubygems.org/&quot;&gt;http://rubygems.org/&lt;/a&gt;经常不稳定, 于是可以通过淘宝镜像来配置源. 代码如下:&lt;/p&gt;
 
@@ -465,10 +485,12 @@ gem source -r http://rubygems.org/
 
 &lt;p&gt;git在mac os也是自带的, 到此, 我们便完成了静态博客的环境配置.&lt;/p&gt;
 
-&lt;h3 id=&quot;github&quot;&gt;github配置&lt;/h3&gt;
+&lt;h3&gt;github配置&lt;/h3&gt;
+
 &lt;p&gt;首先你需要一个github账号(废话), 然后在你的账号设置中, 选择新建一个repository. 注, 新建的repository的名字必须为(yourname).github.com, 此处的yourname为你想要的域名. 此时, github的配置告一段落.&lt;/p&gt;
 
-&lt;h3 id=&quot;octopress&quot;&gt;octopress配置&lt;/h3&gt;
+&lt;h3&gt;octopress配置&lt;/h3&gt;
+
 &lt;p&gt;首先下载最新版的octopress: github &lt;a href=&quot;https://github.com/imathis/octopress&quot;&gt;https://github.com/imathis/octopress&lt;/a&gt;, 下载安装的教程可以参见网页的readme文件.命令如下:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;git clone git://github.com/imathis/octopress.git ~/octopress
@@ -485,7 +507,8 @@ rake install
 
 &lt;p&gt;便可以通过&lt;code&gt;localhost:4000&lt;/code&gt;来预览你的博客(需要保证你的4000端口不被占用)&lt;/p&gt;
 
-&lt;h3 id=&quot;github-1&quot;&gt;关联github&lt;/h3&gt;
+&lt;h3&gt;关联github&lt;/h3&gt;
+
 &lt;p&gt;创建密匙(若.ssh目录下已经有密匙可以跳过)&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;ssh-keygen -t rsa -C username
@@ -496,13 +519,14 @@ rake install
 &lt;p&gt;打开这个网址&lt;a href=&quot;https://github.com/settings/ssh&quot;&gt;https://github.com/settings/ssh&lt;/a&gt;,
 add ssh key, title随便写, key的话就把刚刚id_rsa.pub内的东西黏贴进去. add, 搞定233333.&lt;/p&gt;
 
-&lt;h3 id=&quot;github-2&quot;&gt;发布到github&lt;/h3&gt;
+&lt;h3&gt;发布到github&lt;/h3&gt;
+
 &lt;p&gt;终端输入&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;rake setup_github_pages
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;会要求你输入github仓库的地址, 此时把之前创建的repository的地址输入即可. 如git@github.com:your_username/your_username.github.io.git&lt;/p&gt;
+&lt;p&gt;会要求你输入github仓库的地址, 此时把之前创建的repository的地址输入即可. 如git@github.com:yourusername/yourusername.github.io.git&lt;/p&gt;
 
 &lt;p&gt;终端输入&lt;/p&gt;
 
@@ -510,7 +534,7 @@ add ssh key, title随便写, key的话就把刚刚id_rsa.pub内的东西黏贴�
 rake deploy     # 发布HTML页面
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;到此, 你就可以在你的(yourname).github.com看到你的博客啦(当然, 什么都没写的话什么都没有的, 而且自带主题真是…搓).&lt;/p&gt;
+&lt;p&gt;到此, 你就可以在你的(yourname).github.com看到你的博客啦(当然, 什么都没写的话什么都没有的, 而且自带主题真是...搓).&lt;/p&gt;
 
 &lt;p&gt;终端输入&lt;/p&gt;
 
@@ -519,7 +543,8 @@ rake deploy     # 发布HTML页面
 
 &lt;p&gt;这样会在&lt;code&gt;source/_post&lt;/code&gt;目录下生成一个Markdown文件, 利用Markdown编辑软件或者文本编辑软件即可修改. 修改完后输入上面发布以及生成页面的指令便可以发布你刚刚写的blog到github上啦~~&lt;/p&gt;
 
-&lt;h3 id=&quot;section-1&quot;&gt;扩展功能&lt;/h3&gt;
+&lt;h3&gt;扩展功能&lt;/h3&gt;
+
 &lt;p&gt;octopress可以使用大量模板来迅速搭建一个比较个性的个人博客，网上主题的安装实质上是用主题内的&lt;code&gt;source&lt;/code&gt;以及&lt;code&gt;sass&lt;/code&gt;文件夹来替换原有的&lt;code&gt;source&lt;/code&gt;以及&lt;code&gt;sass&lt;/code&gt;文件夹。我是从这里找的主题：&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://github.com/imathis/octopress/wiki/3rd-Party-Octopress-Themes&quot;&gt;3rd Party Octopress Themes &lt;/a&gt;&lt;/p&gt;
@@ -529,19 +554,21 @@ rake deploy     # 发布HTML页面
 &lt;p&gt;我使用的主题叫做&lt;a href=&quot;https://github.com/sevenadrian/foxslide.git&quot;&gt;foxslide&lt;/a&gt;，并对其进行了一些修改。&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;去掉了国内用不上的instagram以及twitter功能&lt;/li&gt;
-  &lt;li&gt;去掉了过于装比的github repositories功能&lt;/li&gt;
-  &lt;li&gt;增加了国内评论功能&lt;/li&gt;
-  &lt;li&gt;增加了人人链接，微博链接以及staeam链接&lt;/li&gt;
-  &lt;li&gt;修改了date.html解决了主题不能显示文章日期的问题&lt;/li&gt;
+&lt;li&gt;去掉了国内用不上的instagram以及twitter功能&lt;/li&gt;
+&lt;li&gt;去掉了过于装比的github repositories功能&lt;/li&gt;
+&lt;li&gt;增加了国内评论功能&lt;/li&gt;
+&lt;li&gt;增加了人人链接，微博链接以及staeam链接&lt;/li&gt;
+&lt;li&gt;修改了date.html解决了主题不能显示文章日期的问题&lt;/li&gt;
 &lt;/ul&gt;
+
 
 &lt;p&gt;嘛，还有一些别的小细节上的修改，
 比如
 * 自带主题在除开主页的页面进行上下滚动时会有明显卡顿，轻微强迫症患者表示这我不能忍，于是修改了css。
 * github在不翻墙的情况下连接速度比较慢，于是把博客背景等图片内容移到了网上，比较明显地提高了访问速度。&lt;/p&gt;
 
-&lt;h3 id=&quot;section-2&quot;&gt;总结&lt;/h3&gt;
+&lt;h3&gt;总结&lt;/h3&gt;
+
 &lt;p&gt;之后发现有意思的东西还会继续加进去，不过现在的功能基本已经满足了日常需求。通过这几天折腾也大致弄清楚了主题各个文件之间的关系，以后再添加也不会很难。&lt;/p&gt;
 </description>
     </item>
