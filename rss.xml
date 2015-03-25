@@ -6,9 +6,44 @@
     <atom:link href="http://youkochan.github.io/rss.xml" rel="self" type="application/rss+xml" />
     <description>Simple Blog</description>
     <language>zh-cn</language>
-    <pubDate>Mon, 22 Dec 2014 10:37:41 +0800</pubDate>
-    <lastBuildDate>Mon, 22 Dec 2014 10:37:41 +0800</lastBuildDate>
+    <pubDate>Wed, 25 Mar 2015 23:16:35 +0800</pubDate>
+    <lastBuildDate>Wed, 25 Mar 2015 23:16:35 +0800</lastBuildDate>
 
+    
+    <item>
+      <title>leetcode-note</title>
+      <link>http://youkochan.github.io//code/2015/03/25/leetcode-note.html</link>
+      <pubDate>25 Mar 2015</pubDate>
+      <author>Youkochan</author>
+      <guid>http://youkochan.github.io//code/2015/03/25/leetcode-note</guid>
+      <description>&lt;p&gt;最近开始刷题玩玩，这个就用于记录每一个题目的小细节吧。顺序按照刷提顺序来。&lt;/p&gt;
+
+&lt;h3&gt;191 Number of 1 Bits&lt;/h3&gt;
+
+&lt;p&gt;求数字中一比特的个数。没什么难点，循环移位，一边移位一边做与判断。第一次做题主要还是不太清楚leetcode的流程，由于只需要写出函数，结果从本地copy代码的时候多copy了一些无用的导致wrong answer。呵呵呵。。。简直赞。注意：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;unit_32t等数据类型需要引入头文件&amp;lt;stdint.h&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;190 Reverse Bits&lt;/h3&gt;
+
+&lt;p&gt;转置比特。无注意事项。&lt;/p&gt;
+
+&lt;h3&gt;189 Rotate Array&lt;/h3&gt;
+
+&lt;p&gt;尝试了那种转置三次的方式实现位移。不过有多种方式。需要注意的点：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;注意细节，给定的参数不一定就是合理的。&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;!--more--&gt;
+
+</description>
+    </item>
     
     <item>
       <title>js网站结构分析-后续</title>
@@ -541,13 +576,13 @@ rake deploy     # 发布HTML页面
 &lt;pre&gt;&lt;code&gt;rake new_post[&quot;titile&quot;] # zshell记得在[]左边加\
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;这样会在&lt;code&gt;source/_post&lt;/code&gt;目录下生成一个Markdown文件, 利用Markdown编辑软件或者文本编辑软件即可修改. 修改完后输入上面发布以及生成页面的指令便可以发布你刚刚写的blog到github上啦~~&lt;/p&gt;
+&lt;p&gt;这样会在&lt;code&gt;source/_post&lt;/code&gt;目录下生成一个Markdown文件, 利用Markdown编辑软件或者文本编辑软件即可修改. 修改完后输入上面发布以及生成页面的指令便可以发布你刚刚写的blog到github上啦\~\~&lt;/p&gt;
 
 &lt;h3&gt;扩展功能&lt;/h3&gt;
 
 &lt;p&gt;octopress可以使用大量模板来迅速搭建一个比较个性的个人博客，网上主题的安装实质上是用主题内的&lt;code&gt;source&lt;/code&gt;以及&lt;code&gt;sass&lt;/code&gt;文件夹来替换原有的&lt;code&gt;source&lt;/code&gt;以及&lt;code&gt;sass&lt;/code&gt;文件夹。我是从这里找的主题：&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://github.com/imathis/octopress/wiki/3rd-Party-Octopress-Themes&quot;&gt;3rd Party Octopress Themes &lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/imathis/octopress/wiki/3rd-Party-Octopress-Themes&quot;&gt;3rd Party Octopress Themes &lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;具体主题安装指令详见各个主题的readme。&lt;/p&gt;
 
