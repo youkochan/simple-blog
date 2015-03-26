@@ -6,8 +6,8 @@
     <atom:link href="http://youkochan.github.io/rss.xml" rel="self" type="application/rss+xml" />
     <description>Simple Blog</description>
     <language>zh-cn</language>
-    <pubDate>Fri, 27 Mar 2015 00:03:39 +0800</pubDate>
-    <lastBuildDate>Fri, 27 Mar 2015 00:03:39 +0800</lastBuildDate>
+    <pubDate>Fri, 27 Mar 2015 00:06:32 +0800</pubDate>
+    <lastBuildDate>Fri, 27 Mar 2015 00:06:32 +0800</lastBuildDate>
 
     
     <item>
@@ -27,9 +27,13 @@
 &lt;/ul&gt;
 
 
+&lt;hr /&gt;
+
 &lt;h3&gt;190 Reverse Bits&lt;/h3&gt;
 
 &lt;p&gt;转置比特。无注意事项。&lt;/p&gt;
+
+&lt;hr /&gt;
 
 &lt;h3&gt;189 Rotate Array&lt;/h3&gt;
 
@@ -39,6 +43,8 @@
 &lt;li&gt;注意细节，给定的参数不一定就是合理的。&lt;/li&gt;
 &lt;/ul&gt;
 
+
+&lt;hr /&gt;
 
 &lt;h3&gt;121 Best Time to Buy and Sell Stock&lt;/h3&gt;
 
@@ -58,6 +64,8 @@
     return max;
 }
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
 
 &lt;!--more--&gt;
 
