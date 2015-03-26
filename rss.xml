@@ -6,8 +6,8 @@
     <atom:link href="http://youkochan.github.io/rss.xml" rel="self" type="application/rss+xml" />
     <description>Simple Blog</description>
     <language>zh-cn</language>
-    <pubDate>Wed, 25 Mar 2015 23:26:22 +0800</pubDate>
-    <lastBuildDate>Wed, 25 Mar 2015 23:26:22 +0800</lastBuildDate>
+    <pubDate>Fri, 27 Mar 2015 00:03:39 +0800</pubDate>
+    <lastBuildDate>Fri, 27 Mar 2015 00:03:39 +0800</lastBuildDate>
 
     
     <item>
@@ -39,6 +39,25 @@
 &lt;li&gt;注意细节，给定的参数不一定就是合理的。&lt;/li&gt;
 &lt;/ul&gt;
 
+
+&lt;h3&gt;121 Best Time to Buy and Sell Stock&lt;/h3&gt;
+
+&lt;p&gt;通过一次交易，实现利润最大。通过一次遍历，使用一个变量记录遍历当前最低价格，使用一个变量记录当前最大差价。一次遍历即可。代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;c&quot;&gt;int maxProfit(int prices[], int n){
+    int i;
+    int low = -1;
+    int max = 0; 
+
+    for(i = 0; i&amp;lt;= n - 1; i++){
+        if(low &amp;lt; 0 || prices[i] &amp;lt; low)
+            low = prices[i];
+        if(prices[i] - low &amp;gt; max)
+            max = prices[i] - low;
+    } 
+    return max;
+}
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;!--more--&gt;
 
