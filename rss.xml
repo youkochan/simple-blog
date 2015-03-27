@@ -6,8 +6,8 @@
     <atom:link href="http://youkochan.github.io/rss.xml" rel="self" type="application/rss+xml" />
     <description>Simple Blog</description>
     <language>zh-cn</language>
-    <pubDate>Fri, 27 Mar 2015 00:06:32 +0800</pubDate>
-    <lastBuildDate>Fri, 27 Mar 2015 00:06:32 +0800</lastBuildDate>
+    <pubDate>Fri, 27 Mar 2015 16:48:42 +0800</pubDate>
+    <lastBuildDate>Fri, 27 Mar 2015 16:48:42 +0800</lastBuildDate>
 
     
     <item>
@@ -18,7 +18,7 @@
       <guid>http://youkochan.github.io//code/2015/03/25/leetcode-note</guid>
       <description>&lt;p&gt;最近开始刷题玩玩，这个就用于记录每一个题目的小细节吧。顺序按照刷提顺序来。&lt;/p&gt;
 
-&lt;h3&gt;191 Number of 1 Bits&lt;/h3&gt;
+&lt;h5&gt;191 Number of 1 Bits&lt;/h5&gt;
 
 &lt;p&gt;求数字中一比特的个数。没什么难点，循环移位，一边移位一边做与判断。第一次做题主要还是不太清楚leetcode的流程，由于只需要写出函数，结果从本地copy代码的时候多copy了一些无用的导致wrong answer。呵呵呵。。。简直赞。注意：&lt;/p&gt;
 
@@ -27,15 +27,11 @@
 &lt;/ul&gt;
 
 
-&lt;hr /&gt;
-
-&lt;h3&gt;190 Reverse Bits&lt;/h3&gt;
+&lt;h5&gt;190 Reverse Bits&lt;/h5&gt;
 
 &lt;p&gt;转置比特。无注意事项。&lt;/p&gt;
 
-&lt;hr /&gt;
-
-&lt;h3&gt;189 Rotate Array&lt;/h3&gt;
+&lt;h5&gt;189 Rotate Array&lt;/h5&gt;
 
 &lt;p&gt;尝试了那种转置三次的方式实现位移。不过有多种方式。需要注意的点：&lt;/p&gt;
 
@@ -44,13 +40,11 @@
 &lt;/ul&gt;
 
 
-&lt;hr /&gt;
-
-&lt;h3&gt;121 Best Time to Buy and Sell Stock&lt;/h3&gt;
+&lt;h5&gt;121 Best Time to Buy and Sell Stock I&lt;/h5&gt;
 
 &lt;p&gt;通过一次交易，实现利润最大。通过一次遍历，使用一个变量记录遍历当前最低价格，使用一个变量记录当前最大差价。一次遍历即可。代码如下：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;c&quot;&gt;int maxProfit(int prices[], int n){
+&lt;pre&gt;&lt;code&gt;int maxProfit(int prices[], int n){
     int i;
     int low = -1;
     int max = 0; 
@@ -65,7 +59,87 @@
 }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;hr /&gt;
+&lt;h5&gt;Best Time to Buy and Sell Stock II&lt;/h5&gt;
+
+&lt;p&gt;通过多次交易，实现利润最大。这个由于交易次数不限，所以只需要把所有后一天比前一天增加的价格求和就可以了。一次遍历，代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;int maxProfit(int prices[], int n){
+    int i = 0;
+    int max = 0;
+    int d = 0;
+
+    if(n == 1)
+        return 0;
+
+    for(i = 1; i &amp;lt;= n - 1; i++){
+        d = prices[i] - prices[i-1];
+        if(d &amp;gt; 0)
+            max += d;
+    }
+
+    return max;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h5&gt;Best Time to Buy and Sell Stock III&lt;/h5&gt;
+
+&lt;p&gt;通过两次交易，实现利润最大化。由于交易次数有限，可以简化为将prices划分为两个区间，通过求两个区间分别进行一次交易得到的利润和的最大值，来求解这一题。一般情况下，先遍历0到n-1进行划分，再求划分区间的一次交易最大利润（即Best Time to Buy and Sell Stock I，复杂度O(n)），总复杂度O( n&lt;sup&gt;2&lt;/sup&gt; )。&lt;br/&gt;
+通过使用动态规划算法可以简化复杂度，使用两个长度为n的数组记录中间结果，dp1[i]表示[0,...,i]中进行一次交易的最大利润，dp2[i]表示[i,...,n-1]中进行一次交易的最大利润，则，可知递推公式如下：&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;dp1[i+1] = max(dp1[i], prices[i+1]-minPrice)&lt;br/&gt;
+dp2[i-1] = max(dp2[i], maxPrice-prices[i-1])&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;其中， minPrice以及maxPrice分别记录递归过程中的最小以及最大值。代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;int max(int n1, int n2){
+    return n1 &amp;gt; n2 ? n1 : n2;
+}
+
+int maxProfit(int prices[], int n)
+{
+    int* dp1;   // [0,...,i] 最大收益
+    int* dp2;   // [i,...,n-1] 最大收益
+    int maxprofit = 0;
+    int i;
+    int minPrice = prices[0];
+    int maxPrice = prices[n-1];
+
+    dp1 = (int*)malloc(sizeof(int)*n);
+    dp2 = (int*)malloc(sizeof(int)*n);
+
+    for (i = 0; i &amp;lt;= n-1; ++i){
+        dp1[i] = dp2[i] = 0;
+    }
+
+    if (n &amp;lt;= 1)
+        return 0;
+
+    // 第一趟遍历找出dp1
+    for (i = 1; i &amp;lt;= n-1; ++i){
+        if (minPrice &amp;gt; prices[i])
+            minPrice = prices[i];
+        dp1[i] = max(dp1[i-1], prices[i]-minPrice);
+    }
+
+    // 第二趟遍历找出dp2
+    for (i = n-2; i &amp;gt;= 0; --i){
+        if (maxPrice &amp;lt; prices[i])
+            maxPrice = prices[i];
+        dp2[i] = max(dp2[i+1], maxPrice-prices[i]);
+    }
+
+    // 最后找出最大收益
+    for (i = 0; i &amp;lt;= n-1; ++i){
+        if (dp1[i] + dp2[i] &amp;gt; maxprofit)
+            maxprofit = dp1[i] + dp2[i];
+    }
+
+    free(dp1);
+    free(dp2);
+
+    return maxprofit;
+}
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;!--more--&gt;
 
