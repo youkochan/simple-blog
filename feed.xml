@@ -5,8 +5,8 @@
     <description></description>
     <link>http://youkochan.github.io/</link>
     <atom:link href="http://youkochan.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 30 Mar 2015 11:42:16 +0800</pubDate>
-    <lastBuildDate>Mon, 30 Mar 2015 11:42:16 +0800</lastBuildDate>
+    <pubDate>Thu, 02 Apr 2015 12:30:26 +0800</pubDate>
+    <lastBuildDate>Thu, 02 Apr 2015 12:30:26 +0800</lastBuildDate>
     <generator>Jekyll v2.5.2</generator>
     
       <item>
@@ -36,6 +36,137 @@
     }
 
     return maj;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;168  Excel Sheet Column Title&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://leetcode.com/submissions/detail/24413581/&quot;&gt;https://leetcode.com/submissions/detail/24413581/&lt;/a&gt;&lt;br/&gt;
+将数字转化为excel表格对应的字符串。即十进制数转化为26进制数。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;char *convertToTitle(int n) {
+    int mod;
+    int div;
+    int i1 = 0, i2 = 0;
+    char* p1 = NULL;
+    char* p2 = NULL;
+
+    p1 = (char*)malloc(sizeof(char)*100);
+    p2 = (char*)malloc(sizeof(char)*100);
+
+    while (n &amp;gt; 0){
+        div = (n-1) / 26;
+        mod = (n-1) % 26;
+
+        p1[i1++] = mod + &#39;A&#39;;
+
+        n = div;
+    }
+
+    for(i2 = 0; i2 &amp;lt;= i1-1; i2++){
+        p2[i2] = p1[i1-i2-1];
+    }
+    p2[i2] = &#39;\0&#39;;
+
+    return p2;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;171 Excel Sheet Column Number&lt;/h2&gt;
+
+&lt;p&gt;上一题的逆过程。代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;int titleToNumber(char *s) {
+    int i = 0;
+    int num = 0;
+
+    while(s[i] != &#39;\0&#39;){
+        num *= 26;
+        num += s[i] - &#39;A&#39; + 1;
+        i ++;
+    }
+
+    return num;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;69 Sqrt(x)&lt;/h2&gt;
+
+&lt;p&gt;使用牛顿迭代法解方程，Implement int sqrt(int x)。Compute and return the square root of x。即求解&lt;code&gt;f(x)=x^2-N&lt;/code&gt;与x轴的交点。找出迭代方程后就比较好理解了。代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;int mySqrt(int x) {
+    double x0, x1, diff;
+
+    if (x == 0)    // 特殊情况
+        return 0;
+
+    x1 = x;
+    do{
+        x0 = x1;
+        x1 = ((double)x / x0 + x0) / 2;
+        diff = abs(x1 - x0);
+    }
+    while ( diff &amp;gt; 0.001 );
+
+    return (int)x1;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;需要注意的是，判断是否结束递归有两种方法，一是判断x0与x1是否无限接近；二是判断&lt;code&gt;f(x1)&lt;/code&gt;是否无限接近0。由于第一种方式比较简单，于是采用了第一种。&lt;/p&gt;
+
+&lt;h2&gt;187  Repeated DNA Sequences&lt;/h2&gt;
+
+&lt;h2&gt;155 Min Stack&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;&quot;&gt;https://leetcode.com/problems/min-stack/
+&lt;/a&gt;&lt;br/&gt;
+Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;push(x) -- Push element x onto stack.&lt;/li&gt;
+&lt;li&gt;pop() -- Removes the element on top of the stack.&lt;/li&gt;
+&lt;li&gt;top() -- Get the top element.&lt;/li&gt;
+&lt;li&gt;getMin() -- Retrieve the minimum element in the stack.&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;直接看到给定的默认条件&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;typedef struct {
+
+} MinStack;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;很容易误解这个结构定义的是stack的一个node（之前见太多，都形成习惯了），然后在填充后面方程时就会出现问题。其实这个结构定义的不是一个node，而是整个stack。并且题目在构建stack时给定了最大容量，这样可以简单地使用malloc申请一个连续数组来充当stack，转换思路后马上就ac了。所以思路不能太死板。代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;void minStackCreate(MinStack *stack, int maxSize) {
+    stack-&amp;gt;num_stack = (int*)malloc(sizeof(int)*maxSize);
+    stack-&amp;gt;min_stack = (int*)malloc(sizeof(int)*maxSize);
+    stack-&amp;gt;maxSize = maxSize;
+    stack-&amp;gt;pos = -1;
+}
+
+void minStackPush(MinStack *stack, int element) {
+    stack-&amp;gt;pos += 1;
+    stack-&amp;gt;num_stack[stack-&amp;gt;pos] = element;
+    stack-&amp;gt;min_stack[stack-&amp;gt;pos] = stack-&amp;gt;pos == 0 ?\
+        element : min(element, stack-&amp;gt;min_stack[stack-&amp;gt;pos-1]);
+}
+
+void minStackPop(MinStack *stack) {
+    stack-&amp;gt;pos -= 1;
+}
+
+int minStackTop(MinStack *stack) {
+    return stack-&amp;gt;num_stack[stack-&amp;gt;pos];
+}
+
+int minStackGetMin(MinStack *stack) {
+    return stack-&amp;gt;min_stack[stack-&amp;gt;pos];   
+}
+
+void minStackDestroy(MinStack *stack) {
+    stack-&amp;gt;pos = -1;
 }
 &lt;/code&gt;&lt;/pre&gt;
 

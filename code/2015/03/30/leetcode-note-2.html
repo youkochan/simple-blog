@@ -104,6 +104,137 @@
 }
 </code></pre>
 
+<h2>168  Excel Sheet Column Title</h2>
+
+<p><a href="https://leetcode.com/submissions/detail/24413581/">https://leetcode.com/submissions/detail/24413581/</a><br/>
+将数字转化为excel表格对应的字符串。即十进制数转化为26进制数。</p>
+
+<pre><code>char *convertToTitle(int n) {
+    int mod;
+    int div;
+    int i1 = 0, i2 = 0;
+    char* p1 = NULL;
+    char* p2 = NULL;
+
+    p1 = (char*)malloc(sizeof(char)*100);
+    p2 = (char*)malloc(sizeof(char)*100);
+
+    while (n &gt; 0){
+        div = (n-1) / 26;
+        mod = (n-1) % 26;
+
+        p1[i1++] = mod + 'A';
+
+        n = div;
+    }
+
+    for(i2 = 0; i2 &lt;= i1-1; i2++){
+        p2[i2] = p1[i1-i2-1];
+    }
+    p2[i2] = '\0';
+
+    return p2;
+}
+</code></pre>
+
+<h2>171 Excel Sheet Column Number</h2>
+
+<p>上一题的逆过程。代码如下：</p>
+
+<pre><code>int titleToNumber(char *s) {
+    int i = 0;
+    int num = 0;
+
+    while(s[i] != '\0'){
+        num *= 26;
+        num += s[i] - 'A' + 1;
+        i ++;
+    }
+
+    return num;
+}
+</code></pre>
+
+<h2>69 Sqrt(x)</h2>
+
+<p>使用牛顿迭代法解方程，Implement int sqrt(int x)。Compute and return the square root of x。即求解<code>f(x)=x^2-N</code>与x轴的交点。找出迭代方程后就比较好理解了。代码如下：</p>
+
+<pre><code>int mySqrt(int x) {
+    double x0, x1, diff;
+
+    if (x == 0)    // 特殊情况
+        return 0;
+
+    x1 = x;
+    do{
+        x0 = x1;
+        x1 = ((double)x / x0 + x0) / 2;
+        diff = abs(x1 - x0);
+    }
+    while ( diff &gt; 0.001 );
+
+    return (int)x1;
+}
+</code></pre>
+
+<p>需要注意的是，判断是否结束递归有两种方法，一是判断x0与x1是否无限接近；二是判断<code>f(x1)</code>是否无限接近0。由于第一种方式比较简单，于是采用了第一种。</p>
+
+<h2>187  Repeated DNA Sequences</h2>
+
+<h2>155 Min Stack</h2>
+
+<p><a href="">https://leetcode.com/problems/min-stack/
+</a><br/>
+Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.</p>
+
+<ul>
+<li>push(x) -- Push element x onto stack.</li>
+<li>pop() -- Removes the element on top of the stack.</li>
+<li>top() -- Get the top element.</li>
+<li>getMin() -- Retrieve the minimum element in the stack.</li>
+</ul>
+
+
+<p>直接看到给定的默认条件</p>
+
+<pre><code>typedef struct {
+
+} MinStack;
+</code></pre>
+
+<p>很容易误解这个结构定义的是stack的一个node（之前见太多，都形成习惯了），然后在填充后面方程时就会出现问题。其实这个结构定义的不是一个node，而是整个stack。并且题目在构建stack时给定了最大容量，这样可以简单地使用malloc申请一个连续数组来充当stack，转换思路后马上就ac了。所以思路不能太死板。代码如下：</p>
+
+<pre><code>void minStackCreate(MinStack *stack, int maxSize) {
+    stack-&gt;num_stack = (int*)malloc(sizeof(int)*maxSize);
+    stack-&gt;min_stack = (int*)malloc(sizeof(int)*maxSize);
+    stack-&gt;maxSize = maxSize;
+    stack-&gt;pos = -1;
+}
+
+void minStackPush(MinStack *stack, int element) {
+    stack-&gt;pos += 1;
+    stack-&gt;num_stack[stack-&gt;pos] = element;
+    stack-&gt;min_stack[stack-&gt;pos] = stack-&gt;pos == 0 ?\
+        element : min(element, stack-&gt;min_stack[stack-&gt;pos-1]);
+}
+
+void minStackPop(MinStack *stack) {
+    stack-&gt;pos -= 1;
+}
+
+int minStackTop(MinStack *stack) {
+    return stack-&gt;num_stack[stack-&gt;pos];
+}
+
+int minStackGetMin(MinStack *stack) {
+    return stack-&gt;min_stack[stack-&gt;pos];   
+}
+
+void minStackDestroy(MinStack *stack) {
+    stack-&gt;pos = -1;
+}
+</code></pre>
+
 <!--more-->
 
 
