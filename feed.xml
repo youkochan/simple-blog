@@ -5,9 +5,50 @@
     <description></description>
     <link>http://youkochan.github.io/</link>
     <atom:link href="http://youkochan.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 02 Apr 2015 12:30:26 +0800</pubDate>
-    <lastBuildDate>Thu, 02 Apr 2015 12:30:26 +0800</lastBuildDate>
+    <pubDate>Wed, 08 Apr 2015 10:02:05 +0800</pubDate>
+    <lastBuildDate>Wed, 08 Apr 2015 10:02:05 +0800</lastBuildDate>
     <generator>Jekyll v2.5.2</generator>
+    
+      <item>
+        <title>leetcode-note-3</title>
+        <description>&lt;h2&gt;136  Single Number&lt;/h2&gt;
+
+&lt;p&gt;除一个元素外，每个元素出现两次。找出这个元素。无注意事项，按异或做。线性时间复杂度，可以不使用额外空间。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;int singleNumber(int A[], int n) {
+    while(--n &amp;gt; 0){
+        A[0] ^= A[n];
+    }
+    return A[0];
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;137 Single Number II&lt;/h2&gt;
+
+&lt;p&gt;除一个元素外，每个元素出现三次。找出这个元素。线性时间复杂度，可以不使用额外空间。每次循环先计算 twos，即出现两次的 1 的分布，然后计算出现一次的 1 的分布，接着 二者进行与操作得到出现三次的 1 的分布情况，然后对 threes 取反，再与 ones、twos进行与操作，这样的目的是将出现了三次的位置清零。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;int singleNumber(int A[], int n) {
+    int ones = 0;
+    int twos = 0;
+    int threes = 0;
+
+    while (--n &amp;gt;= 0) {
+        twos |= ones &amp;amp; A[n];
+        ones ^= A[n];
+        threes = ones &amp;amp; twos;
+        ones &amp;amp;= ~threes;
+        twos &amp;amp;= ~threes;
+    }
+    return ones;
+}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+        <pubDate>Tue, 07 Apr 2015 22:55:11 +0800</pubDate>
+        <link>http://youkochan.github.io/2015/04/07/leetcode-note-3.html</link>
+        <guid isPermaLink="true">http://youkochan.github.io/2015/04/07/leetcode-note-3.html</guid>
+        
+        
+      </item>
     
       <item>
         <title>leetcode-note-2</title>
@@ -167,6 +208,129 @@ int minStackGetMin(MinStack *stack) {
 
 void minStackDestroy(MinStack *stack) {
     stack-&amp;gt;pos = -1;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;162 Find Peak Element&lt;/h2&gt;
+
+&lt;p&gt;找到峰值峰值元素。num[i] ≠ num[i+1]，num[-1] = num[n] = -∞。说是最好是用对数复杂度实现，很明显就是二分法实现了。考虑到只需要返回一个峰值元素的下标即可，于是可以采取以下思路：初始化left为0，right为n-1，min为left和right的中值，于是定义两个变量，分别记录mid左边是否为上升，以及右边是否为下降。若mid左边上升，右边下降，则返回mid；若左右都上升，则继续二分查找右边的（因为num[n] = -∞）；若都为下降，则继续二分搜索左边的（num[-1] = -∞）。代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;int findPeakElement(int num[], int n) {
+    int left = 0;
+    int right = n - 1;
+    int mid;
+    int up;
+    int down;
+
+    while(left &amp;lt; right){
+        mid = (left + right) &amp;gt;&amp;gt; 1;
+
+        up = ((mid-1) == -1 || num[mid] &amp;gt; num[mid-1]) ? 1 : 0;
+        down = ((mid+1) == n || num[mid] &amp;gt; num[mid+1]) ? 1 : 0;
+
+        if(up &amp;amp;&amp;amp; down){
+            return mid;
+        }
+        else if(up &amp;amp;&amp;amp; !down){
+            left = mid + 1;
+        }
+        else{
+            right = mid - 1;
+        }
+    }
+
+    return left;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;153 Find Minimum in Rotated Sorted Array&lt;/h2&gt;
+
+&lt;p&gt;和上一题类似，要求找出一个排序后的数组旋转一次（可以理解为左移或者右移N次，但是肯定不等于原数组）得到的数组的最小值，且假设数组中没有重复元素。那就简单多了，二分法，根据mid左右的升降情况判断mid是否为转折点，若是，考虑一下多种情况简单判断一下即可；若不是转折点，则根据num[mid]与num[left]或num[right]的大小关系判断下一步应该往左或者往右进行。代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;int findMin(int num[], int n) {
+    int left = 0;
+    int right = n - 1;
+    int direct1;    // 0 向上
+    int direct2;    // 1 向下
+    int mid;
+
+    if(n == 1)
+        return num[0];
+    if(n == 2)
+        return num[0] &amp;lt; num[1] ? num[0] : num[1];
+
+    while(left &amp;lt; right){
+        mid = (left + right) &amp;gt;&amp;gt; 1;
+
+        direct1 = num[mid-1] &amp;lt; num[mid] ? 0 : 1;
+        direct2 = num[mid+1] &amp;gt; num[mid] ? 0 : 1;
+
+        if(!direct1 &amp;amp;&amp;amp; direct2){
+            return num[mid-1] &amp;lt; num[mid+1] ? num[mid-1] : num[mid+1];
+        }else if(direct1 &amp;amp;&amp;amp; !direct2){
+            return num[mid];
+        }
+        else if(!direct1 &amp;amp;&amp;amp; !direct2){
+            if(num[mid] &amp;gt; num[right]){
+                left = mid;
+            }
+            else{
+                right = mid;
+            }
+        }
+        else{
+            if(num[mid] &amp;lt; num[right]){
+                left = mid;
+            }
+            else{
+                right = mid;
+            }
+        }
+    }
+
+    return num[left];
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;后来才发现这个题根本不用考虑这么复杂。。。貌似给定的测试样例只有递增数组，没有递减数组，于是代码简化为：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;int findMin(int num[], int n) {
+    int left = 0;
+    int right = n - 1;
+
+    while(left &amp;lt; right)
+    {
+        if(num[left] &amp;lt; num[right]) {
+            return num[left];
+        }
+
+        int mid = left + (right-left)/2;
+        if(num[left] &amp;lt;= num[mid]) {
+            left = mid + 1;
+        } else {
+            right = mid;
+        }
+    }
+    return num[left];
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;154  Find Minimum in Rotated Sorted Array II&lt;/h2&gt;
+
+&lt;p&gt;这道题是Search in Rotated Sorted Array的扩展，思路在Find Minimum in Rotated Sorted Array中已经介绍过了，和Find Minimum in Rotated Sorted Array唯一的区别是这道题目中元素会有重复的情况出现。不过正是因为这个条件的出现，影响到了算法的时间复杂度。原来我们是依靠中间和边缘元素的大小关系，来判断哪一半是不受rotate影响，仍然有序的。而现在因为重复的出现，如果我们遇到中间和边缘相等的情况，我们就无法判断哪边有序，因为哪边都有可能有序。假设原数组是{1,2,3,3,3,3,3}，那么旋转之后有可能是{3,3,3,3,3,1,2}，或者{3,1,2,3,3,3,3}，这样的我们判断左边缘和中心的时候都是3，我们并不知道应该截掉哪一半。解决的办法只能是对边缘移动一步，直到边缘和中间不在相等或者相遇，这就导致了会有不能切去一半的可能。所以最坏情况就会出现每次移动一步，总共移动n此，算法的时间复杂度变成O(n)。既然是O(n)，最简单的做法即暴力破解。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;int findMin(int num[], int n) {
+    int i = 0;
+
+    if(n == 1)
+        return num[0];
+
+    for(i = 1; i &amp;lt;= n - 1; i ++){
+        if(num[i] &amp;lt; num[i - 1])
+            return num[i];
+    }
+
+    return num[0];
 }
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -926,133 +1090,6 @@ document.getElementsByTagName(&#39;head&#39;)[0].appendChild(script);
         <guid isPermaLink="true">http://youkochan.github.io/2014/08/17/sougou-bug.html</guid>
         
         <category>mac</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>静态博客搭建</title>
-        <description>&lt;p&gt;总结一下最近这几天折腾的博客搭建吧(github+octopress)&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-
-&lt;h3&gt;环境&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;OS:    OS X Yosemite 10.10&lt;/li&gt;
-&lt;li&gt;Ruby:  ruby 2.0.0p481 (2014-05-08 revision 45883)&lt;/li&gt;
-&lt;li&gt;git:   git version 1.8.5.2 (Apple Git-48)&lt;/li&gt;
-&lt;li&gt;xcode: xcode command line tool&lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;p&gt;环境配置上面纠结了我很长时间, octopress要求最低ruby版本为1.9.3, mac自带版本为2.0.0, 可以直接使用. 可是由于之前对ruby一无所知, 所以在环境配置上出现了许多乱七八糟的问题. 最后发现是由于ruby的默认的源&lt;a href=&quot;http://rubygems.org/&quot;&gt;http://rubygems.org/&lt;/a&gt;经常不稳定, 于是可以通过淘宝镜像来配置源. 代码如下:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;gem source -a http://ruby.taobao.org/
-gem source -r http://rubygems.org/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;这样就能替换掉自带的源(→_→ 此处耽误了我N小时). 至于xcode command line tool用于gcc以及make之类操作, Mac OS X 10.9 Mavericks中的Xcode中已经没有选项来自动安装之, 于是我们可以通过终端来安装:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;xcode-select --install
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;git在mac os也是自带的, 到此, 我们便完成了静态博客的环境配置.&lt;/p&gt;
-
-&lt;h3&gt;github配置&lt;/h3&gt;
-
-&lt;p&gt;首先你需要一个github账号(废话), 然后在你的账号设置中, 选择新建一个repository. 注, 新建的repository的名字必须为(yourname).github.com, 此处的yourname为你想要的域名. 此时, github的配置告一段落.&lt;/p&gt;
-
-&lt;h3&gt;octopress配置&lt;/h3&gt;
-
-&lt;p&gt;首先下载最新版的octopress: github &lt;a href=&quot;https://github.com/imathis/octopress&quot;&gt;https://github.com/imathis/octopress&lt;/a&gt;, 下载安装的教程可以参见网页的readme文件.命令如下:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git clone git://github.com/imathis/octopress.git ~/octopress
-cd octopress
-gem install bundler
-bundle install
-rake install
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;此时便完成了octopress的安装. 此时, 输入&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;rake preview
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;便可以通过&lt;code&gt;localhost:4000&lt;/code&gt;来预览你的博客(需要保证你的4000端口不被占用)&lt;/p&gt;
-
-&lt;h3&gt;关联github&lt;/h3&gt;
-
-&lt;p&gt;创建密匙(若.ssh目录下已经有密匙可以跳过)&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;ssh-keygen -t rsa -C username
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;按照提示完成后, .ssh目录下应该有&lt;code&gt;id_rsa&lt;/code&gt;及&lt;code&gt;id_rsa.pub&lt;/code&gt;这两个文件, 打开&lt;code&gt;id_rsa.pub&lt;/code&gt;, &lt;code&gt;cmd+a&lt;/code&gt;, &lt;code&gt;cmd+c&lt;/code&gt;, 复制下来.&lt;/p&gt;
-
-&lt;p&gt;打开这个网址&lt;a href=&quot;https://github.com/settings/ssh&quot;&gt;https://github.com/settings/ssh&lt;/a&gt;,
-add ssh key, title随便写, key的话就把刚刚id_rsa.pub内的东西黏贴进去. add, 搞定233333.&lt;/p&gt;
-
-&lt;h3&gt;发布到github&lt;/h3&gt;
-
-&lt;p&gt;终端输入&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;rake setup_github_pages
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;会要求你输入github仓库的地址, 此时把之前创建的repository的地址输入即可. 如git@github.com:yourusername/yourusername.github.io.git&lt;/p&gt;
-
-&lt;p&gt;终端输入&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;rake generate   # 生成HTML页面  
-rake deploy     # 发布HTML页面
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;到此, 你就可以在你的(yourname).github.com看到你的博客啦(当然, 什么都没写的话什么都没有的, 而且自带主题真是...搓).&lt;/p&gt;
-
-&lt;p&gt;终端输入&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;rake new_post[&quot;titile&quot;] # zshell记得在[]左边加\
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;这样会在&lt;code&gt;source/_post&lt;/code&gt;目录下生成一个Markdown文件, 利用Markdown编辑软件或者文本编辑软件即可修改. 修改完后输入上面发布以及生成页面的指令便可以发布你刚刚写的blog到github上啦\~\~&lt;/p&gt;
-
-&lt;h3&gt;扩展功能&lt;/h3&gt;
-
-&lt;p&gt;octopress可以使用大量模板来迅速搭建一个比较个性的个人博客，网上主题的安装实质上是用主题内的&lt;code&gt;source&lt;/code&gt;以及&lt;code&gt;sass&lt;/code&gt;文件夹来替换原有的&lt;code&gt;source&lt;/code&gt;以及&lt;code&gt;sass&lt;/code&gt;文件夹。我是从这里找的主题：&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://github.com/imathis/octopress/wiki/3rd-Party-Octopress-Themes&quot;&gt;3rd Party Octopress Themes &lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;具体主题安装指令详见各个主题的readme。&lt;/p&gt;
-
-&lt;p&gt;我使用的主题叫做&lt;a href=&quot;https://github.com/sevenadrian/foxslide.git&quot;&gt;foxslide&lt;/a&gt;，并对其进行了一些修改。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;去掉了国内用不上的instagram以及twitter功能&lt;/li&gt;
-&lt;li&gt;去掉了过于装比的github repositories功能&lt;/li&gt;
-&lt;li&gt;增加了国内评论功能&lt;/li&gt;
-&lt;li&gt;增加了人人链接，微博链接以及staeam链接&lt;/li&gt;
-&lt;li&gt;修改了date.html解决了主题不能显示文章日期的问题&lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;p&gt;嘛，还有一些别的小细节上的修改，
-比如
-* 自带主题在除开主页的页面进行上下滚动时会有明显卡顿，轻微强迫症患者表示这我不能忍，于是修改了css。
-* github在不翻墙的情况下连接速度比较慢，于是把博客背景等图片内容移到了网上，比较明显地提高了访问速度。&lt;/p&gt;
-
-&lt;h3&gt;总结&lt;/h3&gt;
-
-&lt;p&gt;之后发现有意思的东西还会继续加进去，不过现在的功能基本已经满足了日常需求。通过这几天折腾也大致弄清楚了主题各个文件之间的关系，以后再添加也不会很难。&lt;/p&gt;
-</description>
-        <pubDate>Fri, 15 Aug 2014 20:42:57 +0800</pubDate>
-        <link>http://youkochan.github.io/2014/08/15/githubda-jian-jing-tai-bo-ke.html</link>
-        <guid isPermaLink="true">http://youkochan.github.io/2014/08/15/githubda-jian-jing-tai-bo-ke.html</guid>
-        
-        <category>github</category>
-        
-        <category>blog</category>
         
         
       </item>
