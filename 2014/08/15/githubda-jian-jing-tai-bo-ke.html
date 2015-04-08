@@ -41,8 +41,8 @@
           <!--a class="macnote pl__all" href="/mac/note/2015/04/08/intsall-mysql-python-in-mac.html"><span class="pl__circle"></span><span class="pl__title">在mac上安装Python模块MySQLdb</span><span class="pl__date">Apr 2015</span></a-->
           <a class=" pl__all" href="/mac/note/2015/04/08/intsall-mysql-python-in-mac.html"><span class="pl__circle"></span><span class="pl__title">在mac上安装Python模块MySQLdb</span><span class="pl__date">Apr 2015</span></a>
         
-          <!--a class=" pl__all" href="/2015/04/07/leetcode-note-3.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-3</span><span class="pl__date">Apr 2015</span></a-->
-          <a class=" pl__all" href="/2015/04/07/leetcode-note-3.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-3</span><span class="pl__date">Apr 2015</span></a>
+          <!--a class="leetcode pl__all" href="/leetcode/2015/04/07/leetcode-note-3.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-3</span><span class="pl__date">Apr 2015</span></a-->
+          <a class=" pl__all" href="/leetcode/2015/04/07/leetcode-note-3.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-3</span><span class="pl__date">Apr 2015</span></a>
         
           <!--a class="code pl__all" href="/code/2015/03/30/leetcode-note-2.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-2</span><span class="pl__date">Mar 2015</span></a-->
           <a class=" pl__all" href="/code/2015/03/30/leetcode-note-2.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-2</span><span class="pl__date">Mar 2015</span></a>
@@ -99,14 +99,14 @@
 
 <p>环境配置上面纠结了我很长时间, octopress要求最低ruby版本为1.9.3, mac自带版本为2.0.0, 可以直接使用. 可是由于之前对ruby一无所知, 所以在环境配置上出现了许多乱七八糟的问题. 最后发现是由于ruby的默认的源<a href="http://rubygems.org/">http://rubygems.org/</a>经常不稳定, 于是可以通过淘宝镜像来配置源. 代码如下:</p>
 
-<pre><code>gem source -a http://ruby.taobao.org/
-gem source -r http://rubygems.org/
-</code></pre>
+<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">gem source -a http://ruby.taobao.org/</span>
+<span class="go">gem source -r http://rubygems.org/</span></code></pre></div>
+
 
 <p>这样就能替换掉自带的源(→_→ 此处耽误了我N小时). 至于xcode command line tool用于gcc以及make之类操作, Mac OS X 10.9 Mavericks中的Xcode中已经没有选项来自动安装之, 于是我们可以通过终端来安装:</p>
 
-<pre><code>xcode-select --install
-</code></pre>
+<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">xcode-select --install</span></code></pre></div>
+
 
 <p>git在mac os也是自带的, 到此, 我们便完成了静态博客的环境配置.</p>
 
@@ -118,17 +118,17 @@ gem source -r http://rubygems.org/
 
 <p>首先下载最新版的octopress: github <a href="https://github.com/imathis/octopress">https://github.com/imathis/octopress</a>, 下载安装的教程可以参见网页的readme文件.命令如下:</p>
 
-<pre><code>git clone git://github.com/imathis/octopress.git ~/octopress
-cd octopress
-gem install bundler
-bundle install
-rake install
-</code></pre>
+<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">git clone git://github.com/imathis/octopress.git ~/octopress</span>
+<span class="go">cd octopress</span>
+<span class="go">gem install bundler</span>
+<span class="go">bundle install</span>
+<span class="go">rake install</span></code></pre></div>
+
 
 <p>此时便完成了octopress的安装. 此时, 输入</p>
 
-<pre><code>rake preview
-</code></pre>
+<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">rake preview</span></code></pre></div>
+
 
 <p>便可以通过<code>localhost:4000</code>来预览你的博客(需要保证你的4000端口不被占用)</p>
 
@@ -136,8 +136,8 @@ rake install
 
 <p>创建密匙(若.ssh目录下已经有密匙可以跳过)</p>
 
-<pre><code>ssh-keygen -t rsa -C username
-</code></pre>
+<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">ssh-keygen -t rsa -C username</span></code></pre></div>
+
 
 <p>按照提示完成后, .ssh目录下应该有<code>id_rsa</code>及<code>id_rsa.pub</code>这两个文件, 打开<code>id_rsa.pub</code>, <code>cmd+a</code>, <code>cmd+c</code>, 复制下来.</p>
 
@@ -148,23 +148,23 @@ add ssh key, title随便写, key的话就把刚刚id_rsa.pub内的东西黏贴�
 
 <p>终端输入</p>
 
-<pre><code>rake setup_github_pages
-</code></pre>
+<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">rake setup_github_pages</span></code></pre></div>
+
 
 <p>会要求你输入github仓库的地址, 此时把之前创建的repository的地址输入即可. 如git@github.com:yourusername/yourusername.github.io.git</p>
 
 <p>终端输入</p>
 
-<pre><code>rake generate   # 生成HTML页面  
-rake deploy     # 发布HTML页面
-</code></pre>
+<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">rake generate   # 生成HTML页面  </span>
+<span class="go">rake deploy     # 发布HTML页面</span></code></pre></div>
+
 
 <p>到此, 你就可以在你的(yourname).github.com看到你的博客啦(当然, 什么都没写的话什么都没有的, 而且自带主题真是...搓).</p>
 
 <p>终端输入</p>
 
-<pre><code>rake new_post["titile"] # zshell记得在[]左边加\
-</code></pre>
+<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">rake new_post[&quot;titile&quot;] # zshell记得在[]左边加\</span></code></pre></div>
+
 
 <p>这样会在<code>source/_post</code>目录下生成一个Markdown文件, 利用Markdown编辑软件或者文本编辑软件即可修改. 修改完后输入上面发布以及生成页面的指令便可以发布你刚刚写的blog到github上啦\~\~</p>
 

@@ -41,8 +41,8 @@
           <!--a class="macnote pl__all" href="/mac/note/2015/04/08/intsall-mysql-python-in-mac.html"><span class="pl__circle"></span><span class="pl__title">在mac上安装Python模块MySQLdb</span><span class="pl__date">Apr 2015</span></a-->
           <a class=" pl__all" href="/mac/note/2015/04/08/intsall-mysql-python-in-mac.html"><span class="pl__circle"></span><span class="pl__title">在mac上安装Python模块MySQLdb</span><span class="pl__date">Apr 2015</span></a>
         
-          <!--a class=" pl__all" href="/2015/04/07/leetcode-note-3.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-3</span><span class="pl__date">Apr 2015</span></a-->
-          <a class=" pl__all" href="/2015/04/07/leetcode-note-3.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-3</span><span class="pl__date">Apr 2015</span></a>
+          <!--a class="leetcode pl__all" href="/leetcode/2015/04/07/leetcode-note-3.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-3</span><span class="pl__date">Apr 2015</span></a-->
+          <a class=" pl__all" href="/leetcode/2015/04/07/leetcode-note-3.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-3</span><span class="pl__date">Apr 2015</span></a>
         
           <!--a class="code pl__all" href="/code/2015/03/30/leetcode-note-2.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-2</span><span class="pl__date">Mar 2015</span></a-->
           <a class=" pl__all" href="/code/2015/03/30/leetcode-note-2.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-2</span><span class="pl__date">Mar 2015</span></a>
@@ -89,30 +89,40 @@
 <!--more-->
 
 
-<pre><code class="javascript">javascript:(function(){
-    script=document.createElement('script');
-    script.setAttribute('src','http://youkochan.github.io/assets/bookmarklet/siteAnalyse.vx.js');
-document.getElementsByTagName('head')[0].appendChild(script);
-</code></pre>
+
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">script</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span>
+    <span class="nx">script</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;src&#39;</span><span class="p">,</span><span class="s1">&#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.vx.js&#39;</span><span class="p">);</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">script</span><span class="p">);</span></code></pre></div>
+
 
 <p>代码采用javascript实现，具体使用方式为，打开浏览器，输入以上代码（有的浏览器不支持自动将空格转化为％20需手动替换一下，vx替换成v1或者v2）</p>
 
 <p>或者复制以下代码在浏览器运行（版本 v1，v2，v3 ... vn）</p>
 
-<pre><code class="javascript">javascript:(function(){script=document.createElement('script');script.setAttribute('src','http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v1.js');document.getElementsByTagName('head')[0].appendChild(script);})();
-</code></pre>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="nx">script</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span><span class="nx">script</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;src&#39;</span><span class="p">,</span><span class="s1">&#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v1.js&#39;</span><span class="p">);</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">script</span><span class="p">);})();</span></code></pre></div>
 
-<pre><code class="javascript">javascript:(function(){script=document.createElement('script');script.setAttribute('src','http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v2.js');document.getElementsByTagName('head')[0].appendChild(script);})();
-</code></pre>
 
-<pre><code class="javascript">javascript:(function(){script=document.createElement('script');script.setAttribute('src','http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v3.js');document.getElementsByTagName('head')[0].appendChild(script);})();
-</code></pre>
 
-<pre><code class="javascript">javascript:(function(){script=document.createElement('script');script.setAttribute('src','http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v4.js');document.getElementsByTagName('head')[0].appendChild(script);})();
-</code></pre>
 
-<pre><code class="javascript">javascript:(function(){try{script=document.createElement('script');script.setAttribute('src','http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v4.js');document.getElementsByTagName('head')[0].appendChild(script);}catch(ex){alert("ERROR")}})();
-</code></pre>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="nx">script</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span><span class="nx">script</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;src&#39;</span><span class="p">,</span><span class="s1">&#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v2.js&#39;</span><span class="p">);</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">script</span><span class="p">);})();</span></code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="nx">script</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span><span class="nx">script</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;src&#39;</span><span class="p">,</span><span class="s1">&#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v3.js&#39;</span><span class="p">);</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">script</span><span class="p">);})();</span></code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="nx">script</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span><span class="nx">script</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;src&#39;</span><span class="p">,</span><span class="s1">&#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v4.js&#39;</span><span class="p">);</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">script</span><span class="p">);})();</span></code></pre></div>
+
+
+
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="k">try</span><span class="p">{</span><span class="nx">script</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span><span class="nx">script</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;src&#39;</span><span class="p">,</span><span class="s1">&#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v4.js&#39;</span><span class="p">);</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">script</span><span class="p">);}</span><span class="k">catch</span><span class="p">(</span><span class="nx">ex</span><span class="p">){</span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;ERROR&quot;</span><span class="p">)}})();</span></code></pre></div>
+
 
 <h3>第一次更新</h3>
 

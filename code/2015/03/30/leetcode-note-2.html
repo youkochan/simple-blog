@@ -41,8 +41,8 @@
           <!--a class="macnote pl__all" href="/mac/note/2015/04/08/intsall-mysql-python-in-mac.html"><span class="pl__circle"></span><span class="pl__title">在mac上安装Python模块MySQLdb</span><span class="pl__date">Apr 2015</span></a-->
           <a class=" pl__all" href="/mac/note/2015/04/08/intsall-mysql-python-in-mac.html"><span class="pl__circle"></span><span class="pl__title">在mac上安装Python模块MySQLdb</span><span class="pl__date">Apr 2015</span></a>
         
-          <!--a class=" pl__all" href="/2015/04/07/leetcode-note-3.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-3</span><span class="pl__date">Apr 2015</span></a-->
-          <a class=" pl__all" href="/2015/04/07/leetcode-note-3.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-3</span><span class="pl__date">Apr 2015</span></a>
+          <!--a class="leetcode pl__all" href="/leetcode/2015/04/07/leetcode-note-3.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-3</span><span class="pl__date">Apr 2015</span></a-->
+          <a class=" pl__all" href="/leetcode/2015/04/07/leetcode-note-3.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-3</span><span class="pl__date">Apr 2015</span></a>
         
           <!--a class="code pl__all" href="/code/2015/03/30/leetcode-note-2.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-2</span><span class="pl__date">Mar 2015</span></a-->
           <a class=" pl__all" href="/code/2015/03/30/leetcode-note-2.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-2</span><span class="pl__date">Mar 2015</span></a>
@@ -87,101 +87,101 @@
 <p>选出数组中的Majority Element元素，即出现次数「大于」n/2的元素。一看到这个题第一反应是排序+遍历。于是想到了qsort。写了qsort后开开心心提交代码结果提示超时，于是考虑用别的方式解决。<br/>
 由于题目的设定是Majority Element元素总存在，且「大于」n/2。于是考虑成对抛弃不同元素，最后留下的肯定就是Majority Element（n为偶数时，为了满足条件Majority Element个数至少为n/2+1，成对删除后必定至少剩余一对Majority Element；n为奇数时，最后必定剩余2*k+1个Majority Element，其中k为自然数）。代码如下：</p>
 
-<pre><code>int majorityElement(int num[], int n) {
-    int maj, count = 0;
-    int i = 0;
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">majorityElement</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">maj</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+                <span class="n">maj</span> <span class="o">=</span> <span class="n">num</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+                <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span><span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">maj</span><span class="p">){</span>
+                    <span class="n">count</span> <span class="o">++</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">else</span><span class="p">{</span>
+                    <span class="n">count</span> <span class="o">--</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        
+        <span class="k">return</span> <span class="n">maj</span><span class="p">;</span>
+    <span class="p">}</span></code></pre></div>
 
-    for (i=0; i&lt;=n-1; i++){
-        if (count == 0){
-            maj = num[i];
-            count = 1;
-        }
-        else{
-            if (num[i] == maj){
-                count ++;
-            }
-            else{
-                count --;
-            }
-        }
-    }
-
-    return maj;
-}
-</code></pre>
 
 <h2>168  Excel Sheet Column Title</h2>
 
 <p><a href="https://leetcode.com/submissions/detail/24413581/">https://leetcode.com/submissions/detail/24413581/</a><br/>
 将数字转化为excel表格对应的字符串。即十进制数转化为26进制数。</p>
 
-<pre><code>char *convertToTitle(int n) {
-    int mod;
-    int div;
-    int i1 = 0, i2 = 0;
-    char* p1 = NULL;
-    char* p2 = NULL;
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">char</span> <span class="o">*</span><span class="nf">convertToTitle</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">mod</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">div</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">i1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">i2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">char</span><span class="o">*</span> <span class="n">p1</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="kt">char</span><span class="o">*</span> <span class="n">p2</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        
+        <span class="n">p1</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">);</span>
+        <span class="n">p2</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">);</span>
+        
+        <span class="k">while</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">){</span>
+            <span class="n">div</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">26</span><span class="p">;</span>
+            <span class="n">mod</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">26</span><span class="p">;</span>
+            
+            <span class="n">p1</span><span class="p">[</span><span class="n">i1</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">mod</span> <span class="o">+</span> <span class="sc">&#39;A&#39;</span><span class="p">;</span>
+            
+            <span class="n">n</span> <span class="o">=</span> <span class="n">div</span><span class="p">;</span>
+        <span class="p">}</span>
+        
+        <span class="k">for</span><span class="p">(</span><span class="n">i2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i2</span> <span class="o">&lt;=</span> <span class="n">i1</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">i2</span><span class="o">++</span><span class="p">){</span>
+            <span class="n">p2</span><span class="p">[</span><span class="n">i2</span><span class="p">]</span> <span class="o">=</span> <span class="n">p1</span><span class="p">[</span><span class="n">i1</span><span class="o">-</span><span class="n">i2</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+        <span class="p">}</span>
+        <span class="n">p2</span><span class="p">[</span><span class="n">i2</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+        
+        <span class="k">return</span> <span class="n">p2</span><span class="p">;</span>
+    <span class="p">}</span></code></pre></div>
 
-    p1 = (char*)malloc(sizeof(char)*100);
-    p2 = (char*)malloc(sizeof(char)*100);
-
-    while (n &gt; 0){
-        div = (n-1) / 26;
-        mod = (n-1) % 26;
-
-        p1[i1++] = mod + 'A';
-
-        n = div;
-    }
-
-    for(i2 = 0; i2 &lt;= i1-1; i2++){
-        p2[i2] = p1[i1-i2-1];
-    }
-    p2[i2] = '\0';
-
-    return p2;
-}
-</code></pre>
 
 <h2>171 Excel Sheet Column Number</h2>
 
 <p>上一题的逆过程。代码如下：</p>
 
-<pre><code>int titleToNumber(char *s) {
-    int i = 0;
-    int num = 0;
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">titleToNumber</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
-    while(s[i] != '\0'){
-        num *= 26;
-        num += s[i] - 'A' + 1;
-        i ++;
-    }
+        <span class="k">while</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;\0&#39;</span><span class="p">){</span>
+            <span class="n">num</span> <span class="o">*=</span> <span class="mi">26</span><span class="p">;</span>
+            <span class="n">num</span> <span class="o">+=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="sc">&#39;A&#39;</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="n">i</span> <span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
 
-    return num;
-}
-</code></pre>
+        <span class="k">return</span> <span class="n">num</span><span class="p">;</span>
+    <span class="p">}</span></code></pre></div>
+
 
 <h2>69 Sqrt(x)</h2>
 
 <p>使用牛顿迭代法解方程，Implement int sqrt(int x)。Compute and return the square root of x。即求解<code>f(x)=x^2-N</code>与x轴的交点。找出迭代方程后就比较好理解了。代码如下：</p>
 
-<pre><code>int mySqrt(int x) {
-    double x0, x1, diff;
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">mySqrt</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">double</span> <span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">diff</span><span class="p">;</span>
 
-    if (x == 0)    // 特殊情况
-        return 0;
+        <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>    <span class="c1">// 特殊情况</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 
-    x1 = x;
-    do{
-        x0 = x1;
-        x1 = ((double)x / x0 + x0) / 2;
-        diff = abs(x1 - x0);
-    }
-    while ( diff &gt; 0.001 );
+        <span class="n">x1</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+        <span class="k">do</span><span class="p">{</span>
+            <span class="n">x0</span> <span class="o">=</span> <span class="n">x1</span><span class="p">;</span>
+            <span class="n">x1</span> <span class="o">=</span> <span class="p">((</span><span class="kt">double</span><span class="p">)</span><span class="n">x</span> <span class="o">/</span> <span class="n">x0</span> <span class="o">+</span> <span class="n">x0</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+            <span class="n">diff</span> <span class="o">=</span> <span class="n">abs</span><span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">while</span> <span class="p">(</span> <span class="n">diff</span> <span class="o">&gt;</span> <span class="mf">0.001</span> <span class="p">);</span>
+        
+        <span class="k">return</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">x1</span><span class="p">;</span>
+    <span class="p">}</span></code></pre></div>
 
-    return (int)x1;
-}
-</code></pre>
 
 <p>需要注意的是，判断是否结束递归有两种方法，一是判断x0与x1是否无限接近；二是判断<code>f(x1)</code>是否无限接近0。由于第一种方式比较简单，于是采用了第一种。</p>
 
@@ -203,166 +203,168 @@ Design a stack that supports push, pop, top, and retrieving the minimum element 
 
 <p>直接看到给定的默认条件</p>
 
-<pre><code>typedef struct {
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+        
+    <span class="p">}</span> <span class="n">MinStack</span><span class="p">;</span></code></pre></div>
 
-} MinStack;
-</code></pre>
 
 <p>很容易误解这个结构定义的是stack的一个node（之前见太多，都形成习惯了），然后在填充后面方程时就会出现问题。其实这个结构定义的不是一个node，而是整个stack。并且题目在构建stack时给定了最大容量，这样可以简单地使用malloc申请一个连续数组来充当stack，转换思路后马上就ac了。所以思路不能太死板。代码如下：</p>
 
-<pre><code>void minStackCreate(MinStack *stack, int maxSize) {
-    stack-&gt;num_stack = (int*)malloc(sizeof(int)*maxSize);
-    stack-&gt;min_stack = (int*)malloc(sizeof(int)*maxSize);
-    stack-&gt;maxSize = maxSize;
-    stack-&gt;pos = -1;
-}
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">minStackCreate</span><span class="p">(</span><span class="n">MinStack</span> <span class="o">*</span><span class="n">stack</span><span class="p">,</span> <span class="kt">int</span> <span class="n">maxSize</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">stack</span><span class="o">-&gt;</span><span class="n">num_stack</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">*</span><span class="n">maxSize</span><span class="p">);</span>
+        <span class="n">stack</span><span class="o">-&gt;</span><span class="n">min_stack</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">*</span><span class="n">maxSize</span><span class="p">);</span>
+        <span class="n">stack</span><span class="o">-&gt;</span><span class="n">maxSize</span> <span class="o">=</span> <span class="n">maxSize</span><span class="p">;</span>
+        <span class="n">stack</span><span class="o">-&gt;</span><span class="n">pos</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
 
-void minStackPush(MinStack *stack, int element) {
-    stack-&gt;pos += 1;
-    stack-&gt;num_stack[stack-&gt;pos] = element;
-    stack-&gt;min_stack[stack-&gt;pos] = stack-&gt;pos == 0 ?\
-        element : min(element, stack-&gt;min_stack[stack-&gt;pos-1]);
-}
+    <span class="kt">void</span> <span class="nf">minStackPush</span><span class="p">(</span><span class="n">MinStack</span> <span class="o">*</span><span class="n">stack</span><span class="p">,</span> <span class="kt">int</span> <span class="n">element</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">stack</span><span class="o">-&gt;</span><span class="n">pos</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">stack</span><span class="o">-&gt;</span><span class="n">num_stack</span><span class="p">[</span><span class="n">stack</span><span class="o">-&gt;</span><span class="n">pos</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span><span class="p">;</span>
+        <span class="n">stack</span><span class="o">-&gt;</span><span class="n">min_stack</span><span class="p">[</span><span class="n">stack</span><span class="o">-&gt;</span><span class="n">pos</span><span class="p">]</span> <span class="o">=</span> <span class="n">stack</span><span class="o">-&gt;</span><span class="n">pos</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">?</span>\
+            <span class="nl">element</span> <span class="p">:</span> <span class="n">min</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">stack</span><span class="o">-&gt;</span><span class="n">min_stack</span><span class="p">[</span><span class="n">stack</span><span class="o">-&gt;</span><span class="n">pos</span><span class="o">-</span><span class="mi">1</span><span class="p">]);</span>
+    <span class="p">}</span>
 
-void minStackPop(MinStack *stack) {
-    stack-&gt;pos -= 1;
-}
+    <span class="kt">void</span> <span class="nf">minStackPop</span><span class="p">(</span><span class="n">MinStack</span> <span class="o">*</span><span class="n">stack</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">stack</span><span class="o">-&gt;</span><span class="n">pos</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
 
-int minStackTop(MinStack *stack) {
-    return stack-&gt;num_stack[stack-&gt;pos];
-}
+    <span class="kt">int</span> <span class="nf">minStackTop</span><span class="p">(</span><span class="n">MinStack</span> <span class="o">*</span><span class="n">stack</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">stack</span><span class="o">-&gt;</span><span class="n">num_stack</span><span class="p">[</span><span class="n">stack</span><span class="o">-&gt;</span><span class="n">pos</span><span class="p">];</span>
+    <span class="p">}</span>
 
-int minStackGetMin(MinStack *stack) {
-    return stack-&gt;min_stack[stack-&gt;pos];   
-}
+    <span class="kt">int</span> <span class="nf">minStackGetMin</span><span class="p">(</span><span class="n">MinStack</span> <span class="o">*</span><span class="n">stack</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">stack</span><span class="o">-&gt;</span><span class="n">min_stack</span><span class="p">[</span><span class="n">stack</span><span class="o">-&gt;</span><span class="n">pos</span><span class="p">];</span>   
+    <span class="p">}</span>
 
-void minStackDestroy(MinStack *stack) {
-    stack-&gt;pos = -1;
-}
-</code></pre>
+    <span class="kt">void</span> <span class="nf">minStackDestroy</span><span class="p">(</span><span class="n">MinStack</span> <span class="o">*</span><span class="n">stack</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">stack</span><span class="o">-&gt;</span><span class="n">pos</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span></code></pre></div>
+
 
 <h2>162 Find Peak Element</h2>
 
 <p>找到峰值峰值元素。num[i] ≠ num[i+1]，num[-1] = num[n] = -∞。说是最好是用对数复杂度实现，很明显就是二分法实现了。考虑到只需要返回一个峰值元素的下标即可，于是可以采取以下思路：初始化left为0，right为n-1，min为left和right的中值，于是定义两个变量，分别记录mid左边是否为上升，以及右边是否为下降。若mid左边上升，右边下降，则返回mid；若左右都上升，则继续二分查找右边的（因为num[n] = -∞）；若都为下降，则继续二分搜索左边的（num[-1] = -∞）。代码如下：</p>
 
-<pre><code>int findPeakElement(int num[], int n) {
-    int left = 0;
-    int right = n - 1;
-    int mid;
-    int up;
-    int down;
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">findPeakElement</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">right</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">mid</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">up</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">down</span><span class="p">;</span>
 
-    while(left &lt; right){
-        mid = (left + right) &gt;&gt; 1;
+        <span class="k">while</span><span class="p">(</span><span class="n">left</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">){</span>
+            <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">;</span>
 
-        up = ((mid-1) == -1 || num[mid] &gt; num[mid-1]) ? 1 : 0;
-        down = ((mid+1) == n || num[mid] &gt; num[mid+1]) ? 1 : 0;
+            <span class="n">up</span> <span class="o">=</span> <span class="p">((</span><span class="n">mid</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="o">||</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="n">down</span> <span class="o">=</span> <span class="p">((</span><span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">n</span> <span class="o">||</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
 
-        if(up &amp;&amp; down){
-            return mid;
-        }
-        else if(up &amp;&amp; !down){
-            left = mid + 1;
-        }
-        else{
-            right = mid - 1;
-        }
-    }
+            <span class="k">if</span><span class="p">(</span><span class="n">up</span> <span class="o">&amp;&amp;</span> <span class="n">down</span><span class="p">){</span>
+                <span class="k">return</span> <span class="n">mid</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">up</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">down</span><span class="p">){</span>
+                <span class="n">left</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span><span class="p">{</span>
+                <span class="n">right</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
 
-    return left;
-}
-</code></pre>
+        <span class="k">return</span> <span class="n">left</span><span class="p">;</span>
+    <span class="p">}</span></code></pre></div>
+
 
 <h2>153 Find Minimum in Rotated Sorted Array</h2>
 
 <p>和上一题类似，要求找出一个排序后的数组旋转一次（可以理解为左移或者右移N次，但是肯定不等于原数组）得到的数组的最小值，且假设数组中没有重复元素。那就简单多了，二分法，根据mid左右的升降情况判断mid是否为转折点，若是，考虑一下多种情况简单判断一下即可；若不是转折点，则根据num[mid]与num[left]或num[right]的大小关系判断下一步应该往左或者往右进行。代码如下：</p>
 
-<pre><code>int findMin(int num[], int n) {
-    int left = 0;
-    int right = n - 1;
-    int direct1;    // 0 向上
-    int direct2;    // 1 向下
-    int mid;
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">findMin</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">right</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">direct1</span><span class="p">;</span>    <span class="c1">// 0 向上</span>
+        <span class="kt">int</span> <span class="n">direct2</span><span class="p">;</span>    <span class="c1">// 1 向下</span>
+        <span class="kt">int</span> <span class="n">mid</span><span class="p">;</span>
+        
+        <span class="k">if</span><span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">num</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">num</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">?</span> <span class="n">num</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">:</span> <span class="n">num</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+        
+        <span class="k">while</span><span class="p">(</span><span class="n">left</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">){</span>
+            <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">;</span>
+            
+            <span class="n">direct1</span> <span class="o">=</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">?</span> <span class="mi">0</span> <span class="o">:</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="n">direct2</span> <span class="o">=</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">?</span> <span class="mi">0</span> <span class="o">:</span> <span class="mi">1</span><span class="p">;</span>
 
-    if(n == 1)
-        return num[0];
-    if(n == 2)
-        return num[0] &lt; num[1] ? num[0] : num[1];
+            <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">direct1</span> <span class="o">&amp;&amp;</span> <span class="n">direct2</span><span class="p">){</span>
+                <span class="k">return</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">?</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">:</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+            <span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">direct1</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">direct2</span><span class="p">){</span>
+                <span class="k">return</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="p">];</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">direct1</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">direct2</span><span class="p">){</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">num</span><span class="p">[</span><span class="n">right</span><span class="p">]){</span>
+                    <span class="n">left</span> <span class="o">=</span> <span class="n">mid</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">else</span><span class="p">{</span>
+                    <span class="n">right</span> <span class="o">=</span> <span class="n">mid</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">else</span><span class="p">{</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">[</span><span class="n">right</span><span class="p">]){</span>
+                    <span class="n">left</span> <span class="o">=</span> <span class="n">mid</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">else</span><span class="p">{</span>
+                    <span class="n">right</span> <span class="o">=</span> <span class="n">mid</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        
+        <span class="k">return</span> <span class="n">num</span><span class="p">[</span><span class="n">left</span><span class="p">];</span>
+    <span class="p">}</span></code></pre></div>
 
-    while(left &lt; right){
-        mid = (left + right) &gt;&gt; 1;
-
-        direct1 = num[mid-1] &lt; num[mid] ? 0 : 1;
-        direct2 = num[mid+1] &gt; num[mid] ? 0 : 1;
-
-        if(!direct1 &amp;&amp; direct2){
-            return num[mid-1] &lt; num[mid+1] ? num[mid-1] : num[mid+1];
-        }else if(direct1 &amp;&amp; !direct2){
-            return num[mid];
-        }
-        else if(!direct1 &amp;&amp; !direct2){
-            if(num[mid] &gt; num[right]){
-                left = mid;
-            }
-            else{
-                right = mid;
-            }
-        }
-        else{
-            if(num[mid] &lt; num[right]){
-                left = mid;
-            }
-            else{
-                right = mid;
-            }
-        }
-    }
-
-    return num[left];
-}
-</code></pre>
 
 <p>后来才发现这个题根本不用考虑这么复杂。。。貌似给定的测试样例只有递增数组，没有递减数组，于是代码简化为：</p>
 
-<pre><code>int findMin(int num[], int n) {
-    int left = 0;
-    int right = n - 1;
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">findMin</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">right</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+            
+        <span class="k">while</span><span class="p">(</span><span class="n">left</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">[</span><span class="n">right</span><span class="p">])</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="n">num</span><span class="p">[</span><span class="n">left</span><span class="p">];</span>
+            <span class="p">}</span>
+            
+            <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">left</span> <span class="o">+</span> <span class="p">(</span><span class="n">right</span><span class="o">-</span><span class="n">left</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="p">])</span> <span class="p">{</span>
+                <span class="n">left</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">right</span> <span class="o">=</span> <span class="n">mid</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">num</span><span class="p">[</span><span class="n">left</span><span class="p">];</span>
+    <span class="p">}</span></code></pre></div>
 
-    while(left &lt; right)
-    {
-        if(num[left] &lt; num[right]) {
-            return num[left];
-        }
-
-        int mid = left + (right-left)/2;
-        if(num[left] &lt;= num[mid]) {
-            left = mid + 1;
-        } else {
-            right = mid;
-        }
-    }
-    return num[left];
-}
-</code></pre>
 
 <h2>154  Find Minimum in Rotated Sorted Array II</h2>
 
 <p>这道题是Search in Rotated Sorted Array的扩展，思路在Find Minimum in Rotated Sorted Array中已经介绍过了，和Find Minimum in Rotated Sorted Array唯一的区别是这道题目中元素会有重复的情况出现。不过正是因为这个条件的出现，影响到了算法的时间复杂度。原来我们是依靠中间和边缘元素的大小关系，来判断哪一半是不受rotate影响，仍然有序的。而现在因为重复的出现，如果我们遇到中间和边缘相等的情况，我们就无法判断哪边有序，因为哪边都有可能有序。假设原数组是{1,2,3,3,3,3,3}，那么旋转之后有可能是{3,3,3,3,3,1,2}，或者{3,1,2,3,3,3,3}，这样的我们判断左边缘和中心的时候都是3，我们并不知道应该截掉哪一半。解决的办法只能是对边缘移动一步，直到边缘和中间不在相等或者相遇，这就导致了会有不能切去一半的可能。所以最坏情况就会出现每次移动一步，总共移动n此，算法的时间复杂度变成O(n)。既然是O(n)，最简单的做法即暴力破解。</p>
 
-<pre><code>int findMin(int num[], int n) {
-    int i = 0;
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">findMin</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        
+        <span class="k">if</span><span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">num</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+        
+        <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">++</span><span class="p">){</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+                <span class="k">return</span> <span class="n">num</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="p">}</span>
+        
+        <span class="k">return</span> <span class="n">num</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="p">}</span></code></pre></div>
 
-    if(n == 1)
-        return num[0];
 
-    for(i = 1; i &lt;= n - 1; i ++){
-        if(num[i] &lt; num[i - 1])
-            return num[i];
-    }
 
-    return num[0];
-}
-</code></pre>
 
 <!--more-->
 

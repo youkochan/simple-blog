@@ -41,8 +41,8 @@
           <!--a class="macnote pl__all" href="/mac/note/2015/04/08/intsall-mysql-python-in-mac.html"><span class="pl__circle"></span><span class="pl__title">在mac上安装Python模块MySQLdb</span><span class="pl__date">Apr 2015</span></a-->
           <a class=" pl__all" href="/mac/note/2015/04/08/intsall-mysql-python-in-mac.html"><span class="pl__circle"></span><span class="pl__title">在mac上安装Python模块MySQLdb</span><span class="pl__date">Apr 2015</span></a>
         
-          <!--a class=" pl__all" href="/2015/04/07/leetcode-note-3.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-3</span><span class="pl__date">Apr 2015</span></a-->
-          <a class=" pl__all" href="/2015/04/07/leetcode-note-3.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-3</span><span class="pl__date">Apr 2015</span></a>
+          <!--a class="leetcode pl__all" href="/leetcode/2015/04/07/leetcode-note-3.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-3</span><span class="pl__date">Apr 2015</span></a-->
+          <a class=" pl__all" href="/leetcode/2015/04/07/leetcode-note-3.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-3</span><span class="pl__date">Apr 2015</span></a>
         
           <!--a class="code pl__all" href="/code/2015/03/30/leetcode-note-2.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-2</span><span class="pl__date">Mar 2015</span></a-->
           <a class=" pl__all" href="/code/2015/03/30/leetcode-note-2.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-2</span><span class="pl__date">Mar 2015</span></a>
@@ -84,35 +84,20 @@
   <h1 id="post__title" data-identifier="20150408">在mac上安装Python模块MySQLdb</h1>
   <p>最近由于有必要使用MySQLdb，而使用pycharm自带的包管理界面进行安装时发现无论如何都安装失败，于是采用了手动安装的方式。具体步骤如下：</p>
 
-<ol>
-<li>下载 MySQL for Python。<a href="http://sourceforge.net/projects/mysql-python/files/mysql-python/">链接</a></li>
-</ol>
+<p>1 下载 MySQL for Python。<a href="http://sourceforge.net/projects/mysql-python/files/mysql-python/">链接</a>，或者采用以下代码</p>
+
+<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">wget http://sourceforge.net/projects/mysql-python/files/mysql-python/1.2.3/MySQL-python-1.2.3.tar.gz</span></code></pre></div>
 
 
-<p>或者采用以下代码</p>
+<p>2 解压执行<code>python setup.py build</code>若出现<code>EnvironmentError: mysql_config not found</code>问题则应该首先修改<code>setup_posix.py</code>文件。将<code>mysql_config.path = "mysql_config"</code>修改为：<code>mysql_config.path = "/usr/local/mysql/bin/mysql_config"</code></p>
 
-<pre><code>wget http://sourceforge.net/projects/mysql-python/files/mysql-python/1.2.3/MySQL-python-1.2.3.tar.gz
-</code></pre>
+<p>3 执行（可能需要sudo）：</p>
 
-<ol>
-<li>解压执行<code>python setup.py build</code>若出现<code>EnvironmentError: mysql_config not found</code>问题则应该首先修改<code>setup_posix.py</code>文件。将</li>
-</ol>
+<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">python setup.py build</span>
+<span class="go">python setup.py install</span></code></pre></div>
 
 
-<p><code>mysql_config.path = "mysql_config"</code></p>
 
-<p>修改为：</p>
-
-<p><code>mysql_config.path = "/usr/local/mysql/bin/mysql_config"</code></p>
-
-<ol>
-<li>执行（可能需要sudo）：</li>
-</ol>
-
-
-<pre><code>python setup.py build
-python setup.py install
-</code></pre>
 
 <!--more-->
 

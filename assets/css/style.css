@@ -410,13 +410,17 @@ h1, h2, h3, h4, h5, h6 {
 #post__content a {
   color: #7d8b99;
   word-break: break-all; }
-  #post__content a:hover {
-    text-decoration: underline; }
+#post__content a:hover {
+  text-decoration: underline; }
 #post__content img {
-  max-width: 100%;
-  max-height: 500px;
+  /*yeqing*/
+  width: 100%;
+
+  /*max-width: 100%;
+  max-height: 500px;*/
   border: 2px solid #e5e8ec;
   border-radius: 5px; }
+
 
 strong {
   font-weight: 600; }
@@ -929,12 +933,13 @@ pre {
   font: .9em/1.5 Consolas, Monaco, 'Andale Mono', monospace;
   border: 1px solid #e5e8ec;
   border-radius: 3px;
-  background-color: #fdfdfd;
-  background-image: -webkit-linear-gradient(transparent 50%, rgba(69, 142, 209, 0.04) 50%);
-  background-image: -moz-linear-gradient(transparent 50%, rgba(69, 142, 209, 0.04) 50%);
-  background-image: -ms-linear-gradient(transparent 50%, rgba(69, 142, 209, 0.04) 50%);
-  background-image: -o-linear-gradient(transparent 50%, rgba(69, 142, 209, 0.04) 50%);
-  background-image: linear-gradient(transparent 50%, rgba(69, 142, 209, 0.04) 50%);
+  /*background-color: #fdfdfd;*/
+  background-color: #111111;
+  background-image: -webkit-linear-gradient(transparent 50%, rgba(69, 142, 209, 0.08) 50%);
+  background-image: -moz-linear-gradient(transparent 50%, rgba(69, 142, 209, 0.08) 50%);
+  background-image: -ms-linear-gradient(transparent 50%, rgba(69, 142, 209, 0.08) 50%);
+  background-image: -o-linear-gradient(transparent 50%, rgba(69, 142, 209, 0.08) 50%);
+  background-image: linear-gradient(transparent 50%, rgba(69, 142, 209, 0.08) 50%);
   background-size: 3em 3em;
   background-origin: content-box;
   overflow: auto;
@@ -965,7 +970,10 @@ pre > code {
   padding: .25em .5em .1em;
   color: black;
   font: .85em Consolas, Monaco, 'Andale Mono', monospace;
-  background: #fafafa;
+  /*background: #fafafa;*/
+  /*yeqing*/
+  background-color: rgba(71, 192, 221, 0.3);
+  
   border: 1px solid #e5e8ec;
   border-radius: .25em;
   vertical-align: 2px; }

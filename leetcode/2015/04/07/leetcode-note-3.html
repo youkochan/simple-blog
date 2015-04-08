@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <!--[if lte IE 9]><meta http-equiv="refresh" content="0;url=/ie.html"><![endif]-->
 
-    <title>404 Not Found Error</title>
+    <title>leetcode-note-3</title>
     <meta name="description" content="">
 
     <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
@@ -81,8 +81,53 @@
     <div id="post">
       <div id="pjax">
         <article id="post__content">
-  <h1 id="post__title">404 Not Found Error</h1>
+  <h1 id="post__title" data-identifier="20150407">leetcode-note-3</h1>
+  <h2>136  Single Number</h2>
+
+<p>除一个元素外，每个元素出现两次。找出这个元素。无注意事项，按异或做。线性时间复杂度，可以不使用额外空间。</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">singleNumber</span><span class="p">(</span><span class="kt">int</span> <span class="n">A</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">while</span><span class="p">(</span><span class="o">--</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">){</span>
+            <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">^=</span> <span class="n">A</span><span class="p">[</span><span class="n">n</span><span class="p">];</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="p">}</span></code></pre></div>
+
+
+<h2>137 Single Number II</h2>
+
+<p>除一个元素外，每个元素出现三次。找出这个元素。线性时间复杂度，可以不使用额外空间。每次循环先计算 twos，即出现两次的 1 的分布，然后计算出现一次的 1 的分布，接着 二者进行与操作得到出现三次的 1 的分布情况，然后对 threes 取反，再与 ones、twos进行与操作，这样的目的是将出现了三次的位置清零。</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">singleNumber</span><span class="p">(</span><span class="kt">int</span> <span class="n">A</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">ones</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">twos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">threes</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        
+        <span class="k">while</span> <span class="p">(</span><span class="o">--</span><span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">twos</span> <span class="o">|=</span> <span class="n">ones</span> <span class="o">&amp;</span> <span class="n">A</span><span class="p">[</span><span class="n">n</span><span class="p">];</span>
+            <span class="n">ones</span> <span class="o">^=</span> <span class="n">A</span><span class="p">[</span><span class="n">n</span><span class="p">];</span>
+            <span class="n">threes</span> <span class="o">=</span> <span class="n">ones</span> <span class="o">&amp;</span> <span class="n">twos</span><span class="p">;</span>
+            <span class="n">ones</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">threes</span><span class="p">;</span>
+            <span class="n">twos</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">threes</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">ones</span><span class="p">;</span>
+    <span class="p">}</span></code></pre></div>
+
+
 </article> <!-- end #post__content -->
+
+<div id="post__share">
+  <a id="icon-twitter" class="fontello" href="https://twitter.com/intent/tweet?url=place_your_url_here/leetcode/2015/04/07/leetcode-note-3.html&text=leetcode-note-3" target="_blank"></a>
+  <a id="icon-cc" class="fontello" href="http://creativecommons.org/licenses/by-nc-sa/3.0" target="_blank"></a>
+  <a id="icon-weibo" class="fontello" href="http://v.t.sina.com.cn/share/share.php?url=place_your_url_here/leetcode/2015/04/07/leetcode-note-3.html&title=leetcode-note-3" target="_blank"></a>
+</div> <!-- end #post__share -->
+
+<div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink" target="_blank">Loading Disqus comments...</a>
+</div> <!-- end #disqus_thread -->
+
+<p id="copyright">Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a>&nbsp;&nbsp;|&nbsp;&nbsp;Theme <a href="https://github.com/P233/3-Jekyll" target="_blank">3-Jekyll</a></p>
       </div> <!-- end #pjax -->
 
       <div id="post__toc-trigger">

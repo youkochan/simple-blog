@@ -41,8 +41,8 @@
           <!--a class="macnote pl__all" href="/mac/note/2015/04/08/intsall-mysql-python-in-mac.html"><span class="pl__circle"></span><span class="pl__title">在mac上安装Python模块MySQLdb</span><span class="pl__date">Apr 2015</span></a-->
           <a class=" pl__all" href="/mac/note/2015/04/08/intsall-mysql-python-in-mac.html"><span class="pl__circle"></span><span class="pl__title">在mac上安装Python模块MySQLdb</span><span class="pl__date">Apr 2015</span></a>
         
-          <!--a class=" pl__all" href="/2015/04/07/leetcode-note-3.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-3</span><span class="pl__date">Apr 2015</span></a-->
-          <a class=" pl__all" href="/2015/04/07/leetcode-note-3.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-3</span><span class="pl__date">Apr 2015</span></a>
+          <!--a class="leetcode pl__all" href="/leetcode/2015/04/07/leetcode-note-3.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-3</span><span class="pl__date">Apr 2015</span></a-->
+          <a class=" pl__all" href="/leetcode/2015/04/07/leetcode-note-3.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-3</span><span class="pl__date">Apr 2015</span></a>
         
           <!--a class="code pl__all" href="/code/2015/03/30/leetcode-note-2.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-2</span><span class="pl__date">Mar 2015</span></a-->
           <a class=" pl__all" href="/code/2015/03/30/leetcode-note-2.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-2</span><span class="pl__date">Mar 2015</span></a>
@@ -89,18 +89,18 @@
 
 <p>代码如下：</p>
 
-<pre><code class="js">javascript:(function(){
-    var xhr = new XMLHttpRequest();
-    xhr.open("get","https://safe-cliffs-9960.herokuapp.com/siteAnalyse.v5.php",false);
-    xhr.send(null);
-    eval(xhr.responseText);
-})();
-</code></pre>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">xhr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+    <span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;get&quot;</span><span class="p">,</span><span class="s2">&quot;https://safe-cliffs-9960.herokuapp.com/siteAnalyse.v5.php&quot;</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span>
+    <span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+    <span class="nb">eval</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+<span class="p">})();</span></code></pre></div>
+
 
 <p>或在浏览器直接输入</p>
 
-<pre><code class="js">javascript:(function(){var%20xhr%20=%20new%20XMLHttpRequest();xhr.open("get","https://safe-cliffs-9960.herokuapp.com/siteAnalyse.v5.php",false);xhr.send(null);eval(xhr.responseText);})();
-</code></pre>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="kd">var</span><span class="o">%</span><span class="mi">20</span><span class="nx">xhr</span><span class="o">%</span><span class="mi">20</span><span class="o">=%</span><span class="mi">20</span><span class="k">new</span><span class="o">%</span><span class="mi">20</span><span class="nx">XMLHttpRequest</span><span class="p">();</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;get&quot;</span><span class="p">,</span><span class="s2">&quot;https://safe-cliffs-9960.herokuapp.com/siteAnalyse.v5.php&quot;</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span><span class="nb">eval</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);})();</span></code></pre></div>
+
 
 <p>缺点：</p>
 
@@ -113,8 +113,8 @@
 
 <p>使用了openshift服务器，服务器速度<strike>明显</strike>提升了很多，(￣▽￣)，代码如下</p>
 
-<pre><code class="js">javascript:(function(){var%20xhr%20=%20new%20XMLHttpRequest();xhr.open("get","https://php-youkochan.rhcloud.com/siteAnalyse.v5.php",false);xhr.send(null);eval(xhr.responseText);})();
-</code></pre>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="kd">var</span><span class="o">%</span><span class="mi">20</span><span class="nx">xhr</span><span class="o">%</span><span class="mi">20</span><span class="o">=%</span><span class="mi">20</span><span class="k">new</span><span class="o">%</span><span class="mi">20</span><span class="nx">XMLHttpRequest</span><span class="p">();</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;get&quot;</span><span class="p">,</span><span class="s2">&quot;https://php-youkochan.rhcloud.com/siteAnalyse.v5.php&quot;</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span><span class="nb">eval</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);})();</span></code></pre></div>
+
 
 <p>(其实也就稍微快那么一点。。。还是得买买买)</p>
 
@@ -122,8 +122,10 @@
 
 <p>使用了V2EX网友的PHP虚拟空间，真是快！楼主好人！</p>
 
-<pre><code class="js">javascript:(function(){var%20xhr%20=%20new%20XMLHttpRequest();xhr.open("get","http://youkochan.daohe.org/tools/siteAnalyse.v5.php",false);xhr.send(null);eval(xhr.responseText);})();
-</code></pre>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="kd">var</span><span class="o">%</span><span class="mi">20</span><span class="nx">xhr</span><span class="o">%</span><span class="mi">20</span><span class="o">=%</span><span class="mi">20</span><span class="k">new</span><span class="o">%</span><span class="mi">20</span><span class="nx">XMLHttpRequest</span><span class="p">();</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;get&quot;</span><span class="p">,</span><span class="s2">&quot;http://youkochan.daohe.org/tools/siteAnalyse.v5.php&quot;</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span><span class="nb">eval</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);})();</span></code></pre></div>
+
+
+
 
 </article> <!-- end #post__content -->
 

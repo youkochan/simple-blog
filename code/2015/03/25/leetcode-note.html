@@ -41,8 +41,8 @@
           <!--a class="macnote pl__all" href="/mac/note/2015/04/08/intsall-mysql-python-in-mac.html"><span class="pl__circle"></span><span class="pl__title">在mac上安装Python模块MySQLdb</span><span class="pl__date">Apr 2015</span></a-->
           <a class=" pl__all" href="/mac/note/2015/04/08/intsall-mysql-python-in-mac.html"><span class="pl__circle"></span><span class="pl__title">在mac上安装Python模块MySQLdb</span><span class="pl__date">Apr 2015</span></a>
         
-          <!--a class=" pl__all" href="/2015/04/07/leetcode-note-3.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-3</span><span class="pl__date">Apr 2015</span></a-->
-          <a class=" pl__all" href="/2015/04/07/leetcode-note-3.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-3</span><span class="pl__date">Apr 2015</span></a>
+          <!--a class="leetcode pl__all" href="/leetcode/2015/04/07/leetcode-note-3.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-3</span><span class="pl__date">Apr 2015</span></a-->
+          <a class=" pl__all" href="/leetcode/2015/04/07/leetcode-note-3.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-3</span><span class="pl__date">Apr 2015</span></a>
         
           <!--a class="code pl__all" href="/code/2015/03/30/leetcode-note-2.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-2</span><span class="pl__date">Mar 2015</span></a-->
           <a class=" pl__all" href="/code/2015/03/30/leetcode-note-2.html"><span class="pl__circle"></span><span class="pl__title">leetcode-note-2</span><span class="pl__date">Mar 2015</span></a>
@@ -113,42 +113,42 @@
 
 <p>通过一次交易，实现利润最大。通过一次遍历，使用一个变量记录遍历当前最低价格，使用一个变量记录当前最大差价。一次遍历即可。代码如下：</p>
 
-<pre><code>int maxProfit(int prices[], int n){
-    int i;
-    int low = -1;
-    int max = 0; 
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="kt">int</span> <span class="n">prices</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+        <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">low</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">max</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> 
+        
+        <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">low</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">low</span><span class="p">)</span>
+                <span class="n">low</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">low</span> <span class="o">&gt;</span> <span class="n">max</span><span class="p">)</span>
+                <span class="n">max</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">low</span><span class="p">;</span>
+        <span class="p">}</span> 
+        <span class="k">return</span> <span class="n">max</span><span class="p">;</span>
+    <span class="p">}</span></code></pre></div>
 
-    for(i = 0; i&lt;= n - 1; i++){
-        if(low &lt; 0 || prices[i] &lt; low)
-            low = prices[i];
-        if(prices[i] - low &gt; max)
-            max = prices[i] - low;
-    } 
-    return max;
-}
-</code></pre>
 
 <h2>122 Best Time to Buy and Sell Stock II</h2>
 
 <p>通过多次交易，实现利润最大。这个由于交易次数不限，所以只需要把所有后一天比前一天增加的价格求和就可以了。一次遍历，代码如下：</p>
 
-<pre><code>int maxProfit(int prices[], int n){
-    int i = 0;
-    int max = 0;
-    int d = 0;
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="kt">int</span> <span class="n">prices</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">max</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        
+        <span class="k">if</span><span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+        
+        <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">d</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">max</span> <span class="o">+=</span> <span class="n">d</span><span class="p">;</span>
+        <span class="p">}</span>
+        
+        <span class="k">return</span> <span class="n">max</span><span class="p">;</span>
+    <span class="p">}</span></code></pre></div>
 
-    if(n == 1)
-        return 0;
-
-    for(i = 1; i &lt;= n - 1; i++){
-        d = prices[i] - prices[i-1];
-        if(d &gt; 0)
-            max += d;
-    }
-
-    return max;
-}
-</code></pre>
 
 <h2>123 Best Time to Buy and Sell Stock III</h2>
 
@@ -160,55 +160,55 @@ dp2[i-1] = max( dp2[i], maxPrice-prices[i-1] )</p></blockquote>
 
 <p>其中， minPrice以及maxPrice分别记录递归过程中的最小以及最大值。代码如下：</p>
 
-<pre><code>int max(int n1, int n2){
-    return n1 &gt; n2 ? n1 : n2;
-}
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">max</span><span class="p">(</span><span class="kt">int</span> <span class="n">n1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n2</span><span class="p">){</span>
+        <span class="k">return</span> <span class="n">n1</span> <span class="o">&gt;</span> <span class="n">n2</span> <span class="o">?</span> <span class="nl">n1</span> <span class="p">:</span> <span class="n">n2</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="kt">int</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="kt">int</span> <span class="n">prices</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">int</span><span class="o">*</span> <span class="n">dp1</span><span class="p">;</span>  <span class="c1">// [0,...,i] 最大收益</span>
+        <span class="kt">int</span><span class="o">*</span> <span class="n">dp2</span><span class="p">;</span>  <span class="c1">// [i,...,n-1] 最大收益</span>
+        <span class="kt">int</span> <span class="n">maxprofit</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">minPrice</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+        <span class="kt">int</span> <span class="n">maxPrice</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+    
+        <span class="n">dp1</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="p">);</span>
+        <span class="n">dp2</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="p">);</span>
+    
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="n">dp1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">dp2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="p">}</span>
+    
+        <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    
+        <span class="c1">// 第一趟遍历找出dp1</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">minPrice</span> <span class="o">&gt;</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                <span class="n">minPrice</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+            <span class="n">dp1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">dp1</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">minPrice</span><span class="p">);</span>
+        <span class="p">}</span>
+    
+        <span class="c1">// 第二趟遍历找出dp2</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="o">--</span><span class="n">i</span><span class="p">){</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">maxPrice</span> <span class="o">&lt;</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                <span class="n">maxPrice</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+            <span class="n">dp2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">dp2</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">maxPrice</span><span class="o">-</span><span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+        <span class="p">}</span>
+    
+        <span class="c1">// 最后找出最大收益</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">dp1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">dp2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">maxprofit</span><span class="p">)</span>
+                <span class="n">maxprofit</span> <span class="o">=</span> <span class="n">dp1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">dp2</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="p">}</span>
+    
+        <span class="n">free</span><span class="p">(</span><span class="n">dp1</span><span class="p">);</span>
+        <span class="n">free</span><span class="p">(</span><span class="n">dp2</span><span class="p">);</span>
+    
+        <span class="k">return</span> <span class="n">maxprofit</span><span class="p">;</span>
+    <span class="p">}</span></code></pre></div>
 
-int maxProfit(int prices[], int n)
-{
-    int* dp1;   // [0,...,i] 最大收益
-    int* dp2;   // [i,...,n-1] 最大收益
-    int maxprofit = 0;
-    int i;
-    int minPrice = prices[0];
-    int maxPrice = prices[n-1];
-
-    dp1 = (int*)malloc(sizeof(int)*n);
-    dp2 = (int*)malloc(sizeof(int)*n);
-
-    for (i = 0; i &lt;= n-1; ++i){
-        dp1[i] = dp2[i] = 0;
-    }
-
-    if (n &lt;= 1)
-        return 0;
-
-    // 第一趟遍历找出dp1
-    for (i = 1; i &lt;= n-1; ++i){
-        if (minPrice &gt; prices[i])
-            minPrice = prices[i];
-        dp1[i] = max(dp1[i-1], prices[i]-minPrice);
-    }
-
-    // 第二趟遍历找出dp2
-    for (i = n-2; i &gt;= 0; --i){
-        if (maxPrice &lt; prices[i])
-            maxPrice = prices[i];
-        dp2[i] = max(dp2[i+1], maxPrice-prices[i]);
-    }
-
-    // 最后找出最大收益
-    for (i = 0; i &lt;= n-1; ++i){
-        if (dp1[i] + dp2[i] &gt; maxprofit)
-            maxprofit = dp1[i] + dp2[i];
-    }
-
-    free(dp1);
-    free(dp2);
-
-    return maxprofit;
-}
-</code></pre>
 
 <h2>188 Best Time to Buy and Sell Stock IV</h2>
 
@@ -232,78 +232,78 @@ local[i][j] = max( global[i-1][j-1] + max( diff, 0 ), local[i-1][j] + diff )</p>
 
 <p>还有一点需要注意的是，题目中的交易次数k有可能远大于天数n，当k远大于n时，问题转化为不限次数求最大利润，即II题的答案。在本题中，可认为k>=n时，问题IV转化为问题II，代码如下：</p>
 
-<pre><code>int max(int n1, int n2){
-    return n1 &gt; n2 ? n1 : n2;
-}
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">max</span><span class="p">(</span><span class="kt">int</span> <span class="n">n1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n2</span><span class="p">){</span>
+        <span class="k">return</span> <span class="n">n1</span> <span class="o">&gt;</span> <span class="n">n2</span> <span class="o">?</span> <span class="nl">n1</span> <span class="p">:</span> <span class="n">n2</span><span class="p">;</span>
+    <span class="p">}</span>
 
-int** getMatrix(int n, int k){
-    int i = 0, j = 0;
-    int** p = NULL;
+    <span class="kt">int</span><span class="o">**</span> <span class="nf">getMatrix</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">){</span>
+        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span><span class="o">**</span> <span class="n">p</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
 
-    p = (int**)malloc(sizeof(int*)*n);
-    for (i = 0; i &lt;= n-1; i++){
-        p[i] = (int*)malloc(sizeof(int)*k);
+        <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">**</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+            <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">*</span><span class="n">k</span><span class="p">);</span>
 
-        for (j = 0; j &lt;= k-1; j ++){
-            p[i][j] = 0;
-        }
-    }
-    return p;
-}
+            <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">++</span><span class="p">){</span>
+                <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
+        <span class="p">}</span>
 
-void freeMatrix(int** p, int n){  // 不可用！会导致超时
-    int i = 0;
+    <span class="kt">void</span> <span class="nf">freeMatrix</span><span class="p">(</span><span class="kt">int</span><span class="o">**</span> <span class="n">p</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>  <span class="c1">// 不可用！会导致超时</span>
+        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
-    for (i = 0; i&lt;= n-1; i++){
-        free(p[i]);
-    }
-    free(p);
-}
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+            <span class="n">free</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+        <span class="p">}</span>
+        <span class="n">free</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+    <span class="p">}</span>
 
-int simpleMaxProfit(int prices[], int n){
-    int i = 0;
-    int max = 0;
-    int d = 0;
+    <span class="kt">int</span> <span class="nf">simpleMaxProfit</span><span class="p">(</span><span class="kt">int</span> <span class="n">prices</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">max</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        
+        <span class="k">if</span><span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+        
+        <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">d</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">max</span> <span class="o">+=</span> <span class="n">d</span><span class="p">;</span>
+        <span class="p">}</span>
+        
+        <span class="k">return</span> <span class="n">max</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    if(n == 1)
-        return 0;
+    <span class="kt">int</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="kt">int</span> <span class="n">k</span><span class="p">,</span> <span class="kt">int</span> <span class="n">prices</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">int</span><span class="o">**</span> <span class="n">g</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="kt">int</span><span class="o">**</span> <span class="n">l</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">diff</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
-    for(i = 1; i &lt;= n - 1; i++){
-        d = prices[i] - prices[i-1];
-        if(d &gt; 0)
-            max += d;
-    }
+        <span class="k">if</span><span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&gt;=</span> <span class="n">n</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">simpleMaxProfit</span><span class="p">(</span><span class="n">prices</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
 
-    return max;
-}
+        <span class="n">g</span> <span class="o">=</span> <span class="n">getMatrix</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">getMatrix</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
 
-int maxProfit(int k, int prices[], int n)
-{
-    int** g = NULL;
-    int** l = NULL;
-    int i = 0;
-    int j = 0;
-    int diff = 0;
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+            <span class="n">diff</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">k</span><span class="p">;</span> <span class="n">j</span> <span class="o">++</span><span class="p">){</span>
+                <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">g</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">max</span><span class="p">(</span><span class="n">diff</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">+</span><span class="n">diff</span><span class="p">);</span>
+                <span class="n">g</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">g</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
 
-    if(n == 1)
-        return 0;
-    if(k &gt;= n / 2)
-        return simpleMaxProfit(prices, n);
+        <span class="k">return</span> <span class="n">g</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">k</span><span class="p">];</span>
+    <span class="p">}</span></code></pre></div>
 
-    g = getMatrix(n, k+1);
-    l = getMatrix(n, k+1);
-
-    for (i = 1; i&lt;= n-1; i++){
-        diff = prices[i] - prices[i-1];
-        for (j = 1; j &lt;= k; j ++){
-            l[i][j] = max(g[i-1][j-1] + max(diff, 0), l[i-1][j]+diff);
-            g[i][j] = max(g[i-1][j], l[i][j]);
-        }
-    }
-
-    return g[n-1][k];
-}
-</code></pre>
 
 <p>PS：写完之后提交了两次，都是<code>Runtime Error</code>，然后发现是自己写的释放内存的操作导致的，所以既然是OJ嘛，申请的内存也没必要替别人free了。是吧。</p>
 
