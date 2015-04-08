@@ -33,7 +33,7 @@ html, body {
   width: 100%;
   height: 100%;
   margin: 0;
-  font: 100 16px/1.5 Avenir, sans-serif;
+  font: 100 16px/1.5 Avenir, fontello, sans-serif;
   -webkit-font-smoothing: subpixel-antialiased;
   -webkit-text-size-adjust: none;
   overflow: hidden; }
@@ -972,7 +972,7 @@ pre > code {
   font: .85em Consolas, Monaco, 'Andale Mono', monospace;
   /*background: #fafafa;*/
   /*yeqing*/
-  background-color: rgba(71, 192, 221, 0.3);
+  background-color: rgba(40, 196, 234, 0.1);
   
   border: 1px solid #e5e8ec;
   border-radius: .25em;
