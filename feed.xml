@@ -5,9 +5,59 @@
     <description></description>
     <link>http://youkochan.github.io/</link>
     <atom:link href="http://youkochan.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 08 Apr 2015 10:02:05 +0800</pubDate>
-    <lastBuildDate>Wed, 08 Apr 2015 10:02:05 +0800</lastBuildDate>
+    <pubDate>Wed, 08 Apr 2015 11:22:27 +0800</pubDate>
+    <lastBuildDate>Wed, 08 Apr 2015 11:22:27 +0800</lastBuildDate>
     <generator>Jekyll v2.5.2</generator>
+    
+      <item>
+        <title>在mac上安装Python模块MySQLdb</title>
+        <description>&lt;p&gt;最近由于有必要使用MySQLdb，而使用pycharm自带的包管理界面进行安装时发现无论如何都安装失败，于是采用了手动安装的方式。具体步骤如下：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;下载 MySQL for Python。&lt;a href=&quot;http://sourceforge.net/projects/mysql-python/files/mysql-python/&quot;&gt;链接&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;p&gt;或者采用以下代码&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;wget http://sourceforge.net/projects/mysql-python/files/mysql-python/1.2.3/MySQL-python-1.2.3.tar.gz
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;解压执行&lt;code&gt;python setup.py build&lt;/code&gt;若出现&lt;code&gt;EnvironmentError: mysql_config not found&lt;/code&gt;问题则应该首先修改&lt;code&gt;setup_posix.py&lt;/code&gt;文件。将&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;p&gt;&lt;code&gt;mysql_config.path = &quot;mysql_config&quot;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;修改为：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;mysql_config.path = &quot;/usr/local/mysql/bin/mysql_config&quot;&lt;/code&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;执行（可能需要sudo）：&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;pre&gt;&lt;code&gt;python setup.py build
+python setup.py install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;!--more--&gt;
+
+
+
+</description>
+        <pubDate>Wed, 08 Apr 2015 11:13:51 +0800</pubDate>
+        <link>http://youkochan.github.io/mac/note/2015/04/08/intsall-mysql-python-in-mac.html</link>
+        <guid isPermaLink="true">http://youkochan.github.io/mac/note/2015/04/08/intsall-mysql-python-in-mac.html</guid>
+        
+        
+        <category>mac</category>
+        
+        <category>note</category>
+        
+      </item>
     
       <item>
         <title>leetcode-note-3</title>
@@ -1057,39 +1107,6 @@ document.getElementsByTagName(&#39;head&#39;)[0].appendChild(script);
         <guid isPermaLink="true">http://youkochan.github.io/2014/08/18/jie-jue-bo-ke-jia-zai-guo-man-de-wen-ti.html</guid>
         
         <category>octopress</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>解决Yousemite下搜狗BUG</title>
-        <description>&lt;p&gt;今天学完车回来忽然发现电脑开机后就会卡死在选择用户的界面，一开始以为是磁盘问题，于是按&lt;code&gt;command＋R&lt;/code&gt;开机用磁盘工具捣鼓了一番，结果没有用。后来百度了几分钟发现是Yousemite与搜狗输入法之间不太兼容的原因（毕竟测试版），于是按照网上的教程进行了一些修改。&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-
-&lt;p&gt;步骤：&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;强制关机重启，开机时按住 command+s 进入单用户模式；&lt;/li&gt;
-&lt;li&gt;输入/sbin/mount空格-uaw，回车；&lt;/li&gt;
-&lt;li&gt;输入rm空格/var/db/.AppleSetupDone，回车；&lt;/li&gt;
-&lt;li&gt;输入reboot，回车；&lt;/li&gt;
-&lt;li&gt;系统重启后会进入创建新用户向导，简单配置即可，因为是临时用户，无需apple ID，无需同步；&lt;/li&gt;
-&lt;li&gt;进入系统后，下载搜狗输入法dmg安装包，然后打开dmg，卸载输入法；&lt;/li&gt;
-&lt;li&gt;注销，重新进入原先的那个用户，删除刚临时创建的用户。完成。&lt;/li&gt;
-&lt;/ol&gt;
-
-
-&lt;p&gt;由于我在装搜狗输入法时很机智地留下了dmg包中的卸载app，于是只要登录新用户接着运行之即可。&lt;/p&gt;
-
-&lt;p&gt;via：&lt;a href=&quot;http://www.v2ex.com/t/116066&quot;&gt;http://www.v2ex.com/t/116066&lt;/a&gt;&lt;/p&gt;
-</description>
-        <pubDate>Sun, 17 Aug 2014 10:43:46 +0800</pubDate>
-        <link>http://youkochan.github.io/2014/08/17/sougou-bug.html</link>
-        <guid isPermaLink="true">http://youkochan.github.io/2014/08/17/sougou-bug.html</guid>
-        
-        <category>mac</category>
         
         
       </item>
