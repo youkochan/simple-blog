@@ -114,6 +114,45 @@
     <span class="p">}</span></code></pre></div>
 
 
+<h2>54 Spiral Matrix</h2>
+
+<p>Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order. 螺旋形输出数组，用四个变量记录上下左右四个方向可以达到的最远位置（即边界线），然后循环输出即可，每次换方向时更新边界线的值。特殊一点的情况在于多行一列的矩阵，若遍历过程中不达到边界线则会造成死循环（在当时那个错误的代码环境下）。通过的代码如下，应该能有更简洁的写法。</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="o">*</span><span class="nf">spiralOrder</span><span class="p">(</span><span class="kt">int</span><span class="o">**</span> <span class="n">matrix</span><span class="p">,</span> <span class="kt">int</span> <span class="n">numRows</span><span class="p">,</span> <span class="kt">int</span> <span class="n">numColumns</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span><span class="o">*</span> <span class="n">result</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">top</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">right</span> <span class="o">=</span> <span class="n">numColumns</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">bottom</span> <span class="o">=</span> <span class="n">numRows</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">total</span> <span class="o">=</span> <span class="n">numRows</span> <span class="o">*</span> <span class="n">numColumns</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">*</span> <span class="n">total</span><span class="p">);</span>
+        
+        <span class="k">while</span><span class="p">(</span><span class="n">count</span> <span class="o">&lt;</span> <span class="n">total</span><span class="p">){</span>
+            <span class="k">while</span><span class="p">(</span><span class="n">j</span> <span class="o">&lt;=</span> <span class="n">right</span> <span class="o">&amp;&amp;</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="n">total</span><span class="p">){</span> <span class="n">result</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span> <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span> <span class="n">count</span><span class="o">++</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">;}</span>
+            <span class="n">top</span> <span class="o">++</span><span class="p">;</span>
+            <span class="n">j</span><span class="o">--</span><span class="p">;</span>
+            <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+            <span class="k">while</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="n">bottom</span> <span class="o">&amp;&amp;</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="n">total</span><span class="p">){</span> <span class="n">result</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span> <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span> <span class="n">count</span><span class="o">++</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">;}</span>
+            <span class="n">right</span> <span class="o">--</span><span class="p">;</span>
+            <span class="n">i</span><span class="o">--</span><span class="p">;</span>
+            <span class="n">j</span><span class="o">--</span><span class="p">;</span>
+            <span class="k">while</span><span class="p">(</span><span class="n">j</span> <span class="o">&gt;=</span> <span class="n">left</span> <span class="o">&amp;&amp;</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="n">total</span><span class="p">){</span> <span class="n">result</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span> <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span> <span class="n">count</span><span class="o">++</span><span class="p">;</span> <span class="n">j</span><span class="o">--</span><span class="p">;}</span>
+            <span class="n">bottom</span> <span class="o">--</span><span class="p">;</span>
+            <span class="n">j</span><span class="o">++</span><span class="p">;</span>
+            <span class="n">i</span><span class="o">--</span><span class="p">;</span>
+            <span class="k">while</span><span class="p">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="n">top</span> <span class="o">&amp;&amp;</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="n">total</span><span class="p">){</span> <span class="n">result</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span> <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span> <span class="n">count</span><span class="o">++</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">;}</span>
+            <span class="n">left</span> <span class="o">++</span><span class="p">;</span>
+            <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+            <span class="n">j</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+        
+        <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+    <span class="p">}</span></code></pre></div>
+
+
 </article> <!-- end #post__content -->
 
 <div id="post__share">
