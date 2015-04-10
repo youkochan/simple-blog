@@ -6,8 +6,8 @@
     <atom:link href="http://youkochan.github.io/rss.xml" rel="self" type="application/rss+xml" />
     <description>Simple Blog</description>
     <language>zh-cn</language>
-    <pubDate>Fri, 10 Apr 2015 00:21:07 +0800</pubDate>
-    <lastBuildDate>Fri, 10 Apr 2015 00:21:07 +0800</lastBuildDate>
+    <pubDate>Fri, 10 Apr 2015 13:53:01 +0800</pubDate>
+    <lastBuildDate>Fri, 10 Apr 2015 13:53:01 +0800</lastBuildDate>
 
     
     <item>
@@ -29,6 +29,11 @@
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;python setup.py build&lt;/span&gt;
 &lt;span class=&quot;go&quot;&gt;python setup.py install&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;4 在执行完上述步骤后仍然可能出现&lt;code&gt;import MySQLdb&lt;/code&gt;时的错误，此时需要执行以下指令：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;sudo ln -s /usr/local/mysql/lib/libmysqlclient.18.dylib /usr/lib/libmysqlclient.18.dylib&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 

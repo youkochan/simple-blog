@@ -97,6 +97,11 @@
 <span class="go">python setup.py install</span></code></pre></div>
 
 
+<p>4 在执行完上述步骤后仍然可能出现<code>import MySQLdb</code>时的错误，此时需要执行以下指令：</p>
+
+<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">sudo ln -s /usr/local/mysql/lib/libmysqlclient.18.dylib /usr/lib/libmysqlclient.18.dylib</span></code></pre></div>
+
+
 
 
 <!--more-->
