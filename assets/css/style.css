@@ -952,6 +952,7 @@ pre {
       background: #d6dbe1; }
 
 pre > code {
+  color: #93a1a1; /*by yeqing*/
   font-family: inherit;
   direction: ltr;
   text-align: left;

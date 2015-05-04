@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <!--[if lte IE 9]><meta http-equiv="refresh" content="0;url=/ie.html"><![endif]-->
 
-    <title>js网站结构分析-后续</title>
+    <title>缩小MySQL中ibdata1文件的大小</title>
     <meta name="description" content="">
 
     <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
@@ -84,58 +84,153 @@
     <div id="post">
       <div id="pjax">
         <article id="post__content">
-  <h1 id="post__title" data-identifier="20141212">js网站结构分析-后续</h1>
-  <p>昨天睡觉前通过使用ajax＋eval＋heroku成功绕过了Content-Security-Policy</p>
+  <h1 id="post__title" data-identifier="20150504">缩小MySQL中ibdata1文件的大小</h1>
+  <h2>前言</h2>
 
-<!--more-->
+<p>最近处理数据库的过程中，发现了一个问题，即每次执行<code>drop table</code>指令后，原table所占的磁盘空间并没有减少。之前没有在意这个问题。直到虚拟机的200G空间告罄时才意识到这个问题是多么的严重。因为当时甚至连备份下整个数据库的磁盘空间都没有了。于是决定重新整理数据库，减少MySQL的磁盘占用。</p>
 
+<p>通过上网查阅资料，了解到了磁盘占用问题所在：</p>
 
-<p>代码如下：</p>
+<blockquote><p>MySQL在运行一段时间后，ibdata1的文件会增长大小，就算删除了表的数据，ibdata1的体积也不会减小。由于硬盘空间有限，这样一直膨胀下去磁盘空间接近崩溃。</p></blockquote>
 
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-    <span class="kd">var</span> <span class="nx">xhr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
-    <span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;get&quot;</span><span class="p">,</span><span class="s2">&quot;https://safe-cliffs-9960.herokuapp.com/siteAnalyse.v5.php&quot;</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span>
-    <span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
-    <span class="nb">eval</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
-<span class="p">})();</span></code></pre></div>
+<p>以及：</p>
 
+<blockquote><p>ibdata1里面包含了InnoDB引擎存储的所有索引和数据信息，很可惜MySQL在设计的时候就没有收缩InnoDB表的功能。</p></blockquote>
 
-<p>或在浏览器直接输入</p>
+<p>因此在delete，truncate，drop这些表的时候这个文件大小没有丝毫要减少。并且也没办法直观的看到哪个数据库占用了大量的ibdata1。</p>
 
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="kd">var</span><span class="o">%</span><span class="mi">20</span><span class="nx">xhr</span><span class="o">%</span><span class="mi">20</span><span class="o">=%</span><span class="mi">20</span><span class="k">new</span><span class="o">%</span><span class="mi">20</span><span class="nx">XMLHttpRequest</span><span class="p">();</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;get&quot;</span><span class="p">,</span><span class="s2">&quot;https://safe-cliffs-9960.herokuapp.com/siteAnalyse.v5.php&quot;</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span><span class="nb">eval</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);})();</span></code></pre></div>
+<p>新版的Mysql中已经通过<code>innodb_file_per_table</code>这个选项来解决了，开启该选项后，每个InnoDB表的索引和数据都会按*.ibd命名存储到各个数据库中，但是这个选项默认是不开启的。由于没法去直接收缩InnoDB数据文件，也没办法在一台没有打开innodb_file_per_table选项的机器上直接加上该选项让他工作，必须在安装完Mysql就加上这个选项，所以采用对数据库部分数据进行备份再恢复备份的方式。</p>
+
+<h2>操作过程</h2>
+
+<p>操作之前查看了一下磁盘占用情况，发现只剩下了12G，备份整个数据库已经不可能了。于是仅仅备份了一些已经计算出的结果数据。顺带执行<code>sudo ls -alh /var/lib/mysql</code>发现里面的idata1文件占用了160G的磁盘空间，其中有一大部分空间都是计算过程中的中间结果表格。这些表格所占用的空间并未在<code>drop table</code>操作完成后释放掉。</p>
+
+<h3>系统环境</h3>
+
+<pre><code>yeqing@yeqing-KVM:~$ uname -a
+Linux yeqing-KVM 3.2.0-23-generic-pae #36-Ubuntu SMP Tue Apr 10 22:19:09 UTC 2012 i686 i686 i386 GNU/Linux
+</code></pre>
+
+<h3>MySQL版本</h3>
+
+<pre><code>yeqing@yeqing-KVM:~$ mysql --version
+mysql  Ver 14.14 Distrib 5.5.41, for debian-linux-gnu (i686) using readline 6.2
+</code></pre>
+
+<h3>导出数据</h3>
+
+<p>现在的数据库中有两个database，其中<code>data</code>保存着工单以及话单的原始数据，由于量太大导致无法备份，但是在另外计算机上存有副本，于是可以不进行备份；<code>result</code>保存着各类统计结果，所占空间约20G。但是导出的SQL文件会远小于这个值，因此可以对其进行备份。</p>
+
+<p>执行：</p>
+
+<pre><code>mysqldump -uroot -p result &gt; export_result.sql
+</code></pre>
+
+<p>执行完成后结果如下：</p>
+
+<pre><code>yeqing@yeqing-KVM:~$ ls -alh | grep export
+-rw-rw-r--  1 yeqing yeqing  6.3G  5月  3 03:35 export_result.sql
+</code></pre>
+
+<h3>重新配置MySQL</h3>
+
+<p>停止MySQL服务器并清空所有数据文件</p>
+
+<pre><code>sudo /etc/init.d/mysql stop
+sudo rm -rf /var/lib/mysql/*
+</code></pre>
+
+<p>修改配置文件</p>
+
+<pre><code>sudo vi /etc/mysql/my.cnf
+</code></pre>
+
+<p>在[mysqld]下添加 innodb_file_per_table = 1 或 innodb_file_per_table。</p>
+
+<p>重新构建数据库实例并启动MySQL</p>
+
+<pre><code>/usr/bin/mysql_install_db
+sudo /etc/init.d/mysql start
+</code></pre>
+
+<p>查看配置是否成功</p>
+
+<pre><code>mysql&gt; show variables like '%per_table%';
++-----------------------+-------+
+| Variable_name         | Value |
++-----------------------+-------+
+| innodb_file_per_table | ON    |
++-----------------------+-------+
+1 row in set (0.11 sec)
+</code></pre>
+
+<h3>恢复数据库</h3>
+
+<p>新建数据库result，并导入备份好的数据</p>
+
+<pre><code>mysql -uroot result &lt; export_result.sql
+</code></pre>
+
+<p>查看导入结果</p>
+
+<pre><code>yeqing@yeqing-KVM:~$ sudo ls -alh /var/lib/mysql/result
+drwx------ 2 mysql mysql 4.0K  5月  4 19:10 .
+drwxrwxrwx 6 mysql mysql 4.0K  5月  4 02:40 ..
+-rw-rw---- 1 mysql mysql   65  5月  3 04:55 db.opt
+-rw-rw---- 1 mysql mysql 8.8K  5月  4 18:07 result_cti_data.frm
+-rw-rw---- 1 mysql mysql  21G  5月  4 19:00 result_cti_data.ibd
+-rw-rw---- 1 mysql mysql 8.6K  5月  3 04:56 result_data.frm
+-rw-rw---- 1 mysql mysql  13G  5月  3 13:03 result_data.ibd
+-rw-rw---- 1 mysql mysql 8.5K  5月  3 12:22 result_number.frm
+-rw-rw---- 1 mysql mysql 2.4G  5月  3 12:34 result_number.ibd
+-rw-rw---- 1 mysql mysql 8.6K  5月  3 12:34 result_project_calling_count.frm
+-rw-rw---- 1 mysql mysql  96K  5月  3 12:34 result_project_calling_count.ibd
+-rw-rw---- 1 mysql mysql 8.5K  5月  3 12:34 result_project.frm
+-rw-rw---- 1 mysql mysql 112K  5月  3 12:34 result_project.ibd
+-rw-rw---- 1 mysql mysql 8.5K  5月  3 12:34 result_project_name.frm
+-rw-rw---- 1 mysql mysql 144K  5月  3 12:34 result_project_name.ibd
+-rw-rw---- 1 mysql mysql 8.5K  5月  3 12:34 result_project_user_count.frm
+-rw-rw---- 1 mysql mysql  96K  5月  3 12:34 result_project_user_count.ibd
+-rw-rw---- 1 mysql mysql 8.9K  5月  3 12:34 result_user_info.frm
+</code></pre>
+
+<p>可以发现数据已经成功导入，并且每一个table对应一个idb文件，说明MySQL已经配置成功。当我们再导出表drop后，对应的数据文件idb就会被删除，系统硬盘空间使用就会在正常值范围内。</p>
+
+<p>重置root密码</p>
+
+<pre><code>mysql&gt; SET PASSWORD FOR 'root'@'localhost' = PASSWORD('123456');
+mysql&gt; FLUSH PRIVILEGES;
+</code></pre>
+
+<h2>总结</h2>
+
+<p>使用独立表空间的优点如下：</p>
+
+<ol>
+<li>每个表都有自已独立的表空间。</li>
+<li>每个表的数据和索引都会存在自已的表空间中。</li>
+<li>可以实现单表在不同的数据库中移动。</li>
+<li>空间可以回收
+
+<ul>
+<li><code>Drop table</code>操作自动回收表空间，如果对于统计分析或是日值表，删除大量数据后可以通过alter table TableName engine=innodb;回缩不用的空间。</li>
+<li>对于使innodb-plugin的Innodb使用turncate table也会使空间收缩。</li>
+<li>对于使用独立表空间的表，不管怎么删除，表空间的碎片不会太严重的影响性能，而且还有机会处理。</li>
+</ul>
+</li>
+</ol>
 
 
 <p>缺点：</p>
 
-<ul>
-<li>heroku云服务器速度慢死了次奥，下次看看国内有木有</li>
-</ul>
-
-
-<h3>12-12 22:02 更新</h3>
-
-<p>使用了openshift服务器，服务器速度<strike>明显</strike>提升了很多，(￣▽￣)，代码如下</p>
-
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="kd">var</span><span class="o">%</span><span class="mi">20</span><span class="nx">xhr</span><span class="o">%</span><span class="mi">20</span><span class="o">=%</span><span class="mi">20</span><span class="k">new</span><span class="o">%</span><span class="mi">20</span><span class="nx">XMLHttpRequest</span><span class="p">();</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;get&quot;</span><span class="p">,</span><span class="s2">&quot;https://php-youkochan.rhcloud.com/siteAnalyse.v5.php&quot;</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span><span class="nb">eval</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);})();</span></code></pre></div>
-
-
-<p>(其实也就稍微快那么一点。。。还是得买买买)</p>
-
-<h3>12-22 10:30 更新</h3>
-
-<p>使用了V2EX网友的PHP虚拟空间，真是快！楼主好人！</p>
-
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">javascript</span><span class="o">:</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span><span class="kd">var</span><span class="o">%</span><span class="mi">20</span><span class="nx">xhr</span><span class="o">%</span><span class="mi">20</span><span class="o">=%</span><span class="mi">20</span><span class="k">new</span><span class="o">%</span><span class="mi">20</span><span class="nx">XMLHttpRequest</span><span class="p">();</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;get&quot;</span><span class="p">,</span><span class="s2">&quot;http://youkochan.daohe.org/tools/siteAnalyse.v5.php&quot;</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span><span class="nb">eval</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);})();</span></code></pre></div>
-
-
-
+<p>单表增加过大，如超过100个G。</p>
 
 </article> <!-- end #post__content -->
 
 <div id="post__share">
-  <a id="icon-twitter" class="fontello" href="https://twitter.com/intent/tweet?url=place_your_url_here/2014/12/12/site-analyse-v5.html&text=js网站结构分析-后续" target="_blank"></a>
+  <a id="icon-twitter" class="fontello" href="https://twitter.com/intent/tweet?url=place_your_url_here/mysql/2015/05/04/ibdata1.html&text=缩小MySQL中ibdata1文件的大小" target="_blank"></a>
   <a id="icon-cc" class="fontello" href="http://creativecommons.org/licenses/by-nc-sa/3.0" target="_blank"></a>
-  <a id="icon-weibo" class="fontello" href="http://v.t.sina.com.cn/share/share.php?url=place_your_url_here/2014/12/12/site-analyse-v5.html&title=js网站结构分析-后续" target="_blank"></a>
+  <a id="icon-weibo" class="fontello" href="http://v.t.sina.com.cn/share/share.php?url=place_your_url_here/mysql/2015/05/04/ibdata1.html&title=缩小MySQL中ibdata1文件的大小" target="_blank"></a>
 </div> <!-- end #post__share -->
 
 <div id="disqus_thread">

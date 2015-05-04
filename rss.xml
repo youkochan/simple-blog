@@ -6,9 +6,157 @@
     <atom:link href="http://youkochan.github.io/rss.xml" rel="self" type="application/rss+xml" />
     <description>Simple Blog</description>
     <language>zh-cn</language>
-    <pubDate>Tue, 21 Apr 2015 22:31:52 +0800</pubDate>
-    <lastBuildDate>Tue, 21 Apr 2015 22:31:52 +0800</lastBuildDate>
+    <pubDate>Mon, 04 May 2015 13:19:11 +0800</pubDate>
+    <lastBuildDate>Mon, 04 May 2015 13:19:11 +0800</lastBuildDate>
 
+    
+    <item>
+      <title>缩小MySQL中ibdata1文件的大小</title>
+      <link>http://youkochan.github.io//mysql/2015/05/04/ibdata1.html</link>
+      <pubDate>04 May 2015</pubDate>
+      <author>Youkochan</author>
+      <guid>http://youkochan.github.io//mysql/2015/05/04/ibdata1</guid>
+      <description>&lt;h2&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;最近处理数据库的过程中，发现了一个问题，即每次执行&lt;code&gt;drop table&lt;/code&gt;指令后，原table所占的磁盘空间并没有减少。之前没有在意这个问题。直到虚拟机的200G空间告罄时才意识到这个问题是多么的严重。因为当时甚至连备份下整个数据库的磁盘空间都没有了。于是决定重新整理数据库，减少MySQL的磁盘占用。&lt;/p&gt;
+
+&lt;p&gt;通过上网查阅资料，了解到了磁盘占用问题所在：&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;MySQL在运行一段时间后，ibdata1的文件会增长大小，就算删除了表的数据，ibdata1的体积也不会减小。由于硬盘空间有限，这样一直膨胀下去磁盘空间接近崩溃。&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;以及：&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;ibdata1里面包含了InnoDB引擎存储的所有索引和数据信息，很可惜MySQL在设计的时候就没有收缩InnoDB表的功能。&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;因此在delete，truncate，drop这些表的时候这个文件大小没有丝毫要减少。并且也没办法直观的看到哪个数据库占用了大量的ibdata1。&lt;/p&gt;
+
+&lt;p&gt;新版的Mysql中已经通过&lt;code&gt;innodb_file_per_table&lt;/code&gt;这个选项来解决了，开启该选项后，每个InnoDB表的索引和数据都会按*.ibd命名存储到各个数据库中，但是这个选项默认是不开启的。由于没法去直接收缩InnoDB数据文件，也没办法在一台没有打开innodb_file_per_table选项的机器上直接加上该选项让他工作，必须在安装完Mysql就加上这个选项，所以采用对数据库部分数据进行备份再恢复备份的方式。&lt;/p&gt;
+
+&lt;h2&gt;操作过程&lt;/h2&gt;
+
+&lt;p&gt;操作之前查看了一下磁盘占用情况，发现只剩下了12G，备份整个数据库已经不可能了。于是仅仅备份了一些已经计算出的结果数据。顺带执行&lt;code&gt;sudo ls -alh /var/lib/mysql&lt;/code&gt;发现里面的idata1文件占用了160G的磁盘空间，其中有一大部分空间都是计算过程中的中间结果表格。这些表格所占用的空间并未在&lt;code&gt;drop table&lt;/code&gt;操作完成后释放掉。&lt;/p&gt;
+
+&lt;h3&gt;系统环境&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;yeqing@yeqing-KVM:~$ uname -a
+Linux yeqing-KVM 3.2.0-23-generic-pae #36-Ubuntu SMP Tue Apr 10 22:19:09 UTC 2012 i686 i686 i386 GNU/Linux
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;MySQL版本&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;yeqing@yeqing-KVM:~$ mysql --version
+mysql  Ver 14.14 Distrib 5.5.41, for debian-linux-gnu (i686) using readline 6.2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;导出数据&lt;/h3&gt;
+
+&lt;p&gt;现在的数据库中有两个database，其中&lt;code&gt;data&lt;/code&gt;保存着工单以及话单的原始数据，由于量太大导致无法备份，但是在另外计算机上存有副本，于是可以不进行备份；&lt;code&gt;result&lt;/code&gt;保存着各类统计结果，所占空间约20G。但是导出的SQL文件会远小于这个值，因此可以对其进行备份。&lt;/p&gt;
+
+&lt;p&gt;执行：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysqldump -uroot -p result &amp;gt; export_result.sql
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;执行完成后结果如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;yeqing@yeqing-KVM:~$ ls -alh | grep export
+-rw-rw-r--  1 yeqing yeqing  6.3G  5月  3 03:35 export_result.sql
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;重新配置MySQL&lt;/h3&gt;
+
+&lt;p&gt;停止MySQL服务器并清空所有数据文件&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo /etc/init.d/mysql stop
+sudo rm -rf /var/lib/mysql/*
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;修改配置文件&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo vi /etc/mysql/my.cnf
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;在[mysqld]下添加 innodb_file_per_table = 1 或 innodb_file_per_table。&lt;/p&gt;
+
+&lt;p&gt;重新构建数据库实例并启动MySQL&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/usr/bin/mysql_install_db
+sudo /etc/init.d/mysql start
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;查看配置是否成功&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; show variables like &#39;%per_table%&#39;;
++-----------------------+-------+
+| Variable_name         | Value |
++-----------------------+-------+
+| innodb_file_per_table | ON    |
++-----------------------+-------+
+1 row in set (0.11 sec)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;恢复数据库&lt;/h3&gt;
+
+&lt;p&gt;新建数据库result，并导入备份好的数据&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql -uroot result &amp;lt; export_result.sql
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;查看导入结果&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;yeqing@yeqing-KVM:~$ sudo ls -alh /var/lib/mysql/result
+drwx------ 2 mysql mysql 4.0K  5月  4 19:10 .
+drwxrwxrwx 6 mysql mysql 4.0K  5月  4 02:40 ..
+-rw-rw---- 1 mysql mysql   65  5月  3 04:55 db.opt
+-rw-rw---- 1 mysql mysql 8.8K  5月  4 18:07 result_cti_data.frm
+-rw-rw---- 1 mysql mysql  21G  5月  4 19:00 result_cti_data.ibd
+-rw-rw---- 1 mysql mysql 8.6K  5月  3 04:56 result_data.frm
+-rw-rw---- 1 mysql mysql  13G  5月  3 13:03 result_data.ibd
+-rw-rw---- 1 mysql mysql 8.5K  5月  3 12:22 result_number.frm
+-rw-rw---- 1 mysql mysql 2.4G  5月  3 12:34 result_number.ibd
+-rw-rw---- 1 mysql mysql 8.6K  5月  3 12:34 result_project_calling_count.frm
+-rw-rw---- 1 mysql mysql  96K  5月  3 12:34 result_project_calling_count.ibd
+-rw-rw---- 1 mysql mysql 8.5K  5月  3 12:34 result_project.frm
+-rw-rw---- 1 mysql mysql 112K  5月  3 12:34 result_project.ibd
+-rw-rw---- 1 mysql mysql 8.5K  5月  3 12:34 result_project_name.frm
+-rw-rw---- 1 mysql mysql 144K  5月  3 12:34 result_project_name.ibd
+-rw-rw---- 1 mysql mysql 8.5K  5月  3 12:34 result_project_user_count.frm
+-rw-rw---- 1 mysql mysql  96K  5月  3 12:34 result_project_user_count.ibd
+-rw-rw---- 1 mysql mysql 8.9K  5月  3 12:34 result_user_info.frm
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;可以发现数据已经成功导入，并且每一个table对应一个idb文件，说明MySQL已经配置成功。当我们再导出表drop后，对应的数据文件idb就会被删除，系统硬盘空间使用就会在正常值范围内。&lt;/p&gt;
+
+&lt;p&gt;重置root密码&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mysql&amp;gt; SET PASSWORD FOR &#39;root&#39;@&#39;localhost&#39; = PASSWORD(&#39;123456&#39;);
+mysql&amp;gt; FLUSH PRIVILEGES;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;总结&lt;/h2&gt;
+
+&lt;p&gt;使用独立表空间的优点如下：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;每个表都有自已独立的表空间。&lt;/li&gt;
+&lt;li&gt;每个表的数据和索引都会存在自已的表空间中。&lt;/li&gt;
+&lt;li&gt;可以实现单表在不同的数据库中移动。&lt;/li&gt;
+&lt;li&gt;空间可以回收
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Drop table&lt;/code&gt;操作自动回收表空间，如果对于统计分析或是日值表，删除大量数据后可以通过alter table TableName engine=innodb;回缩不用的空间。&lt;/li&gt;
+&lt;li&gt;对于使innodb-plugin的Innodb使用turncate table也会使空间收缩。&lt;/li&gt;
+&lt;li&gt;对于使用独立表空间的表，不管怎么删除，表空间的碎片不会太严重的影响性能，而且还有机会处理。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;p&gt;缺点：&lt;/p&gt;
+
+&lt;p&gt;单表增加过大，如超过100个G。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>在mac上安装Python模块MySQLdb</title>
@@ -304,6 +452,18 @@ Given input array A = [1,1,2],&lt;/p&gt;
 &lt;p&gt;最长回文字串问题。这里介绍一种时间复杂度为O(n)的解法，Manacher算法。&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://github.com/julycoding/The-Art-Of-Programming-By-July/blob/master/ebook/zh/01.05.md&quot;&gt;链接&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;134 Gas Station&lt;/h2&gt;
+
+&lt;p&gt;待写。&lt;/p&gt;
+
+&lt;h2&gt;172 Factorial Trailing Zeroes&lt;/h2&gt;
+
+&lt;p&gt;待写。&lt;/p&gt;
+
+&lt;h2&gt;198 House Robber&lt;/h2&gt;
+
+&lt;p&gt;待写。&lt;/p&gt;
 </description>
     </item>
     
@@ -1278,29 +1438,6 @@ local[i][j] = max( global[i-1][j-1] + max( diff, 0 ), local[i-1][j] + diff )&lt;
 
 &lt;!--more--&gt;
 
-</description>
-    </item>
-    
-    <item>
-      <title>解决博客加载过慢的问题</title>
-      <link>http://youkochan.github.io//2014/08/18/jie-jue-bo-ke-jia-zai-guo-man-de-wen-ti.html</link>
-      <pubDate>18 Aug 2014</pubDate>
-      <author>Youkochan</author>
-      <guid>http://youkochan.github.io//2014/08/18/jie-jue-bo-ke-jia-zai-guo-man-de-wen-ti</guid>
-      <description>&lt;p&gt;最近几天继续捣鼓博客的时候发现一个问题，就是“博客打开速度太慢了”。平时我在电脑上网是挂着翻墙软件的，于是打开速度还可以。后来给easy同学测试的时候怎么打都打不开，并且手机端排版也有点问题。于是就尝试解决了一下这些问题。&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-
-&lt;p&gt;打开浏览器，审查元素，盒模型，调整margin以及padding等，将修改后的代码加入&lt;code&gt;source/index.html&lt;/code&gt;。虽然这种办法比较傻，没有去修改本质的css文件，但是还是很简单粗暴的。（其实就是懒是吧2333）&lt;/p&gt;
-
-&lt;p&gt;打开浏览器，审查元素，时间线，刷新，观察。发现有一些请求css资源以及一些js一直加载不出来。&lt;/p&gt;
-
-&lt;p&gt;js主要是&lt;code&gt;/javascripts/jquery.tweet.js&lt;/code&gt;以及&lt;code&gt;/javascripts/jquery.instagram.js&lt;/code&gt;。一看都是用不上的就果断把&lt;code&gt;source/_include/&lt;/code&gt;里面有关的代码注释掉了。&lt;/p&gt;
-
-&lt;p&gt;剩下的css资源，看了一下是请求的&lt;code&gt;fonts.google.com&lt;/code&gt;的资源。在中国你懂的。这个请求主要是请求网页需要的字体，由于一直请求一直超时于是网页一直难以加载完。通过将这个网址改为&lt;code&gt;fonts.useso.com&lt;/code&gt;就可以使用使用360网站卫士的最新服务：前端公共库、Google公共库以及Google字体库来加载所需要的资源。（不得不说这方面360还是不错哈）&lt;/p&gt;
-
-&lt;p&gt;至此，博客打开的速度就有了一个质的提升。&lt;/p&gt;
 </description>
     </item>
     
