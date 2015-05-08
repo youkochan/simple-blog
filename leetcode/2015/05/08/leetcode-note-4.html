@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <!--[if lte IE 9]><meta http-equiv="refresh" content="0;url=/ie.html"><![endif]-->
 
-    <title>在mac上安装Python模块MySQLdb</title>
+    <title>leetcode-note-4</title>
     <meta name="description" content="">
 
     <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
@@ -87,40 +87,83 @@
     <div id="post">
       <div id="pjax">
         <article id="post__content">
-  <h1 id="post__title" data-identifier="20150408">在mac上安装Python模块MySQLdb</h1>
-  <p>最近由于有必要使用MySQLdb，而使用pycharm自带的包管理界面进行安装时发现无论如何都安装失败，于是采用了手动安装的方式。具体步骤如下：</p>
+  <h1 id="post__title" data-identifier="20150508">leetcode-note-4</h1>
+  <p>最近被数据库折腾得不成人形，题目也没怎么刷。不过感觉现在基本看到很多easy的题目直接敲基本都能过，算是一种长进吧。</p>
 
-<p>1 下载 MySQL for Python。<a href="http://sourceforge.net/projects/mysql-python/files/mysql-python/">链接</a>，或者采用以下代码</p>
+<h2>199 Binary Tree Right Side View</h2>
 
-<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">wget http://sourceforge.net/projects/mysql-python/files/mysql-python/1.2.3/MySQL-python-1.2.3.tar.gz</span></code></pre></div>
+<p>Given a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.</p>
 
+<p>题目大意是，给你一个二叉树，你站在这棵树的右边，把看到的序列从顶到底输出。一开始我想错了，我以为简单地自顶向下，若有右孩子，则向右移动指针；若没有则左移。后来发现这个简单的想法是错误的。因为有可能左子树的高度大于右子树，因此，向左看的时候看到的最下面一部分是左子树。</p>
 
-<p>2 解压执行<code>python setup.py build</code>若出现<code>EnvironmentError: mysql_config not found</code>问题则应该首先修改<code>setup_posix.py</code>文件。将<code>mysql_config.path = "mysql_config"</code>修改为：<code>mysql_config.path = "/usr/local/mysql/bin/mysql_config"</code></p>
+<p>由于需要输出一个数组，则可以使用一个buffer，buffer[i]表示i层能看到的数字。</p>
 
-<p>3 执行（可能需要sudo）：</p>
+<p>因此，考虑在中序（中右左）递归中记录一个遍历到的最大深度（初始为0），若当前遍历的节点深度大于或者等于最大深度，则将该节点加入buffer（因为在这种情况下该节点一定是最右边的节点，因为遍历顺序的原因，先中，再右，再左）；若深度小于等于最大深度，说明右边有更高的子树（肯定会挡住这个节点，因此这个节点不可见），则跳过这个点，继续搜索这个节点的子节点。</p>
 
-<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">python setup.py build</span>
-<span class="go">python setup.py install</span></code></pre></div>
+<p>代码如下：</p>
 
-
-<p>4 在执行完上述步骤后仍然可能出现<code>import MySQLdb</code>时的错误，此时需要执行以下指令：</p>
-
-<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">sudo ln -s /usr/local/mysql/lib/libmysqlclient.18.dylib /usr/lib/libmysqlclient.18.dylib</span></code></pre></div>
-
-
-
-
-<!--more-->
-
-
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cm">/**</span>
+<span class="cm">    * Definition for a binary tree node.</span>
+<span class="cm">    * struct TreeNode {</span>
+<span class="cm">    *     int val;</span>
+<span class="cm">    *     struct TreeNode *left;</span>
+<span class="cm">    *     struct TreeNode *right;</span>
+<span class="cm">    * };</span>
+<span class="cm">    */</span>
+    <span class="cm">/**</span>
+<span class="cm">    * Return an array of size *returnSize.</span>
+<span class="cm">    * Note: The returned array must be malloced, assume caller calls free().</span>
+<span class="cm">    */</span>
+    
+    <span class="kt">void</span> <span class="nf">searchTree</span><span class="p">(</span><span class="k">struct</span> <span class="n">TreeNode</span><span class="o">*</span> <span class="n">node</span><span class="p">,</span> <span class="kt">int</span> <span class="n">buffer</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">level</span><span class="p">,</span> <span class="kt">int</span><span class="o">*</span> <span class="n">maxLevel</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">node</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+            <span class="k">return</span><span class="p">;</span>
+            
+        <span class="k">if</span><span class="p">(</span><span class="n">level</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="o">*</span><span class="n">maxLevel</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">buffer</span><span class="p">[</span><span class="n">level</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">val</span><span class="p">;</span>
+            <span class="p">(</span><span class="o">*</span><span class="n">maxLevel</span><span class="p">)</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+        
+        <span class="n">searchTree</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="n">level</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">maxLevel</span><span class="p">);</span>
+        <span class="n">searchTree</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="n">level</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">maxLevel</span><span class="p">);</span>
+    <span class="p">}</span>
+    
+    <span class="kt">int</span><span class="o">*</span> <span class="nf">rightSideView</span><span class="p">(</span><span class="k">struct</span> <span class="n">TreeNode</span><span class="o">*</span> <span class="n">root</span><span class="p">,</span> <span class="kt">int</span><span class="o">*</span> <span class="n">returnSize</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">2000</span><span class="p">];</span>
+        <span class="kt">int</span><span class="o">*</span><span class="n">result</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">count</span><span class="p">;</span>
+        <span class="kt">int</span><span class="o">*</span><span class="n">maxLevel</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+        
+        <span class="p">(</span><span class="o">*</span><span class="n">maxLevel</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        
+        <span class="n">searchTree</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">maxLevel</span><span class="p">);</span>
+        
+        <span class="n">count</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">maxLevel</span><span class="p">);</span>
+        
+        <span class="k">if</span><span class="p">(</span><span class="n">count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="p">(</span><span class="o">*</span><span class="n">returnSize</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            
+            <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">*</span><span class="n">count</span><span class="p">);</span>
+            <span class="p">(</span><span class="o">*</span><span class="n">returnSize</span><span class="p">)</span> <span class="o">=</span> <span class="n">count</span><span class="p">;</span>
+            
+            <span class="k">for</span><span class="p">(</span><span class="n">count</span> <span class="o">=</span> <span class="n">count</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">count</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">count</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">=</span> <span class="n">buffer</span><span class="p">[</span><span class="n">count</span><span class="p">];</span>
+            <span class="p">}</span>
+            
+            <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span></code></pre></div>
 
 
 </article> <!-- end #post__content -->
 
 <div id="post__share">
-  <a id="icon-twitter" class="fontello" href="https://twitter.com/intent/tweet?url=place_your_url_here/mac/note/2015/04/08/intsall-mysql-python-in-mac.html&text=在mac上安装Python模块MySQLdb" target="_blank"></a>
+  <a id="icon-twitter" class="fontello" href="https://twitter.com/intent/tweet?url=place_your_url_here/leetcode/2015/05/08/leetcode-note-4.html&text=leetcode-note-4" target="_blank"></a>
   <a id="icon-cc" class="fontello" href="http://creativecommons.org/licenses/by-nc-sa/3.0" target="_blank"></a>
-  <a id="icon-weibo" class="fontello" href="http://v.t.sina.com.cn/share/share.php?url=place_your_url_here/mac/note/2015/04/08/intsall-mysql-python-in-mac.html&title=在mac上安装Python模块MySQLdb" target="_blank"></a>
+  <a id="icon-weibo" class="fontello" href="http://v.t.sina.com.cn/share/share.php?url=place_your_url_here/leetcode/2015/05/08/leetcode-note-4.html&title=leetcode-note-4" target="_blank"></a>
 </div> <!-- end #post__share -->
 
 <div id="disqus_thread">
