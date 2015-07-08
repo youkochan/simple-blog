@@ -1,0 +1,432 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>leetcode-note &#8211; Simple Blog</title>
+<meta name="description" content="On the way.">
+<meta name="keywords" content="code">
+
+
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="leetcode-note">
+<meta property="og:description" content="On the way.">
+<meta property="og:url" content="http://qingye.me/leetcode-note/">
+<meta property="og:site_name" content="Simple Blog">
+
+
+
+
+
+<link rel="canonical" href="http://qingye.me/leetcode-note/">
+<link href="http://qingye.me/feed.xml" type="application/atom+xml" rel="alternate" title="Simple Blog Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://qingye.me/assets/css/main.css">
+
+<!-- Webfonts -->
+<!-- <link href="//fonts.useso.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.useso.com/css?family=monospace:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load MathJax -->
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<!-- Load Modernizr -->
+<script src="http://qingye.me/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://qingye.me/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://qingye.me/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://qingye.me/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://qingye.me/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://qingye.me/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://qingye.me/images/apple-touch-icon-144x144-precomposed.png">
+
+
+
+</head>
+
+<body id="post" >
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+	<button class="dl-trigger">Open Menu</button>
+	<ul class="dl-menu">
+		<li><a href="http://qingye.me/">Home</a></li>
+		<li>
+			<a href="#">About</a>
+			<ul class="dl-submenu">
+				<li>
+					<img src="http://qingye.me/images/avatar2.jpg" alt="Qing YE photo" class="author-photo">
+					<h4>Qing YE</h4>
+					<p>You can code, they can not, that is pretty damn cool.</p>
+				</li>
+				<li><a href="http://qingye.me/about/"><span class="btn btn-inverse">Learn More</span></a></li>
+				<li>
+					<a href="mailto:youkochan233@gmail.com"><i class="fa fa-fw fa-envelope"></i> Email</a>
+				</li>
+				
+				
+				
+				
+				<li>
+					<a href="http://github.com/youkochan"><i class="fa fa-fw fa-github"></i> GitHub</a>
+				</li>
+				
+				
+				
+				
+			</ul><!-- /.dl-submenu -->
+		</li>
+		<li>
+			<a href="#">Posts</a>
+			<ul class="dl-submenu">
+				<li><a href="http://qingye.me/posts/">All Posts</a></li>
+				<li><a href="http://qingye.me/tags/">All Tags</a></li>
+			</ul>
+		</li>
+		
+	    
+	        
+	        
+	    <li><a href="http://mademistakes.com" target="_blank">External Link</a></li>
+	  
+	</ul><!-- /.dl-menu -->
+</nav><!-- /.dl-menuwrapper -->
+
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <header class="header-title">
+      <div class="header-title-wrap">
+        
+          <h1 class="entry-title"><a href="http://qingye.me/leetcode-note/" rel="bookmark" title="leetcode-note">leetcode-note</a></h1>
+        
+        <h2><span class="entry-date date published"><time datetime="2015-03-25T17:17:13+08:00">March 25, 2015</time></span></h2>
+        
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          
+          Reading time ~7 minutes
+        </p><!-- /.entry-reading-time -->
+        
+      </div><!-- /.header-title-wrap -->
+    </header>
+    <div class="entry-content">
+      <p>最近开始刷题玩玩，这个就用于记录每一个题目的小细节吧。顺序按照刷提顺序来。</p>
+
+<!--more-->
+
+<h2 id="number-of-1-bits">191 Number of 1 Bits</h2>
+<p>求数字中一比特的个数。没什么难点，循环移位，一边移位一边做与判断。第一次做题主要还是不太清楚leetcode的流程，由于只需要写出函数，结果从本地copy代码的时候多copy了一些无用的导致wrong answer。呵呵呵。。。简直赞。注意：</p>
+
+<ul>
+  <li>unit_32t等数据类型需要引入头文件<stdint.h></stdint.h></li>
+</ul>
+
+<h2 id="reverse-bits">190 Reverse Bits</h2>
+<p>转置比特。无注意事项。</p>
+
+<h2 id="rotate-array">189 Rotate Array</h2>
+<p>尝试了那种转置三次的方式实现位移。不过有多种方式。需要注意的点：</p>
+
+<ul>
+  <li>注意细节，给定的参数不一定就是合理的。</li>
+</ul>
+
+<h2 id="best-time-to-buy-and-sell-stock-i">121 Best Time to Buy and Sell Stock I</h2>
+<p>通过一次交易，实现利润最大。通过一次遍历，使用一个变量记录遍历当前最低价格，使用一个变量记录当前最大差价。一次遍历即可。代码如下：</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="kt">int</span> <span class="n">prices</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+	    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+	    <span class="kt">int</span> <span class="n">low</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+	    <span class="kt">int</span> <span class="n">max</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> 
+	    
+	    <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+	        <span class="k">if</span><span class="p">(</span><span class="n">low</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">low</span><span class="p">)</span>
+	            <span class="n">low</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+	        <span class="k">if</span><span class="p">(</span><span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">low</span> <span class="o">&gt;</span> <span class="n">max</span><span class="p">)</span>
+	            <span class="n">max</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">low</span><span class="p">;</span>
+	    <span class="p">}</span> 
+	    <span class="k">return</span> <span class="n">max</span><span class="p">;</span>
+	<span class="p">}</span></code></pre></div>
+
+<h2 id="best-time-to-buy-and-sell-stock-ii">122 Best Time to Buy and Sell Stock II</h2>
+<p>通过多次交易，实现利润最大。这个由于交易次数不限，所以只需要把所有后一天比前一天增加的价格求和就可以了。一次遍历，代码如下：</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="kt">int</span> <span class="n">prices</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+	    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	    <span class="kt">int</span> <span class="n">max</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	    <span class="kt">int</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	    
+	    <span class="k">if</span><span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+	        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+	    
+	    <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+	        <span class="n">d</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+	        <span class="k">if</span><span class="p">(</span><span class="n">d</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+	            <span class="n">max</span> <span class="o">+=</span> <span class="n">d</span><span class="p">;</span>
+	    <span class="p">}</span>
+	    
+	    <span class="k">return</span> <span class="n">max</span><span class="p">;</span>
+	<span class="p">}</span></code></pre></div>
+
+<h2 id="best-time-to-buy-and-sell-stock-iii">123 Best Time to Buy and Sell Stock III</h2>
+<p>通过两次交易，实现利润最大化。由于交易次数有限，可以简化为将prices划分为两个区间，通过求两个区间分别进行一次交易得到的利润和的最大值，来求解这一题。一般情况下，先遍历0到n-1进行划分，再求划分区间的一次交易最大利润（即Best Time to Buy and Sell Stock I，复杂度O(n)），总复杂度O( n^2 )。<br />
+通过使用动态规划算法可以简化复杂度，使用两个长度为n的数组记录中间结果，dp1[i]表示[0,…,i]中进行一次交易的最大利润，dp2[i]表示[i,…,n-1]中进行一次交易的最大利润，则，可知递推公式如下：</p>
+
+<blockquote>
+  <p>dp1[i+1] = max( dp1[i], prices[i+1]-minPrice )<br />
+dp2[i-1] = max( dp2[i], maxPrice-prices[i-1] )</p>
+</blockquote>
+
+<p>其中， minPrice以及maxPrice分别记录递归过程中的最小以及最大值。代码如下：</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">max</span><span class="p">(</span><span class="kt">int</span> <span class="n">n1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n2</span><span class="p">){</span>
+		<span class="k">return</span> <span class="n">n1</span> <span class="o">&gt;</span> <span class="n">n2</span> <span class="o">?</span> <span class="nl">n1</span> <span class="p">:</span> <span class="n">n2</span><span class="p">;</span>
+	<span class="p">}</span>
+	
+	<span class="kt">int</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="kt">int</span> <span class="n">prices</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
+	<span class="p">{</span>
+	    <span class="kt">int</span><span class="o">*</span> <span class="n">dp1</span><span class="p">;</span>	<span class="c1">// [0,...,i] 最大收益</span>
+	    <span class="kt">int</span><span class="o">*</span> <span class="n">dp2</span><span class="p">;</span>	<span class="c1">// [i,...,n-1] 最大收益</span>
+	    <span class="kt">int</span> <span class="n">maxprofit</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+	    <span class="kt">int</span> <span class="n">minPrice</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+	    <span class="kt">int</span> <span class="n">maxPrice</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+	
+	    <span class="n">dp1</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="p">);</span>
+	    <span class="n">dp2</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="p">);</span>
+	
+	    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+	    	<span class="n">dp1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">dp2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	    <span class="p">}</span>
+	
+	    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span>
+	    	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+	
+	    <span class="c1">// 第一趟遍历找出dp1</span>
+	    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+	    	<span class="k">if</span> <span class="p">(</span><span class="n">minPrice</span> <span class="o">&gt;</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+	    		<span class="n">minPrice</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+	    	<span class="n">dp1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">dp1</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">minPrice</span><span class="p">);</span>
+	    <span class="p">}</span>
+	
+	    <span class="c1">// 第二趟遍历找出dp2</span>
+	    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="o">--</span><span class="n">i</span><span class="p">){</span>
+	    	<span class="k">if</span> <span class="p">(</span><span class="n">maxPrice</span> <span class="o">&lt;</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+	    		<span class="n">maxPrice</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+	    	<span class="n">dp2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">dp2</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">maxPrice</span><span class="o">-</span><span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+	    <span class="p">}</span>
+	
+	    <span class="c1">// 最后找出最大收益</span>
+	    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+	    	<span class="k">if</span> <span class="p">(</span><span class="n">dp1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">dp2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">maxprofit</span><span class="p">)</span>
+	    		<span class="n">maxprofit</span> <span class="o">=</span> <span class="n">dp1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">dp2</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+	    <span class="p">}</span>
+	
+	    <span class="n">free</span><span class="p">(</span><span class="n">dp1</span><span class="p">);</span>
+	    <span class="n">free</span><span class="p">(</span><span class="n">dp2</span><span class="p">);</span>
+	
+	    <span class="k">return</span> <span class="n">maxprofit</span><span class="p">;</span>
+	<span class="p">}</span></code></pre></div>
+
+<h2 id="best-time-to-buy-and-sell-stock-iv">188 Best Time to Buy and Sell Stock IV</h2>
+<p>再上题基础上，不限制交易次数，设交易次数为k，求最大利润。需要使用动态规划来处理。可以维护两个数组用来存放中间结果，即</p>
+
+<ol>
+  <li>global[i][j]，表示到第i天为止，最多进行j次交易可以的到的最大利润；</li>
+  <li>local[i][j]，表示到第i天为止，且第i天卖出股票（即获得收益），且最多进行k次交易可以得到的最大利润。</li>
+</ol>
+
+<p>通过分析可以得出以下递推公式：</p>
+
+<blockquote>
+  <p>global[i][j] = max( global[i-1][j], local[i][j] )<br />
+local[i][j] = max( global[i-1][j-1] + max( diff, 0 ), local[i-1][j] + diff )</p>
+</blockquote>
+
+<p>其中diff为prices[i]-prices[i-1]，具体解释如下：</p>
+
+<blockquote>
+  <p>①全局到i-1天进行j-1次交易，然后加上今天的交易（如果今天的交易赚钱的话）。 <br />
+②取局部第i-1天进行j次交易，然后加上今天的差值（ local[i-1][j]是第i-1天卖出的交易，它加上diff后变成第i天卖出，并不会增加交易次数。无论diff是正还是负都要加上，否则就不满足local[i][j]必须在最后一天卖出的条件了 ）</p>
+</blockquote>
+
+<p>还有一点需要注意的是，题目中的交易次数k有可能远大于天数n，当k远大于n时，问题转化为不限次数求最大利润，即II题的答案。在本题中，可认为k&gt;=n时，问题IV转化为问题II，代码如下：</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">max</span><span class="p">(</span><span class="kt">int</span> <span class="n">n1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n2</span><span class="p">){</span>
+		<span class="k">return</span> <span class="n">n1</span> <span class="o">&gt;</span> <span class="n">n2</span> <span class="o">?</span> <span class="nl">n1</span> <span class="p">:</span> <span class="n">n2</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="kt">int</span><span class="o">**</span> <span class="nf">getMatrix</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">){</span>
+	    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	    <span class="kt">int</span><span class="o">**</span> <span class="n">p</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+
+	    <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">**</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="p">);</span>
+	    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+	        <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">*</span><span class="n">k</span><span class="p">);</span>
+
+	        <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">++</span><span class="p">){</span>
+	            <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	        <span class="p">}</span>
+	    <span class="p">}</span>
+	    <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
+		<span class="p">}</span>
+
+	<span class="kt">void</span> <span class="nf">freeMatrix</span><span class="p">(</span><span class="kt">int</span><span class="o">**</span> <span class="n">p</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>  <span class="c1">// 不可用！会导致超时</span>
+	    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+	    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+	        <span class="n">free</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+	    <span class="p">}</span>
+	    <span class="n">free</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+	<span class="p">}</span>
+
+	<span class="kt">int</span> <span class="nf">simpleMaxProfit</span><span class="p">(</span><span class="kt">int</span> <span class="n">prices</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+	    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	    <span class="kt">int</span> <span class="n">max</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	    <span class="kt">int</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	    
+	    <span class="k">if</span><span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+	        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+	    
+	    <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+	        <span class="n">d</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+	        <span class="k">if</span><span class="p">(</span><span class="n">d</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+	            <span class="n">max</span> <span class="o">+=</span> <span class="n">d</span><span class="p">;</span>
+	    <span class="p">}</span>
+	    
+	    <span class="k">return</span> <span class="n">max</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="kt">int</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="kt">int</span> <span class="n">k</span><span class="p">,</span> <span class="kt">int</span> <span class="n">prices</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
+	<span class="p">{</span>
+	    <span class="kt">int</span><span class="o">**</span> <span class="n">g</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+	    <span class="kt">int</span><span class="o">**</span> <span class="n">l</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+	    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	    <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	    <span class="kt">int</span> <span class="n">diff</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+	    <span class="k">if</span><span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+	        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+	    <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&gt;=</span> <span class="n">n</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+	        <span class="k">return</span> <span class="n">simpleMaxProfit</span><span class="p">(</span><span class="n">prices</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+
+	    <span class="n">g</span> <span class="o">=</span> <span class="n">getMatrix</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+	    <span class="n">l</span> <span class="o">=</span> <span class="n">getMatrix</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+
+	    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+	        <span class="n">diff</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+	        <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">k</span><span class="p">;</span> <span class="n">j</span> <span class="o">++</span><span class="p">){</span>
+	            <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">g</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">max</span><span class="p">(</span><span class="n">diff</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">+</span><span class="n">diff</span><span class="p">);</span>
+	            <span class="n">g</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">g</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]);</span>
+	        <span class="p">}</span>
+	    <span class="p">}</span>
+
+	    <span class="k">return</span> <span class="n">g</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">k</span><span class="p">];</span>
+	<span class="p">}</span></code></pre></div>
+
+<p>PS：写完之后提交了两次，都是<code>Runtime Error</code>，然后发现是自己写的释放内存的操作导致的，所以既然是OJ嘛，申请的内存也没必要替别人free了。是吧。</p>
+
+
+      <footer class="entry-meta">
+        <span class="entry-tags"><a href="http://qingye.me/tags/#code" title="Pages tagged code" class="tag"><span class="term">code</span></a></span>
+        
+        <div class="social-share">
+  <ul class="socialcount socialcount-small inline-list">
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://qingye.me/leetcode-note/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://qingye.me/leetcode-note/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://qingye.me/leetcode-note/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+  </ul>
+</div><!-- /.social-share -->
+      </footer>
+    </div><!-- /.entry-content -->
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+    <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="http://qingye.me/site-analyse-v5/" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="http://qingye.me/shadowsocks-proxifier/" title="shadowsocks/proxifier">shadowsocks/proxifier</a></h3>
+      <p>## 介绍自从学校校园网改革一下就怨声载道，民不聊生，毕竟作为计算机+互联网方向的北邮，能让大多数人都不敢安心点开网页也是蛮拼的。因此催生出了各种省流量的方式，其中主要就是使用IPv6流量来代替IPv4流量，因为学校网关是不计IPv6流量的。然而现阶段IPv6并没有那么普及...&hellip; <a href="http://qingye.me/shadowsocks-proxifier/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
+    
+      <div class="list-item">
+        <h4><a href="http://qingye.me/introduction-to-mathjax-and-latex-expression/" title="introduction-to-mathjax-and-latex-expression">introduction-to-mathjax-and-latex-expression</a></h4>
+        <span>Published on July 01, 2015</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="http://qingye.me/decision-tree-note/" title="Machine Learning note - Decision Tree">Machine Learning note - Decision Tree</a></h4>
+        <span>Published on June 30, 2015</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    <span>&copy; 2015 Qing YE. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="https://mademistakes.com/work/hpstr-jekyll-theme/" rel="nofollow">HPSTR Theme</a>.</span>
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+<script src="http://qingye.me/assets/js/vendor/jquery-1.9.1.min.js"></script>
+<!-- <script>window.jQuery || document.write('<script src="http://qingye.me/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script> -->
+<script src="http://qingye.me/assets/js/scripts.min.js"></script>
+
+
+
+
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'qingye'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script'); s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	        
+
+</body>
+</html>

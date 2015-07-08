@@ -1,0 +1,578 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>leetcode-note-4 &#8211; Simple Blog</title>
+<meta name="description" content="On the way.">
+<meta name="keywords" content="code">
+
+
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="leetcode-note-4">
+<meta property="og:description" content="On the way.">
+<meta property="og:url" content="http://qingye.me/leetcode-note-4/">
+<meta property="og:site_name" content="Simple Blog">
+
+
+
+
+
+<link rel="canonical" href="http://qingye.me/leetcode-note-4/">
+<link href="http://qingye.me/feed.xml" type="application/atom+xml" rel="alternate" title="Simple Blog Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://qingye.me/assets/css/main.css">
+
+<!-- Webfonts -->
+<!-- <link href="//fonts.useso.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.useso.com/css?family=monospace:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load MathJax -->
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<!-- Load Modernizr -->
+<script src="http://qingye.me/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://qingye.me/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://qingye.me/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://qingye.me/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://qingye.me/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://qingye.me/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://qingye.me/images/apple-touch-icon-144x144-precomposed.png">
+
+
+
+</head>
+
+<body id="post" >
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+	<button class="dl-trigger">Open Menu</button>
+	<ul class="dl-menu">
+		<li><a href="http://qingye.me/">Home</a></li>
+		<li>
+			<a href="#">About</a>
+			<ul class="dl-submenu">
+				<li>
+					<img src="http://qingye.me/images/avatar2.jpg" alt="Qing YE photo" class="author-photo">
+					<h4>Qing YE</h4>
+					<p>You can code, they can not, that is pretty damn cool.</p>
+				</li>
+				<li><a href="http://qingye.me/about/"><span class="btn btn-inverse">Learn More</span></a></li>
+				<li>
+					<a href="mailto:youkochan233@gmail.com"><i class="fa fa-fw fa-envelope"></i> Email</a>
+				</li>
+				
+				
+				
+				
+				<li>
+					<a href="http://github.com/youkochan"><i class="fa fa-fw fa-github"></i> GitHub</a>
+				</li>
+				
+				
+				
+				
+			</ul><!-- /.dl-submenu -->
+		</li>
+		<li>
+			<a href="#">Posts</a>
+			<ul class="dl-submenu">
+				<li><a href="http://qingye.me/posts/">All Posts</a></li>
+				<li><a href="http://qingye.me/tags/">All Tags</a></li>
+			</ul>
+		</li>
+		
+	    
+	        
+	        
+	    <li><a href="http://mademistakes.com" target="_blank">External Link</a></li>
+	  
+	</ul><!-- /.dl-menu -->
+</nav><!-- /.dl-menuwrapper -->
+
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <header class="header-title">
+      <div class="header-title-wrap">
+        
+          <h1 class="entry-title"><a href="http://qingye.me/leetcode-note-4/" rel="bookmark" title="leetcode-note-4">leetcode-note-4</a></h1>
+        
+        <h2><span class="entry-date date published"><time datetime="2015-05-08T23:26:07+08:00">May 08, 2015</time></span></h2>
+        
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          
+          Reading time ~12 minutes
+        </p><!-- /.entry-reading-time -->
+        
+      </div><!-- /.header-title-wrap -->
+    </header>
+    <div class="entry-content">
+      <!--more-->
+
+<h2 id="binary-tree-right-side-view">199 Binary Tree Right Side View</h2>
+<p>Given a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.</p>
+
+<p>题目大意是，给你一个二叉树，你站在这棵树的右边，把看到的序列从顶到底输出。一开始我想错了，我以为简单地自顶向下，若有右孩子，则向右移动指针；若没有则左移。后来发现这个简单的想法是错误的。因为有可能左子树的高度大于右子树，因此，向左看的时候看到的最下面一部分是左子树。</p>
+
+<p>由于需要输出一个数组，则可以使用一个buffer，buffer[i]表示i层能看到的数字。</p>
+
+<p>因此，考虑在中序（中右左）递归中记录一个遍历到的最大深度（初始为0），若当前遍历的节点深度大于或者等于最大深度，则将该节点加入buffer（因为在这种情况下该节点一定是最右边的节点，因为遍历顺序的原因，先中，再右，再左）；若深度小于等于最大深度，说明右边有更高的子树（肯定会挡住这个节点，因此这个节点不可见），则跳过这个点，继续搜索这个节点的子节点。</p>
+
+<p>代码如下：</p>
+
+<div class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cm">/**</span>
+<span class="cm"> * Definition for a binary tree node.</span>
+<span class="cm"> * struct TreeNode {</span>
+<span class="cm"> *     int val;</span>
+<span class="cm"> *     struct TreeNode *left;</span>
+<span class="cm"> *     struct TreeNode *right;</span>
+<span class="cm"> * };</span>
+<span class="cm"> */</span>
+<span class="cm">/**</span>
+<span class="cm"> * Return an array of size *returnSize.</span>
+<span class="cm"> * Note: The returned array must be malloced, assume caller calls free().</span>
+<span class="cm"> */</span>
+
+<span class="kt">void</span> <span class="nf">searchTree</span><span class="p">(</span><span class="k">struct</span> <span class="n">TreeNode</span><span class="o">*</span> <span class="n">node</span><span class="p">,</span> <span class="kt">int</span> <span class="n">buffer</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">level</span><span class="p">,</span> <span class="kt">int</span><span class="o">*</span> <span class="n">maxLevel</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">node</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+        
+    <span class="k">if</span><span class="p">(</span><span class="n">level</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="o">*</span><span class="n">maxLevel</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">buffer</span><span class="p">[</span><span class="n">level</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">val</span><span class="p">;</span>
+        <span class="p">(</span><span class="o">*</span><span class="n">maxLevel</span><span class="p">)</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="n">searchTree</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="n">level</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">maxLevel</span><span class="p">);</span>
+    <span class="n">searchTree</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="n">level</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">maxLevel</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="o">*</span> <span class="nf">rightSideView</span><span class="p">(</span><span class="k">struct</span> <span class="n">TreeNode</span><span class="o">*</span> <span class="n">root</span><span class="p">,</span> <span class="kt">int</span><span class="o">*</span> <span class="n">returnSize</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">2000</span><span class="p">];</span>
+    <span class="kt">int</span><span class="o">*</span><span class="n">result</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">count</span><span class="p">;</span>
+    <span class="kt">int</span><span class="o">*</span><span class="n">maxLevel</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+    
+    <span class="p">(</span><span class="o">*</span><span class="n">maxLevel</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    
+    <span class="n">searchTree</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">maxLevel</span><span class="p">);</span>
+    
+    <span class="n">count</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">maxLevel</span><span class="p">);</span>
+    
+    <span class="k">if</span><span class="p">(</span><span class="n">count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">(</span><span class="o">*</span><span class="n">returnSize</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">*</span><span class="n">count</span><span class="p">);</span>
+        <span class="p">(</span><span class="o">*</span><span class="n">returnSize</span><span class="p">)</span> <span class="o">=</span> <span class="n">count</span><span class="p">;</span>
+        
+        <span class="k">for</span><span class="p">(</span><span class="n">count</span> <span class="o">=</span> <span class="n">count</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">count</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">count</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">=</span> <span class="n">buffer</span><span class="p">[</span><span class="n">count</span><span class="p">];</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+<h2 id="copy-list-with-random-pointer">138 Copy List with Random Pointer</h2>
+<p>A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null. Return a deep copy of the list.</p>
+
+<p>解题思路，使用一个哈希表将待拷贝的链表的节点的地址映射到新地址，同时根据哈希表中有无新地址进行操作，若无新地址，则申请且记录；若有，则使用新地址。代码如下：</p>
+
+<div class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cm">/**</span>
+<span class="cm"> * Definition for singly-linked list with a random pointer.</span>
+<span class="cm"> * struct RandomListNode {</span>
+<span class="cm"> *     int label;</span>
+<span class="cm"> *     RandomListNode *next, *random;</span>
+<span class="cm"> *     RandomListNode(int x) : label(x), next(NULL), random(NULL) {}</span>
+<span class="cm"> * };</span>
+<span class="cm"> */</span>
+<span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">RandomListNode</span> <span class="o">*</span><span class="n">copyRandomList</span><span class="p">(</span><span class="n">RandomListNode</span> <span class="o">*</span><span class="n">head</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">RandomListNode</span> <span class="o">*</span><span class="p">,</span> <span class="n">RandomListNode</span> <span class="o">*&gt;</span> <span class="n">hashMap</span><span class="p">;</span>
+        <span class="n">RandomListNode</span> <span class="o">*</span><span class="n">newHead</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+        <span class="n">RandomListNode</span> <span class="o">*</span><span class="n">newTail</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+        
+        <span class="k">while</span><span class="p">(</span><span class="n">head</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// 地址不在哈希表中</span>
+            <span class="n">RandomListNode</span> <span class="o">*</span><span class="n">tmpNode</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">hashMap</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">head</span><span class="p">)</span> <span class="o">==</span> <span class="n">hashMap</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+                <span class="n">tmpNode</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RandomListNode</span><span class="p">(</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">label</span><span class="p">);</span>
+                <span class="n">hashMap</span><span class="p">[</span><span class="n">head</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmpNode</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="c1">// 地址在哈希表中</span>
+            <span class="k">else</span> <span class="p">{</span>
+                <span class="n">tmpNode</span> <span class="o">=</span> <span class="n">hashMap</span><span class="p">[</span><span class="n">head</span><span class="p">];</span>
+                <span class="n">tmpNode</span><span class="o">-&gt;</span><span class="n">label</span> <span class="o">=</span> <span class="n">head</span><span class="o">-&gt;</span><span class="n">label</span><span class="p">;</span>
+            <span class="p">}</span>
+            
+            <span class="k">if</span><span class="p">(</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">random</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">hashMap</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">random</span><span class="p">)</span> <span class="o">==</span> <span class="n">hashMap</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+                    <span class="n">tmpNode</span><span class="o">-&gt;</span><span class="n">random</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RandomListNode</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+                    <span class="n">hashMap</span><span class="p">[</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">random</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmpNode</span><span class="o">-&gt;</span><span class="n">random</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">else</span> <span class="p">{</span>
+                    <span class="n">tmpNode</span><span class="o">-&gt;</span><span class="n">random</span> <span class="o">=</span> <span class="n">hashMap</span><span class="p">[</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">random</span><span class="p">];</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            
+            <span class="k">if</span><span class="p">(</span><span class="n">newHead</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">newHead</span> <span class="o">=</span> <span class="n">tmpNode</span><span class="p">;</span>
+                <span class="n">newTail</span> <span class="o">=</span> <span class="n">tmpNode</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="p">{</span>
+                <span class="n">newTail</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">tmpNode</span><span class="p">;</span>
+                <span class="n">newTail</span> <span class="o">=</span> <span class="n">tmpNode</span><span class="p">;</span>
+            <span class="p">}</span>
+            
+            <span class="n">head</span> <span class="o">=</span> <span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+        <span class="p">}</span>
+        
+        <span class="k">return</span> <span class="n">newHead</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span></code></pre></div>
+
+<h2 id="text-justification">68 Text Justification</h2>
+<p>Given an array of words and a length L, format the text such that each line has exactly L characters and is fully (left and right) justified.</p>
+
+<p>You should pack your words in a greedy approach; that is, pack as many words as you can in each line. Pad extra spaces ‘ ‘ when necessary so that each line has exactly L characters.</p>
+
+<p>Extra spaces between words should be distributed as evenly as possible. If the number of spaces on a line do not divide evenly between words, the empty slots on the left will be assigned more spaces than the slots on the right.</p>
+
+<p>For the last line of text, it should be left justified and no extra space is inserted between words.</p>
+
+<p>For example, words: [“This”, “is”, “an”, “example”, “of”, “text”, “justification.”], L: 16.</p>
+
+<p>Return the formatted lines as:</p>
+
+<pre><code>[
+   "This    is    an",
+   "example  of text",
+   "justification.  "
+]
+</code></pre>
+
+<p>题目要求即为两端对齐单词，思路比较简单，判断单词是否还能加入该字符串，若能，继续加入；若不能，格式化之后加入vector，然后从当前位置开始继续将单词加入字符串。在加入过程中记录字符串中的单词数目以及字符数目，用于计算间隔宽度。最后一行左对齐后直接在尾部补充空格即可。代码如下：</p>
+
+<div class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">fullJustify</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">words</span><span class="p">,</span> <span class="kt">int</span> <span class="n">maxWidth</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">result</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">charCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">wordCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">rest</span> <span class="o">=</span> <span class="n">maxWidth</span><span class="p">;</span>
+        <span class="c1">// 遍历每一个单词</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">words</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span> <span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">string</span> <span class="n">word</span> <span class="o">=</span> <span class="n">words</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+            <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">word</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">rest</span> <span class="o">&gt;=</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">rest</span> <span class="o">=</span> <span class="n">rest</span> <span class="o">-</span> <span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="n">wordCount</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="n">charCount</span> <span class="o">+=</span> <span class="n">size</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="p">{</span>
+                <span class="c1">// 将单词从start填充到i-1</span>
+                <span class="n">string</span> <span class="n">buff</span><span class="p">;</span>
+                
+                <span class="kt">int</span> <span class="n">spaceNum</span> <span class="o">=</span> <span class="n">maxWidth</span> <span class="o">-</span> <span class="n">charCount</span><span class="p">;</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">wordCount</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">buff</span> <span class="o">=</span> <span class="n">words</span><span class="p">[</span><span class="n">start</span><span class="p">];</span>
+                    <span class="k">while</span><span class="p">(</span><span class="n">buff</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">maxWidth</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="n">buff</span> <span class="o">=</span> <span class="n">buff</span> <span class="o">+</span> <span class="sc">&#39; &#39;</span><span class="p">;</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+                <span class="k">else</span> <span class="p">{</span>
+                    <span class="kt">int</span> <span class="n">div</span> <span class="o">=</span> <span class="n">spaceNum</span> <span class="o">/</span> <span class="p">(</span><span class="n">wordCount</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+                    <span class="kt">int</span> <span class="n">mod</span> <span class="o">=</span> <span class="n">spaceNum</span> <span class="o">%</span> <span class="p">(</span><span class="n">wordCount</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+                    <span class="n">buff</span> <span class="o">=</span> <span class="n">buff</span> <span class="o">+</span> <span class="n">words</span><span class="p">[</span><span class="n">start</span><span class="p">];</span>
+                    
+                    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="n">i</span><span class="p">;</span> <span class="n">idx</span> <span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="n">string</span> <span class="n">gap</span><span class="p">;</span>
+                        <span class="kt">int</span> <span class="n">gapLen</span> <span class="o">=</span> <span class="p">(</span><span class="n">mod</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">?</span> <span class="nl">div</span> <span class="p">:</span> <span class="n">div</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+                        <span class="k">if</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+                            <span class="n">mod</span> <span class="o">--</span><span class="p">;</span>
+                        <span class="k">while</span><span class="p">(</span><span class="n">gap</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">gapLen</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="n">gap</span> <span class="o">=</span> <span class="n">gap</span> <span class="o">+</span> <span class="sc">&#39; &#39;</span><span class="p">;</span>
+                        <span class="p">}</span>
+                        <span class="n">buff</span> <span class="o">=</span> <span class="n">buff</span> <span class="o">+</span> <span class="n">gap</span><span class="p">;</span>
+                        <span class="n">buff</span> <span class="o">=</span> <span class="n">buff</span> <span class="o">+</span> <span class="n">words</span><span class="p">[</span><span class="n">idx</span><span class="p">];</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+                
+                <span class="n">result</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">buff</span><span class="p">);</span>
+                <span class="n">start</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+                <span class="n">wordCount</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="n">charCount</span> <span class="o">=</span> <span class="n">size</span><span class="p">;</span>
+                <span class="n">rest</span> <span class="o">=</span> <span class="n">maxWidth</span> <span class="o">-</span> <span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        
+        <span class="c1">// 最后一行</span>
+        <span class="n">string</span> <span class="n">buff</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">start</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">words</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span> <span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">start</span><span class="p">)</span>
+                <span class="n">buff</span> <span class="o">=</span> <span class="n">buff</span> <span class="o">+</span> <span class="n">words</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+            <span class="k">else</span>
+                <span class="n">buff</span> <span class="o">=</span> <span class="n">buff</span> <span class="o">+</span> <span class="sc">&#39; &#39;</span> <span class="o">+</span> <span class="n">words</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="p">}</span>
+        
+        <span class="k">while</span><span class="p">(</span><span class="n">buff</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">maxWidth</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">buff</span> <span class="o">=</span> <span class="n">buff</span> <span class="o">+</span> <span class="sc">&#39; &#39;</span><span class="p">;</span>
+        <span class="p">}</span>
+            
+        <span class="n">result</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">buff</span><span class="p">);</span>
+        
+        <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span></code></pre></div>
+
+<h2 id="sort-colors">75 Sort Colors</h2>
+<p>Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue.</p>
+
+<p>Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.</p>
+
+<p>起初看到这个题的时候直接采用了一次遍历计算0，1，2的个数，然后直接一次遍历给数组赋值的做法（简单粗暴），结果竟然都通过了。不得不说Leetcode复杂度检测确实不严格。</p>
+
+<p>第二种做法是采用两个指针，一个指向0的最后一个元素的前一个位置，一个指向2的最后一个元素的后一个位置，顺序扫描数组，遇到0时，将0置换到合适的位置，当前位置加一；遇到1直接跳过；遇到2将2置换到合适的位置，此时当前位置不自增，因为换过来的数字可能为0（如果自增则跳过了该0）。代码如下：</p>
+
+<div class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="kt">void</span> <span class="n">swap</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">nums</span><span class="p">,</span> <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">buff</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+        <span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">buff</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">void</span> <span class="n">sortColors</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">l</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+        <span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        
+        <span class="k">while</span><span class="p">(</span><span class="n">p</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">swap</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="o">++</span><span class="n">l</span><span class="p">,</span> <span class="n">p</span><span class="o">++</span><span class="p">);</span>
+            <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">p</span><span class="o">++</span><span class="p">;</span>
+            <span class="k">else</span>
+                <span class="nf">swap</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="o">--</span><span class="n">r</span><span class="p">,</span> <span class="n">p</span><span class="p">);</span>
+        <span class="p">}</span>
+        
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span></code></pre></div>
+
+<h2 id="divide-two-integers">29 Divide Two Integers</h2>
+
+<p>Divide two integers without using multiplication, division and mod operator.</p>
+
+<p>If it is overflow, return MAX_INT.</p>
+
+<p>思路比较清晰，即先将除数左移，得到最大的不超过被除数的除数，并记录倍数，当被除数大于除数时，每次从除数中每次减去被除数，并将倍数加入结果，每进行一次将除数与倍数右移一位。</p>
+
+<p>完成代码后发现各种问题，结果发现是最开始我使用<code>while(time&gt;=1)</code>来判断循环是否结束，然而time类型没有设置为<code>unsigned</code>，导致没有进入循环于是出错。另外，除数与被除数使用<code>long long</code>是为了在预判左移后ldivisor不至于溢出。代码如下：</p>
+
+<div class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">divide</span><span class="p">(</span><span class="kt">int</span> <span class="n">dividend</span><span class="p">,</span> <span class="kt">int</span> <span class="n">divisor</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">divisor</span> <span class="o">||</span> <span class="p">(</span><span class="n">dividend</span> <span class="o">==</span> <span class="n">INT_MIN</span> <span class="o">&amp;&amp;</span> <span class="n">divisor</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">INT_MAX</span><span class="p">;</span>
+            
+        <span class="kt">int</span> <span class="n">flag</span> <span class="o">=</span> <span class="p">(</span><span class="n">dividend</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">^</span> <span class="p">(</span><span class="n">divisor</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">?</span> <span class="o">-</span><span class="mi">1</span> <span class="o">:</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        
+        <span class="kt">long</span> <span class="kt">long</span> <span class="n">ldividend</span> <span class="o">=</span> <span class="n">labs</span><span class="p">(</span><span class="n">dividend</span><span class="p">);</span>
+        <span class="kt">long</span> <span class="kt">long</span> <span class="n">ldivisor</span>  <span class="o">=</span> <span class="n">labs</span><span class="p">(</span><span class="n">divisor</span><span class="p">);</span>
+        
+        <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">time</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        
+        <span class="k">while</span><span class="p">((</span><span class="n">ldivisor</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">ldividend</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ldivisor</span> <span class="o">&lt;&lt;=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="n">time</span> <span class="o">&lt;&lt;=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+        
+        <span class="k">while</span><span class="p">(</span><span class="n">ldivisor</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">ldividend</span> <span class="o">&gt;=</span> <span class="n">ldivisor</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">ldividend</span> <span class="o">-=</span> <span class="n">ldivisor</span><span class="p">;</span>
+                <span class="n">res</span> <span class="o">+=</span> <span class="n">time</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="n">ldivisor</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="n">time</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+        
+        <span class="k">return</span> <span class="n">res</span> <span class="o">*</span> <span class="n">flag</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span></code></pre></div>
+
+<h2 id="merge-k-sorted-lists">23 Merge k Sorted Lists</h2>
+<p>Merge k Sorted Lists Total Accepted: 47008 Total Submissions: 223015 My Submissions Question Solution 
+Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.</p>
+
+<p>使用最小堆，先将每个链表的头节点构成堆，每次从堆顶取出节点，将该节点的下一个节点加入堆，同时将该节点插入新链表的尾部，循环直至堆为空。代码如下：</p>
+
+<div class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cm">/**</span>
+<span class="cm"> * Definition for singly-linked list.</span>
+<span class="cm"> * struct ListNode {</span>
+<span class="cm"> *     int val;</span>
+<span class="cm"> *     ListNode *next;</span>
+<span class="cm"> *     ListNode(int x) : val(x), next(NULL) {}</span>
+<span class="cm"> * };</span>
+<span class="cm"> */</span>
+<span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="k">static</span> <span class="kt">bool</span> <span class="n">_comp</span><span class="p">(</span><span class="n">ListNode</span> <span class="o">*</span><span class="n">n1</span><span class="p">,</span> <span class="n">ListNode</span> <span class="o">*</span><span class="n">n2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">n1</span><span class="o">-&gt;</span><span class="n">val</span> <span class="o">&lt;</span> <span class="n">n2</span><span class="o">-&gt;</span><span class="n">val</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="k">else</span>
+            <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">ListNode</span><span class="o">*</span> <span class="n">mergeKLists</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ListNode</span><span class="o">*&gt;&amp;</span> <span class="n">lists</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="n">ListNode</span><span class="o">*&gt;</span> <span class="n">myHeap</span><span class="p">;</span>
+        <span class="n">ListNode</span> <span class="o">*</span><span class="n">newHead</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+        <span class="n">ListNode</span> <span class="o">*</span><span class="n">newTail</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+        
+        <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="nl">list</span> <span class="p">:</span> <span class="n">lists</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">list</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">myHeap</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">list</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        
+        <span class="n">make_heap</span><span class="p">(</span><span class="n">myHeap</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">myHeap</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">_comp</span><span class="p">);</span>
+        
+        <span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">myHeap</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+            <span class="n">ListNode</span> <span class="o">*</span><span class="n">newNode</span> <span class="o">=</span> <span class="n">myHeap</span><span class="p">.</span><span class="n">front</span><span class="p">();</span>
+            <span class="n">pop_heap</span><span class="p">(</span><span class="n">myHeap</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">myHeap</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">_comp</span><span class="p">);</span>
+            <span class="n">myHeap</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>
+            
+            <span class="k">if</span><span class="p">(</span><span class="n">newNode</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">myHeap</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">newNode</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">);</span>
+                <span class="n">push_heap</span><span class="p">(</span><span class="n">myHeap</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">myHeap</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">_comp</span><span class="p">);</span>
+            <span class="p">}</span>
+            
+            <span class="n">newNode</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+            
+            <span class="k">if</span><span class="p">(</span><span class="n">newHead</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">newHead</span> <span class="o">=</span> <span class="n">newNode</span><span class="p">;</span>
+                <span class="n">newTail</span> <span class="o">=</span> <span class="n">newNode</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="p">{</span>
+                <span class="n">newTail</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">newNode</span><span class="p">;</span>
+                <span class="n">newTail</span> <span class="o">=</span> <span class="n">newTail</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        
+        <span class="k">return</span> <span class="n">newHead</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span></code></pre></div>
+
+
+      <footer class="entry-meta">
+        <span class="entry-tags"><a href="http://qingye.me/tags/#code" title="Pages tagged code" class="tag"><span class="term">code</span></a></span>
+        
+        <div class="social-share">
+  <ul class="socialcount socialcount-small inline-list">
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://qingye.me/leetcode-note-4/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://qingye.me/leetcode-note-4/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://qingye.me/leetcode-note-4/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+  </ul>
+</div><!-- /.social-share -->
+      </footer>
+    </div><!-- /.entry-content -->
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+    <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="http://qingye.me/ibdata1/" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="http://qingye.me/shadowsocks-proxifier/" title="shadowsocks/proxifier">shadowsocks/proxifier</a></h3>
+      <p>## 介绍自从学校校园网改革一下就怨声载道，民不聊生，毕竟作为计算机+互联网方向的北邮，能让大多数人都不敢安心点开网页也是蛮拼的。因此催生出了各种省流量的方式，其中主要就是使用IPv6流量来代替IPv4流量，因为学校网关是不计IPv6流量的。然而现阶段IPv6并没有那么普及...&hellip; <a href="http://qingye.me/shadowsocks-proxifier/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
+    
+      <div class="list-item">
+        <h4><a href="http://qingye.me/introduction-to-mathjax-and-latex-expression/" title="introduction-to-mathjax-and-latex-expression">introduction-to-mathjax-and-latex-expression</a></h4>
+        <span>Published on July 01, 2015</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="http://qingye.me/decision-tree-note/" title="Machine Learning note - Decision Tree">Machine Learning note - Decision Tree</a></h4>
+        <span>Published on June 30, 2015</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    <span>&copy; 2015 Qing YE. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="https://mademistakes.com/work/hpstr-jekyll-theme/" rel="nofollow">HPSTR Theme</a>.</span>
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+<script src="http://qingye.me/assets/js/vendor/jquery-1.9.1.min.js"></script>
+<!-- <script>window.jQuery || document.write('<script src="http://qingye.me/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script> -->
+<script src="http://qingye.me/assets/js/scripts.min.js"></script>
+
+
+
+
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'qingye'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script'); s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	        
+
+</body>
+</html>

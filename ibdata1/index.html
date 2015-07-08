@@ -1,0 +1,359 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>缩小MySQL中ibdata1文件的大小 &#8211; Simple Blog</title>
+<meta name="description" content="On the way.">
+<meta name="keywords" content="mysql">
+
+
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="缩小MySQL中ibdata1文件的大小">
+<meta property="og:description" content="On the way.">
+<meta property="og:url" content="http://qingye.me/ibdata1/">
+<meta property="og:site_name" content="Simple Blog">
+
+
+
+
+
+<link rel="canonical" href="http://qingye.me/ibdata1/">
+<link href="http://qingye.me/feed.xml" type="application/atom+xml" rel="alternate" title="Simple Blog Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://qingye.me/assets/css/main.css">
+
+<!-- Webfonts -->
+<!-- <link href="//fonts.useso.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.useso.com/css?family=monospace:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load MathJax -->
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<!-- Load Modernizr -->
+<script src="http://qingye.me/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://qingye.me/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://qingye.me/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://qingye.me/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://qingye.me/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://qingye.me/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://qingye.me/images/apple-touch-icon-144x144-precomposed.png">
+
+
+
+</head>
+
+<body id="post" >
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+	<button class="dl-trigger">Open Menu</button>
+	<ul class="dl-menu">
+		<li><a href="http://qingye.me/">Home</a></li>
+		<li>
+			<a href="#">About</a>
+			<ul class="dl-submenu">
+				<li>
+					<img src="http://qingye.me/images/avatar2.jpg" alt="Qing YE photo" class="author-photo">
+					<h4>Qing YE</h4>
+					<p>You can code, they can not, that is pretty damn cool.</p>
+				</li>
+				<li><a href="http://qingye.me/about/"><span class="btn btn-inverse">Learn More</span></a></li>
+				<li>
+					<a href="mailto:youkochan233@gmail.com"><i class="fa fa-fw fa-envelope"></i> Email</a>
+				</li>
+				
+				
+				
+				
+				<li>
+					<a href="http://github.com/youkochan"><i class="fa fa-fw fa-github"></i> GitHub</a>
+				</li>
+				
+				
+				
+				
+			</ul><!-- /.dl-submenu -->
+		</li>
+		<li>
+			<a href="#">Posts</a>
+			<ul class="dl-submenu">
+				<li><a href="http://qingye.me/posts/">All Posts</a></li>
+				<li><a href="http://qingye.me/tags/">All Tags</a></li>
+			</ul>
+		</li>
+		
+	    
+	        
+	        
+	    <li><a href="http://mademistakes.com" target="_blank">External Link</a></li>
+	  
+	</ul><!-- /.dl-menu -->
+</nav><!-- /.dl-menuwrapper -->
+
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <header class="header-title">
+      <div class="header-title-wrap">
+        
+          <h1 class="entry-title"><a href="http://qingye.me/ibdata1/" rel="bookmark" title="缩小MySQL中ibdata1文件的大小">缩小MySQL中ibdata1文件的大小</a></h1>
+        
+        <h2><span class="entry-date date published"><time datetime="2015-05-04T11:24:29+08:00">May 04, 2015</time></span></h2>
+        
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          
+          Reading time ~1 minute
+        </p><!-- /.entry-reading-time -->
+        
+      </div><!-- /.header-title-wrap -->
+    </header>
+    <div class="entry-content">
+      <!--more-->
+
+<h2 id="section">前言</h2>
+
+<p>最近处理数据库的过程中，发现了一个问题，即每次执行<code>drop table</code>指令后，原table所占的磁盘空间并没有减少。之前没有在意这个问题。直到虚拟机的200G空间告罄时才意识到这个问题是多么的严重。因为当时甚至连备份下整个数据库的磁盘空间都没有了。于是决定重新整理数据库，减少MySQL的磁盘占用。</p>
+
+<p>通过上网查阅资料，了解到了磁盘占用问题所在：</p>
+
+<blockquote>
+  <p>MySQL在运行一段时间后，ibdata1的文件会增长大小，就算删除了表的数据，ibdata1的体积也不会减小。由于硬盘空间有限，这样一直膨胀下去磁盘空间接近崩溃。</p>
+</blockquote>
+
+<p>以及：</p>
+
+<blockquote>
+  <p>ibdata1里面包含了InnoDB引擎存储的所有索引和数据信息，很可惜MySQL在设计的时候就没有收缩InnoDB表的功能。</p>
+</blockquote>
+
+<p>因此在delete，truncate，drop这些表的时候这个文件大小没有丝毫要减少。并且也没办法直观的看到哪个数据库占用了大量的ibdata1。</p>
+
+<p>新版的Mysql中已经通过<code>innodb_file_per_table</code>这个选项来解决了，开启该选项后，每个InnoDB表的索引和数据都会按*.ibd命名存储到各个数据库中，但是这个选项默认是不开启的。由于没法去直接收缩InnoDB数据文件，也没办法在一台没有打开innodb_file_per_table选项的机器上直接加上该选项让他工作，必须在安装完Mysql就加上这个选项，所以采用对数据库部分数据进行备份再恢复备份的方式。</p>
+
+<h2 id="section-1">操作过程</h2>
+
+<p>操作之前查看了一下磁盘占用情况，发现只剩下了12G，备份整个数据库已经不可能了。于是仅仅备份了一些已经计算出的结果数据。顺带执行<code>sudo ls -alh /var/lib/mysql</code>发现里面的idata1文件占用了160G的磁盘空间，其中有一大部分空间都是计算过程中的中间结果表格。这些表格所占用的空间并未在<code>drop table</code>操作完成后释放掉。</p>
+
+<h3 id="section-2">系统环境</h3>
+
+<pre><code>yeqing@yeqing-KVM:~$ uname -a
+Linux yeqing-KVM 3.2.0-23-generic-pae #36-Ubuntu SMP Tue Apr 10 22:19:09 UTC 2012 i686 i686 i386 GNU/Linux
+</code></pre>
+
+<h3 id="mysql">MySQL版本</h3>
+
+<pre><code>yeqing@yeqing-KVM:~$ mysql --version
+mysql  Ver 14.14 Distrib 5.5.41, for debian-linux-gnu (i686) using readline 6.2
+</code></pre>
+
+<h3 id="section-3">导出数据</h3>
+
+<p>现在的数据库中有两个database，其中<code>data</code>保存着工单以及话单的原始数据，由于量太大导致无法备份，但是在另外计算机上存有副本，于是可以不进行备份；<code>result</code>保存着各类统计结果，所占空间约20G。但是导出的SQL文件会远小于这个值，因此可以对其进行备份。</p>
+
+<p>执行：</p>
+
+<pre><code>mysqldump -uroot -p result &gt; export_result.sql
+</code></pre>
+
+<p>执行完成后结果如下：</p>
+
+<pre><code>yeqing@yeqing-KVM:~$ ls -alh | grep export
+-rw-rw-r--  1 yeqing yeqing  6.3G  5月  3 03:35 export_result.sql
+</code></pre>
+
+<h3 id="mysql-1">重新配置MySQL</h3>
+
+<p>停止MySQL服务器并清空所有数据文件</p>
+
+<pre><code>sudo /etc/init.d/mysql stop
+sudo rm -rf /var/lib/mysql/*
+</code></pre>
+
+<p>修改配置文件</p>
+
+<pre><code>sudo vi /etc/mysql/my.cnf
+</code></pre>
+
+<p>在[mysqld]下添加 <code>innodb\_file\_per\_table = 1</code> 或 <code>innodb\_file\_per\_table</code>。</p>
+
+<p>重新构建数据库实例并启动MySQL</p>
+
+<pre><code>/usr/bin/mysql_install_db
+sudo /etc/init.d/mysql start
+</code></pre>
+
+<p>查看配置是否成功</p>
+
+<pre><code>mysql&gt; show variables like '%per_table%';
++-----------------------+-------+
+| Variable_name         | Value |
++-----------------------+-------+
+| innodb_file_per_table | ON    |
++-----------------------+-------+
+1 row in set (0.11 sec)
+</code></pre>
+
+<h3 id="section-4">恢复数据库</h3>
+
+<p>新建数据库result，并导入备份好的数据</p>
+
+<pre><code>mysql -uroot result &lt; export_result.sql
+</code></pre>
+
+<p>查看导入结果</p>
+
+<pre><code>yeqing@yeqing-KVM:~$ sudo ls -alh /var/lib/mysql/result
+drwx------ 2 mysql mysql 4.0K  5月  4 19:10 .
+drwxrwxrwx 6 mysql mysql 4.0K  5月  4 02:40 ..
+-rw-rw---- 1 mysql mysql   65  5月  3 04:55 db.opt
+-rw-rw---- 1 mysql mysql 8.8K  5月  4 18:07 result_cti_data.frm
+-rw-rw---- 1 mysql mysql  21G  5月  4 19:00 result_cti_data.ibd
+-rw-rw---- 1 mysql mysql 8.6K  5月  3 04:56 result_data.frm
+-rw-rw---- 1 mysql mysql  13G  5月  3 13:03 result_data.ibd
+-rw-rw---- 1 mysql mysql 8.5K  5月  3 12:22 result_number.frm
+-rw-rw---- 1 mysql mysql 2.4G  5月  3 12:34 result_number.ibd
+-rw-rw---- 1 mysql mysql 8.6K  5月  3 12:34 result_project_calling_count.frm
+-rw-rw---- 1 mysql mysql  96K  5月  3 12:34 result_project_calling_count.ibd
+-rw-rw---- 1 mysql mysql 8.5K  5月  3 12:34 result_project.frm
+-rw-rw---- 1 mysql mysql 112K  5月  3 12:34 result_project.ibd
+-rw-rw---- 1 mysql mysql 8.5K  5月  3 12:34 result_project_name.frm
+-rw-rw---- 1 mysql mysql 144K  5月  3 12:34 result_project_name.ibd
+-rw-rw---- 1 mysql mysql 8.5K  5月  3 12:34 result_project_user_count.frm
+-rw-rw---- 1 mysql mysql  96K  5月  3 12:34 result_project_user_count.ibd
+-rw-rw---- 1 mysql mysql 8.9K  5月  3 12:34 result_user_info.frm
+</code></pre>
+
+<p>可以发现数据已经成功导入，并且每一个table对应一个idb文件，说明MySQL已经配置成功。当我们再导出表drop后，对应的数据文件idb就会被删除，系统硬盘空间使用就会在正常值范围内。</p>
+
+<p>重置root密码</p>
+
+<pre><code>mysql&gt; SET PASSWORD FOR 'root'@'localhost' = PASSWORD('123456');
+mysql&gt; FLUSH PRIVILEGES;
+</code></pre>
+
+<h2 id="section-5">总结</h2>
+
+<p>使用独立表空间的优点如下：</p>
+
+<ol>
+  <li>每个表都有自已独立的表空间。</li>
+  <li>每个表的数据和索引都会存在自已的表空间中。</li>
+  <li>可以实现单表在不同的数据库中移动。</li>
+  <li>空间可以回收
+    <ul>
+      <li><code>Drop table</code>操作自动回收表空间，如果对于统计分析或是日值表，删除大量数据后可以通过alter table TableName engine=innodb;回缩不用的空间。</li>
+      <li>对于使innodb-plugin的Innodb使用turncate table也会使空间收缩。</li>
+      <li>对于使用独立表空间的表，不管怎么删除，表空间的碎片不会太严重的影响性能，而且还有机会处理。</li>
+    </ul>
+  </li>
+</ol>
+
+<p>缺点：</p>
+
+<p>单表增加过大，如超过100个G。</p>
+
+      <footer class="entry-meta">
+        <span class="entry-tags"><a href="http://qingye.me/tags/#mysql" title="Pages tagged mysql" class="tag"><span class="term">mysql</span></a></span>
+        
+        <div class="social-share">
+  <ul class="socialcount socialcount-small inline-list">
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://qingye.me/ibdata1/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://qingye.me/ibdata1/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://qingye.me/ibdata1/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+  </ul>
+</div><!-- /.social-share -->
+      </footer>
+    </div><!-- /.entry-content -->
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+    <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="http://qingye.me/intsall-mysql-python-in-mac/" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="http://qingye.me/shadowsocks-proxifier/" title="shadowsocks/proxifier">shadowsocks/proxifier</a></h3>
+      <p>## 介绍自从学校校园网改革一下就怨声载道，民不聊生，毕竟作为计算机+互联网方向的北邮，能让大多数人都不敢安心点开网页也是蛮拼的。因此催生出了各种省流量的方式，其中主要就是使用IPv6流量来代替IPv4流量，因为学校网关是不计IPv6流量的。然而现阶段IPv6并没有那么普及...&hellip; <a href="http://qingye.me/shadowsocks-proxifier/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
+    
+      <div class="list-item">
+        <h4><a href="http://qingye.me/introduction-to-mathjax-and-latex-expression/" title="introduction-to-mathjax-and-latex-expression">introduction-to-mathjax-and-latex-expression</a></h4>
+        <span>Published on July 01, 2015</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="http://qingye.me/decision-tree-note/" title="Machine Learning note - Decision Tree">Machine Learning note - Decision Tree</a></h4>
+        <span>Published on June 30, 2015</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    <span>&copy; 2015 Qing YE. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="https://mademistakes.com/work/hpstr-jekyll-theme/" rel="nofollow">HPSTR Theme</a>.</span>
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+<script src="http://qingye.me/assets/js/vendor/jquery-1.9.1.min.js"></script>
+<!-- <script>window.jQuery || document.write('<script src="http://qingye.me/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script> -->
+<script src="http://qingye.me/assets/js/scripts.min.js"></script>
+
+
+
+
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'qingye'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script'); s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	        
+
+</body>
+</html>

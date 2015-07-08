@@ -1,0 +1,632 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Machine Learning note - Decision Tree &#8211; Simple Blog</title>
+<meta name="description" content="On the way.">
+<meta name="keywords" content="ml, note, decision tree">
+
+
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Machine Learning note - Decision Tree">
+<meta property="og:description" content="On the way.">
+<meta property="og:url" content="http://qingye.me/decision-tree-note/">
+<meta property="og:site_name" content="Simple Blog">
+
+
+
+
+
+<link rel="canonical" href="http://qingye.me/decision-tree-note/">
+<link href="http://qingye.me/feed.xml" type="application/atom+xml" rel="alternate" title="Simple Blog Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://qingye.me/assets/css/main.css">
+
+<!-- Webfonts -->
+<!-- <link href="//fonts.useso.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.useso.com/css?family=monospace:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load MathJax -->
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<!-- Load Modernizr -->
+<script src="http://qingye.me/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://qingye.me/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://qingye.me/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://qingye.me/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://qingye.me/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://qingye.me/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://qingye.me/images/apple-touch-icon-144x144-precomposed.png">
+
+
+
+</head>
+
+<body id="post" >
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+	<button class="dl-trigger">Open Menu</button>
+	<ul class="dl-menu">
+		<li><a href="http://qingye.me/">Home</a></li>
+		<li>
+			<a href="#">About</a>
+			<ul class="dl-submenu">
+				<li>
+					<img src="http://qingye.me/images/avatar2.jpg" alt="Qing YE photo" class="author-photo">
+					<h4>Qing YE</h4>
+					<p>You can code, they can not, that is pretty damn cool.</p>
+				</li>
+				<li><a href="http://qingye.me/about/"><span class="btn btn-inverse">Learn More</span></a></li>
+				<li>
+					<a href="mailto:youkochan233@gmail.com"><i class="fa fa-fw fa-envelope"></i> Email</a>
+				</li>
+				
+				
+				
+				
+				<li>
+					<a href="http://github.com/youkochan"><i class="fa fa-fw fa-github"></i> GitHub</a>
+				</li>
+				
+				
+				
+				
+			</ul><!-- /.dl-submenu -->
+		</li>
+		<li>
+			<a href="#">Posts</a>
+			<ul class="dl-submenu">
+				<li><a href="http://qingye.me/posts/">All Posts</a></li>
+				<li><a href="http://qingye.me/tags/">All Tags</a></li>
+			</ul>
+		</li>
+		
+	    
+	        
+	        
+	    <li><a href="http://mademistakes.com" target="_blank">External Link</a></li>
+	  
+	</ul><!-- /.dl-menu -->
+</nav><!-- /.dl-menuwrapper -->
+
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <header class="header-title">
+      <div class="header-title-wrap">
+        
+          <h1 class="entry-title"><a href="http://qingye.me/decision-tree-note/" rel="bookmark" title="Machine Learning note - Decision Tree">Machine Learning note - Decision Tree</a></h1>
+        
+        <h2><span class="entry-date date published"><time datetime="2015-06-30T15:25:44+08:00">June 30, 2015</time></span></h2>
+        
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          
+          Reading time ~6 minutes
+        </p><!-- /.entry-reading-time -->
+        
+      </div><!-- /.header-title-wrap -->
+    </header>
+    <div class="entry-content">
+      <p>有关于决策树的笔记。</p>
+
+<!--more-->
+
+<h1 id="section">前言</h1>
+<p>决策树是一种很容易让人理解的数学模型，通过模拟人的决策过程，来对给定的记录进行分类。可以理解为决策树就是一个流程图，根据记录的各项特征选择不同的分支，根据分支往下不断走直到走到叶子节点。如下图所示：</p>
+
+<figure>
+	<a href="/images/blog/descision-tree-1.png">
+		<img src="/images/blog/descision-tree-1.png" alt="" />
+	</a>
+</figure>
+
+<p>上图是使用了ID3算法生成的一棵决策树，使用的数据集是机器学习实战中提供的隐形眼镜数据集。由此可见决策树生成后的决策过程是很清晰易懂的，因此，主要难点就在于如何去构建这一棵决策树。</p>
+
+<h1 id="section-1">决策树构建过程</h1>
+
+<h2 id="section-2">信息熵</h2>
+<p>首先明确一下信息熵的概念。1948年，香农提出了“信息熵”的概念，解决了对信息的量化度量问题。通俗的说，信息熵代表了数据中的信息的多少，也反应了数据中的混乱程度。</p>
+
+<p>假如事件A的全概率划分是（A1,A2,…,An），每部分发生的概率是 (p1,p2,…,pn)，那信息熵定义为：</p>
+
+<script type="math/tex; mode=display">H(x)=-\sum_{1}^{n}p_{i}\log_{2}p_{i}</script>
+
+<h2 id="id3">ID3算法</h2>
+<p>ID3算法的核心思想就是，使得决策树在搜索过程中，信息熵降低得越快，这样理论上就能最快地得出决策结果。我们使用隐形眼镜数据集来对该算法的过程进行一个简单描述。</p>
+
+<p>数据集如下：</p>
+
+<table rules="groups">
+  <thead>
+    <tr>
+      <th style="text-align: center">age</th>
+      <th style="text-align: center">prescript</th>
+      <th style="text-align: center">astigmatic</th>
+      <th style="text-align: center">tearRate</th>
+      <th style="text-align: center">lens</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">young</td>
+      <td style="text-align: center">myope</td>
+      <td style="text-align: center">no</td>
+      <td style="text-align: center">reduced</td>
+      <td style="text-align: center">no lenses</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">young</td>
+      <td style="text-align: center">myope</td>
+      <td style="text-align: center">no</td>
+      <td style="text-align: center">normal</td>
+      <td style="text-align: center">soft</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">young</td>
+      <td style="text-align: center">myope</td>
+      <td style="text-align: center">yes</td>
+      <td style="text-align: center">reduced</td>
+      <td style="text-align: center">no lenses</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">young</td>
+      <td style="text-align: center">myope</td>
+      <td style="text-align: center">yes</td>
+      <td style="text-align: center">normal</td>
+      <td style="text-align: center">hard</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">young</td>
+      <td style="text-align: center">hyper</td>
+      <td style="text-align: center">no</td>
+      <td style="text-align: center">reduced</td>
+      <td style="text-align: center">no lenses</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">young</td>
+      <td style="text-align: center">hyper</td>
+      <td style="text-align: center">no</td>
+      <td style="text-align: center">normal</td>
+      <td style="text-align: center">soft</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">young</td>
+      <td style="text-align: center">hyper</td>
+      <td style="text-align: center">yes</td>
+      <td style="text-align: center">reduced</td>
+      <td style="text-align: center">no lenses</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">young</td>
+      <td style="text-align: center">hyper</td>
+      <td style="text-align: center">yes</td>
+      <td style="text-align: center">normal</td>
+      <td style="text-align: center">hard</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">pre</td>
+      <td style="text-align: center">myope</td>
+      <td style="text-align: center">no</td>
+      <td style="text-align: center">reduced</td>
+      <td style="text-align: center">no lenses</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">pre</td>
+      <td style="text-align: center">myope</td>
+      <td style="text-align: center">no</td>
+      <td style="text-align: center">normal</td>
+      <td style="text-align: center">soft</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">pre</td>
+      <td style="text-align: center">myope</td>
+      <td style="text-align: center">yes</td>
+      <td style="text-align: center">reduced</td>
+      <td style="text-align: center">no lenses</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">pre</td>
+      <td style="text-align: center">myope</td>
+      <td style="text-align: center">yes</td>
+      <td style="text-align: center">normal</td>
+      <td style="text-align: center">hard</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">pre</td>
+      <td style="text-align: center">hyper</td>
+      <td style="text-align: center">no</td>
+      <td style="text-align: center">reduced</td>
+      <td style="text-align: center">no lenses</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">pre</td>
+      <td style="text-align: center">hyper</td>
+      <td style="text-align: center">no</td>
+      <td style="text-align: center">normal</td>
+      <td style="text-align: center">soft</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">pre</td>
+      <td style="text-align: center">hyper</td>
+      <td style="text-align: center">yes</td>
+      <td style="text-align: center">reduced</td>
+      <td style="text-align: center">no lenses</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">pre</td>
+      <td style="text-align: center">hyper</td>
+      <td style="text-align: center">yes</td>
+      <td style="text-align: center">normal</td>
+      <td style="text-align: center">no lenses</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">presbyopic</td>
+      <td style="text-align: center">myope</td>
+      <td style="text-align: center">no</td>
+      <td style="text-align: center">reduced</td>
+      <td style="text-align: center">no lenses</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">presbyopic</td>
+      <td style="text-align: center">myope</td>
+      <td style="text-align: center">no</td>
+      <td style="text-align: center">normal</td>
+      <td style="text-align: center">no lenses</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">presbyopic</td>
+      <td style="text-align: center">myope</td>
+      <td style="text-align: center">yes</td>
+      <td style="text-align: center">reduced</td>
+      <td style="text-align: center">no lenses</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">presbyopic</td>
+      <td style="text-align: center">myope</td>
+      <td style="text-align: center">yes</td>
+      <td style="text-align: center">normal</td>
+      <td style="text-align: center">hard</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">presbyopic</td>
+      <td style="text-align: center">hyper</td>
+      <td style="text-align: center">no</td>
+      <td style="text-align: center">reduced</td>
+      <td style="text-align: center">no lenses</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">presbyopic</td>
+      <td style="text-align: center">hyper</td>
+      <td style="text-align: center">no</td>
+      <td style="text-align: center">normal</td>
+      <td style="text-align: center">soft</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">presbyopic</td>
+      <td style="text-align: center">hyper</td>
+      <td style="text-align: center">yes</td>
+      <td style="text-align: center">reduced</td>
+      <td style="text-align: center">no lenses</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">presbyopic</td>
+      <td style="text-align: center">hyper</td>
+      <td style="text-align: center">yes</td>
+      <td style="text-align: center">normal</td>
+      <td style="text-align: center">no lenses</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>上述数据集有四个属性，属性集合 lensesLabels = [‘age’, ‘prescript’, ‘astigmatic’, ‘tearRate’]；标签集合 [‘no lenses’, ‘soft’, ‘hard’]，有三类。</p>
+
+<p>数据集 lenses 包含24个训练样本，其中属于类别 <code>no lenses</code> 15个，属于类别 <code>soft</code> 5个，属于类别 <code>hard</code> 4个</p>
+
+<p>首先，计算整个训练样本的信息熵。有</p>
+
+<p>$H(D)=-\frac{15}{24}\log_2{\frac{15}{24}}-\frac{5}{24}\log_2{\frac{4}{24}}-\frac{4}{24}\log_2{\frac{4}{24}}=1.3260$</p>
+
+<p>接下来针对属性集合中的每一个属性来计算按该属性划分后得出的数据集的信息熵。</p>
+
+<h3 id="age">age</h3>
+<p>age 有三个取值，<code>young</code>，<code>pre</code>，<code>presbyopic</code>。</p>
+
+<ul>
+  <li>属于<code>young</code>的样本共8个，其中：属于类别 <code>no lenses</code> 4个，属于类别 <code>soft</code> 2个，属于类别 <code>hard</code> 2个</li>
+  <li>属于<code>pre</code>的样本共8个，其中：属于类别 <code>no lenses</code> 5个，属于类别 <code>soft</code> 2个，属于类别 <code>hard</code> 1个</li>
+  <li>属于<code>presbyopic</code>的样本共8个，其中：属于类别 <code>no lenses</code> 6个，属于类别 <code>soft</code> 1个，属于类别 <code>hard</code> 1个</li>
+</ul>
+
+<p>则可知</p>
+
+<p>$H(age, young)=-\frac{4}{8}\log_2{\frac{4}{8}}-\frac{2}{8}\log_2{\frac{2}{8}}-\frac{2}{8}\log_2{\frac{2}{8}}=1.500$</p>
+
+<p>$H(age, pre)=-\frac{5}{8}\log_2{\frac{5}{8}}-\frac{2}{8}\log_2{\frac{2}{8}}-\frac{1}{8}\log_2{\frac{1}{8}}=1.2987$</p>
+
+<p>$H(age, presbyopic)=-\frac{6}{8}\log_2{\frac{6}{8}}-\frac{1}{8}\log_2{\frac{1}{8}}-\frac{1}{8}\log_2{\frac{1}{8}}=1.0612$</p>
+
+<p>$H(age)=\frac8{24}H(age, young)+\frac8{24}H(age, pre)+\frac8{24}H(age, presbyopic)=1.2866$</p>
+
+<h3 id="prescript">prescript</h3>
+<p>prescript，有两个取值，<code>myope</code>以及<code>hyper</code></p>
+
+<ul>
+  <li>属于<code>myope</code>的样本共12个，其中：属于类别 <code>no lenses</code> 7个，属于类别 <code>soft</code> 2个，属于类别 <code>hard</code> 3个</li>
+  <li>属于<code>hyper</code>的样本共12个，其中：属于类别 <code>no lenses</code> 8个，属于类别 <code>soft</code> 3个，属于类别 <code>hard</code> 1个</li>
+</ul>
+
+<p>$H(prescript, myope)=-\frac{7}{12}\log_2{\frac{7}{12}}-\frac{2}{12}\log_2{\frac{2}{12}}-\frac{3}{12}\log_2{\frac{3}{12}}=1.3844$</p>
+
+<p>$H(prescript, hyper)=-\frac{8}{12}\log_2{\frac{8}{12}}-\frac{3}{12}\log_2{\frac{3}{12}}-\frac{1}{12}\log_2{\frac{1}{12}}=1.1887$</p>
+
+<p>$H(prescript)=\frac{12}{24}H(prescript, myope)+\frac{12}{24}H(prescript, hyper)=1.2865$</p>
+
+<h3 id="astigmatic">astigmatic</h3>
+<p>astigmatic有两个取值，<code>yes</code>以及<code>no</code></p>
+
+<ul>
+  <li>属于<code>yes</code>的样本共12个，其中：属于类别 <code>no lenses</code> 8个，属于类别 <code>soft</code> 0个，属于类别 <code>hard</code> 4个</li>
+  <li>属于<code>no</code>的样本共12个，其中：属于类别 <code>no lenses</code> 3个，属于类别 <code>soft</code> 5个，属于类别 <code>hard</code> 4个</li>
+</ul>
+
+<p>$H(astigmatic, yes)=-\frac{8}{12}\log_2{\frac{8}{12}}-\frac{4}{12}\log_2{\frac{4}{12}}=0.9182$</p>
+
+<p>$H(astigmatic, no)=-\frac{3}{12}\log_2{\frac{3}{12}}-\frac{5}{12}\log_2{\frac{5}{12}}-\frac{4}{12}\log_2{\frac{4}{12}}=1.5545$</p>
+
+<p>$H(astigmatic)=\frac{12}{24}H(astigmatic, yes)+\frac{12}{24}H(astigmatic, no)=1.2363$</p>
+
+<h3 id="tearrate">tearRate</h3>
+<p>tearRate有两个取值，<code>reduced</code>以及<code>normal</code></p>
+
+<ul>
+  <li>属于<code>reduced</code>的样本共12个，其中：属于类别 <code>no lenses</code> 3个，属于类别 <code>soft</code> 5个，属于类别 <code>hard</code> 4个</li>
+  <li>属于<code>normal</code>的样本共12个，其中：属于类别 <code>no lenses</code> 12个，属于类别 <code>soft</code> 0个，属于类别 <code>hard</code> 0个</li>
+</ul>
+
+<p>$H(tearRate, reduced)=-\frac{3}{12}\log_2{\frac{3}{12}}-\frac{5}{12}\log_2{\frac{5}{12}}-\frac{4}{12}\log_2{\frac{4}{12}}=1.5545$</p>
+
+<p>$H(tearRate, normal)=0$</p>
+
+<p>$H(tearRate)=\frac{12}{24}H(tearRate, reduced)+\frac{12}{24}H(tearRate, normal)=0.7772$</p>
+
+<h3 id="section-3">计算</h3>
+<p>根据上面的数据，我们可以计算选择第一个根结点所依赖的信息增益值，计算如下所示：</p>
+
+<p>$Gain(age)=H(D)-H(age)=1.3260-1.2866=0.0394$</p>
+
+<p>$Gain(prescript)=H(D)-H(prescript)=1.3260-1.2865=0.0395$</p>
+
+<p>$Gain(astigmatic)=H(D)-H(astigmatic)=1.32600-1.2363=0.0897$</p>
+
+<p>$Gain(tearRate)=H(D)-H(tearRate)=1.3260-0.7772=0.5488$</p>
+
+<p>因此可知Gain(tearRate)最大，因此，我们选择tearRate作为决策树的第一个节点。</p>
+
+<p>继续执行上述信息熵和信息增益的计算，最终能够选出其他的决策结点，从而建立一棵决策树，这就是我们训练出来的分类模型。基于此模型，可以使用一组测试数据及进行模型的验证，最后能够对新数据进行预测。</p>
+
+<h2 id="section-4">代码分析</h2>
+<p>这里使用<code>Machine Learning in Action</code>中的决策树代码。</p>
+
+<h3 id="createtree">createTree</h3>
+<p>该函数主要用于递归地构造决策树。</p>
+
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="k">def</span> <span class="nf">createTree</span><span class="p">(</span><span class="n">dataSet</span><span class="p">,</span><span class="n">labels</span><span class="p">):</span>
+    <span class="c"># 获得每一条样本数据集的标签，在本例中为`no lenses`，`soft`，`hard`</span>
+    <span class="n">classList</span> <span class="o">=</span> <span class="p">[</span><span class="n">example</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">example</span> <span class="ow">in</span> <span class="n">dataSet</span><span class="p">]</span>
+
+    <span class="c"># 当所有样本的标签都一样时，无需再进行构建树的操作，直接将该标签返回，作为决策树的叶子节点</span>
+    <span class="k">if</span> <span class="n">classList</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">classList</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">classList</span><span class="p">):</span> 
+        <span class="k">return</span> <span class="n">classList</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c"># 当没有特征可以使用时，直接返回数目最多的样本标签</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataSet</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">majorityCnt</span><span class="p">(</span><span class="n">classList</span><span class="p">)</span>
+    
+    <span class="c"># 根据香农熵，来选择最佳的划分特征</span>
+    <span class="n">bestFeat</span> <span class="o">=</span> <span class="n">chooseBestFeatureToSplit</span><span class="p">(</span><span class="n">dataSet</span><span class="p">)</span>
+    <span class="n">bestFeatLabel</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="n">bestFeat</span><span class="p">]</span>
+    
+    <span class="n">myTree</span> <span class="o">=</span> <span class="p">{</span><span class="n">bestFeatLabel</span><span class="p">:{}}</span>
+    <span class="k">del</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">bestFeat</span><span class="p">])</span>
+    
+    <span class="c"># 获得该最佳特征的不同的值</span>
+    <span class="n">featValues</span> <span class="o">=</span> <span class="p">[</span><span class="n">example</span><span class="p">[</span><span class="n">bestFeat</span><span class="p">]</span> <span class="k">for</span> <span class="n">example</span> <span class="ow">in</span> <span class="n">dataSet</span><span class="p">]</span>
+    <span class="n">uniqueVals</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">featValues</span><span class="p">)</span>
+    
+    <span class="c"># 对于最佳特征的每一个值，作为不同的分支，递归构建决策树。</span>
+    <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">uniqueVals</span><span class="p">:</span>
+        <span class="c"># 复制所有的特征</span>
+        <span class="n">subLabels</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[:]</span>
+
+        <span class="c"># 根据value划分数据集，递归构建决策树</span>
+        <span class="n">myTree</span><span class="p">[</span><span class="n">bestFeatLabel</span><span class="p">][</span><span class="n">value</span><span class="p">]</span> <span class="o">=</span> <span class="n">createTree</span><span class="p">(</span><span class="n">splitDataSet</span><span class="p">(</span><span class="n">dataSet</span><span class="p">,</span> <span class="n">bestFeat</span><span class="p">,</span> <span class="n">value</span><span class="p">),</span><span class="n">subLabels</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">myTree</span></code></pre></div>
+
+<h3 id="choosebestfeaturetosplit">chooseBestFeatureToSplit</h3>
+<p>该函数主要用来选择本次划分所使用的特征。</p>
+
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="k">def</span> <span class="nf">chooseBestFeatureToSplit</span><span class="p">(</span><span class="n">dataSet</span><span class="p">):</span>
+    <span class="c"># 该样本集合的特征个数，最后一项作为样本标签。</span>
+    <span class="n">numFeatures</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataSet</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="c"># 样本香农熵</span>
+    <span class="n">baseEntropy</span> <span class="o">=</span> <span class="n">calcShannonEnt</span><span class="p">(</span><span class="n">dataSet</span><span class="p">)</span>
+
+    <span class="c"># 最佳增益以及最佳特征</span>
+    <span class="n">bestInfoGain</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span> <span class="n">bestFeature</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numFeatures</span><span class="p">):</span>
+        <span class="n">featList</span> <span class="o">=</span> <span class="p">[</span><span class="n">example</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">example</span> <span class="ow">in</span> <span class="n">dataSet</span><span class="p">]</span>
+        <span class="c"># 第i个特征的所有不同值的集合</span>
+        <span class="n">uniqueVals</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">featList</span><span class="p">)</span>
+        
+        <span class="n">newEntropy</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">uniqueVals</span><span class="p">:</span>
+            <span class="c"># 选出第i个特征为值value的样本</span>
+            <span class="n">subDataSet</span> <span class="o">=</span> <span class="n">splitDataSet</span><span class="p">(</span><span class="n">dataSet</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="n">prob</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">subDataSet</span><span class="p">)</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dataSet</span><span class="p">))</span>
+            <span class="n">newEntropy</span> <span class="o">+=</span> <span class="n">prob</span> <span class="o">*</span> <span class="n">calcShannonEnt</span><span class="p">(</span><span class="n">subDataSet</span><span class="p">)</span>
+
+        <span class="c"># 计算信息增益，若信息增益大于最佳增益，则记录信息增益与特征下标</span>
+        <span class="n">infoGain</span> <span class="o">=</span> <span class="n">baseEntropy</span> <span class="o">-</span> <span class="n">newEntropy</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">infoGain</span> <span class="o">&gt;</span> <span class="n">bestInfoGain</span><span class="p">):</span>
+            <span class="n">bestInfoGain</span> <span class="o">=</span> <span class="n">infoGain</span>
+            <span class="n">bestFeature</span> <span class="o">=</span> <span class="n">i</span>
+    
+    <span class="c"># 返回最佳特征的下标</span>
+    <span class="k">return</span> <span class="n">bestFeature</span></code></pre></div>
+
+<h3 id="splitdataset">splitDataSet</h3>
+<p>该函数主要用来划分数据集</p>
+
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="k">def</span> <span class="nf">splitDataSet</span><span class="p">(</span><span class="n">dataSet</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="n">retDataSet</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">featVec</span> <span class="ow">in</span> <span class="n">dataSet</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">featVec</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
+            <span class="c"># 划分时丢弃特征axis</span>
+            <span class="n">reducedFeatVec</span> <span class="o">=</span> <span class="n">featVec</span><span class="p">[:</span><span class="n">axis</span><span class="p">]</span>
+            <span class="n">reducedFeatVec</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">featVec</span><span class="p">[</span><span class="n">axis</span><span class="o">+</span><span class="mi">1</span><span class="p">:])</span>
+            <span class="n">retDataSet</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reducedFeatVec</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">retDataSet</span></code></pre></div>
+
+<h3 id="calcshannonent">calcShannonEnt</h3>
+<p>该函数用来计算香农熵</p>
+
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="k">def</span> <span class="nf">calcShannonEnt</span><span class="p">(</span><span class="n">dataSet</span><span class="p">):</span>
+    <span class="n">numEntries</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataSet</span><span class="p">)</span>
+    <span class="n">labelCounts</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">featVec</span> <span class="ow">in</span> <span class="n">dataSet</span><span class="p">:</span>
+        <span class="n">currentLabel</span> <span class="o">=</span> <span class="n">featVec</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">currentLabel</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">labelCounts</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">labelCounts</span><span class="p">[</span><span class="n">currentLabel</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">labelCounts</span><span class="p">[</span><span class="n">currentLabel</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">shannonEnt</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">labelCounts</span><span class="p">:</span>
+        <span class="c"># prob为值为key的标签出现的概率</span>
+        <span class="n">prob</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">labelCounts</span><span class="p">[</span><span class="n">key</span><span class="p">])</span><span class="o">/</span><span class="n">numEntries</span>
+        <span class="c"># log是math包中包含的函数</span>
+        <span class="n">shannonEnt</span> <span class="o">-=</span> <span class="n">prob</span> <span class="o">*</span> <span class="n">log</span><span class="p">(</span><span class="n">prob</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">shannonEnt</span></code></pre></div>
+
+<h3 id="majoritycnt">majorityCnt</h3>
+<p>直接选择出现最多的标签</p>
+
+<div class="highlight"><pre><code class="language-py" data-lang="py"><span class="k">def</span> <span class="nf">majorityCnt</span><span class="p">(</span><span class="n">classList</span><span class="p">):</span>
+    <span class="c"># 直接选择出现最多的标签</span>
+    <span class="n">classCount</span><span class="o">=</span><span class="p">{}</span>
+    <span class="k">for</span> <span class="n">vote</span> <span class="ow">in</span> <span class="n">classList</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">vote</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">classCount</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span> <span class="n">classCount</span><span class="p">[</span><span class="n">vote</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">classCount</span><span class="p">[</span><span class="n">vote</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">sortedClassCount</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">classCount</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sortedClassCount</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></code></pre></div>
+
+<h2 id="section-5">总结</h2>
+<p>决策树算法的优点在于直观，容易理解，容易实现；缺点在于业界对于决策树的理论支持比较少。通俗意义来说就是“人们觉得这么做是有道理的，至于为什么有道理，就不太清楚了”。并且决策树算法的变种比较多，很多变种都是作者的一些小HACK，而效果也不错。</p>
+
+<p>ID3算法的优点是：算法的理论清晰，方法简单，学习能力较强。</p>
+
+<p>ID3算法的缺点是：只对比较小的数据集有效，且对噪声比较敏感，当训练数据集加大时，决策树可能会随之改变。</p>
+
+      <footer class="entry-meta">
+        <span class="entry-tags"><a href="http://qingye.me/tags/#ml" title="Pages tagged ml" class="tag"><span class="term">ml</span></a><a href="http://qingye.me/tags/#note" title="Pages tagged note" class="tag"><span class="term">note</span></a><a href="http://qingye.me/tags/#decision tree" title="Pages tagged decision tree" class="tag"><span class="term">decision tree</span></a></span>
+        
+        <div class="social-share">
+  <ul class="socialcount socialcount-small inline-list">
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://qingye.me/decision-tree-note/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://qingye.me/decision-tree-note/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://qingye.me/decision-tree-note/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+  </ul>
+</div><!-- /.social-share -->
+      </footer>
+    </div><!-- /.entry-content -->
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+    <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="http://qingye.me/linux-cmd-skill/" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="http://qingye.me/shadowsocks-proxifier/" title="shadowsocks/proxifier">shadowsocks/proxifier</a></h3>
+      <p>## 介绍自从学校校园网改革一下就怨声载道，民不聊生，毕竟作为计算机+互联网方向的北邮，能让大多数人都不敢安心点开网页也是蛮拼的。因此催生出了各种省流量的方式，其中主要就是使用IPv6流量来代替IPv4流量，因为学校网关是不计IPv6流量的。然而现阶段IPv6并没有那么普及...&hellip; <a href="http://qingye.me/shadowsocks-proxifier/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
+    
+      <div class="list-item">
+        <h4><a href="http://qingye.me/introduction-to-mathjax-and-latex-expression/" title="introduction-to-mathjax-and-latex-expression">introduction-to-mathjax-and-latex-expression</a></h4>
+        <span>Published on July 01, 2015</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="http://qingye.me/linux-cmd-skill/" title="linux命令行技巧">linux命令行技巧</a></h4>
+        <span>Published on June 30, 2015</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    <span>&copy; 2015 Qing YE. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="https://mademistakes.com/work/hpstr-jekyll-theme/" rel="nofollow">HPSTR Theme</a>.</span>
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+<script src="http://qingye.me/assets/js/vendor/jquery-1.9.1.min.js"></script>
+<!-- <script>window.jQuery || document.write('<script src="http://qingye.me/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script> -->
+<script src="http://qingye.me/assets/js/scripts.min.js"></script>
+
+
+
+
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'qingye'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script'); s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	        
+
+</body>
+</html>

@@ -1,0 +1,346 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>shadowsocks/proxifier &#8211; Simple Blog</title>
+<meta name="description" content="On the way.">
+<meta name="keywords" content="shadowsocks, proxifier">
+
+
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shadowsocks/proxifier">
+<meta property="og:description" content="On the way.">
+<meta property="og:url" content="http://qingye.me/shadowsocks-proxifier/">
+<meta property="og:site_name" content="Simple Blog">
+
+
+
+
+
+<link rel="canonical" href="http://qingye.me/shadowsocks-proxifier/">
+<link href="http://qingye.me/feed.xml" type="application/atom+xml" rel="alternate" title="Simple Blog Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://qingye.me/assets/css/main.css">
+
+<!-- Webfonts -->
+<!-- <link href="//fonts.useso.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.useso.com/css?family=monospace:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load MathJax -->
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<!-- Load Modernizr -->
+<script src="http://qingye.me/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://qingye.me/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://qingye.me/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://qingye.me/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://qingye.me/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://qingye.me/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://qingye.me/images/apple-touch-icon-144x144-precomposed.png">
+
+
+
+</head>
+
+<body id="post" >
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+	<button class="dl-trigger">Open Menu</button>
+	<ul class="dl-menu">
+		<li><a href="http://qingye.me/">Home</a></li>
+		<li>
+			<a href="#">About</a>
+			<ul class="dl-submenu">
+				<li>
+					<img src="http://qingye.me/images/avatar2.jpg" alt="Qing YE photo" class="author-photo">
+					<h4>Qing YE</h4>
+					<p>You can code, they can not, that is pretty damn cool.</p>
+				</li>
+				<li><a href="http://qingye.me/about/"><span class="btn btn-inverse">Learn More</span></a></li>
+				<li>
+					<a href="mailto:youkochan233@gmail.com"><i class="fa fa-fw fa-envelope"></i> Email</a>
+				</li>
+				
+				
+				
+				
+				<li>
+					<a href="http://github.com/youkochan"><i class="fa fa-fw fa-github"></i> GitHub</a>
+				</li>
+				
+				
+				
+				
+			</ul><!-- /.dl-submenu -->
+		</li>
+		<li>
+			<a href="#">Posts</a>
+			<ul class="dl-submenu">
+				<li><a href="http://qingye.me/posts/">All Posts</a></li>
+				<li><a href="http://qingye.me/tags/">All Tags</a></li>
+			</ul>
+		</li>
+		
+	    
+	        
+	        
+	    <li><a href="http://mademistakes.com" target="_blank">External Link</a></li>
+	  
+	</ul><!-- /.dl-menu -->
+</nav><!-- /.dl-menuwrapper -->
+
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <header class="header-title">
+      <div class="header-title-wrap">
+        
+          <h1 class="entry-title"><a href="http://qingye.me/shadowsocks-proxifier/" rel="bookmark" title="shadowsocks/proxifier">shadowsocks/proxifier</a></h1>
+        
+        <h2><span class="entry-date date published"><time datetime="2015-07-07T15:42:08+08:00">July 07, 2015</time></span></h2>
+        
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          
+          Reading time ~1 minute
+        </p><!-- /.entry-reading-time -->
+        
+      </div><!-- /.header-title-wrap -->
+    </header>
+    <div class="entry-content">
+      <h2 id="section">介绍</h2>
+
+<p>自从学校校园网改革一下就怨声载道，民不聊生，毕竟作为计算机+互联网方向的北邮，能让大多数人都不敢安心点开网页也是蛮拼的。因此催生出了各种省流量的方式，其中主要就是使用IPv6流量来代替IPv4流量，因为学校网关是不计IPv6流量的。然而现阶段IPv6并没有那么普及，大多数网站仍然是IPv4，因此，就需要两个工具即，shadowsocks以及proxifier。</p>
+
+<!--more-->
+
+<h2 id="section-1">本机环境</h2>
+
+<ul>
+  <li>系统：OS X Yosemite 10.10.4 MacBook Pro (Retina, 13-inch, Late 2013)</li>
+  <li>网络：IPv6（不计流量，不需网关登录）, IPv4（记流量，且需要网关登录）</li>
+</ul>
+
+<h2 id="shadowsocks">shadowsocks</h2>
+
+<p>我们可以使用 <a href="https://github.com/shadowsocks/shadowsocks/">shadowsocks</a> 这个轻量级的代理，来将原本IPv4网页的访问请求，通过IPv6发送到shadowsocks服务器，转化为服务器对IPv4网页的访问，然后通过IPv6将访问网页获取的数据从服务器发送到本机。通过上述过程就可以绕开IPv4计费的机制（顺便还能科学上网，因为服务器在外国），从而达到了省钱的目的。</p>
+
+<p>服务器端，按照上述链接简单安装shadowsocks即可，客户端的选择比较多，我选择的是 <a href="https://github.com/ohdarling/GoAgentX">GoAgentX</a>。</p>
+
+<p>安装GoAgentX后，新建一个服务类型，选择shadowsocks，配置界面如下：</p>
+
+<figure>
+	<a href="/images/blog/shadowsocks-1.png">
+		<img src="/images/blog/shadowsocks-1.png" alt="" />
+	</a>
+</figure>
+
+<p>其中，主要如下：</p>
+
+<ul>
+  <li>本地端口：客户端实际是通过在本地建立一个SOCKS5代理服务器，用这个代理服务器来实现代理。因此，本地端口即为你设定的本地代理服务器的端口。使用前需要判断一下这个端口是否被占用，否则无法建立代理服务器。</li>
+  <li>服务器列表 / 服务器地址：在该栏填写提供服务的shadowsocks服务器的地址（IP）。在本文的上下文环境中这个地址需要是一个IPv6地址。</li>
+  <li>服务器端口：提供服务的端口号，在服务器的配置文件中设定。</li>
+  <li>连接超时：连接超时的时间（秒）</li>
+  <li>加密方式：也需要和服务器配置文件中的加密方式一致。</li>
+</ul>
+
+<p>完成了上述配置后，就可以简单地使用shadowsocks的服务了。</p>
+
+<p>GoAgentX有三种模式：</p>
+
+<ul>
+  <li>独立模式：该模式下，GoAgentX仅仅建立一个本地的SOCKS5代理服务器，然后什么也不干。你可以根据自己的需要对于特定的程序进行单独配置。使用该模式即可与proxifier配合进行比较复杂的代理控制。</li>
+  <li>全局模式：该模式下，GoAgentX在本地建立好SOCKS5代理后，将系统的全局代理（系统偏好设置–&gt;网络–&gt;高级–&gt;代理）中的SOCKS代理设置为了该SOCKS5代理。注意，这时，系统中所有可以走SOCKS5代理的程序都会自动使用该代理，如Safari，iTunes，AppStore，网易云音乐等，然而别的不能走的程序就会使用直接连接的方式。</li>
+  <li>自动代理配置（PAC）模式：该模式下，程序通过PAC文件判断该目标地址是否应该使用代理。PAC文件可以自己编辑，也可以使用Github上广大码农们维护的PAC文件，文件中记录了最新的哪些网址被GFW屏蔽。该模式下，既可以保证不被屏蔽的网站的访问速度（因为一般情况下直接连接国内网站的速度远大于代理），又可以保证可以访问被屏蔽网站。然而在本文的上下文环境中，这种模式基本没有用，因为我的目标是绝大多数使用代理，以达到省流量的目的。</li>
+</ul>
+
+<p>于是，通过上述总结可知，如果只是简单地使用shadowsocks服务，使用全局代理即可。GoAgentX还有贴心的规则功能，如下图，对于某些特殊的网站比如内网网关登录（10.3.8.211，也可以查询剩余流量）就可以使用直接连接方式。在这种环境下配置好之后基本只有Mac QQ，微信，steam等不支持SOCKS5连接的程序需要继续消耗流量。</p>
+
+<figure>
+	<a href="/images/blog/shadowsocks-2.png">
+		<img src="/images/blog/shadowsocks-2.png" alt="" />
+	</a>
+</figure>
+
+<p>以上只是一些简单的GoAgentX功能，还有更复杂的我就没有深究了。通过以上配置发现steam不支持SOCK5，然而steam中的dota2隔三差五就是几百兆的更新，完全不够用，于是采用了新的方式使用proxifier来省钱。</p>
+
+<h2 id="proxifier">proxifier</h2>
+<p>先看一下官网这货的简介：</p>
+
+<blockquote>
+  <p>Proxifier is a program that allows network applications that do not support working through proxy servers to operate through a SOCKS or HTTPS proxy or a chain of proxy servers.
+With Proxifier you can easily tunnel all TCP connections on the system or the selected ones only.</p>
+</blockquote>
+
+<p>Proxifier allows you to:</p>
+
+<ul>
+  <li>Run any network applications through a proxy server. No special configuration is required for the software; the entire process is completely transparent.</li>
+  <li>Access the Internet from a restricted network through a proxy server gateway.</li>
+  <li>Bypass firewall restrictions.</li>
+  <li>“Tunnel” the entire system (force all network connections including system connections to work through a proxy server).</li>
+  <li>Resolve DNS names through a proxy server.</li>
+  <li>Use flexible Proxification Rules with hostname and application name wildcards.</li>
+  <li>Secure privacy by hiding your IP address.</li>
+  <li>Work through a chain of proxy servers using different protocols.</li>
+  <li>View information on current network activities (connections, hosts, times, bandwidth usage, etc.) in real-time.</li>
+  <li>Maintain log files and traffic dumps.</li>
+  <li>Get detailed reports on network errors.</li>
+  <li>… and much more.</li>
+</ul>
+
+<p>说白了就是可以将原本不支持代理服务器的程序给强行用代理给代理了。简单的使用方式也是相当简单，下载，安装，配置服务器，DONE。一切都是透明的，配置好且运行proxifier后，完全察觉不出你已经被代理了。</p>
+
+<p>操作步骤如下：</p>
+
+<figure>
+	<a href="/images/blog/shadowsocks-3.png">
+		<img src="/images/blog/shadowsocks-3.png" alt="" />
+	</a>
+</figure>
+
+<p>首先，新建一个服务器，如上图，点ADD，填写好你的shadowsocks建立好的服务器就成。</p>
+
+<figure>
+	<a href="/images/blog/shadowsocks-4.png">
+		<img src="/images/blog/shadowsocks-4.png" alt="" />
+	</a>
+</figure>
+
+<p>接着，配置你所需要的规则，如上图，proxifier从上往下检测你的规则，如果有冲突则选择后面的规则。default不可删除，没有匹配到规则时，默认使用default的规则，将default设置为上一个步骤新建的服务器则使得系统的所有连接都将使用这个代理；localhost规则也是自带的，防止本地连接也使用代理，最好不要禁用这条规则除非你明确知道你想要干嘛（笑）；ss-local规则貌似是配置好服务器后自动添加的，貌似是为了shadowsocks正常工作吧，我也没有仔细管（笑）；我自己加了两条记录，分别是为了正常使用ssh以及查看学校网关我的帐号的余额。</p>
+
+<p>规则配置的一些指标如下（每一项都可以填多个值，用分号;分隔）：</p>
+
+<ul>
+  <li>Name：一些对你有意义的字符串</li>
+  <li>Enable：是否启用这条规则，如果不启动，仅仅只是简单忽略它而已</li>
+  <li>Applications：某些特定应用程序，可以使用正则匹配，比如”?”，”+”，”*”</li>
+  <li>Targrt hosts：目的地址，可以使用域名，IPv4以及IPv6，也可以使用正则匹配</li>
+  <li>Targrt ports：目的端口，可以用来针对某些特定的服务来制定规则，范围从1到65535（2^16-1）</li>
+  <li>Action：决定Proxifier如何处理满足上述规则的请求。可以选择direct，直接连接；block，禁用；或者一个你之前配置好的服务器。</li>
+</ul>
+
+<p>至此，已经可以用配置好的代理来更新dota这个流量大户了。</p>
+
+<h2 id="section-2">最后的问题</h2>
+<p>1，为啥我这么配置了，登录steam的时候还是需要登录网关呢？</p>
+
+<p>可能steam服务器采取了某些特殊机制，代理记录确实是有记录的，然而可能服务器端检测出代理还是可能别的什么问题，总是登录不上。不过不影响省流量的大目的，游戏更新依然走代理。</p>
+
+<p>2，如果我手机需要使用代理怎么办呢？</p>
+
+<p>安卓不清楚。越狱iOS手机不清楚。未越狱iOS现在电脑上的shadowsocks或者GoAgentX选择共享到局域网，然后手机进入「无线局域网」，选择和电脑在同一局域网的wifi，点击wifi信息，在下方代理服务器处填写你电脑的IP以及端口即可。亲测表示不越狱的iPhone仅仅可以代理Safari，AppStore等，和上述GoAgentX全局代理效果类似。无法使用QQ，微信等。然而可以使用这种方式来下载/更新APP。</p>
+
+<p>3，这么折腾好像并没有什么卵用啊？</p>
+
+<p>好像也是。不过这几天以来我的服务器走了25G流量，算上上下行，实际也就等于为我省了大约12G流量。这个数字对于学校的总共10G的流量来说还是挺值得的。（虽然也有原因是因为有了代理后用流量更肆无忌惮了。23333。</p>
+
+<p>转载注明出处。</p>
+
+
+      <footer class="entry-meta">
+        <span class="entry-tags"><a href="http://qingye.me/tags/#shadowsocks" title="Pages tagged shadowsocks" class="tag"><span class="term">shadowsocks</span></a><a href="http://qingye.me/tags/#proxifier" title="Pages tagged proxifier" class="tag"><span class="term">proxifier</span></a></span>
+        
+        <div class="social-share">
+  <ul class="socialcount socialcount-small inline-list">
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://qingye.me/shadowsocks-proxifier/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://qingye.me/shadowsocks-proxifier/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://qingye.me/shadowsocks-proxifier/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+  </ul>
+</div><!-- /.social-share -->
+      </footer>
+    </div><!-- /.entry-content -->
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+    <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="http://qingye.me/introduction-to-mathjax-and-latex-expression/" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="http://qingye.me/introduction-to-mathjax-and-latex-expression/" title="introduction-to-mathjax-and-latex-expression">introduction-to-mathjax-and-latex-expression</a></h3>
+      <p>网上找到了一篇比较好的通过MathJax以及LaTex在博客生成公式的博文，比较详细。&hellip; <a href="http://qingye.me/introduction-to-mathjax-and-latex-expression/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
+    
+      <div class="list-item">
+        <h4><a href="http://qingye.me/decision-tree-note/" title="Machine Learning note - Decision Tree">Machine Learning note - Decision Tree</a></h4>
+        <span>Published on June 30, 2015</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="http://qingye.me/linux-cmd-skill/" title="linux命令行技巧">linux命令行技巧</a></h4>
+        <span>Published on June 30, 2015</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    <span>&copy; 2015 Qing YE. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="https://mademistakes.com/work/hpstr-jekyll-theme/" rel="nofollow">HPSTR Theme</a>.</span>
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+<script src="http://qingye.me/assets/js/vendor/jquery-1.9.1.min.js"></script>
+<!-- <script>window.jQuery || document.write('<script src="http://qingye.me/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script> -->
+<script src="http://qingye.me/assets/js/scripts.min.js"></script>
+
+
+
+
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'qingye'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script'); s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	        
+
+</body>
+</html>

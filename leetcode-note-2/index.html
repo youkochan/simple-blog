@@ -1,0 +1,483 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>leetcode-note-2 &#8211; Simple Blog</title>
+<meta name="description" content="On the way.">
+<meta name="keywords" content="code">
+
+
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="leetcode-note-2">
+<meta property="og:description" content="On the way.">
+<meta property="og:url" content="http://qingye.me/leetcode-note-2/">
+<meta property="og:site_name" content="Simple Blog">
+
+
+
+
+
+<link rel="canonical" href="http://qingye.me/leetcode-note-2/">
+<link href="http://qingye.me/feed.xml" type="application/atom+xml" rel="alternate" title="Simple Blog Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://qingye.me/assets/css/main.css">
+
+<!-- Webfonts -->
+<!-- <link href="//fonts.useso.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.useso.com/css?family=monospace:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load MathJax -->
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<!-- Load Modernizr -->
+<script src="http://qingye.me/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://qingye.me/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://qingye.me/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://qingye.me/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://qingye.me/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://qingye.me/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://qingye.me/images/apple-touch-icon-144x144-precomposed.png">
+
+
+
+</head>
+
+<body id="post" >
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+	<button class="dl-trigger">Open Menu</button>
+	<ul class="dl-menu">
+		<li><a href="http://qingye.me/">Home</a></li>
+		<li>
+			<a href="#">About</a>
+			<ul class="dl-submenu">
+				<li>
+					<img src="http://qingye.me/images/avatar2.jpg" alt="Qing YE photo" class="author-photo">
+					<h4>Qing YE</h4>
+					<p>You can code, they can not, that is pretty damn cool.</p>
+				</li>
+				<li><a href="http://qingye.me/about/"><span class="btn btn-inverse">Learn More</span></a></li>
+				<li>
+					<a href="mailto:youkochan233@gmail.com"><i class="fa fa-fw fa-envelope"></i> Email</a>
+				</li>
+				
+				
+				
+				
+				<li>
+					<a href="http://github.com/youkochan"><i class="fa fa-fw fa-github"></i> GitHub</a>
+				</li>
+				
+				
+				
+				
+			</ul><!-- /.dl-submenu -->
+		</li>
+		<li>
+			<a href="#">Posts</a>
+			<ul class="dl-submenu">
+				<li><a href="http://qingye.me/posts/">All Posts</a></li>
+				<li><a href="http://qingye.me/tags/">All Tags</a></li>
+			</ul>
+		</li>
+		
+	    
+	        
+	        
+	    <li><a href="http://mademistakes.com" target="_blank">External Link</a></li>
+	  
+	</ul><!-- /.dl-menu -->
+</nav><!-- /.dl-menuwrapper -->
+
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <header class="header-title">
+      <div class="header-title-wrap">
+        
+          <h1 class="entry-title"><a href="http://qingye.me/leetcode-note-2/" rel="bookmark" title="leetcode-note-2">leetcode-note-2</a></h1>
+        
+        <h2><span class="entry-date date published"><time datetime="2015-03-30T11:03:49+08:00">March 30, 2015</time></span></h2>
+        
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          
+          Reading time ~9 minutes
+        </p><!-- /.entry-reading-time -->
+        
+      </div><!-- /.header-title-wrap -->
+    </header>
+    <div class="entry-content">
+      <!--more-->
+
+<h2 id="majority-element">169 Majority Element</h2>
+<p>选出数组中的Majority Element元素，即出现次数「大于」n/2的元素。一看到这个题第一反应是排序+遍历。于是想到了qsort。写了qsort后开开心心提交代码结果提示超时，于是考虑用别的方式解决。</p>
+
+<p>由于题目的设定是Majority Element元素总存在，且「大于」n/2。于是考虑成对抛弃不同元素，最后留下的肯定就是Majority Element（n为偶数时，为了满足条件Majority Element个数至少为n/2+1，成对删除后必定至少剩余一对Majority Element；n为奇数时，最后必定剩余2*k+1个Majority Element，其中k为自然数）。代码如下：</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">majorityElement</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+	    <span class="kt">int</span> <span class="n">maj</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	    
+	    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+	        <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+	            <span class="n">maj</span> <span class="o">=</span> <span class="n">num</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+	            <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+	        <span class="p">}</span>
+	        <span class="k">else</span><span class="p">{</span>
+	            <span class="k">if</span> <span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">maj</span><span class="p">){</span>
+	                <span class="n">count</span> <span class="o">++</span><span class="p">;</span>
+	            <span class="p">}</span>
+	            <span class="k">else</span><span class="p">{</span>
+	                <span class="n">count</span> <span class="o">--</span><span class="p">;</span>
+	            <span class="p">}</span>
+	        <span class="p">}</span>
+	    <span class="p">}</span>
+	    
+	    <span class="k">return</span> <span class="n">maj</span><span class="p">;</span>
+	<span class="p">}</span></code></pre></div>
+
+<h2 id="excel-sheet-column-title">168	Excel Sheet Column Title</h2>
+<p><a href="https://leetcode.com/submissions/detail/24413581/">https://leetcode.com/submissions/detail/24413581/</a><br />
+将数字转化为excel表格对应的字符串。即十进制数转化为26进制数。</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">char</span> <span class="o">*</span><span class="nf">convertToTitle</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+	    <span class="kt">int</span> <span class="n">mod</span><span class="p">;</span>
+	    <span class="kt">int</span> <span class="n">div</span><span class="p">;</span>
+	    <span class="kt">int</span> <span class="n">i1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">i2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	    <span class="kt">char</span><span class="o">*</span> <span class="n">p1</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+	    <span class="kt">char</span><span class="o">*</span> <span class="n">p2</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+	    
+	    <span class="n">p1</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">);</span>
+	    <span class="n">p2</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">);</span>
+	    
+	    <span class="k">while</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">){</span>
+	        <span class="n">div</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">26</span><span class="p">;</span>
+	        <span class="n">mod</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">26</span><span class="p">;</span>
+	        
+	        <span class="n">p1</span><span class="p">[</span><span class="n">i1</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">mod</span> <span class="o">+</span> <span class="sc">&#39;A&#39;</span><span class="p">;</span>
+	        
+	        <span class="n">n</span> <span class="o">=</span> <span class="n">div</span><span class="p">;</span>
+	    <span class="p">}</span>
+	    
+	    <span class="k">for</span><span class="p">(</span><span class="n">i2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i2</span> <span class="o">&lt;=</span> <span class="n">i1</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">i2</span><span class="o">++</span><span class="p">){</span>
+	        <span class="n">p2</span><span class="p">[</span><span class="n">i2</span><span class="p">]</span> <span class="o">=</span> <span class="n">p1</span><span class="p">[</span><span class="n">i1</span><span class="o">-</span><span class="n">i2</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+	    <span class="p">}</span>
+	    <span class="n">p2</span><span class="p">[</span><span class="n">i2</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+	    
+	    <span class="k">return</span> <span class="n">p2</span><span class="p">;</span>
+	<span class="p">}</span></code></pre></div>
+
+<h2 id="excel-sheet-column-number">171 Excel Sheet Column Number</h2>
+<p>上一题的逆过程。代码如下：</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">titleToNumber</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+		<span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+		<span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+		<span class="k">while</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;\0&#39;</span><span class="p">){</span>
+			<span class="n">num</span> <span class="o">*=</span> <span class="mi">26</span><span class="p">;</span>
+			<span class="n">num</span> <span class="o">+=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="sc">&#39;A&#39;</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+			<span class="n">i</span> <span class="o">++</span><span class="p">;</span>
+		<span class="p">}</span>
+
+		<span class="k">return</span> <span class="n">num</span><span class="p">;</span>
+	<span class="p">}</span></code></pre></div>
+
+<h2 id="sqrtx">69 Sqrt(x)</h2>
+<p>使用牛顿迭代法解方程，Implement int sqrt(int x)。Compute and return the square root of x。即求解<code>f(x)=x^2-N</code>与x轴的交点。找出迭代方程后就比较好理解了。代码如下：</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">mySqrt</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+	    <span class="kt">double</span> <span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">diff</span><span class="p">;</span>
+
+	    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>    <span class="c1">// 特殊情况</span>
+	        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+
+	    <span class="n">x1</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+	    <span class="k">do</span><span class="p">{</span>
+	        <span class="n">x0</span> <span class="o">=</span> <span class="n">x1</span><span class="p">;</span>
+	        <span class="n">x1</span> <span class="o">=</span> <span class="p">((</span><span class="kt">double</span><span class="p">)</span><span class="n">x</span> <span class="o">/</span> <span class="n">x0</span> <span class="o">+</span> <span class="n">x0</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+	        <span class="n">diff</span> <span class="o">=</span> <span class="n">abs</span><span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span><span class="p">);</span>
+	    <span class="p">}</span>
+	    <span class="k">while</span> <span class="p">(</span> <span class="n">diff</span> <span class="o">&gt;</span> <span class="mf">0.001</span> <span class="p">);</span>
+	    
+	    <span class="k">return</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">x1</span><span class="p">;</span>
+	<span class="p">}</span></code></pre></div>
+
+<p>需要注意的是，判断是否结束递归有两种方法，一是判断x0与x1是否无限接近；二是判断<code>f(x1)</code>是否无限接近0。由于第一种方式比较简单，于是采用了第一种。</p>
+
+<h2 id="repeated-dna-sequences">187	Repeated DNA Sequences</h2>
+
+<h2 id="min-stack">155 Min Stack</h2>
+<p><a href="">https://leetcode.com/problems/min-stack/
+</a><br />
+Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.</p>
+
+<ul>
+  <li>push(x) – Push element x onto stack.</li>
+  <li>pop() – Removes the element on top of the stack.</li>
+  <li>top() – Get the top element.</li>
+  <li>getMin() – Retrieve the minimum element in the stack.</li>
+</ul>
+
+<p>直接看到给定的默认条件</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+	    
+	<span class="p">}</span> <span class="n">MinStack</span><span class="p">;</span></code></pre></div>
+
+<p>很容易误解这个结构定义的是stack的一个node（之前见太多，都形成习惯了），然后在填充后面方程时就会出现问题。其实这个结构定义的不是一个node，而是整个stack。并且题目在构建stack时给定了最大容量，这样可以简单地使用malloc申请一个连续数组来充当stack，转换思路后马上就ac了。所以思路不能太死板。代码如下：</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">minStackCreate</span><span class="p">(</span><span class="n">MinStack</span> <span class="o">*</span><span class="n">stack</span><span class="p">,</span> <span class="kt">int</span> <span class="n">maxSize</span><span class="p">)</span> <span class="p">{</span>
+	    <span class="n">stack</span><span class="o">-&gt;</span><span class="n">num_stack</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">*</span><span class="n">maxSize</span><span class="p">);</span>
+	    <span class="n">stack</span><span class="o">-&gt;</span><span class="n">min_stack</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">*</span><span class="n">maxSize</span><span class="p">);</span>
+	    <span class="n">stack</span><span class="o">-&gt;</span><span class="n">maxSize</span> <span class="o">=</span> <span class="n">maxSize</span><span class="p">;</span>
+	    <span class="n">stack</span><span class="o">-&gt;</span><span class="n">pos</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="kt">void</span> <span class="nf">minStackPush</span><span class="p">(</span><span class="n">MinStack</span> <span class="o">*</span><span class="n">stack</span><span class="p">,</span> <span class="kt">int</span> <span class="n">element</span><span class="p">)</span> <span class="p">{</span>
+	    <span class="n">stack</span><span class="o">-&gt;</span><span class="n">pos</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+	    <span class="n">stack</span><span class="o">-&gt;</span><span class="n">num_stack</span><span class="p">[</span><span class="n">stack</span><span class="o">-&gt;</span><span class="n">pos</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span><span class="p">;</span>
+	    <span class="n">stack</span><span class="o">-&gt;</span><span class="n">min_stack</span><span class="p">[</span><span class="n">stack</span><span class="o">-&gt;</span><span class="n">pos</span><span class="p">]</span> <span class="o">=</span> <span class="n">stack</span><span class="o">-&gt;</span><span class="n">pos</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">?</span>\
+	    	<span class="nl">element</span> <span class="p">:</span> <span class="n">min</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">stack</span><span class="o">-&gt;</span><span class="n">min_stack</span><span class="p">[</span><span class="n">stack</span><span class="o">-&gt;</span><span class="n">pos</span><span class="o">-</span><span class="mi">1</span><span class="p">]);</span>
+	<span class="p">}</span>
+
+	<span class="kt">void</span> <span class="nf">minStackPop</span><span class="p">(</span><span class="n">MinStack</span> <span class="o">*</span><span class="n">stack</span><span class="p">)</span> <span class="p">{</span>
+	    <span class="n">stack</span><span class="o">-&gt;</span><span class="n">pos</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="kt">int</span> <span class="nf">minStackTop</span><span class="p">(</span><span class="n">MinStack</span> <span class="o">*</span><span class="n">stack</span><span class="p">)</span> <span class="p">{</span>
+	    <span class="k">return</span> <span class="n">stack</span><span class="o">-&gt;</span><span class="n">num_stack</span><span class="p">[</span><span class="n">stack</span><span class="o">-&gt;</span><span class="n">pos</span><span class="p">];</span>
+	<span class="p">}</span>
+
+	<span class="kt">int</span> <span class="nf">minStackGetMin</span><span class="p">(</span><span class="n">MinStack</span> <span class="o">*</span><span class="n">stack</span><span class="p">)</span> <span class="p">{</span>
+	    <span class="k">return</span> <span class="n">stack</span><span class="o">-&gt;</span><span class="n">min_stack</span><span class="p">[</span><span class="n">stack</span><span class="o">-&gt;</span><span class="n">pos</span><span class="p">];</span>   
+	<span class="p">}</span>
+
+	<span class="kt">void</span> <span class="nf">minStackDestroy</span><span class="p">(</span><span class="n">MinStack</span> <span class="o">*</span><span class="n">stack</span><span class="p">)</span> <span class="p">{</span>
+	    <span class="n">stack</span><span class="o">-&gt;</span><span class="n">pos</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+	<span class="p">}</span></code></pre></div>
+
+<h2 id="find-peak-element">162 Find Peak Element</h2>
+<p>找到峰值峰值元素。num[i] ≠ num[i+1]，num[-1] = num[n] = -∞。说是最好是用对数复杂度实现，很明显就是二分法实现了。考虑到只需要返回一个峰值元素的下标即可，于是可以采取以下思路：初始化left为0，right为n-1，min为left和right的中值，于是定义两个变量，分别记录mid左边是否为上升，以及右边是否为下降。若mid左边上升，右边下降，则返回mid；若左右都上升，则继续二分查找右边的（因为num[n] = -∞）；若都为下降，则继续二分搜索左边的（num[-1] = -∞）。代码如下：</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">findPeakElement</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+		<span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+		<span class="kt">int</span> <span class="n">right</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+		<span class="kt">int</span> <span class="n">mid</span><span class="p">;</span>
+		<span class="kt">int</span> <span class="n">up</span><span class="p">;</span>
+		<span class="kt">int</span> <span class="n">down</span><span class="p">;</span>
+
+		<span class="k">while</span><span class="p">(</span><span class="n">left</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">){</span>
+			<span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">;</span>
+
+			<span class="n">up</span> <span class="o">=</span> <span class="p">((</span><span class="n">mid</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="o">||</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+			<span class="n">down</span> <span class="o">=</span> <span class="p">((</span><span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">n</span> <span class="o">||</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+
+			<span class="k">if</span><span class="p">(</span><span class="n">up</span> <span class="o">&amp;&amp;</span> <span class="n">down</span><span class="p">){</span>
+				<span class="k">return</span> <span class="n">mid</span><span class="p">;</span>
+			<span class="p">}</span>
+			<span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">up</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">down</span><span class="p">){</span>
+				<span class="n">left</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+			<span class="p">}</span>
+			<span class="k">else</span><span class="p">{</span>
+				<span class="n">right</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+
+		<span class="k">return</span> <span class="n">left</span><span class="p">;</span>
+	<span class="p">}</span></code></pre></div>
+
+<h2 id="find-minimum-in-rotated-sorted-array">153 Find Minimum in Rotated Sorted Array</h2>
+<p>和上一题类似，要求找出一个排序后的数组旋转一次（可以理解为左移或者右移N次，但是肯定不等于原数组）得到的数组的最小值，且假设数组中没有重复元素。那就简单多了，二分法，根据mid左右的升降情况判断mid是否为转折点，若是，考虑一下多种情况简单判断一下即可；若不是转折点，则根据num[mid]与num[left]或num[right]的大小关系判断下一步应该往左或者往右进行。代码如下：</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">findMin</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+	    <span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	    <span class="kt">int</span> <span class="n">right</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+	    <span class="kt">int</span> <span class="n">direct1</span><span class="p">;</span>    <span class="c1">// 0 向上</span>
+	    <span class="kt">int</span> <span class="n">direct2</span><span class="p">;</span>    <span class="c1">// 1 向下</span>
+	    <span class="kt">int</span> <span class="n">mid</span><span class="p">;</span>
+	    
+	    <span class="k">if</span><span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+	        <span class="k">return</span> <span class="n">num</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+	    <span class="k">if</span><span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
+	        <span class="k">return</span> <span class="n">num</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">?</span> <span class="n">num</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">:</span> <span class="n">num</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+	    
+	    <span class="k">while</span><span class="p">(</span><span class="n">left</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">){</span>
+	        <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">;</span>
+	        
+	        <span class="n">direct1</span> <span class="o">=</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">?</span> <span class="mi">0</span> <span class="o">:</span> <span class="mi">1</span><span class="p">;</span>
+	        <span class="n">direct2</span> <span class="o">=</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">?</span> <span class="mi">0</span> <span class="o">:</span> <span class="mi">1</span><span class="p">;</span>
+
+	        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">direct1</span> <span class="o">&amp;&amp;</span> <span class="n">direct2</span><span class="p">){</span>
+	            <span class="k">return</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">?</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">:</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+	        <span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">direct1</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">direct2</span><span class="p">){</span>
+	            <span class="k">return</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="p">];</span>
+	        <span class="p">}</span>
+	        <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">direct1</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">direct2</span><span class="p">){</span>
+	            <span class="k">if</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">num</span><span class="p">[</span><span class="n">right</span><span class="p">]){</span>
+	                <span class="n">left</span> <span class="o">=</span> <span class="n">mid</span><span class="p">;</span>
+	            <span class="p">}</span>
+	            <span class="k">else</span><span class="p">{</span>
+	                <span class="n">right</span> <span class="o">=</span> <span class="n">mid</span><span class="p">;</span>
+	            <span class="p">}</span>
+	        <span class="p">}</span>
+	        <span class="k">else</span><span class="p">{</span>
+	            <span class="k">if</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">[</span><span class="n">right</span><span class="p">]){</span>
+	                <span class="n">left</span> <span class="o">=</span> <span class="n">mid</span><span class="p">;</span>
+	            <span class="p">}</span>
+	            <span class="k">else</span><span class="p">{</span>
+	                <span class="n">right</span> <span class="o">=</span> <span class="n">mid</span><span class="p">;</span>
+	            <span class="p">}</span>
+	        <span class="p">}</span>
+	    <span class="p">}</span>
+	    
+	    <span class="k">return</span> <span class="n">num</span><span class="p">[</span><span class="n">left</span><span class="p">];</span>
+	<span class="p">}</span></code></pre></div>
+
+<p>后来才发现这个题根本不用考虑这么复杂。。。貌似给定的测试样例只有递增数组，没有递减数组，于是代码简化为：</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">findMin</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+	    <span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	    <span class="kt">int</span> <span class="n">right</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+	        
+	    <span class="k">while</span><span class="p">(</span><span class="n">left</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">)</span>
+	    <span class="p">{</span>
+	        <span class="k">if</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">[</span><span class="n">right</span><span class="p">])</span> <span class="p">{</span>
+	            <span class="k">return</span> <span class="n">num</span><span class="p">[</span><span class="n">left</span><span class="p">];</span>
+	        <span class="p">}</span>
+	        
+	        <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">left</span> <span class="o">+</span> <span class="p">(</span><span class="n">right</span><span class="o">-</span><span class="n">left</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+	        <span class="k">if</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">num</span><span class="p">[</span><span class="n">mid</span><span class="p">])</span> <span class="p">{</span>
+	            <span class="n">left</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+	        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+	            <span class="n">right</span> <span class="o">=</span> <span class="n">mid</span><span class="p">;</span>
+	        <span class="p">}</span>
+	    <span class="p">}</span>
+	    <span class="k">return</span> <span class="n">num</span><span class="p">[</span><span class="n">left</span><span class="p">];</span>
+	<span class="p">}</span></code></pre></div>
+
+<h2 id="find-minimum-in-rotated-sorted-array-ii">154	Find Minimum in Rotated Sorted Array II</h2>
+<p>这道题是Search in Rotated Sorted Array的扩展，思路在Find Minimum in Rotated Sorted Array中已经介绍过了，和Find Minimum in Rotated Sorted Array唯一的区别是这道题目中元素会有重复的情况出现。不过正是因为这个条件的出现，影响到了算法的时间复杂度。原来我们是依靠中间和边缘元素的大小关系，来判断哪一半是不受rotate影响，仍然有序的。而现在因为重复的出现，如果我们遇到中间和边缘相等的情况，我们就无法判断哪边有序，因为哪边都有可能有序。假设原数组是{1,2,3,3,3,3,3}，那么旋转之后有可能是{3,3,3,3,3,1,2}，或者{3,1,2,3,3,3,3}，这样的我们判断左边缘和中心的时候都是3，我们并不知道应该截掉哪一半。解决的办法只能是对边缘移动一步，直到边缘和中间不在相等或者相遇，这就导致了会有不能切去一半的可能。所以最坏情况就会出现每次移动一步，总共移动n此，算法的时间复杂度变成O(n)。既然是O(n)，最简单的做法即暴力破解。</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">findMin</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+	    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	    
+	    <span class="k">if</span><span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+	        <span class="k">return</span> <span class="n">num</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+	    
+	    <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">++</span><span class="p">){</span>
+	        <span class="k">if</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+	            <span class="k">return</span> <span class="n">num</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+	    <span class="p">}</span>
+	    
+	    <span class="k">return</span> <span class="n">num</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+	<span class="p">}</span></code></pre></div>
+
+<!--more-->
+
+      <footer class="entry-meta">
+        <span class="entry-tags"><a href="http://qingye.me/tags/#code" title="Pages tagged code" class="tag"><span class="term">code</span></a></span>
+        
+        <div class="social-share">
+  <ul class="socialcount socialcount-small inline-list">
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://qingye.me/leetcode-note-2/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://qingye.me/leetcode-note-2/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://qingye.me/leetcode-note-2/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+  </ul>
+</div><!-- /.social-share -->
+      </footer>
+    </div><!-- /.entry-content -->
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+    <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="http://qingye.me/leetcode-note/" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="http://qingye.me/shadowsocks-proxifier/" title="shadowsocks/proxifier">shadowsocks/proxifier</a></h3>
+      <p>## 介绍自从学校校园网改革一下就怨声载道，民不聊生，毕竟作为计算机+互联网方向的北邮，能让大多数人都不敢安心点开网页也是蛮拼的。因此催生出了各种省流量的方式，其中主要就是使用IPv6流量来代替IPv4流量，因为学校网关是不计IPv6流量的。然而现阶段IPv6并没有那么普及...&hellip; <a href="http://qingye.me/shadowsocks-proxifier/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
+    
+      <div class="list-item">
+        <h4><a href="http://qingye.me/introduction-to-mathjax-and-latex-expression/" title="introduction-to-mathjax-and-latex-expression">introduction-to-mathjax-and-latex-expression</a></h4>
+        <span>Published on July 01, 2015</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="http://qingye.me/decision-tree-note/" title="Machine Learning note - Decision Tree">Machine Learning note - Decision Tree</a></h4>
+        <span>Published on June 30, 2015</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    <span>&copy; 2015 Qing YE. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="https://mademistakes.com/work/hpstr-jekyll-theme/" rel="nofollow">HPSTR Theme</a>.</span>
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+<script src="http://qingye.me/assets/js/vendor/jquery-1.9.1.min.js"></script>
+<!-- <script>window.jQuery || document.write('<script src="http://qingye.me/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script> -->
+<script src="http://qingye.me/assets/js/scripts.min.js"></script>
+
+
+
+
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'qingye'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script'); s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	        
+
+</body>
+</html>

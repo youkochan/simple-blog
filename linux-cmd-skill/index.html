@@ -1,0 +1,441 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>linux命令行技巧 &#8211; Simple Blog</title>
+<meta name="description" content="On the way.">
+<meta name="keywords" content="cmd, linux">
+
+
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux命令行技巧">
+<meta property="og:description" content="On the way.">
+<meta property="og:url" content="http://qingye.me/linux-cmd-skill/">
+<meta property="og:site_name" content="Simple Blog">
+
+
+
+
+
+<link rel="canonical" href="http://qingye.me/linux-cmd-skill/">
+<link href="http://qingye.me/feed.xml" type="application/atom+xml" rel="alternate" title="Simple Blog Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://qingye.me/assets/css/main.css">
+
+<!-- Webfonts -->
+<!-- <link href="//fonts.useso.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.useso.com/css?family=monospace:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load MathJax -->
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<!-- Load Modernizr -->
+<script src="http://qingye.me/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://qingye.me/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://qingye.me/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://qingye.me/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://qingye.me/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://qingye.me/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://qingye.me/images/apple-touch-icon-144x144-precomposed.png">
+
+
+
+</head>
+
+<body id="post" >
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+	<button class="dl-trigger">Open Menu</button>
+	<ul class="dl-menu">
+		<li><a href="http://qingye.me/">Home</a></li>
+		<li>
+			<a href="#">About</a>
+			<ul class="dl-submenu">
+				<li>
+					<img src="http://qingye.me/images/avatar2.jpg" alt="Qing YE photo" class="author-photo">
+					<h4>Qing YE</h4>
+					<p>You can code, they can not, that is pretty damn cool.</p>
+				</li>
+				<li><a href="http://qingye.me/about/"><span class="btn btn-inverse">Learn More</span></a></li>
+				<li>
+					<a href="mailto:youkochan233@gmail.com"><i class="fa fa-fw fa-envelope"></i> Email</a>
+				</li>
+				
+				
+				
+				
+				<li>
+					<a href="http://github.com/youkochan"><i class="fa fa-fw fa-github"></i> GitHub</a>
+				</li>
+				
+				
+				
+				
+			</ul><!-- /.dl-submenu -->
+		</li>
+		<li>
+			<a href="#">Posts</a>
+			<ul class="dl-submenu">
+				<li><a href="http://qingye.me/posts/">All Posts</a></li>
+				<li><a href="http://qingye.me/tags/">All Tags</a></li>
+			</ul>
+		</li>
+		
+	    
+	        
+	        
+	    <li><a href="http://mademistakes.com" target="_blank">External Link</a></li>
+	  
+	</ul><!-- /.dl-menu -->
+</nav><!-- /.dl-menuwrapper -->
+
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <header class="header-title">
+      <div class="header-title-wrap">
+        
+          <h1 class="entry-title"><a href="http://qingye.me/linux-cmd-skill/" rel="bookmark" title="linux命令行技巧">linux命令行技巧</a></h1>
+        
+        <h2><span class="entry-date date published"><time datetime="2015-06-30T11:34:53+08:00">June 30, 2015</time></span></h2>
+        
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          
+          Reading time ~2 minutes
+        </p><!-- /.entry-reading-time -->
+        
+      </div><!-- /.header-title-wrap -->
+    </header>
+    <div class="entry-content">
+      <p>最近学习了一下之前不太常用的快捷键操作，做一个记录吧。
+<!--more--></p>
+
+<h2 id="section">编辑命令</h2>
+
+<table rules="groups">
+  <thead>
+    <tr>
+      <th>cmd</th>
+      <th style="text-align: center">opt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Ctrl + a</code></td>
+      <td style="text-align: center">移到命令行首</td>
+    </tr>
+    <tr>
+      <td><code>Ctrl + e</code></td>
+      <td style="text-align: center">移到命令行尾</td>
+    </tr>
+    <tr>
+      <td><code>Ctrl + f</code></td>
+      <td style="text-align: center">按字符前移（右向）</td>
+    </tr>
+    <tr>
+      <td><code>Ctrl + b</code></td>
+      <td style="text-align: center">按字符后移（左向）</td>
+    </tr>
+    <tr>
+      <td><code>Alt + f</code></td>
+      <td style="text-align: center">按单词前移（右向）</td>
+    </tr>
+    <tr>
+      <td><code>Alt + b</code></td>
+      <td style="text-align: center">按单词后移（左向）</td>
+    </tr>
+    <tr>
+      <td><code>Ctrl + xx</code></td>
+      <td style="text-align: center">在命令行首和光标之间移动</td>
+    </tr>
+    <tr>
+      <td><code>Ctrl + u</code></td>
+      <td style="text-align: center">从光标处删除至命令行首</td>
+    </tr>
+    <tr>
+      <td><code>Ctrl + k</code></td>
+      <td style="text-align: center">从光标处删除至命令行尾</td>
+    </tr>
+    <tr>
+      <td><code>Ctrl + w</code></td>
+      <td style="text-align: center">从光标处删除至字首</td>
+    </tr>
+    <tr>
+      <td><code>Alt + d</code></td>
+      <td style="text-align: center">从光标处删除至字尾</td>
+    </tr>
+    <tr>
+      <td><code>Ctrl + d</code></td>
+      <td style="text-align: center">删除光标处的字符</td>
+    </tr>
+    <tr>
+      <td><code>Ctrl + h</code></td>
+      <td style="text-align: center">删除光标前的字符</td>
+    </tr>
+    <tr>
+      <td><code>Ctrl + y</code></td>
+      <td style="text-align: center">粘贴至光标后</td>
+    </tr>
+    <tr>
+      <td><code>Alt + c</code></td>
+      <td style="text-align: center">从光标处更改为首字母大写的单词</td>
+    </tr>
+    <tr>
+      <td><code>Alt + u</code></td>
+      <td style="text-align: center">从光标处更改为全部大写的单词</td>
+    </tr>
+    <tr>
+      <td><code>Alt + l</code></td>
+      <td style="text-align: center">从光标处更改为全部小写的单词</td>
+    </tr>
+    <tr>
+      <td><code>Ctrl + t</code></td>
+      <td style="text-align: center">交换光标处和之前的字符</td>
+    </tr>
+    <tr>
+      <td><code>Alt + t</code></td>
+      <td style="text-align: center">交换光标处和之前的单词</td>
+    </tr>
+    <tr>
+      <td><code>Alt + Backspace</code></td>
+      <td style="text-align: center">与 Ctrl + w 类似，分隔符有些差别</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="section-1">重新执行命令</h2>
+
+<table rules="groups">
+  <thead>
+    <tr>
+      <th>cmd</th>
+      <th style="text-align: center">opt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Ctrl + r</code></td>
+      <td style="text-align: center">逆向搜索命令历史</td>
+    </tr>
+    <tr>
+      <td><code>Ctrl + g</code></td>
+      <td style="text-align: center">从历史搜索模式退出</td>
+    </tr>
+    <tr>
+      <td><code>Ctrl + p</code></td>
+      <td style="text-align: center">历史中的上一条命令</td>
+    </tr>
+    <tr>
+      <td><code>Ctrl + n</code></td>
+      <td style="text-align: center">历史中的下一条命令</td>
+    </tr>
+    <tr>
+      <td><code>Alt + .</code></td>
+      <td style="text-align: center">使用上一条命令的最后一个参数</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="section-2">控制命令</h2>
+
+<table rules="groups">
+  <thead>
+    <tr>
+      <th>cmd</th>
+      <th style="text-align: center">opt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Ctrl + l</code></td>
+      <td style="text-align: center">清屏</td>
+    </tr>
+    <tr>
+      <td><code>Ctrl + o</code></td>
+      <td style="text-align: center">执行当前命令，并选择上一条命令</td>
+    </tr>
+    <tr>
+      <td><code>Ctrl + s</code></td>
+      <td style="text-align: center">阻止屏幕输出</td>
+    </tr>
+    <tr>
+      <td><code>Ctrl + q</code></td>
+      <td style="text-align: center">允许屏幕输出</td>
+    </tr>
+    <tr>
+      <td><code>Ctrl + c</code></td>
+      <td style="text-align: center">终止命令</td>
+    </tr>
+    <tr>
+      <td><code>Ctrl + z</code></td>
+      <td style="text-align: center">挂起命令</td>
+    </tr>
+    <tr>
+      <td><code>Ctrl + d</code></td>
+      <td style="text-align: center">EOF</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="bang--">Bang (!) 命令</h2>
+
+<table rules="groups">
+  <thead>
+    <tr>
+      <th>cmd</th>
+      <th style="text-align: center">opt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>!!</code></td>
+      <td style="text-align: center">执行上一条命令</td>
+    </tr>
+    <tr>
+      <td><code>!blah</code></td>
+      <td style="text-align: center">执行最近的以 blah 开头的命令，如 <code>!ls</code></td>
+    </tr>
+    <tr>
+      <td><code>!blah:p</code></td>
+      <td style="text-align: center">仅打印输出，而不执行</td>
+    </tr>
+    <tr>
+      <td><code>!$</code></td>
+      <td style="text-align: center">上一条命令的最后一个参数，与 <code>Alt + .</code> 相同</td>
+    </tr>
+    <tr>
+      <td><code>!$:p</code></td>
+      <td style="text-align: center">打印输出 <code>!$</code> 的内容</td>
+    </tr>
+    <tr>
+      <td><code>!*</code></td>
+      <td style="text-align: center">上一条命令的所有参数</td>
+    </tr>
+    <tr>
+      <td><code>!*:p</code></td>
+      <td style="text-align: center">打印输出 <code>!*</code> 的内容</td>
+    </tr>
+    <tr>
+      <td><code>^blah</code></td>
+      <td style="text-align: center">删除上一条命令中的 blah</td>
+    </tr>
+    <tr>
+      <td><code>^blah^foo</code></td>
+      <td style="text-align: center">将上一条命令中的 blah 替换为 foo</td>
+    </tr>
+    <tr>
+      <td><code>^blah^foo^</code></td>
+      <td style="text-align: center">将上一条命令中所有的 blah 都替换为 foo</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>注，其实不太推荐Bang命令，因为指令执行之前没有清楚了解即将执行的指令具体是什么样的，容易导致一些错误。</p>
+
+
+      <footer class="entry-meta">
+        <span class="entry-tags"><a href="http://qingye.me/tags/#cmd" title="Pages tagged cmd" class="tag"><span class="term">cmd</span></a><a href="http://qingye.me/tags/#linux" title="Pages tagged linux" class="tag"><span class="term">linux</span></a></span>
+        
+        <div class="social-share">
+  <ul class="socialcount socialcount-small inline-list">
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://qingye.me/linux-cmd-skill/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://qingye.me/linux-cmd-skill/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://qingye.me/linux-cmd-skill/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+  </ul>
+</div><!-- /.social-share -->
+      </footer>
+    </div><!-- /.entry-content -->
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+    <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="http://qingye.me/leetcode-note-4/" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="http://qingye.me/shadowsocks-proxifier/" title="shadowsocks/proxifier">shadowsocks/proxifier</a></h3>
+      <p>## 介绍自从学校校园网改革一下就怨声载道，民不聊生，毕竟作为计算机+互联网方向的北邮，能让大多数人都不敢安心点开网页也是蛮拼的。因此催生出了各种省流量的方式，其中主要就是使用IPv6流量来代替IPv4流量，因为学校网关是不计IPv6流量的。然而现阶段IPv6并没有那么普及...&hellip; <a href="http://qingye.me/shadowsocks-proxifier/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
+    
+      <div class="list-item">
+        <h4><a href="http://qingye.me/introduction-to-mathjax-and-latex-expression/" title="introduction-to-mathjax-and-latex-expression">introduction-to-mathjax-and-latex-expression</a></h4>
+        <span>Published on July 01, 2015</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="http://qingye.me/decision-tree-note/" title="Machine Learning note - Decision Tree">Machine Learning note - Decision Tree</a></h4>
+        <span>Published on June 30, 2015</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    <span>&copy; 2015 Qing YE. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="https://mademistakes.com/work/hpstr-jekyll-theme/" rel="nofollow">HPSTR Theme</a>.</span>
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+<script src="http://qingye.me/assets/js/vendor/jquery-1.9.1.min.js"></script>
+<!-- <script>window.jQuery || document.write('<script src="http://qingye.me/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script> -->
+<script src="http://qingye.me/assets/js/scripts.min.js"></script>
+
+
+
+
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'qingye'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script'); s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	        
+
+</body>
+</html>
