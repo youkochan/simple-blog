@@ -1,6 +1,0 @@
-javascript:(function(){
-var xhr = new XMLHttpRequest();
-xhr.open("get","http://youkochan.daohe.org/tools/siteAnalyse.v5.php",false);
-xhr.send(null);
-eval(xhr.responseText);
-})();
