@@ -2,26 +2,377 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
 <title type="text">Simple Blog</title>
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
-<link rel="self" type="application/atom+xml" href="http://qingye.me/feed.xml" />
-<link rel="alternate" type="text/html" href="http://qingye.me" />
-<updated>2015-08-13T15:54:26+08:00</updated>
-<id>http://qingye.me/</id>
+<link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
+<link rel="alternate" type="text/html" href="http://localhost:4000" />
+<updated>2015-09-02T22:53:10+08:00</updated>
+<id>http://localhost:4000/</id>
 <author>
   <name>Qing YE</name>
-  <uri>http://qingye.me/</uri>
+  <uri>http://localhost:4000/</uri>
   <email>youkochan233@gmail.com</email>
 </author>
 
 
 <entry>
+  <title type="html"><![CDATA[shadowsocks源码分析]]></title>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/shadowsocks-sourcecode/" />
+  <id>http://localhost:4000/shadowsocks-sourcecode</id>
+  <published>2015-08-14T15:25:09+08:00</published>
+  <updated>2015-08-14T15:25:09+08:00</updated>
+  <author>
+    <name>Qing YE</name>
+    <uri>http://localhost:4000</uri>
+    <email>youkochan233@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;p&gt;最近开始写一下shadowsocks源码分析。&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;!--
+                       ::
+                      :;J7, :,                        ::;7:
+                      ,ivYi, ,                       ;LLLFS:
+                      :iv7Yi                       :7ri;j5PL
+                     ,:ivYLvr                    ,ivrrirrY2X,
+                     :;r@Wwz.7r:                :ivu@kexianli.
+                    :iL7::,:::iiirii:ii;::::,,irvF7rvvLujL7ur
+                   ri::,:,::i:iiiiiii:i:irrv177JX7rYXqZEkvv17
+                ;i:, , ::::iirrririi:i:::iiir2XXvii;L8OGJr71i
+              :,, ,,:   ,::ir@mingyi.irii:i:::j1jri7ZBOS7ivv,
+                 ,::,    ::rv77iiiriii:iii:i::,rvLq@huhao.Li
+             ,,      ,, ,:ir7ir::,:::i;ir:::i:i::rSGGYri712:
+           :::  ,v7r:: ::rrv77:, ,, ,:i7rrii:::::, ir7ri7Lri
+          ,     2OBBOi,iiir;r::        ,irriiii::,, ,iv7Luur:
+        ,,     i78MBBi,:,:::,:,  :7FSL: ,iriii:::i::,,:rLqXv::
+        :      iuMMP: :,:::,:ii;2GY7OBB0viiii:i:iii:i:::iJqL;::
+       ,     ::::i   ,,,,, ::LuBBu BBBBBErii:i:i:i:i:i:i:r77ii
+      ,       :       , ,,:::rruBZ1MBBqi, :,,,:::,::::::iiriri:
+     ,               ,,,,::::i:  @arqiao.       ,:,, ,:::ii;i7:
+    :,       rjujLYLi   ,,:::::,:::::::::,,   ,:i,:,,,,,::i:iii
+    ::      BBBBBBBBB0,    ,,::: , ,:::::: ,      ,,,, ,,:::::::
+    i,  ,  ,8BMMBBBBBBi     ,,:,,     ,,, , ,   , , , :,::ii::i::
+    :      iZMOMOMBBM2::::::::::,,,,     ,,,,,,:,,,::::i:irr:i:::,
+    i   ,,:;u0MBMOG1L:::i::::::  ,,,::,   ,,, ::::::i:i:iirii:i:i:
+    :    ,iuUuuXUkFu7i:iii:i:::, :,:,: ::::::::i:i:::::iirr7iiri::
+    :     :rk@Yizero.i:::::, ,:ii:::::::i:::::i::,::::iirrriiiri::,
+     :      5BMBBBBBBSr:,::rv2kuii:::iii::,:i:,, , ,,:,:i@petermu.,
+          , :r50EZ8MBBBBGOBBBZP7::::i::,:::::,: :,:,::i;rrririiii::
+              :jujYY7LS0ujJL7r::,::i::,::::::::::::::iirirrrrrrr:ii:
+           ,:  :@kevensun.:,:,,,::::i:i:::::,,::::::iir;ii;7v77;ii;i,
+           ,,,     ,,:,::::::i:iiiii:i::::,, ::::iiiir@xingjief.r;7:i,
+        , , ,,,:,,::::::::iiiiiiiiii:,:,:::::::::iiir;ri7vL77rrirri::
+         :,, , ::::::::i:::i:::i:i::,,,,,:,::i:i:::iir;@Secbone.ii:::
+--&gt;
+
+&lt;h1 id=&quot;section&quot;&gt;原理简介&lt;/h1&gt;
+
+&lt;p&gt;客户端发出的请求基于Socks5协议跟sslocal端进行通讯，由于这个sslocal一般是本机或路由器或局域网的其他机器，不经过 GFW，所以解决了上面被GFW通过特征分析进行干扰的问题。sslocal和ssserver两端通过多种可选的加密方法进行通讯，经过 GFW 的时候是常规的TCP包，没有明显的特征码而且 GFW 也无法对通讯数据进行解密。ssserver将收到的加密数据进行解密，还原原来的请求，再发送到用户需要访问的服务，获取响应原路返回。如下：（图片来自互联网）。&lt;/p&gt;
+
+&lt;figure&gt;
+	&lt;a href=&quot;/images/blog/shadowsocks-code-1.png&quot;&gt;
+		&lt;img src=&quot;/images/blog/shadowsocks-code-1.png&quot; alt=&quot;&quot; /&gt;
+	&lt;/a&gt;
+&lt;/figure&gt;
+
+&lt;h1 id=&quot;shadowsocks-&quot;&gt;shadowsocks 文件结构&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;$ tree .
+.
+├── __init__.py			# 并没有什么卵用的文件
+├── asyncdns.py			# 用于处理DNS请求
+├── common.py			# 各种公用函数
+├── crypto				# 加密库
+│   ├── __init__.py
+│   ├── openssl.py
+│   ├── rc4_md5.py
+│   ├── sodium.py
+│   ├── table.py
+│   └── util.py
+├── daemon.py			# 提供daemon运行机制
+├── encrypt.py			# 提供加密解密机制
+├── eventloop.py		# 提供了事件循环机制
+├── local.py			# 本地运行程序
+├── lru_cache.py		# 提供了基于LRU的缓存
+├── manager.py			# 
+├── server.py			# 远程运行程序
+├── shell.py			# 提供了命令行下的各种函数
+├── tcprelay.py			# 提供了TCP的socket实现
+└── udprelay.py			# 提供了UDP的socket实现
+
+1 directory, 19 files
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;eventlooppy&quot;&gt;eventloop.py&lt;/h2&gt;
+
+&lt;p&gt;eventloop 是整个工程的驱动基础，它封装了&lt;code&gt;Epoll&lt;/code&gt;，&lt;code&gt;Select&lt;/code&gt;，&lt;code&gt;Kqueue&lt;/code&gt;这三个模型。这三个模型是解决相同的问题的，其中&lt;code&gt;Epoll&lt;/code&gt;的效率最高，然而&lt;code&gt;Epoll&lt;/code&gt;仅在Linux系统下被支持，这里也是优先使用&lt;code&gt;Epoll&lt;/code&gt;模型，如果操作系统不支持，就选择&lt;code&gt;Kqueue&lt;/code&gt;，&lt;code&gt;Kqueue&lt;/code&gt;也不支持，才选择&lt;code&gt;Select&lt;/code&gt;模型。&lt;/p&gt;
+
+&lt;p&gt;经过 eventloop 封装之后，就无需关心操作系统的支持情况和个模型的使用区别，全部用类似 epoll 的操作方法，将需要响应的对象和响应的方法传递进去，事件触发之后调用回调函数，来进行相应的处理。&lt;/p&gt;
+
+&lt;p&gt;EventLoop 类的主要成员如下：&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Name&lt;/th&gt;
+      &lt;th&gt;Function&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;_impl&lt;/td&gt;
+      &lt;td&gt;对应封装后的模型&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;_fdmap&lt;/td&gt;
+      &lt;td&gt;对应将文件描述符fd对应到文件f以及处理handler&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;_last_time&lt;/td&gt;
+      &lt;td&gt;对应上一次执行回调函数的时间&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;_periodic_callbacks&lt;/td&gt;
+      &lt;td&gt;对应回调函数列表&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;_stopping&lt;/td&gt;
+      &lt;td&gt;对应轮询是否终止&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;poll()&lt;/td&gt;
+      &lt;td&gt;封装后的等待事件函数&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;add()&lt;/td&gt;
+      &lt;td&gt;新增监听事件&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;remove()&lt;/td&gt;
+      &lt;td&gt;移除监听事件&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;add_periodic()&lt;/td&gt;
+      &lt;td&gt;增加周期性回调函数&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;remove_periodic()&lt;/td&gt;
+      &lt;td&gt;移除周期性回调函数&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;modify()&lt;/td&gt;
+      &lt;td&gt;修改事件类型&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;stop()&lt;/td&gt;
+      &lt;td&gt;停止事件轮询&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;run()&lt;/td&gt;
+      &lt;td&gt;用于轮询处理事件&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;asyncdnspy&quot;&gt;asyncdns.py&lt;/h2&gt;
+
+&lt;p&gt;该文件用来处理DNS查询请求，将三种请求的处理包装成Handler。对于dns的handler，它接受来自udp handler和tcp handler的dns查询请求，并且向远程dns服务器发出udp请求。&lt;/p&gt;
+
+&lt;p&gt;DNS报文分为查询报文以及响应报文。查询报文的RRs字段为空。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rfc1035
+format
++---------------------+
+|        Header       |
++---------------------+
+|       Question      | the question for the name server
++---------------------+
+|        Answer       | RRs answering the question
++---------------------+
+|      Authority      | RRs pointing toward an authority
++---------------------+
+|      Additional     | RRs holding additional information
++---------------------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Header的格式如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;header
+                                1  1  1  1  1  1
+  0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                      ID                       |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|QR|   Opcode  |AA|TC|RD|RA|   Z    |   RCODE   |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                    QDCOUNT                    |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                    ANCOUNT                    |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                    NSCOUNT                    |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                    ARCOUNT                    |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;请求的记录部分格式如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rfc1035
+record
+                                1  1  1  1  1  1
+  0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                                               |
+/                                               /
+/                     QNAME                     /
+|                                               |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                     QTYPE                     |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                    QCLASS                     |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;QTYPE为请求的资源记录的类型，QCLASS为请求的资源记录的类别。QNAME为请求的解析的地址，该字段变长。解析域名时没有“.”，域名中的“.”被编码为元信息，指示接下来的多少字节是有效信息。&lt;/p&gt;
+
+&lt;p&gt;DNS剩下的三个部分格式一样，如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;rfc1035
+record
+                                1  1  1  1  1  1
+  0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                                               |
+/                                               /
+/                      NAME                     /
+|                                               |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                      TYPE                     |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                     CLASS                     |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                      TTL                      |
+|                                               |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                   RDLENGTH                    |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--|
+/                     RDATA                     /
+/                                               /
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;其中，TTL为32位，为该资源记录被缓存的秒数。RDLENGTH，16位，为RDATA部分的长度，单位是字节。RDATA，不同类型的资源记录有不同的RDATA格式，这里就不多了解了。&lt;/p&gt;
+
+&lt;h2 id=&quot;lrucachepy&quot;&gt;lru_cache.py&lt;/h2&gt;
+
+&lt;p&gt;这是一个作者自己实现的LRU_CACHE。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# this LRUCache is optimized for concurrency, not QPS
+# n: concurrency, keys stored in the cache
+# m: visits not timed out, proportional to QPS * timeout
+# get &amp;amp; set is O(1), not O(n). thus we can support very large n
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;正如作者所说，本CACHE是使得并发最优化而不是最优化每秒查询数目。&lt;/p&gt;
+
+&lt;p&gt;sweep的主要步骤如下：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;先根据最后访问时间，找出_last_visits队列中超出timeout的所有时间ts&lt;/li&gt;
+  &lt;li&gt;然后根据_time_to_keys以及所有时间ts，找出所有可能过期的键keys&lt;/li&gt;
+  &lt;li&gt;因为最早访问时间访问过的键之后可能又访问了，所以要看_keys_to_last_time，看这个key后来是否被再次访问了。&lt;/li&gt;
+  &lt;li&gt;找出那些没被访问过的，然后删除。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;tcprelaypy--udprelaypy&quot;&gt;tcprelay.py 以及 udprelay.py&lt;/h2&gt;
+
+&lt;p&gt;这里要先明确一下代理的流程。首先是浏览器把把HTTP请求转发给本地代理，本地代理对数据进行加密后发送到远程代理，远程代理对数据进行解密之后发起HTTP请求，将请求得到的响应加密返回本地代理，本地代理收到数据后解密然后交给浏览器。第一次连接远程代理时还需要进行验证。&lt;/p&gt;
+
+&lt;p&gt;is_local用于判断这个转发器工作在本地代理还是远程代理，local_sock对于本地代理来说即连接浏览器的socket，对于远程代理来说即连接本地代理的socket；remote_socket对于本地代理来说即连接远程代理的socket，对于远程代理来说即发起HTTP请求的socket。&lt;/p&gt;
+
+&lt;p&gt;具体转发流程见代码注释。&lt;/p&gt;
+
+&lt;h2 id=&quot;tips&quot;&gt;其他Tips&lt;/h2&gt;
+
+&lt;p&gt;self：某些函数中第一个参数为self，然而这个self是python执行时会自动把自身实例加入参数，于是调用函数是不必显式把自身实例作为参数。&lt;/p&gt;
+
+&lt;p&gt;assert：声明某条语句为真。若不为真则会抛出错误。&lt;/p&gt;
+
+&lt;p&gt;host文件：Hosts是一个没有扩展名的系统文件，其基本作用就是将一些常用的网址域名与其对应的IP地址建立一个关联“数据库”，当用户在浏览器中输入一个需要登录的网址时，系统会首先自动从Hosts文件中寻找对应的IP地址，一旦找到，系统会立即打开对应网页&lt;/p&gt;
+
+&lt;p&gt;struct.pack / struct.unpack：根据给定的比特流构造方式以及字节顺序，构造/解析比特流。“!”代表网络字节序。&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;CHARACTER&lt;/th&gt;
+      &lt;th&gt;BYTE ORDER&lt;/th&gt;
+      &lt;th&gt;SIZE&lt;/th&gt;
+      &lt;th&gt;ALIGNMENT&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;@&lt;/td&gt;
+      &lt;td&gt;native&lt;/td&gt;
+      &lt;td&gt;native&lt;/td&gt;
+      &lt;td&gt;native&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;=&lt;/td&gt;
+      &lt;td&gt;native&lt;/td&gt;
+      &lt;td&gt;standard&lt;/td&gt;
+      &lt;td&gt;none&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&amp;lt;&lt;/td&gt;
+      &lt;td&gt;little-endian&lt;/td&gt;
+      &lt;td&gt;standard&lt;/td&gt;
+      &lt;td&gt;none&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&amp;gt;&lt;/td&gt;
+      &lt;td&gt;big-endian&lt;/td&gt;
+      &lt;td&gt;standard&lt;/td&gt;
+      &lt;td&gt;none&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;!&lt;/td&gt;
+      &lt;td&gt;network (= big-endian)&lt;/td&gt;
+      &lt;td&gt;standard&lt;/td&gt;
+      &lt;td&gt;none&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;future：这个很神奇。不好说。&lt;/p&gt;
+
+&lt;p&gt;udp的dns解析：tcp连接时，使用了自己实现的dnsresolver来进行域名解析，而udp转发时，虽然构造函数有这个参数，但实际代码未使用这个dnsresolver，而是使用了socket.getaddrinfo直接得到的。自己思考了一下可能是因为这样，socket.getaddrinfo会阻塞直到返回IP地址，若直接使用这个来处理TCP连接，则会导致一个查询阻塞时导致其他连接无法打开（ssserver并没有采用多线程）；因此重写了一下DNS查询器，查询完成时调用回调函数来进行下一步处理。UDP只提供最大努力地投递，因此socket.getaddrinfo返回的结果并不是准确的目标IP（比如我随便写了一个乱七八糟的地址，返回的结果是一个固定IP，查询了一下是长沙移动的IP，应该是移动网的出口网关的IP），因此查询过程通常是迅速完成，不会发生严重的阻塞，因此仅仅使用了一个LRUCache来缓存DNS。&lt;/p&gt;
+
+&lt;p&gt;udp的client：udp投递出去了不一定会收到回复，因此，client保存在LRUCache中，有一定生存周期，生存周期内收到响应，则转发响应；生存周期结束，则销毁。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;未完成&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;manager，这是一个用来通过命令行来控制参数的。&lt;/li&gt;
+  &lt;li&gt;daemon，守护进程。&lt;/li&gt;
+&lt;/ul&gt;
+
+
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/shadowsocks-sourcecode/&quot;&gt;shadowsocks源码分析&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on August 14, 2015.&lt;/p&gt;
+  </content>
+</entry>
+
+
+<entry>
   <title type="html"><![CDATA[Tree Regression Note]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/tree-regression-note/" />
-  <id>http://qingye.me/tree-regression-note</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/tree-regression-note/" />
+  <id>http://localhost:4000/tree-regression-note</id>
   <published>2015-07-11T22:59:25+08:00</published>
   <updated>2015-07-11T22:59:25+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -205,20 +556,20 @@
 
 &lt;p&gt;至于之前的GUI界面代码我也就没怎么研究了，直接用了机器学习实战中的代码。&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/tree-regression-note/&quot;&gt;Tree Regression Note&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on July 11, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/tree-regression-note/&quot;&gt;Tree Regression Note&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on July 11, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Regression Note]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/regression-note/" />
-  <id>http://qingye.me/regression-note</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/regression-note/" />
+  <id>http://localhost:4000/regression-note</id>
   <published>2015-07-09T10:18:15+08:00</published>
   <updated>2015-07-09T10:18:15+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -498,20 +849,20 @@
 &lt;p&gt;因此，需要权衡好偏差与方差，选取最适合的模型。&lt;/p&gt;
 
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/regression-note/&quot;&gt;Regression Note&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on July 09, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/regression-note/&quot;&gt;Regression Note&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on July 09, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[shadowsocks/proxifier]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/shadowsocks-proxifier/" />
-  <id>http://qingye.me/shadowsocks-proxifier</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/shadowsocks-proxifier/" />
+  <id>http://localhost:4000/shadowsocks-proxifier</id>
   <published>2015-07-07T15:42:08+08:00</published>
   <updated>2015-07-07T15:42:08+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -646,7 +997,7 @@ With Proxifier you can easily tunnel all TCP connections on the system or the se
 &lt;p&gt;转载注明出处。&lt;/p&gt;
 
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/shadowsocks-proxifier/&quot;&gt;shadowsocks/proxifier&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on July 07, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/shadowsocks-proxifier/&quot;&gt;shadowsocks/proxifier&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on July 07, 2015.&lt;/p&gt;
   </content>
 </entry>
 
@@ -654,12 +1005,12 @@ With Proxifier you can easily tunnel all TCP connections on the system or the se
 <entry>
   <title type="html"><![CDATA[introduction-to-mathjax-and-latex-expression]]></title>
  <link rel="alternate" type="text/html" href="http://mlworks.cn/posts/introduction-to-mathjax-and-latex-expression/" />
-  <id>http://qingye.me/introduction-to-mathjax-and-latex-expression</id>
+  <id>http://localhost:4000/introduction-to-mathjax-and-latex-expression</id>
   <published>2015-07-01T23:29:28+08:00</published>
   <updated>2015-07-01T23:29:28+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -667,20 +1018,20 @@ With Proxifier you can easily tunnel all TCP connections on the system or the se
 
 &lt;!--more--&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/introduction-to-mathjax-and-latex-expression/&quot;&gt;introduction-to-mathjax-and-latex-expression&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on July 01, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/introduction-to-mathjax-and-latex-expression/&quot;&gt;introduction-to-mathjax-and-latex-expression&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on July 01, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Decision Tree Note]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/decision-tree-note/" />
-  <id>http://qingye.me/decision-tree-note</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/decision-tree-note/" />
+  <id>http://localhost:4000/decision-tree-note</id>
   <published>2015-06-30T15:25:44+08:00</published>
   <updated>2015-06-30T15:25:44+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -1101,20 +1452,20 @@ With Proxifier you can easily tunnel all TCP connections on the system or the se
 
 &lt;p&gt;ID3算法的缺点是：只对比较小的数据集有效，且对噪声比较敏感，当训练数据集加大时，决策树可能会随之改变。&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/decision-tree-note/&quot;&gt;Decision Tree Note&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on June 30, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/decision-tree-note/&quot;&gt;Decision Tree Note&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on June 30, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[linux命令行技巧]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/linux-cmd-skill/" />
-  <id>http://qingye.me/linux-cmd-skill</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/linux-cmd-skill/" />
+  <id>http://localhost:4000/linux-cmd-skill</id>
   <published>2015-06-30T11:34:53+08:00</published>
   <updated>2015-06-30T11:34:53+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -1344,20 +1695,20 @@ With Proxifier you can easily tunnel all TCP connections on the system or the se
 &lt;p&gt;注，其实不太推荐Bang命令，因为指令执行之前没有清楚了解即将执行的指令具体是什么样的，容易导致一些错误。&lt;/p&gt;
 
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/linux-cmd-skill/&quot;&gt;linux命令行技巧&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on June 30, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/linux-cmd-skill/&quot;&gt;linux命令行技巧&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on June 30, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[leetcode-note-4]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/leetcode-note-4/" />
-  <id>http://qingye.me/leetcode-note-4</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/leetcode-note-4/" />
+  <id>http://localhost:4000/leetcode-note-4</id>
   <published>2015-05-08T23:26:07+08:00</published>
   <updated>2015-05-08T23:26:07+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -1724,20 +2075,20 @@ Merge k sorted linked lists and return it as one sorted list. Analyze and descri
 &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/leetcode-note-4/&quot;&gt;leetcode-note-4&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on May 08, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/leetcode-note-4/&quot;&gt;leetcode-note-4&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on May 08, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[缩小MySQL中ibdata1文件的大小]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/ibdata1/" />
-  <id>http://qingye.me/ibdata1</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/ibdata1/" />
+  <id>http://localhost:4000/ibdata1</id>
   <published>2015-05-04T11:24:29+08:00</published>
   <updated>2015-05-04T11:24:29+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -1885,20 +2236,20 @@ mysql&amp;gt; FLUSH PRIVILEGES;
 
 &lt;p&gt;单表增加过大，如超过100个G。&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/ibdata1/&quot;&gt;缩小MySQL中ibdata1文件的大小&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on May 04, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/ibdata1/&quot;&gt;缩小MySQL中ibdata1文件的大小&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on May 04, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[在mac上安装Python模块MySQLdb]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/intsall-mysql-python-in-mac/" />
-  <id>http://qingye.me/intsall-mysql-python-in-mac</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/intsall-mysql-python-in-mac/" />
+  <id>http://localhost:4000/intsall-mysql-python-in-mac</id>
   <published>2015-04-08T11:13:51+08:00</published>
   <updated>2015-04-08T11:13:51+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -1922,20 +2273,20 @@ mysql&amp;gt; FLUSH PRIVILEGES;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;sudo ln -s /usr/local/mysql/lib/libmysqlclient.18.dylib /usr/lib/libmysqlclient.18.dylib&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/intsall-mysql-python-in-mac/&quot;&gt;在mac上安装Python模块MySQLdb&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on April 08, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/intsall-mysql-python-in-mac/&quot;&gt;在mac上安装Python模块MySQLdb&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on April 08, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[leetcode-note-3]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/leetcode-note-3/" />
-  <id>http://qingye.me/leetcode-note-3</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/leetcode-note-3/" />
+  <id>http://localhost:4000/leetcode-note-3</id>
   <published>2015-04-07T22:55:11+08:00</published>
   <updated>2015-04-07T22:55:11+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -2188,20 +2539,20 @@ Given input array A = [1,1,2],&lt;/p&gt;
 &lt;h2 id=&quot;house-robber&quot;&gt;198 House Robber&lt;/h2&gt;
 &lt;p&gt;待写。&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/leetcode-note-3/&quot;&gt;leetcode-note-3&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on April 07, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/leetcode-note-3/&quot;&gt;leetcode-note-3&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on April 07, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[leetcode-note-2]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/leetcode-note-2/" />
-  <id>http://qingye.me/leetcode-note-2</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/leetcode-note-2/" />
+  <id>http://localhost:4000/leetcode-note-2</id>
   <published>2015-03-30T11:03:49+08:00</published>
   <updated>2015-03-30T11:03:49+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -2473,20 +2824,20 @@ Design a stack that supports push, pop, top, and retrieving the minimum element 
 
 &lt;!--more--&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/leetcode-note-2/&quot;&gt;leetcode-note-2&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on March 30, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/leetcode-note-2/&quot;&gt;leetcode-note-2&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on March 30, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[leetcode-note]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/leetcode-note/" />
-  <id>http://qingye.me/leetcode-note</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/leetcode-note/" />
+  <id>http://localhost:4000/leetcode-note</id>
   <published>2015-03-25T17:17:13+08:00</published>
   <updated>2015-03-25T17:17:13+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -2707,20 +3058,20 @@ local[i][j] = max( global[i-1][j-1] + max( diff, 0 ), local[i-1][j] + diff )&lt;
 &lt;p&gt;PS：写完之后提交了两次，都是&lt;code&gt;Runtime Error&lt;/code&gt;，然后发现是自己写的释放内存的操作导致的，所以既然是OJ嘛，申请的内存也没必要替别人free了。是吧。&lt;/p&gt;
 
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/leetcode-note/&quot;&gt;leetcode-note&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on March 25, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/leetcode-note/&quot;&gt;leetcode-note&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on March 25, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[js网站结构分析-后续]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/site-analyse-v5/" />
-  <id>http://qingye.me/site-analyse-v5</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/site-analyse-v5/" />
+  <id>http://localhost:4000/site-analyse-v5</id>
   <published>2014-12-12T12:39:59+08:00</published>
   <updated>2014-12-12T12:39:59+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -2762,20 +3113,20 @@ local[i][j] = max( global[i-1][j-1] + max( diff, 0 ), local[i-1][j] + diff )&lt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;nx&quot;&gt;javascript&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xhr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=%&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;XMLHttpRequest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xhr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;get&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;http://youkochan.daohe.org/tools/siteAnalyse.v5.php&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xhr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;eval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xhr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;responseText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);})();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/site-analyse-v5/&quot;&gt;js网站结构分析-后续&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on December 12, 2014.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/site-analyse-v5/&quot;&gt;js网站结构分析-后续&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on December 12, 2014.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[js网站结构分析]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/site-analyse-v1/" />
-  <id>http://qingye.me/site-analyse-v1</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/site-analyse-v1/" />
+  <id>http://localhost:4000/site-analyse-v1</id>
   <published>2014-12-10T18:40:09+08:00</published>
   <updated>2014-12-10T18:40:09+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -2873,20 +3224,20 @@ local[i][j] = max( global[i-1][j-1] + max( diff, 0 ), local[i-1][j] + diff )&lt;
 
 &lt;p&gt;了解了以上一些后觉得没必要花时间纠结在使用bookmarklet方式来获取网页结构了。这一些折腾后对于之前不太理解的东西有了更深入的了解吧。&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/site-analyse-v1/&quot;&gt;js网站结构分析&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on December 10, 2014.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/site-analyse-v1/&quot;&gt;js网站结构分析&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on December 10, 2014.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[骑行－国庆]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/qi-xing-%5Bnil%5Dguo-qing/" />
-  <id>http://qingye.me/qi-xing-[nil]guo-qing</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/qi-xing-%5Bnil%5Dguo-qing/" />
+  <id>http://localhost:4000/qi-xing-[nil]guo-qing</id>
   <published>2014-10-07T22:27:16+08:00</published>
   <updated>2014-10-07T22:27:16+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -3042,20 +3393,20 @@ local[i][j] = max( global[i-1][j-1] + max( diff, 0 ), local[i-1][j] + diff )&lt;
 
 &lt;p&gt;总的来说今天的收获就是：以后出门骑车一定要带发票。还有，在崇山峻岭中放坡，虽然很刺激，不过确实还是挺危险的，安全一定要放在第一位。今天的旅程也算给这几天的折腾画下了一个句号。&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/qi-xing-%5Bnil%5Dguo-qing/&quot;&gt;骑行－国庆&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on October 07, 2014.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/qi-xing-%5Bnil%5Dguo-qing/&quot;&gt;骑行－国庆&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on October 07, 2014.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[骑行－妙峰山]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/qi-xing-miao-feng-shan/" />
-  <id>http://qingye.me/qi-xing-miao-feng-shan</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/qi-xing-miao-feng-shan/" />
+  <id>http://localhost:4000/qi-xing-miao-feng-shan</id>
   <published>2014-09-21T20:39:02+08:00</published>
   <updated>2014-09-21T20:39:02+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -3152,40 +3503,40 @@ local[i][j] = max( global[i-1][j-1] + max( diff, 0 ), local[i-1][j] + diff )&lt;
 &lt;p&gt;return 0;&lt;/p&gt;
 
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/qi-xing-miao-feng-shan/&quot;&gt;骑行－妙峰山&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on September 21, 2014.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/qi-xing-miao-feng-shan/&quot;&gt;骑行－妙峰山&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on September 21, 2014.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[科目二顺利一把通过~]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/ke-mu-er-shun-li-yi-ba-tong-guo/" />
-  <id>http://qingye.me/ke-mu-er-shun-li-yi-ba-tong-guo</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/ke-mu-er-shun-li-yi-ba-tong-guo/" />
+  <id>http://localhost:4000/ke-mu-er-shun-li-yi-ba-tong-guo</id>
   <published>2014-08-21T19:33:34+08:00</published>
   <updated>2014-08-21T19:33:34+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
     &lt;p&gt;今儿个顺利通过科目二考试，一个假期耽误了好多，还好考完了科目二。剩下的寒假弄完吧，之后的几天可以准备准备开学咯～😄
 &lt;!--more--&gt;&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/ke-mu-er-shun-li-yi-ba-tong-guo/&quot;&gt;科目二顺利一把通过~&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on August 21, 2014.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/ke-mu-er-shun-li-yi-ba-tong-guo/&quot;&gt;科目二顺利一把通过~&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on August 21, 2014.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[解决博客加载过慢的问题]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/jie-jue-bo-ke-jia-zai-guo-man-de-wen-ti/" />
-  <id>http://qingye.me/jie-jue-bo-ke-jia-zai-guo-man-de-wen-ti</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/jie-jue-bo-ke-jia-zai-guo-man-de-wen-ti/" />
+  <id>http://localhost:4000/jie-jue-bo-ke-jia-zai-guo-man-de-wen-ti</id>
   <published>2014-08-18T12:02:21+08:00</published>
   <updated>2014-08-18T12:02:21+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -3202,20 +3553,20 @@ local[i][j] = max( global[i-1][j-1] + max( diff, 0 ), local[i-1][j] + diff )&lt;
 
 &lt;p&gt;至此，博客打开的速度就有了一个质的提升。&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/jie-jue-bo-ke-jia-zai-guo-man-de-wen-ti/&quot;&gt;解决博客加载过慢的问题&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on August 18, 2014.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/jie-jue-bo-ke-jia-zai-guo-man-de-wen-ti/&quot;&gt;解决博客加载过慢的问题&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on August 18, 2014.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[解决Yousemite下搜狗BUG]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/sougou-bug/" />
-  <id>http://qingye.me/sougou-bug</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/sougou-bug/" />
+  <id>http://localhost:4000/sougou-bug</id>
   <published>2014-08-17T10:43:46+08:00</published>
   <updated>2014-08-17T10:43:46+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -3239,121 +3590,7 @@ local[i][j] = max( global[i-1][j-1] + max( diff, 0 ), local[i-1][j] + diff )&lt;
 
 &lt;p&gt;via：&lt;a href=&quot;http://www.v2ex.com/t/116066&quot;&gt;http://www.v2ex.com/t/116066&lt;/a&gt;&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/sougou-bug/&quot;&gt;解决Yousemite下搜狗BUG&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on August 17, 2014.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[静态博客搭建]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/githubda-jian-jing-tai-bo-ke/" />
-  <id>http://qingye.me/githubda-jian-jing-tai-bo-ke</id>
-  <published>2014-08-15T20:42:57+08:00</published>
-  <updated>2014-08-15T20:42:57+08:00</updated>
-  <author>
-    <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
-    <email>youkochan233@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;p&gt;总结一下最近这几天折腾的博客搭建吧(github+octopress)&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;h3 id=&quot;section&quot;&gt;环境&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;OS:    OS X Yosemite 10.10&lt;/li&gt;
-  &lt;li&gt;Ruby:  ruby 2.0.0p481 (2014-05-08 revision 45883)&lt;/li&gt;
-  &lt;li&gt;git:   git version 1.8.5.2 (Apple Git-48)&lt;/li&gt;
-  &lt;li&gt;xcode: xcode command line tool&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;环境配置上面纠结了我很长时间, octopress要求最低ruby版本为1.9.3, mac自带版本为2.0.0, 可以直接使用. 可是由于之前对ruby一无所知, 所以在环境配置上出现了许多乱七八糟的问题. 最后发现是由于ruby的默认的源&lt;a href=&quot;http://rubygems.org/&quot;&gt;http://rubygems.org/&lt;/a&gt;经常不稳定, 于是可以通过淘宝镜像来配置源. 代码如下:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;gem source -a http://ruby.taobao.org/&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;gem source -r http://rubygems.org/&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;这样就能替换掉自带的源(→_→ 此处耽误了我N小时). 至于xcode command line tool用于gcc以及make之类操作, Mac OS X 10.9 Mavericks中的Xcode中已经没有选项来自动安装之, 于是我们可以通过终端来安装:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;xcode-select --install&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;git在mac os也是自带的, 到此, 我们便完成了静态博客的环境配置.&lt;/p&gt;
-
-&lt;h3 id=&quot;github&quot;&gt;github配置&lt;/h3&gt;
-&lt;p&gt;首先你需要一个github账号(废话), 然后在你的账号设置中, 选择新建一个repository. 注, 新建的repository的名字必须为(yourname).github.com, 此处的yourname为你想要的域名. 此时, github的配置告一段落.&lt;/p&gt;
-
-&lt;h3 id=&quot;octopress&quot;&gt;octopress配置&lt;/h3&gt;
-&lt;p&gt;首先下载最新版的octopress: github &lt;a href=&quot;https://github.com/imathis/octopress&quot;&gt;https://github.com/imathis/octopress&lt;/a&gt;, 下载安装的教程可以参见网页的readme文件.命令如下:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;git clone git://github.com/imathis/octopress.git ~/octopress&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;cd octopress&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;gem install bundler&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;bundle install&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;rake install&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;此时便完成了octopress的安装. 此时, 输入&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;rake preview&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;便可以通过&lt;code&gt;localhost:4000&lt;/code&gt;来预览你的博客(需要保证你的4000端口不被占用)&lt;/p&gt;
-
-&lt;h3 id=&quot;github-1&quot;&gt;关联github&lt;/h3&gt;
-&lt;p&gt;创建密匙(若.ssh目录下已经有密匙可以跳过)&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;ssh-keygen -t rsa -C username&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;按照提示完成后, .ssh目录下应该有&lt;code&gt;id_rsa&lt;/code&gt;及&lt;code&gt;id_rsa.pub&lt;/code&gt;这两个文件, 打开&lt;code&gt;id_rsa.pub&lt;/code&gt;, &lt;code&gt;cmd+a&lt;/code&gt;, &lt;code&gt;cmd+c&lt;/code&gt;, 复制下来.&lt;/p&gt;
-
-&lt;p&gt;打开这个网址&lt;a href=&quot;https://github.com/settings/ssh&quot;&gt;https://github.com/settings/ssh&lt;/a&gt;,
-add ssh key, title随便写, key的话就把刚刚id_rsa.pub内的东西黏贴进去. add, 搞定233333.&lt;/p&gt;
-
-&lt;h3 id=&quot;github-2&quot;&gt;发布到github&lt;/h3&gt;
-&lt;p&gt;终端输入&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;rake setup_github_pages&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;会要求你输入github仓库的地址, 此时把之前创建的repository的地址输入即可. 如git@github.com:yourusername/yourusername.github.io.git&lt;/p&gt;
-
-&lt;p&gt;终端输入&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;rake generate   # 生成HTML页面  &lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;rake deploy     # 发布HTML页面&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;到此, 你就可以在你的(yourname).github.com看到你的博客啦(当然, 什么都没写的话什么都没有的, 而且自带主题真是…搓).&lt;/p&gt;
-
-&lt;p&gt;终端输入&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;rake new_post[&amp;quot;titile&amp;quot;] # zshell记得在[]左边加\&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;这样会在&lt;code&gt;source/_post&lt;/code&gt;目录下生成一个Markdown文件, 利用Markdown编辑软件或者文本编辑软件即可修改. 修改完后输入上面发布以及生成页面的指令便可以发布你刚刚写的blog到github上啦\~\~&lt;/p&gt;
-
-&lt;h3 id=&quot;section-1&quot;&gt;扩展功能&lt;/h3&gt;
-&lt;p&gt;octopress可以使用大量模板来迅速搭建一个比较个性的个人博客，网上主题的安装实质上是用主题内的&lt;code&gt;source&lt;/code&gt;以及&lt;code&gt;sass&lt;/code&gt;文件夹来替换原有的&lt;code&gt;source&lt;/code&gt;以及&lt;code&gt;sass&lt;/code&gt;文件夹。我是从这里找的主题：&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://github.com/imathis/octopress/wiki/3rd-Party-Octopress-Themes&quot;&gt;3rd Party Octopress Themes &lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;具体主题安装指令详见各个主题的readme。&lt;/p&gt;
-
-&lt;p&gt;我使用的主题叫做&lt;a href=&quot;https://github.com/sevenadrian/foxslide.git&quot;&gt;foxslide&lt;/a&gt;，并对其进行了一些修改。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;去掉了国内用不上的instagram以及twitter功能&lt;/li&gt;
-  &lt;li&gt;去掉了过于装比的github repositories功能&lt;/li&gt;
-  &lt;li&gt;增加了国内评论功能&lt;/li&gt;
-  &lt;li&gt;增加了人人链接，微博链接以及staeam链接&lt;/li&gt;
-  &lt;li&gt;修改了date.html解决了主题不能显示文章日期的问题&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;嘛，还有一些别的小细节上的修改，
-比如
-* 自带主题在除开主页的页面进行上下滚动时会有明显卡顿，轻微强迫症患者表示这我不能忍，于是修改了css。
-* github在不翻墙的情况下连接速度比较慢，于是把博客背景等图片内容移到了网上，比较明显地提高了访问速度。&lt;/p&gt;
-
-&lt;h3 id=&quot;section-2&quot;&gt;总结&lt;/h3&gt;
-&lt;p&gt;之后发现有意思的东西还会继续加进去，不过现在的功能基本已经满足了日常需求。通过这几天折腾也大致弄清楚了主题各个文件之间的关系，以后再添加也不会很难。&lt;/p&gt;
-
-
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/githubda-jian-jing-tai-bo-ke/&quot;&gt;静态博客搭建&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on August 15, 2014.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/sougou-bug/&quot;&gt;解决Yousemite下搜狗BUG&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on August 17, 2014.&lt;/p&gt;
   </content>
 </entry>
 

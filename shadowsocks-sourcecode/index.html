@@ -1,0 +1,549 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>shadowsocks源码分析 &#8211; Simple Blog</title>
+<meta name="description" content="On the way.">
+<meta name="keywords" content="shadowsocks">
+
+
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shadowsocks源码分析">
+<meta property="og:description" content="On the way.">
+<meta property="og:url" content="http://localhost:4000/shadowsocks-sourcecode/">
+<meta property="og:site_name" content="Simple Blog">
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/shadowsocks-sourcecode/">
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Simple Blog Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<!-- Webfonts -->
+<!-- <link href="//fonts.useso.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.useso.com/css?family=monospace:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load MathJax -->
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<!-- Load Modernizr -->
+<script src="http://localhost:4000/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://localhost:4000/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144-precomposed.png">
+
+
+
+</head>
+
+<body id="post" >
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+	<button class="dl-trigger">Open Menu</button>
+	<ul class="dl-menu">
+		<li><a href="http://localhost:4000/">Home</a></li>
+		<li>
+			<a href="#">About</a>
+			<ul class="dl-submenu">
+				<li>
+					<img src="http://localhost:4000/images/avatar2.jpg" alt="Qing YE photo" class="author-photo">
+					<h4>Qing YE</h4>
+					<p>You can code, they can not, that is pretty damn cool.</p>
+				</li>
+				<li><a href="http://localhost:4000/about/"><span class="btn btn-inverse">Learn More</span></a></li>
+				<li>
+					<a href="mailto:youkochan233@gmail.com"><i class="fa fa-fw fa-envelope"></i> Email</a>
+				</li>
+				
+				
+				
+				
+				<li>
+					<a href="http://github.com/youkochan"><i class="fa fa-fw fa-github"></i> GitHub</a>
+				</li>
+				
+				
+				
+				
+			</ul><!-- /.dl-submenu -->
+		</li>
+		<li>
+			<a href="#">Posts</a>
+			<ul class="dl-submenu">
+				<li><a href="http://localhost:4000/posts/">All Posts</a></li>
+				<li><a href="http://localhost:4000/tags/">All Tags</a></li>
+			</ul>
+		</li>
+		
+	    
+	        
+	        
+	    <li><a href="http://mademistakes.com" target="_blank">External Link</a></li>
+	  
+	</ul><!-- /.dl-menu -->
+</nav><!-- /.dl-menuwrapper -->
+
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <header class="header-title">
+      <div class="header-title-wrap">
+        
+          <h1 class="entry-title"><a href="http://localhost:4000/shadowsocks-sourcecode/" rel="bookmark" title="shadowsocks源码分析">shadowsocks源码分析</a></h1>
+        
+        <h2><span class="entry-date date published"><time datetime="2015-08-14T15:25:09+08:00">August 14, 2015</time></span></h2>
+        
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          
+          Reading time ~3 minutes
+        </p><!-- /.entry-reading-time -->
+        
+      </div><!-- /.header-title-wrap -->
+    </header>
+    <div class="entry-content">
+      <p>最近开始写一下shadowsocks源码分析。</p>
+
+<!--more-->
+
+<!--
+                       ::
+                      :;J7, :,                        ::;7:
+                      ,ivYi, ,                       ;LLLFS:
+                      :iv7Yi                       :7ri;j5PL
+                     ,:ivYLvr                    ,ivrrirrY2X,
+                     :;r@Wwz.7r:                :ivu@kexianli.
+                    :iL7::,:::iiirii:ii;::::,,irvF7rvvLujL7ur
+                   ri::,:,::i:iiiiiii:i:irrv177JX7rYXqZEkvv17
+                ;i:, , ::::iirrririi:i:::iiir2XXvii;L8OGJr71i
+              :,, ,,:   ,::ir@mingyi.irii:i:::j1jri7ZBOS7ivv,
+                 ,::,    ::rv77iiiriii:iii:i::,rvLq@huhao.Li
+             ,,      ,, ,:ir7ir::,:::i;ir:::i:i::rSGGYri712:
+           :::  ,v7r:: ::rrv77:, ,, ,:i7rrii:::::, ir7ri7Lri
+          ,     2OBBOi,iiir;r::        ,irriiii::,, ,iv7Luur:
+        ,,     i78MBBi,:,:::,:,  :7FSL: ,iriii:::i::,,:rLqXv::
+        :      iuMMP: :,:::,:ii;2GY7OBB0viiii:i:iii:i:::iJqL;::
+       ,     ::::i   ,,,,, ::LuBBu BBBBBErii:i:i:i:i:i:i:r77ii
+      ,       :       , ,,:::rruBZ1MBBqi, :,,,:::,::::::iiriri:
+     ,               ,,,,::::i:  @arqiao.       ,:,, ,:::ii;i7:
+    :,       rjujLYLi   ,,:::::,:::::::::,,   ,:i,:,,,,,::i:iii
+    ::      BBBBBBBBB0,    ,,::: , ,:::::: ,      ,,,, ,,:::::::
+    i,  ,  ,8BMMBBBBBBi     ,,:,,     ,,, , ,   , , , :,::ii::i::
+    :      iZMOMOMBBM2::::::::::,,,,     ,,,,,,:,,,::::i:irr:i:::,
+    i   ,,:;u0MBMOG1L:::i::::::  ,,,::,   ,,, ::::::i:i:iirii:i:i:
+    :    ,iuUuuXUkFu7i:iii:i:::, :,:,: ::::::::i:i:::::iirr7iiri::
+    :     :rk@Yizero.i:::::, ,:ii:::::::i:::::i::,::::iirrriiiri::,
+     :      5BMBBBBBBSr:,::rv2kuii:::iii::,:i:,, , ,,:,:i@petermu.,
+          , :r50EZ8MBBBBGOBBBZP7::::i::,:::::,: :,:,::i;rrririiii::
+              :jujYY7LS0ujJL7r::,::i::,::::::::::::::iirirrrrrrr:ii:
+           ,:  :@kevensun.:,:,,,::::i:i:::::,,::::::iir;ii;7v77;ii;i,
+           ,,,     ,,:,::::::i:iiiii:i::::,, ::::iiiir@xingjief.r;7:i,
+        , , ,,,:,,::::::::iiiiiiiiii:,:,:::::::::iiir;ri7vL77rrirri::
+         :,, , ::::::::i:::i:::i:i::,,,,,:,::i:i:::iir;@Secbone.ii:::
+-->
+
+<h1 id="section">原理简介</h1>
+
+<p>客户端发出的请求基于Socks5协议跟sslocal端进行通讯，由于这个sslocal一般是本机或路由器或局域网的其他机器，不经过 GFW，所以解决了上面被GFW通过特征分析进行干扰的问题。sslocal和ssserver两端通过多种可选的加密方法进行通讯，经过 GFW 的时候是常规的TCP包，没有明显的特征码而且 GFW 也无法对通讯数据进行解密。ssserver将收到的加密数据进行解密，还原原来的请求，再发送到用户需要访问的服务，获取响应原路返回。如下：（图片来自互联网）。</p>
+
+<figure>
+	<a href="/images/blog/shadowsocks-code-1.png">
+		<img src="/images/blog/shadowsocks-code-1.png" alt="" />
+	</a>
+</figure>
+
+<h1 id="shadowsocks-">shadowsocks 文件结构</h1>
+
+<pre><code>$ tree .
+.
+├── __init__.py			# 并没有什么卵用的文件
+├── asyncdns.py			# 用于处理DNS请求
+├── common.py			# 各种公用函数
+├── crypto				# 加密库
+│   ├── __init__.py
+│   ├── openssl.py
+│   ├── rc4_md5.py
+│   ├── sodium.py
+│   ├── table.py
+│   └── util.py
+├── daemon.py			# 提供daemon运行机制
+├── encrypt.py			# 提供加密解密机制
+├── eventloop.py		# 提供了事件循环机制
+├── local.py			# 本地运行程序
+├── lru_cache.py		# 提供了基于LRU的缓存
+├── manager.py			# 
+├── server.py			# 远程运行程序
+├── shell.py			# 提供了命令行下的各种函数
+├── tcprelay.py			# 提供了TCP的socket实现
+└── udprelay.py			# 提供了UDP的socket实现
+
+1 directory, 19 files
+</code></pre>
+
+<h2 id="eventlooppy">eventloop.py</h2>
+
+<p>eventloop 是整个工程的驱动基础，它封装了<code>Epoll</code>，<code>Select</code>，<code>Kqueue</code>这三个模型。这三个模型是解决相同的问题的，其中<code>Epoll</code>的效率最高，然而<code>Epoll</code>仅在Linux系统下被支持，这里也是优先使用<code>Epoll</code>模型，如果操作系统不支持，就选择<code>Kqueue</code>，<code>Kqueue</code>也不支持，才选择<code>Select</code>模型。</p>
+
+<p>经过 eventloop 封装之后，就无需关心操作系统的支持情况和个模型的使用区别，全部用类似 epoll 的操作方法，将需要响应的对象和响应的方法传递进去，事件触发之后调用回调函数，来进行相应的处理。</p>
+
+<p>EventLoop 类的主要成员如下：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Function</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>_impl</td>
+      <td>对应封装后的模型</td>
+    </tr>
+    <tr>
+      <td>_fdmap</td>
+      <td>对应将文件描述符fd对应到文件f以及处理handler</td>
+    </tr>
+    <tr>
+      <td>_last_time</td>
+      <td>对应上一次执行回调函数的时间</td>
+    </tr>
+    <tr>
+      <td>_periodic_callbacks</td>
+      <td>对应回调函数列表</td>
+    </tr>
+    <tr>
+      <td>_stopping</td>
+      <td>对应轮询是否终止</td>
+    </tr>
+    <tr>
+      <td>poll()</td>
+      <td>封装后的等待事件函数</td>
+    </tr>
+    <tr>
+      <td>add()</td>
+      <td>新增监听事件</td>
+    </tr>
+    <tr>
+      <td>remove()</td>
+      <td>移除监听事件</td>
+    </tr>
+    <tr>
+      <td>add_periodic()</td>
+      <td>增加周期性回调函数</td>
+    </tr>
+    <tr>
+      <td>remove_periodic()</td>
+      <td>移除周期性回调函数</td>
+    </tr>
+    <tr>
+      <td>modify()</td>
+      <td>修改事件类型</td>
+    </tr>
+    <tr>
+      <td>stop()</td>
+      <td>停止事件轮询</td>
+    </tr>
+    <tr>
+      <td>run()</td>
+      <td>用于轮询处理事件</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="asyncdnspy">asyncdns.py</h2>
+
+<p>该文件用来处理DNS查询请求，将三种请求的处理包装成Handler。对于dns的handler，它接受来自udp handler和tcp handler的dns查询请求，并且向远程dns服务器发出udp请求。</p>
+
+<p>DNS报文分为查询报文以及响应报文。查询报文的RRs字段为空。</p>
+
+<pre><code>rfc1035
+format
++---------------------+
+|        Header       |
++---------------------+
+|       Question      | the question for the name server
++---------------------+
+|        Answer       | RRs answering the question
++---------------------+
+|      Authority      | RRs pointing toward an authority
++---------------------+
+|      Additional     | RRs holding additional information
++---------------------+
+</code></pre>
+
+<p>Header的格式如下：</p>
+
+<pre><code>header
+                                1  1  1  1  1  1
+  0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                      ID                       |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|QR|   Opcode  |AA|TC|RD|RA|   Z    |   RCODE   |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                    QDCOUNT                    |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                    ANCOUNT                    |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                    NSCOUNT                    |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                    ARCOUNT                    |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+</code></pre>
+
+<p>请求的记录部分格式如下：</p>
+
+<pre><code>rfc1035
+record
+                                1  1  1  1  1  1
+  0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                                               |
+/                                               /
+/                     QNAME                     /
+|                                               |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                     QTYPE                     |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                    QCLASS                     |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+</code></pre>
+
+<p>QTYPE为请求的资源记录的类型，QCLASS为请求的资源记录的类别。QNAME为请求的解析的地址，该字段变长。解析域名时没有“.”，域名中的“.”被编码为元信息，指示接下来的多少字节是有效信息。</p>
+
+<p>DNS剩下的三个部分格式一样，如下：</p>
+
+<pre><code>rfc1035
+record
+                                1  1  1  1  1  1
+  0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                                               |
+/                                               /
+/                      NAME                     /
+|                                               |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                      TYPE                     |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                     CLASS                     |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                      TTL                      |
+|                                               |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+|                   RDLENGTH                    |
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--|
+/                     RDATA                     /
+/                                               /
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+</code></pre>
+
+<p>其中，TTL为32位，为该资源记录被缓存的秒数。RDLENGTH，16位，为RDATA部分的长度，单位是字节。RDATA，不同类型的资源记录有不同的RDATA格式，这里就不多了解了。</p>
+
+<h2 id="lrucachepy">lru_cache.py</h2>
+
+<p>这是一个作者自己实现的LRU_CACHE。</p>
+
+<pre><code># this LRUCache is optimized for concurrency, not QPS
+# n: concurrency, keys stored in the cache
+# m: visits not timed out, proportional to QPS * timeout
+# get &amp; set is O(1), not O(n). thus we can support very large n
+</code></pre>
+
+<p>正如作者所说，本CACHE是使得并发最优化而不是最优化每秒查询数目。</p>
+
+<p>sweep的主要步骤如下：</p>
+
+<ul>
+  <li>先根据最后访问时间，找出_last_visits队列中超出timeout的所有时间ts</li>
+  <li>然后根据_time_to_keys以及所有时间ts，找出所有可能过期的键keys</li>
+  <li>因为最早访问时间访问过的键之后可能又访问了，所以要看_keys_to_last_time，看这个key后来是否被再次访问了。</li>
+  <li>找出那些没被访问过的，然后删除。</li>
+</ul>
+
+<h2 id="tcprelaypy--udprelaypy">tcprelay.py 以及 udprelay.py</h2>
+
+<p>这里要先明确一下代理的流程。首先是浏览器把把HTTP请求转发给本地代理，本地代理对数据进行加密后发送到远程代理，远程代理对数据进行解密之后发起HTTP请求，将请求得到的响应加密返回本地代理，本地代理收到数据后解密然后交给浏览器。第一次连接远程代理时还需要进行验证。</p>
+
+<p>is_local用于判断这个转发器工作在本地代理还是远程代理，local_sock对于本地代理来说即连接浏览器的socket，对于远程代理来说即连接本地代理的socket；remote_socket对于本地代理来说即连接远程代理的socket，对于远程代理来说即发起HTTP请求的socket。</p>
+
+<p>具体转发流程见代码注释。</p>
+
+<h2 id="tips">其他Tips</h2>
+
+<p>self：某些函数中第一个参数为self，然而这个self是python执行时会自动把自身实例加入参数，于是调用函数是不必显式把自身实例作为参数。</p>
+
+<p>assert：声明某条语句为真。若不为真则会抛出错误。</p>
+
+<p>host文件：Hosts是一个没有扩展名的系统文件，其基本作用就是将一些常用的网址域名与其对应的IP地址建立一个关联“数据库”，当用户在浏览器中输入一个需要登录的网址时，系统会首先自动从Hosts文件中寻找对应的IP地址，一旦找到，系统会立即打开对应网页</p>
+
+<p>struct.pack / struct.unpack：根据给定的比特流构造方式以及字节顺序，构造/解析比特流。“!”代表网络字节序。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>CHARACTER</th>
+      <th>BYTE ORDER</th>
+      <th>SIZE</th>
+      <th>ALIGNMENT</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>@</td>
+      <td>native</td>
+      <td>native</td>
+      <td>native</td>
+    </tr>
+    <tr>
+      <td>=</td>
+      <td>native</td>
+      <td>standard</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>&lt;</td>
+      <td>little-endian</td>
+      <td>standard</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>&gt;</td>
+      <td>big-endian</td>
+      <td>standard</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>!</td>
+      <td>network (= big-endian)</td>
+      <td>standard</td>
+      <td>none</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>future：这个很神奇。不好说。</p>
+
+<p>udp的dns解析：tcp连接时，使用了自己实现的dnsresolver来进行域名解析，而udp转发时，虽然构造函数有这个参数，但实际代码未使用这个dnsresolver，而是使用了socket.getaddrinfo直接得到的。自己思考了一下可能是因为这样，socket.getaddrinfo会阻塞直到返回IP地址，若直接使用这个来处理TCP连接，则会导致一个查询阻塞时导致其他连接无法打开（ssserver并没有采用多线程）；因此重写了一下DNS查询器，查询完成时调用回调函数来进行下一步处理。UDP只提供最大努力地投递，因此socket.getaddrinfo返回的结果并不是准确的目标IP（比如我随便写了一个乱七八糟的地址，返回的结果是一个固定IP，查询了一下是长沙移动的IP，应该是移动网的出口网关的IP），因此查询过程通常是迅速完成，不会发生严重的阻塞，因此仅仅使用了一个LRUCache来缓存DNS。</p>
+
+<p>udp的client：udp投递出去了不一定会收到回复，因此，client保存在LRUCache中，有一定生存周期，生存周期内收到响应，则转发响应；生存周期结束，则销毁。</p>
+
+<h2 id="section-1">未完成</h2>
+
+<ul>
+  <li>manager，这是一个用来通过命令行来控制参数的。</li>
+  <li>daemon，守护进程。</li>
+</ul>
+
+
+      <footer class="entry-meta">
+        <span class="entry-tags"><a href="http://localhost:4000/tags/#shadowsocks" title="Pages tagged shadowsocks" class="tag"><span class="term">shadowsocks</span></a></span>
+        
+        <div class="social-share">
+  <ul class="socialcount socialcount-small inline-list">
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/shadowsocks-sourcecode/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/shadowsocks-sourcecode/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/shadowsocks-sourcecode/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+  </ul>
+</div><!-- /.social-share -->
+      </footer>
+    </div><!-- /.entry-content -->
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+    <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="http://localhost:4000/tree-regression-note/" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="http://localhost:4000/tree-regression-note/" title="Tree Regression Note">Tree Regression Note</a></h3>
+      <p>关于机器学习，树回归的笔记。树回归其实也是决策树的一种。之前决策树ID3算法主要解决的是离散、标称型数据，而这次的树回归则主要是为了解决连续型变量的决策树构造问题。根据机器学习实战，树回归包括了两种，一种成为回归树，一种成为模型树。其区别在于回归树的叶子节点为单一值；而模型...&hellip; <a href="http://localhost:4000/tree-regression-note/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/regression-note/" title="Regression Note">Regression Note</a></h4>
+        <span>Published on July 09, 2015</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/shadowsocks-proxifier/" title="shadowsocks/proxifier">shadowsocks/proxifier</a></h4>
+        <span>Published on July 07, 2015</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    <span>&copy; 2015 Qing YE. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="https://mademistakes.com/work/hpstr-jekyll-theme/" rel="nofollow">HPSTR Theme</a>.</span>
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+<script src="http://localhost:4000/assets/js/vendor/jquery-1.9.1.min.js"></script>
+<!-- <script>window.jQuery || document.write('<script src="http://localhost:4000/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script> -->
+<script src="http://localhost:4000/assets/js/scripts.min.js"></script>
+
+
+
+
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'qingye'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script'); s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	        
+
+</body>
+</html>
