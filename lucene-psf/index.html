@@ -1,0 +1,752 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Lucene的实用评分功能 &#8211; Simple Blog</title>
+<meta name="description" content="本文介绍了Lucene背后的打分相关理论，然后就Lucene中的`Prarical Scoring Function`的每一项进行了分析。">
+<meta name="keywords" content="elasticsearch, lucene">
+
+
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lucene的实用评分功能">
+<meta property="og:description" content="本文介绍了Lucene背后的打分相关理论，然后就Lucene中的`Prarical Scoring Function`的每一项进行了分析。">
+<meta property="og:url" content="http://localhost:4000/lucene-psf/">
+<meta property="og:site_name" content="Simple Blog">
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/lucene-psf/">
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Simple Blog Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<!-- Webfonts -->
+<!-- <link href="//fonts.useso.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.useso.com/css?family=monospace:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load MathJax -->
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<!-- Load Modernizr -->
+<script src="http://localhost:4000/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://localhost:4000/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144-precomposed.png">
+
+
+
+</head>
+
+<body id="post" >
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+	<button class="dl-trigger">Open Menu</button>
+	<ul class="dl-menu">
+		<li><a href="http://localhost:4000/">Home</a></li>
+		<li>
+			<a href="#">About</a>
+			<ul class="dl-submenu">
+				<li>
+					<img src="http://localhost:4000/images/avatar2.jpg" alt="Qing YE photo" class="author-photo">
+					<h4>Qing YE</h4>
+					<p>You can code, they can not, that is pretty damn cool.</p>
+				</li>
+				<li><a href="http://localhost:4000/about/"><span class="btn btn-inverse">Learn More</span></a></li>
+				<li>
+					<a href="mailto:youkochan233@gmail.com"><i class="fa fa-fw fa-envelope"></i> Email</a>
+				</li>
+				
+				
+				
+				
+				<li>
+					<a href="http://github.com/youkochan"><i class="fa fa-fw fa-github"></i> GitHub</a>
+				</li>
+				
+				
+				
+				
+			</ul><!-- /.dl-submenu -->
+		</li>
+		<li>
+			<a href="#">Posts</a>
+			<ul class="dl-submenu">
+				<li><a href="http://localhost:4000/posts/">All Posts</a></li>
+				<li><a href="http://localhost:4000/tags/">All Tags</a></li>
+			</ul>
+		</li>
+		
+	    
+	        
+	        
+	    <li><a href="http://geekfan.me" target="_blank">GeekFan.me</a></li>
+	  
+	</ul><!-- /.dl-menu -->
+</nav><!-- /.dl-menuwrapper -->
+
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <header class="header-title">
+      <div class="header-title-wrap">
+        
+          <h1 class="entry-title"><a href="http://localhost:4000/lucene-psf/" rel="bookmark" title="Lucene的实用评分功能">Lucene的实用评分功能</a></h1>
+        
+        <h2><span class="entry-date date published"><time datetime="2015-12-01T10:42:33+08:00">December 01, 2015</time></span></h2>
+        
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          
+          Reading time ~13 minutes
+        </p><!-- /.entry-reading-time -->
+        
+      </div><!-- /.header-title-wrap -->
+    </header>
+    <div class="entry-content">
+      <p>最近既然毕设是有关这个的我就先看看文档，顺便翻译翻译吧。</p>
+
+<!--more-->
+
+<h2 id="section">背景介绍</h2>
+
+<p>对于仅处理结构化数据(比如日期，数值和字符枚举值)的数据库，它们只需要检查一份文档(在关系数据库中是一行)是否匹配查询即可。</p>
+
+<p>尽管布尔类型的YESNO匹配也是全文搜索的一个必要组成，它们本身是不够的。我们还需要知道每份文档和查询之间的相关程度。全文搜索引擎不仅要找到匹配的文档，还需要根据相关度对它们进行排序。</p>
+
+<p>全文搜索相关度的公式，或者被称为相似度算法，将多个因素综合起来为没份文档产生一个相关度_score。在本章中，我们来讨论一下其中的一些变化的部分以及如何控制它们。</p>
+
+<p>当然相关度并不只和全文查询相关；它也许会将结构化数据考虑在内。我们可能在寻找一个拥有某些卖点(空调，海景，免费的WiFi)的度假旅店。那么当某个度假旅店拥有的卖点越多，那么它也就越相关。或者我们希望除全文搜索本身的相关度外，同时将时间的远近，价格，流行度或者距离这类因素也考虑在内。</p>
+
+<p>以上这些设想都是可以实现的，得益于ES中强大的分值计算功能。</p>
+
+<p>我们首先会从理论角度来看看Lucene是如何计算相关度的，然后从实际的例子出发来讨论一下如何来控制该过程。</p>
+
+<p>Lucene（也就是ES）使用了布尔模型（Boolean Model）来寻找匹配的文档，以及一个被称为<code>Prarical Scoring Function</code>的公式来计算相关度。该公式借用了词条频度/倒排文档频度以及向量空间模型的概念，同时也增加了一些更现代的特性比如Coordination Factor，字段长度归约，以及词条/查询子句提升。</p>
+
+<blockquote>
+  <p>不要害怕！这些概念并不像它们的名字那般复杂。尽管在这一节中提到了算法，公式以及数学模型，它们的作用也只不过是方便人类理解。理解算法本身并不比理解它们对结果的影响更重要。</p>
+</blockquote>
+
+<h2 id="boolean-model">Boolean Model</h2>
+
+<blockquote>
+  <p>The Boolean model simply applies the AND, OR, and NOT conditions expressed in the query to find all the documents that match. A query for full AND text AND search AND (elasticsearch OR lucene) will include only documents that contain all of the terms full, text, and search, and either elasticsearch or lucene.<br />
+This process is simple and fast. It is used to exclude any documents that cannot possibly match the query.</p>
+</blockquote>
+
+<p>布尔模型简单地应用查询中的AND，OR以及NOT条件来寻找所有匹配的文档。下面的查询：</p>
+
+<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">full AND text AND search AND (elasticsearch OR lucene)</span></code></pre></div>
+
+<p>会只包括含有所有full，text，search词条，以及词条elasticsearch或者lucene之一的文档。</p>
+
+<p>这个过程是简单且迅速的。它用来排除那些不会匹配查询的文档。</p>
+
+<h2 id="term-frequencyinverse-document-frequency-tfidf">Term Frequency/Inverse Document Frequency (TF/IDF)</h2>
+
+<blockquote>
+  <p>Once we have a list of matching documents, they need to be ranked by relevance. Not all documents will contain all the terms, and some terms are more important than others. The relevance score of the whole document depends (in part) on the weight of each query term that appears in that document.</p>
+</blockquote>
+
+<p>当我们获得一系列的匹配上查询的文档之后，需要对这些文档根据这些文档与查询的相关性进行打分。不是所有的文档都会包含所有的查询词条，并且某一些词条可能比其他的词条更重要一些。因此，文档的整体相关性得分取决于每一个出现在这篇文档中的查询词条的<strong>权重</strong>。</p>
+
+<h3 id="term-frequency">Term frequency</h3>
+
+<blockquote>
+  <p>How often does the term appear in this document? The more often, the higher the weight. A field containing five mentions of the same term is more likely to be relevant than a field containing just one mention. The term frequency is calculated as follows:</p>
+</blockquote>
+
+<p>一个词条出现在某篇文档中的频繁程度是多少呢？出现越频繁，权重越高。一个包含五次对于同一个词条的提及的字段会比一个仅仅提及这个词条一次的字段更佳相关。词条频率按照下列公式进行计算：</p>
+
+<blockquote>
+  <p>tf(t in d) = √frequency<br />
+The term frequency (tf) for term t in document d is the square root of the number of times the term appears in the document.</p>
+</blockquote>
+
+<p>意思就是词条频率就是一个词条t在文档d中出现的次数的平方根。</p>
+
+<p>如果你根本不关心一个词条在一个字段中出现了多少次，你只是关心这个词条是否出现了，那么你可以通过使用下面这种<code>mapping</code>禁用词条频率：</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">PUT /my_index
+<span class="o">{</span>
+  <span class="s2">&quot;mappings&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;doc&quot;</span>: <span class="o">{</span>
+      <span class="s2">&quot;properties&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;text&quot;</span>: <span class="o">{</span>
+          <span class="s2">&quot;type&quot;</span>:          <span class="s2">&quot;string&quot;</span>,
+          <span class="s2">&quot;index_options&quot;</span>: <span class="s2">&quot;docs&quot;</span> 
+        <span class="o">}</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<p>把某个字段的<code>index_options</code>设置为<code>docs</code>将会禁用词条频率以及词条位置（即词条在这段文本中出现的位置）。这么设置之后这个字段将无法统计一个词条出现了多少次，并且将不能使用<em>phrase or proximity queries</em>。把某个字段设置为<code>not_analyzed</code>后，将会默认使用这种配置。</p>
+
+<h3 id="inverse-document-frequency">Inverse document frequency</h3>
+
+<blockquote>
+  <p>How often does the term appear in all documents in the collection? The more often, the lower the weight. Common terms like <code>and</code> or <code>the</code> contribute little to relevance, as they appear in most documents, while uncommon terms like <code>elastic</code> or <code>hippopotamus</code> help us zoom in on the most interesting documents. The inverse document frequency is calculated as follows:</p>
+</blockquote>
+
+<p>一个词条出现在所有收集到的文档中的频繁程度是多少呢？出现越频繁，权重则应该越低。一些常用词条比如<code>and</code>或者<code>the</code>应该对于相关性得分的贡献很低，因为它们出现在大多数的文档中，然而一些不常见的词条比如<code>elastic</code>或者<code>hippopotamus</code>可以帮助我们放大那些有兴趣的文档的特征。因此，倒排索引频度按照下列公式计算：</p>
+
+<blockquote>
+  <p>idf(t) = 1 + log ( numDocs / (docFreq + 1))<br />
+The inverse document frequency (idf) of term t is the logarithm of the number of documents in the index, divided by the number of documents that contain the term.</p>
+</blockquote>
+
+<p>某个词条t的倒排索引频率（idf）是（（该索引中的文档数目）除以（包含词条t的文档数目加一））求对数的结果（底数是多少？e）。</p>
+
+<h3 id="field-length-norm">Field-length norm</h3>
+
+<blockquote>
+  <p>How long is the field? The shorter the field, the higher the weight. If a term appears in a short field, such as a title field, it is more likely that the content of that field is about the term than if the same term appears in a much bigger body field. The field length norm is calculated as follows:</p>
+</blockquote>
+
+<p>字段长度有多长呢？字段长度越短，权重应该越高。如果一个词条出现在一个短字段中，例如一个标题字段，那我们可以认为，这个字段中的文本相对于一个更大的主体字段来说，对于这个词条更相关。字段长度归约按照下列公式进行计算：</p>
+
+<blockquote>
+  <p>norm(d) = 1 / √numTerms<br />
+The field-length norm (norm) is the inverse square root of the number of terms in the field.</p>
+</blockquote>
+
+<p>字段长度归约是这个字段中的词条数目的平方根的倒数。</p>
+
+<blockquote>
+  <p>While the field-length norm is important for full-text search, many other fields don’t need norms. Norms consume approximately 1 byte per string field per document in the index, whether or not a document contains the field. Exact-value not_analyzed string fields have norms disabled by default, but you can use the field mapping to disable norms on analyzed fields as well:</p>
+</blockquote>
+
+<p>尽管字段长度归约对于全文搜索是很重要的，然而依然有一些字段不需要进行规约。归约对于每一个索引下的每一篇文档中的每一个字符串字段大约消耗一个字节，而不管这个文档是否包含这个字段。使用<code>not_analyzed</code>也默认地禁用了归约，不过你也可以使用<code>mapping</code>来禁用某个<code>analyzed</code>字段的归约操作。</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">PUT /my_index
+<span class="o">{</span>
+  <span class="s2">&quot;mappings&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;doc&quot;</span>: <span class="o">{</span>
+      <span class="s2">&quot;properties&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;text&quot;</span>: <span class="o">{</span>
+          <span class="s2">&quot;type&quot;</span>: <span class="s2">&quot;string&quot;</span>,
+          <span class="s2">&quot;norms&quot;</span>: <span class="o">{</span> <span class="s2">&quot;enabled&quot;</span>: <span class="nb">false</span> <span class="o">}</span> 
+        <span class="o">}</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<blockquote>
+  <p>This field will not take the field-length norm into account. A long field and a short field will be scored as if they were the same length.</p>
+</blockquote>
+
+<p>这样进行mapping操作之后呢，这个字段将不会计算字段长度归约。一个长字段和一个短字段打分时会被认为是同样长度。</p>
+
+<blockquote>
+  <p>For use cases such as logging, norms are not useful. All you care about is whether a field contains a particular error code or a particular browser identifier. The length of the field does not affect the outcome. Disabling norms can save a significant amount of memory.</p>
+</blockquote>
+
+<p>对于用例中的一些，比如日志记录，归约并不是有用的。你所关注的仅仅是一个字段是否包含特定的错误码或者特定的浏览器标识符。字段的长度并不会影响这个输出。禁用归约可以节约大量内存。</p>
+
+<h3 id="putting-it-together">Putting it together</h3>
+
+<blockquote>
+  <p>These three factors—term frequency, inverse document frequency, and field-length norm—are calculated and stored at index time. Together, they are used to calculate the weight of a single term in a particular document.</p>
+</blockquote>
+
+<p>这三个影响因素，词条频率，倒排索引频率，字段长度归约，在索引时就被计算以及储存。他们被一起用于一个单个的词条在一个特定文档中的权重。</p>
+
+<blockquote>
+  <p>[tips] When we refer to documents in the preceding formulae, we are actually talking about a field within a document. Each field has its own inverted index and thus, for TF/IDF purposes, the value of the field is the value of the document.</p>
+</blockquote>
+
+<p>「这段很关键」: 当我们在上述公式中提及文档（<em>documents</em>）时，我们实际在说的是文档中的一个字段（<em>field</em>）。每一个字段都会有它自己倒排索引因此，对于TF/IDF假设，这个字段的值即为这个文档的值。</p>
+
+<blockquote>
+  <p>When we run a simple term query with explain set to true (<a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/relevance-intro.html#explain">see Understanding the Score</a>), you will see that the only factors involved in calculating the score are the ones explained in the preceding sections:</p>
+</blockquote>
+
+<p>当我们使用<code>explain</code>来进行一个简单地词条查询时，你将会看到计算得分中相关因素的影响。</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">PUT /my_index/doc/1
+<span class="o">{</span> <span class="s2">&quot;text&quot;</span> : <span class="s2">&quot;quick brown fox&quot;</span> <span class="o">}</span>
+
+POST /my_index/doc/_search?explain
+<span class="o">{</span>
+  <span class="s2">&quot;query&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;term&quot;</span>: <span class="o">{</span>
+      <span class="s2">&quot;text&quot;</span>: <span class="s2">&quot;fox&quot;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<p>下面是查询返回的<code>explanation</code>:</p>
+
+<div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="l-Scalar-Plain">weight(text:fox in 0) [PerFieldSimilarity]</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">0.15342641   (1)</span>
+<span class="l-Scalar-Plain">result of</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">fieldWeight in 0                         0.15342641</span>
+    <span class="l-Scalar-Plain">product of</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">tf(freq=1.0), with freq of 1</span><span class="p-Indicator">:</span>        <span class="l-Scalar-Plain">1.0          (2)</span>
+        <span class="l-Scalar-Plain">idf(docFreq=1, maxDocs=1)</span><span class="p-Indicator">:</span>           <span class="l-Scalar-Plain">0.30685282   (3)</span>
+        <span class="l-Scalar-Plain">fieldNorm(doc=0)</span><span class="p-Indicator">:</span>                    <span class="l-Scalar-Plain">0.5          (4)</span></code></pre></div>
+
+<p>下面来解释一下这些参数的具体意义：</p>
+
+<ol>
+  <li>词条<code>fox</code>在Lucene内部文档ID为0的文档中的<code>text</code>字段的最终<code>score</code></li>
+  <li>词条<code>fox</code>在<code>text</code>字段就出现了一次</li>
+  <li>词条<code>fox</code>在所有文档的<code>text</code>字段的倒排索引频率（1+ln(1/2)）</li>
+  <li>这个字段的字段长度归约因子。（为何是0.5？）</li>
+  <li>（备注：为何我执行以上代码没有这个结果呢？妈蛋原来官方文档错了）</li>
+  <li>（备注：实际计算字段长度归约因子时字段长度加了1，这个官网文档没写）</li>
+</ol>
+
+<p>通过上面这堆东西，我们知道了一个关键词的得分，当然，一个查询通常由不止一个词条组成，因此，我们需要一个方式来组合多词条的权重。为此，我们介绍向量空间模型（<em>vector space model</em>）</p>
+
+<h2 id="vector-space-model">vector space model</h2>
+
+<blockquote>
+  <p>The vector space model provides a way of comparing a multiterm query against a document. The output is a single score that represents how well the document matches the query. In order to do this, the model represents both the document and the query as vectors.</p>
+</blockquote>
+
+<p>向量空间模型提供了一种针对一篇文档的组合多词条查询结果的方式。向量空间模型输出是一个单个的得分，代表了这篇文档与这个查询的匹配程度。为了完成这个目标，这个模型把文档以及查询都表现为向量的形式。</p>
+
+<blockquote>
+  <p>A vector is really just a one-dimensional array containing numbers, for example:<br />
+[1,2,5,22,3,8]<br />
+In the vector space model, each number in the vector is the weight of a term, as calculated with term frequency/inverse document frequency.</p>
+</blockquote>
+
+<p>在向量空间模型中，向量种的每一个数字表示某一个词条的权重（<em>weight</em>），就是上面介绍的词条频率/反向索引频率中计算出的结果。</p>
+
+<blockquote>
+  <p>[tips] While TF/IDF is the default way of calculating term weights for the vector space model, it is not the only way. Other models like Okapi-BM25 exist and are available in Elasticsearch. TF/IDF is the default because it is a simple, efficient algorithm that produces high-quality search results and has stood the test of time.</p>
+</blockquote>
+
+<p>尽管TF/IDF是向量空间模型中默认的计算词条权重的方式，也不仅仅有这种方式。其他的模型比如Okapi-BM25在elasticsearch中也是可以直接使用的。TF/IDF之所以是默认的，是因为它是一个简单高效的算法，可以提供高质量的搜索结果并且已经经过了时间测试的。</p>
+
+<blockquote>
+  <p>Imagine that we have a query for “happy hippopotamus.” A common word like happy will have a low weight, while an uncommon term like hippopotamus will have a high weight. Let’s assume that happy has a weight of 2 and hippopotamus has a weight of 5. We can plot this simple two-dimensional vector—[2,5]—as a line on a graph starting at point (0,0) and ending at point (2,5), as shown in Figure 27, “A two-dimensional query vector for “happy hippopotamus” represented”.</p>
+</blockquote>
+
+<p>假设我们有一个针对“happy hippopotamus”的查询，一个常用的词条比如<code>happy</code>将会有一个比较低的权值，然而一个不常见的词条比如<code>hippopotamus</code>将会有一个比较高的权值。让我们假设<code>happy</code>权重为2、<code>hippopotamus</code>权重为5。那么，我们能够绘制出这个二维向量在一个图中，这个向量从（0，0）出发，终止于（2，5），正如下图所示。</p>
+
+<figure>
+	<a href="/images/blog/elas_17in01.png">
+		<img src="/images/blog/elas_17in01.png" alt="" />
+	</a>
+</figure>
+
+<p>接下来，我们来看这三篇文档：</p>
+
+<ol>
+  <li>I am <em>happy</em> in summer.</li>
+  <li>After Christmas I’m a <em>hippopotamus</em>.</li>
+  <li>The <em>happy</em> <em>hippopotamus</em> helped Harry.</li>
+</ol>
+
+<blockquote>
+  <p>We can create a similar vector for each document, consisting of the weight of each query term—happy and hippopotamus—that appears in the document, and plot these vectors on the same graph, as shown in Figure 28, “Query and document vectors for “happy hippopotamus””:</p>
+</blockquote>
+
+<p>我们可以为每一篇文档构造一个相似向量，由每一个在这篇文档中出现过的查询词条的权重组成，在同一个图中绘制出这些向量，如下图所示。</p>
+
+<ul>
+  <li>Document 1: (happy,             ) — [2,0]</li>
+  <li>Document 2: (     , hippopotamus) — [0,5]</li>
+  <li>Document 3: (happy, hippopotamus) — [2,5]</li>
+</ul>
+
+<figure>
+	<a href="/images/blog/elas_17in01.png">
+		<img src="/images/blog/elas_17in02.png" alt="" />
+	</a>
+</figure>
+
+<blockquote>
+  <p>The nice thing about vectors is that they can be compared. By measuring the angle between the query vector and the document vector, it is possible to assign a relevance score to each document. The angle between document 1 and the query is large, so it is of low relevance. Document 2 is closer to the query, meaning that it is reasonably relevant, and document 3 is a perfect match.</p>
+</blockquote>
+
+<p>使用向量的好处在于向量可以进行比较。我们可以通过测量查询向量与文档向量之间的夹角来给每一篇文档确定一个相关性得分。文档1与查询向量之间的夹角过大，因此它的相关性应该比较低。文档2比较接近查询向量，意味着它有一定相关性，文档3则是一个完美的匹配。</p>
+
+<blockquote>
+  <p>[tips] In practice, only two-dimensional vectors (queries with two terms) can be plotted easily on a graph. Fortunately, linear algebra—the branch of mathematics that deals with vectors—provides tools to compare the angle between multidimensional vectors, which means that we can apply the same principles explained above to queries that consist of many terms.</p>
+</blockquote>
+
+<p>实际上，只有二维向量(使用两个词条的查询)才能够被简单地表示在坐标中。幸运的是，线性代数 - 数学的一个分支，能够处理向量 - 提供了用来比较多维向量间角度的工具，这意味着我们能够使用上述原理对包含很多词条的查询进行处理。</p>
+
+<p>讨论了向量空间模型，接下来就是看看Lucene实际是如何进行分值计算的。</p>
+
+<blockquote>
+  <p>For multiterm queries, Lucene takes the Boolean model, TF/IDF, and the vector space model and combines them in a single efficient package that collects matching documents and scores them as it goes.</p>
+</blockquote>
+
+<p>对于多词条的查询，Lucene使用了布尔模型，TF/IDF模型，以及向量空间模型，并且把它们结合到了一个高效的包中，使得可以一边收集匹配上的文档一边给这些文档打分。</p>
+
+<p>一个多词条查询如下：</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">GET /my_index/doc/_search
+<span class="o">{</span>
+  <span class="s2">&quot;query&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;match&quot;</span>: <span class="o">{</span>
+      <span class="s2">&quot;text&quot;</span>: <span class="s2">&quot;quick fox&quot;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<p>会被重写为：</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">GET /my_index/doc/_search
+<span class="o">{</span>
+  <span class="s2">&quot;query&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;bool&quot;</span>: <span class="o">{</span>
+      <span class="s2">&quot;should&quot;</span>: <span class="o">[</span>
+        <span class="o">{</span><span class="s2">&quot;term&quot;</span>: <span class="o">{</span> <span class="s2">&quot;text&quot;</span>: <span class="s2">&quot;quick&quot;</span> <span class="o">}}</span>,
+        <span class="o">{</span><span class="s2">&quot;term&quot;</span>: <span class="o">{</span> <span class="s2">&quot;text&quot;</span>: <span class="s2">&quot;fox&quot;</span>   <span class="o">}}</span>
+      <span class="o">]</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<blockquote>
+  <p>The bool query implements the Boolean model and, in this example, will include only documents that contain either the term quick or the term fox or both.</p>
+</blockquote>
+
+<p><code>bool</code>查询实现了布尔模型，在本例中，只会包括含有词条quick或者词条fox的文档。</p>
+
+<blockquote>
+  <p>As soon as a document matches a query, Lucene calculates its score for that query, combining the scores of each matching term. The formula used for scoring is called the practical scoring function. It looks intimidating, but don’t be put off — most of the components you already know. It introduces a few new elements that we discuss next.</p>
+</blockquote>
+
+<p>当某篇文档匹配一个查询的时候，Lucene同时就会根据这篇文档匹配的所有词条的得分，来计算这篇文档对于这整个查询的得分。这个被用于计算得分的公式被叫做<em>practical scoring function</em>。这个公式看起来挺可怕的，但是也别退怯，大多数公式中的组件其实都已经知道是什么意思了。下面会介绍这个公式引入的新元素。</p>
+
+<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">score(q,d)  =                   (1)</span>
+<span class="go">            queryNorm(q)        (2)</span>
+<span class="go">          · coord(q,d)          (3)</span>
+<span class="go">          · ∑ (                 (4)</span>
+<span class="go">                tf(t in d)      (5)</span>
+<span class="go">              · idf(t)²         (6)</span>
+<span class="go">              · t.getBoost()    (7)</span>
+<span class="go">              · norm(t,d)       (8)</span>
+<span class="go">            ) (t in q)          (9)</span></code></pre></div>
+
+<p>下面来一点点解释：</p>
+
+<ol>
+  <li><code>score(q,d)</code>: 表示文档d对于查询q的<strong>相关性得分</strong>（<em>relevance score</em>），也就是我们得到的最终得分</li>
+  <li><code>queryNorm(q)</code>: 表示<strong>查询归约因子</strong>（<em>query normalization factor</em>）</li>
+  <li><code>coord(q,d)</code>: 表示文档d与查询q的<strong>协调因子</strong>（<em>coordination factor</em>）</li>
+  <li>(4)-&gt;(9): 表示求和，对于查询q中的每一个词条t</li>
+  <li><code>tf(t in d)</code>: 表示词条t在文档d中的<strong>词条频率</strong>（<em>term frequency</em>）</li>
+  <li><code>idf(t)</code>: 表示词条t的<strong>倒排索引频率</strong>（<em>inverse document frequency</em>）</li>
+  <li><code>t.getBoost()</code>: 表示适用于查询的<strong>提升</strong>（<em>boost</em>）</li>
+  <li><code>norm(t,d)</code>: 表示<strong>字段长度归约</strong>（<em>field-length norm</em>），有可能结合了<strong>索引期间的字段提升</strong>（<em>index-time field-level boost</em>）</li>
+</ol>
+
+<p>上述有一些已经知道定义了，现在介绍一些新的内容：</p>
+
+<h3 id="query-normalization-factor">Query Normalization Factor</h3>
+
+<blockquote>
+  <p>The query normalization factor (queryNorm) is an attempt to normalize a query so that the results from one query may be compared with the results of anothe</p>
+</blockquote>
+
+<p>查询归约因子用于归约一个查询，因此这个查询的结果可以与另外的查询的结果进行比较。</p>
+
+<blockquote>
+  <p>[tips] Even though the intent of the query norm is to make results from different queries comparable, it doesn’t work very well. The only purpose of the relevance _score is to sort the results of the current query in the correct order. You should not try to compare the relevance scores from different queries.</p>
+</blockquote>
+
+<p>尽管查询归约因子的意图是确保不同的查询的结果之间可以进行比较，但是它也并没有完全工作得很好。相关度<code>_score</code>的唯一目的是将当前查询的结果以正确的顺序被排序。你不应该尝试去比较不同查询得到的相关度分值。</p>
+
+<blockquote>
+  <p>This factor is calculated at the beginning of the query. The actual calculation depends on the queries involved, but a typical implementation is as follows:</p>
+</blockquote>
+
+<p>这个因子在查询的开始时被计算。实际的计算取决于查询本身，但是一个典型的实现如下所示：</p>
+
+<blockquote>
+  <p>queryNorm = 1 / √sumOfSquaredWeights<br />
+The sumOfSquaredWeights is calculated by adding together the IDF of each term in the query, squared.</p>
+</blockquote>
+
+<p>sumOfSquaredWeights通过对查询中每个词条的IDF进行累加，然后取其平方根得到的。</p>
+
+<blockquote>
+  <p>[tips] The same query normalization factor is applied to every document, and you have no way of changing it. For all intents and purposes, it can be ignored.</p>
+</blockquote>
+
+<p>相同的查询归约因子会被适用在每份文档上，你也没有办法改变它。总而言之，它是可以被忽略的。</p>
+
+<h3 id="query-coordination">Query Coordination</h3>
+
+<blockquote>
+  <p>The coordination factor (coord) is used to reward documents that contain a higher percentage of the query terms. The more query terms that appear in the document, the greater the chances that the document is a good match for the query.</p>
+</blockquote>
+
+<p>协调因子被用来奖励那些包含了更多查询词条的文档。文档中出现了越多的查询词条，那么该文档就越可能是该查询的一个高质量匹配。</p>
+
+<p>假设我们有一个对于<code>quick brown fox</code>的查询，并且每一个词条的权重都是1.5。没有协调因子时，每一篇文档的得分将会是文档中包含的词条的权重之和。举个例子就是：</p>
+
+<ul>
+  <li>Document with <code>fox</code> → score: 1.5</li>
+  <li>Document with <code>quick fox</code> → score: 3.0</li>
+  <li>Document with <code>quick brown fox</code> → score: 4.5</li>
+</ul>
+
+<blockquote>
+  <p>The coordination factor multiplies the score by the number of matching terms in the document, and divides it by the total number of terms in the query. With the coordination factor, the scores would be as follows:</p>
+</blockquote>
+
+<p>而协调因子会将得分乘以文档中匹配的词条数目，然后除以查询中的总词条数。通过使用查询归约因子，最终的文档得分如下所示：</p>
+
+<ul>
+  <li>Document with <code>fox</code> → score: 1.5 * 1 / 3 = 0.5</li>
+  <li>Document with <code>quick fox</code> → score: 3.0 * 2 / 3 = 2.0</li>
+  <li>Document with <code>quick brown fox</code> → score: 4.5 * 3 / 3 = 4.5</li>
+</ul>
+
+<p>协调因子使得包含了所有的三个词条的文档比其他的两个文档变得与这个查询更佳相关。</p>
+
+<p>记得一个对于<code>quick brown fox</code>的查询将会被重写为一个布尔查询：</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">GET /_search
+<span class="o">{</span>
+  <span class="s2">&quot;query&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;bool&quot;</span>: <span class="o">{</span>
+      <span class="s2">&quot;should&quot;</span>: <span class="o">[</span>
+        <span class="o">{</span> <span class="s2">&quot;term&quot;</span>: <span class="o">{</span> <span class="s2">&quot;text&quot;</span>: <span class="s2">&quot;quick&quot;</span> <span class="o">}}</span>,
+        <span class="o">{</span> <span class="s2">&quot;term&quot;</span>: <span class="o">{</span> <span class="s2">&quot;text&quot;</span>: <span class="s2">&quot;brown&quot;</span> <span class="o">}}</span>,
+        <span class="o">{</span> <span class="s2">&quot;term&quot;</span>: <span class="o">{</span> <span class="s2">&quot;text&quot;</span>: <span class="s2">&quot;fox&quot;</span>   <span class="o">}}</span>
+      <span class="o">]</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<p>布尔查询默认地为所有<code>should</code>查询子句使用了协调因子，但是它也允许你禁用协调因子。为什么你会想禁用它呢？好吧，通常情况下，答案是你不想禁用它。协调因子通常都起了一个积极作用。当你使用布尔查询来将多个像<code>match</code>这样的高级查询(High-level Query)包装在一起时，启用协调因子也是有意义的。匹配的查询子句越多，你的搜索请求和返回的文档之间的匹配程度就越高。</p>
+
+<p>然而，在一些高级场合下，禁用协调因子也是有意义的。假设你正在查找同义词（synonyms）比如<code>jump</code>，<code>leap</code>以及<code>hop</code>，你不需要关心这个同义词出现了多少次，因为它们都表示了相同的概念。事实上，可能只有其中的一个会出现。此时，禁用协调因子是一个不错的选择：</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">GET /_search
+<span class="o">{</span>
+  <span class="s2">&quot;query&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;bool&quot;</span>: <span class="o">{</span>
+      <span class="s2">&quot;disable_coord&quot;</span>: <span class="nb">true</span>,
+      <span class="s2">&quot;should&quot;</span>: <span class="o">[</span>
+        <span class="o">{</span> <span class="s2">&quot;term&quot;</span>: <span class="o">{</span> <span class="s2">&quot;text&quot;</span>: <span class="s2">&quot;jump&quot;</span> <span class="o">}}</span>,
+        <span class="o">{</span> <span class="s2">&quot;term&quot;</span>: <span class="o">{</span> <span class="s2">&quot;text&quot;</span>: <span class="s2">&quot;hop&quot;</span>  <span class="o">}}</span>,
+        <span class="o">{</span> <span class="s2">&quot;term&quot;</span>: <span class="o">{</span> <span class="s2">&quot;text&quot;</span>: <span class="s2">&quot;leap&quot;</span> <span class="o">}}</span>
+      <span class="o">]</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<blockquote>
+  <p>When you use synonyms (see <a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/synonyms.html">Synonyms</a>), this is exactly what happens internally: the rewritten query disables coordination for the synonyms. Most use cases for disabling coordination are handled automatically; you don’t need to worry about it.</p>
+</blockquote>
+
+<p>当你使用<a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/synonyms.html">同义词</a>的时候，这正是在内部发生的：重写的查询会为同义词禁用协调因子。多数禁用协调因子的用例都会被自动地处理；你根本无需担心它。</p>
+
+<h3 id="index-time-field-level-boosting">Index-Time Field-Level Boosting</h3>
+
+<p>接下来我们讨论一下<strong>提升</strong>（<em>boosting</em>）一个字段，即使得一个字段比其他字段更重要，在一个<strong>查询时的提升</strong>（<em>Query-Time Boosting</em>）中。当然，在建立索引时，也可以运用提升。事实上，提升是适用于字段中的每一个词条，而不是这一个字段它本身。</p>
+
+<p>为了在尽可能少占用空间的前提下，将提升值存储到索引中，索引期间字段级别提升会和字段长度归约一起以一个字节被保存在索引中。它是之前公式中norm(t,d)返回的值。</p>
+
+<blockquote>
+  <p>[warning] We strongly recommend against using field-level index-time boosts for a few reasons:
+* Combining the boost with the field-length norm and storing it in a single byte means that the field-length norm loses precision. The result is that Elasticsearch is unable to distinguish between a field containing three words and a field containing five words.
+* To change an index-time boost, you have to reindex all your documents. A query-time boost, on the other hand, can be changed with every query.
+* If a field with an index-time boost has multiple values, the boost is multiplied by itself for every value, dramatically increasing the weight for that field.</p>
+</blockquote>
+
+<p>警告！我们强烈不推荐使用索引期间的字段提升，理由如下：
+* 将此提升和字段长度归约存储在一个字节中意味着字段长度归约会损失精度。结果是ES不能区分一个含有三个单词的字段和一个含有五个单词的字段。
+* 为了修改索引期间提升，你不得不对所有文档重索引。而查询期间的提升则可以因查询而异。
+* 如果一个使用了索引期间提升的字段是多值字段（<em>Multivalue Field</em>），那么提升值会为每一个值进行乘法操作，导致该字段的权重飙升。</p>
+
+<p>查询时的提升则是一种更简单更干净以及更灵活的选择。</p>
+
+<h3 id="query-time-boosting">Query-Time Boosting</h3>
+
+<p>在调整查询子句优先级（<em>Prioritizing Clauses</em>）一节中，我们已经介绍过如何在搜索期间使用<code>boost</code>参数为一个查询子句增加权重。比如：</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">GET /_search
+<span class="o">{</span>
+  <span class="s2">&quot;query&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;bool&quot;</span>: <span class="o">{</span>
+      <span class="s2">&quot;should&quot;</span>: <span class="o">[</span>
+        <span class="o">{</span>
+          <span class="s2">&quot;match&quot;</span>: <span class="o">{</span>
+            <span class="s2">&quot;title&quot;</span>: <span class="o">{</span>
+              <span class="s2">&quot;query&quot;</span>: <span class="s2">&quot;quick brown fox&quot;</span>,
+              <span class="s2">&quot;boost&quot;</span>: <span class="m">2</span> 
+            <span class="o">}</span>
+          <span class="o">}</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+          <span class="s2">&quot;match&quot;</span>: <span class="o">{</span> 
+            <span class="s2">&quot;content&quot;</span>: <span class="s2">&quot;quick brown fox&quot;</span>
+          <span class="o">}</span>
+        <span class="o">}</span>
+      <span class="o">]</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<ol>
+  <li>可知<code>title</code>字段的查询子句是<code>content</code>字段查询子句的重要性的两倍，因为它被一个系数2提升了。</li>
+  <li>一个不包含<code>boost</code>值的查询子句将会有一个中性的提升值1。</li>
+</ol>
+
+<blockquote>
+  <p>Query-time boosting is the main tool that you can use to tune relevance. Any type of query accepts a boost parameter. Setting a boost of 2 doesn’t simply double the final _score; the actual boost value that is applied goes through normalization and some internal optimization. However, it does imply that a clause with a boost of 2 is twice as important as a clause with a boost of 1.</p>
+</blockquote>
+
+<p>查询期间的提升是你可以用来调整相关性的一个主要工具。任何的查询类型都可以接受一个<code>boost</code>参数，但把一个查询的<code>boost</code>参数设置为2并不会简单地把最终的<code>_score</code>加倍。实际的提升值将会经过归约以及一些其他的内部操作。然而它确实意味着包含一个2的提升的查询子句的重要性是一个包含1的提升的子句的重要性的两倍。</p>
+
+<p>实际上，没有任何公式能够决定对某个特定的查询子句，”正确的”提升值应该是多少。它是通过尝试来得到的。记住<code>boost</code>仅仅是相关度分值中的一个因素；它需要和其它因素竞争。比如在上面的例子中，title字段相对于content字段，大概已经有一个”自然的”提升了，该提升来自字段长度归约(<em>Field-length Norm</em>)(因为标题通常会比相关内容要短一些)，因此不要因为你认为某个字段应该被提升而盲目地对它进行提升。适用一个提升值然后检查得到的结果，再进行修正。</p>
+
+<h4 id="section-1">提升一个索引</h4>
+
+<p>当跨索引进行搜索时，你可以通过<code>indices_boost</code>参数提升整个索引，如下面的例子所示，给近期的索引中的文档一个更高的权重。</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">GET /docs_2014_*/_search 
+<span class="o">{</span>
+  <span class="s2">&quot;indices_boost&quot;</span>: <span class="o">{</span> 
+    <span class="s2">&quot;docs_2014_10&quot;</span>: 3,
+    <span class="s2">&quot;docs_2014_09&quot;</span>: 2
+  <span class="o">}</span>,
+  <span class="s2">&quot;query&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;match&quot;</span>: <span class="o">{</span>
+      <span class="s2">&quot;text&quot;</span>: <span class="s2">&quot;quick brown fox&quot;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<h4 id="tgetboost">t.getBoost()</h4>
+
+<p>这些提升值在<a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/practical-scoring-function.html">Lucene’s Practical Scoring Function</a>中用<code>t.getBoost()</code>来表示。提升并不是其在查询DSL出现的地方被适用的。相反，任何的提升值都会被合并然后传递到每个词条上。<code>t.getBoost()</code>方法返回的是适用于词条本身上的提升值，或者是适用于上层查询的提升值。</p>
+
+<blockquote>
+  <p>[tips] In fact, reading the explain output is a little more complex than that. You won’t see the boost value or t.getBoost() mentioned in the explanatio
+n at all. Instead, the boost is rolled into the queryNorm that is applied to a particular term. Although we said that the queryNorm is the same for every term, you will see that the queryNorm for a boosted term is higher than the queryNorm for an unboosted term.</p>
+</blockquote>
+
+<p>实际上，阅读<code>explain</code>的输出本身比上述的说明更复杂。你在解释中根本看不到<code>boost</code>值或者<code>t.getBoost()</code>。提升被融合到了适用于特定词条上的<code>queryNorm</code>中。尽管我们说过<code>queryNorm</code>对任何词条都是相同的，但是对于提升过的词条而言，<code>queryNorm</code>会更高一些。</p>
+
+<hr />
+
+<p>相关链接：
+* <a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/practical-scoring-function.html">practical-scoring-function</a><br />
+* <a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/scoring-theory.html">scoring-theory</a><br />
+* <a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/query-time-boosting.html">Query-time boosting</a></p>
+
+
+      <footer class="entry-meta">
+        <span class="entry-tags"><a href="http://localhost:4000/tags/#elasticsearch" title="Pages tagged elasticsearch" class="tag"><span class="term">elasticsearch</span></a><a href="http://localhost:4000/tags/#lucene" title="Pages tagged lucene" class="tag"><span class="term">lucene</span></a></span>
+        
+        <div class="social-share">
+  <ul class="socialcount socialcount-small inline-list">
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/lucene-psf/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/lucene-psf/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/lucene-psf/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+  </ul>
+</div><!-- /.social-share -->
+      </footer>
+    </div><!-- /.entry-content -->
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+    <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="http://localhost:4000/shadowsocks-sourcecode/" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="http://localhost:4000/controlling-relevance/" title="通过查询结构控制相关程度">通过查询结构控制相关程度</a></h3>
+      <p>根据上一篇文章，我们可以通过选取不同的模型，或者在创立索引时加入一些提升，或者禁用某些查询因子来实现对查询的控制。这一篇中，会介绍一些通过不同的查询结构来对文档相似度进行控制的方式。ES的查询DSL是非常灵活的。你可以通过将单独的查询子句在查询层次中上下移动来让它更重要/更...&hellip; <a href="http://localhost:4000/controlling-relevance/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/shadowsocks-sourcecode/" title="shadowsocks源码分析">shadowsocks源码分析</a></h4>
+        <span>Published on August 14, 2015</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/tree-regression-note/" title="Tree Regression Note">Tree Regression Note</a></h4>
+        <span>Published on July 11, 2015</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    <span>&copy; 2015 Qing YE. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="https://mademistakes.com/work/hpstr-jekyll-theme/" rel="nofollow">HPSTR Theme</a>.</span>
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+<script src="http://localhost:4000/assets/js/vendor/jquery-1.9.1.min.js"></script>
+<!-- <script>window.jQuery || document.write('<script src="http://localhost:4000/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script> -->
+<script src="http://localhost:4000/assets/js/scripts.min.js"></script>
+
+
+
+
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'qingye'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script'); s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	        
+
+</body>
+</html>

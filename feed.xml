@@ -2,26 +2,835 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
 <title type="text">Simple Blog</title>
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
-<link rel="self" type="application/atom+xml" href="http://qingye.me/feed.xml" />
-<link rel="alternate" type="text/html" href="http://qingye.me" />
-<updated>2015-09-02T23:01:04+08:00</updated>
-<id>http://qingye.me/</id>
+<link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
+<link rel="alternate" type="text/html" href="http://localhost:4000" />
+<updated>2015-12-01T11:51:16+08:00</updated>
+<id>http://localhost:4000/</id>
 <author>
   <name>Qing YE</name>
-  <uri>http://qingye.me/</uri>
+  <uri>http://localhost:4000/</uri>
   <email>youkochan233@gmail.com</email>
 </author>
 
 
 <entry>
+  <title type="html"><![CDATA[通过查询结构控制相关程度]]></title>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/controlling-relevance/" />
+  <id>http://localhost:4000/controlling-relevance</id>
+  <published>2015-12-01T11:37:03+08:00</published>
+  <updated>2015-12-01T11:37:03+08:00</updated>
+  <author>
+    <name>Qing YE</name>
+    <uri>http://localhost:4000</uri>
+    <email>youkochan233@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;p&gt;根据上一篇文章，我们可以通过选取不同的模型，或者在创立索引时加入一些提升，或者禁用某些查询因子来实现对查询的控制。这一篇中，会介绍一些通过不同的查询结构来对文档相似度进行控制的方式。&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;ES的查询DSL是非常灵活的。你可以通过将单独的查询子句在查询层次中上下移动来让它更重要/更不重要。比如，下面的查询：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;quick OR brown OR red OR fox&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;那我们就可以把这个查询写作成一个布尔查询使得对于所有的词条在同一个层次：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;GET /_search
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;query&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;bool&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&amp;quot;should&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;term&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;quick&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;,
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;term&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;brown&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;,
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;term&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;red&amp;quot;&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;,
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;term&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;fox&amp;quot;&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;但是这种查询有可能会对一篇包含&lt;code&gt;quick&lt;/code&gt;、&lt;code&gt;red&lt;/code&gt;以及&lt;code&gt;brown&lt;/code&gt;的文章与另一篇包含&lt;code&gt;quick&lt;/code&gt;、&lt;code&gt;red&lt;/code&gt;以及&lt;code&gt;fox&lt;/code&gt;的文章得出相同的分数。&lt;code&gt;red&lt;/code&gt;以及&lt;code&gt;brown&lt;/code&gt;是近义词于是我们有可能仅仅只需要他们中有一个出现就可以了。或许我们实际上所期望的查询应该是下面这样：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;quick OR (brown OR red) OR fox&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;根据标准布尔逻辑，这一条查询和最初的查询是完全一致的，但是根据组合查询，一个布尔查询并不止关心一个文档是否与自身匹配，还关心这篇文档匹配得有多好。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;GET /_search
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;query&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;bool&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&amp;quot;should&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;term&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;quick&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;,
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;term&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;fox&amp;quot;&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;,
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;s2&quot;&gt;&amp;quot;bool&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;s2&quot;&gt;&amp;quot;should&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;
+              &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;term&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;brown&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;,
+              &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;term&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;red&amp;quot;&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;现在，&lt;code&gt;red&lt;/code&gt;以及&lt;code&gt;brown&lt;/code&gt;在同一层上竞争，&lt;code&gt;quick&lt;/code&gt;、&lt;code&gt;fox&lt;/code&gt;以及&lt;code&gt;red OR brown&lt;/code&gt;为顶层的竞争词条。&lt;/p&gt;
+
+&lt;p&gt;我们之前也讨论过了&lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/guide/current/match-query.html&quot;&gt;match&lt;/a&gt;、&lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/guide/current/multi-match-query.html&quot;&gt;multi_match&lt;/a&gt;、&lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/guide/current/term-vs-full-text.html&quot;&gt;term&lt;/a&gt;、&lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/guide/current/bool-query.html&quot;&gt;bool&lt;/a&gt;以及&lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/guide/current/_best_fields.html#dis-max-query&quot;&gt;dis_max&lt;/a&gt;这些查询，都可以用来控制相关度得分。剩下的部分介绍三种打分相关的查询：&lt;code&gt;the boosting query&lt;/code&gt;、&lt;code&gt;the constant_score query&lt;/code&gt;以及&lt;code&gt;the function_score query&lt;/code&gt;。&lt;/p&gt;
+
+&lt;h2 id=&quot;the-boosting-query&quot;&gt;the boosting query&lt;/h2&gt;
+
+&lt;p&gt;如果你想在互联网上搜索&lt;code&gt;Apple&lt;/code&gt;，那么搜出的结果有可能是公司、水果或者是菜谱。我们有可能会想去缩小搜索出的结果的范围，从而能仅仅搜索出有关公司的结果。于是我们可以通过十一年&lt;code&gt;must_not&lt;/code&gt;子句排除一些词语比如&lt;code&gt;pie&lt;/code&gt;、&lt;code&gt;tart&lt;/code&gt;等。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;GET /_search
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;query&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;bool&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&amp;quot;must&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s2&quot;&gt;&amp;quot;match&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;apple&amp;quot;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;,
+      &lt;span class=&quot;s2&quot;&gt;&amp;quot;must_not&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s2&quot;&gt;&amp;quot;match&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;pie tart fruit crumble tree&amp;quot;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;但是谁能说我们使用这种方式排除一些词条后不会错过一些实际上非常相关的文档呢？某些时候&lt;code&gt;must_not&lt;/code&gt;子句却是太严格了。&lt;/p&gt;
+
+&lt;p&gt;为了解决这种问题，我们可以使用&lt;code&gt;boosting query&lt;/code&gt;。这种查询语句使得我们得到的结果也有可能是关于水果或者是点心，但是我们降低了这些文档的得分，如：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;GET /_search
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;query&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;boosting&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&amp;quot;positive&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s2&quot;&gt;&amp;quot;match&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;apple&amp;quot;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;,
+      &lt;span class=&quot;s2&quot;&gt;&amp;quot;negative&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s2&quot;&gt;&amp;quot;match&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;pie tart fruit crumble tree&amp;quot;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;,
+      &lt;span class=&quot;s2&quot;&gt;&amp;quot;negative_boost&amp;quot;&lt;/span&gt;: 0.5
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;它接受了一个&lt;code&gt;postive&lt;/code&gt;查询以及一个&lt;code&gt;negative&lt;/code&gt;查询，只有匹配&lt;code&gt;positive&lt;/code&gt;查询的文档会被包括到结果列表中，但是也匹配了&lt;code&gt;negative&lt;/code&gt;查询的的文档的原始&lt;code&gt;_score&lt;/code&gt;则会乘上&lt;code&gt;negative_boost&lt;/code&gt;从而使得文档的相关性得分被降低。&lt;/p&gt;
+
+&lt;p&gt;因此，&lt;code&gt;negative_boost&lt;/code&gt;应该是小于1.0的。在这个例子中，包含了消极词条的所有文档的&lt;code&gt;_score&lt;/code&gt;都会被减半。&lt;/p&gt;
+
+&lt;h2 id=&quot;constantscore-query&quot;&gt;constant_score query&lt;/h2&gt;
+
+&lt;p&gt;有些时候我们根本不想考虑TF/IDF。我们考虑的仅仅只是一个特定的词有没有出现在一个字段中。或许我们正在搜索一个度假村，我们想尽可能地找出具有以下特征的房子：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;WiFi&lt;/li&gt;
+  &lt;li&gt;Garden&lt;/li&gt;
+  &lt;li&gt;Pool&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;度假村文档有可能是下面这种形式的：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;quot;description&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;A delightful four-bedroomed house with ... &amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;我们可以使用一个简单地&lt;code&gt;match&lt;/code&gt;查询：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;GET /_search
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;query&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;match&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&amp;quot;description&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;wifi garden pool&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;然而，我们需要的并不是真正的全文搜索。此时TF/IDF只会碍手碍脚。我们不在意wifi是否是一个常见的词条，也不在意它在文档中出现的是否频繁。我们在意的只是它是否出现了。实际上，我们只是想通过卖点来对这些度假酒店进行排序，卖点越多越好。如果拥有一个卖点，那么它的分值就是1，如果没有它的分值就是0。&lt;/p&gt;
+
+&lt;p&gt;因此，我们可以使用&lt;code&gt;constant_score query&lt;/code&gt;。这个查询可以包含一个查询或者一个过滤器，并且对多有满足匹配的文档赋值为1，不考虑TF/IDF。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;GET /_search
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;query&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;bool&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&amp;quot;should&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;constant_score&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;s2&quot;&gt;&amp;quot;query&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;match&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;description&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;wifi&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;,
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;constant_score&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;s2&quot;&gt;&amp;quot;query&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;match&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;description&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;garden&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;,
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;constant_score&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;s2&quot;&gt;&amp;quot;query&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;match&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;description&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;pool&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;或许不是所有的特点都是同样重要的，有一些可能对于用户来说有更高的价值。假设最重要的特征是&lt;code&gt;pool&lt;/code&gt;，那么我们可以提升这个查询子句使得它计算时占更多比重。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;GET /_search
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;query&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;bool&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&amp;quot;should&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;constant_score&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;s2&quot;&gt;&amp;quot;query&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;match&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;description&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;wifi&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;,
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;constant_score&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;s2&quot;&gt;&amp;quot;query&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;match&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;description&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;garden&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;,
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;constant_score&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;s2&quot;&gt;&amp;quot;boost&amp;quot;&lt;/span&gt;:   &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt; 
+          &lt;span class=&quot;s2&quot;&gt;&amp;quot;query&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;match&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;description&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;pool&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;一个匹配&lt;code&gt;pool&lt;/code&gt;的文档会使文档最终得分加二，而其他的查询子句只会使总得分加一。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;[tips] The final score for each result is not simply the sum of the scores of all matching clauses. The coordination factor and query normalization factor are still taken into account.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;最终得分不会是简单地把这些匹配子句的得分相加。协调因子以及查询归约因子也最终被加入了计算中。&lt;/p&gt;
+
+&lt;p&gt;我们可以优化我们的度假村文档，通过添加一个&lt;code&gt;not_analyzed&lt;/code&gt;的&lt;code&gt;features&lt;/code&gt;字段：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;quot;features&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;wifi&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;pool&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;garden&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;By default, a &lt;code&gt;not_analyzed&lt;/code&gt; field has &lt;code&gt;field-length norms&lt;/code&gt; disabled and has &lt;code&gt;index_options&lt;/code&gt; set to &lt;code&gt;docs&lt;/code&gt;, disabling &lt;code&gt;term frequencies&lt;/code&gt;, but the problem remains: &lt;code&gt;the inverse document frequency&lt;/code&gt; of each term is still taken into account.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;默认地，一个&lt;code&gt;not_analyzed&lt;/code&gt;字段禁用了&lt;code&gt;field-length norms&lt;/code&gt;，并且把&lt;code&gt;index_options&lt;/code&gt;设置为了&lt;code&gt;docs&lt;/code&gt;，禁用了&lt;code&gt;term frequencies&lt;/code&gt;。但是问题在于每一个词条的&lt;code&gt;the inverse document frequency&lt;/code&gt;依然被用于进行了计算。&lt;/p&gt;
+
+&lt;p&gt;我们可以使用之前的方式，通过使用&lt;code&gt;constant_score query&lt;/code&gt;来解决这个问题。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;GET /_search
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;query&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;bool&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&amp;quot;should&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;constant_score&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;s2&quot;&gt;&amp;quot;query&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;match&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;features&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;wifi&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;,
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;constant_score&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;s2&quot;&gt;&amp;quot;query&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;match&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;features&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;garden&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;,
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;constant_score&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;s2&quot;&gt;&amp;quot;boost&amp;quot;&lt;/span&gt;:   2
+          &lt;span class=&quot;s2&quot;&gt;&amp;quot;query&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;match&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;features&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;pool&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;实际上，每个卖点都应该被视为一个过滤器。度假酒店要么有该卖点，要么没有。使用过滤器似乎是更自然的选择。并且如果我们使用了过滤器，还可以得益于过滤器缓存这一功能。&lt;/p&gt;
+
+&lt;p&gt;不使用过滤器的根源在于：过滤器不会计算相关度分值。我们需要的是一座用来连接过滤器和查询的桥梁。而&lt;code&gt;function_score&lt;/code&gt;查询就能够做到这一点，并且它也提供了更多的功能。&lt;/p&gt;
+
+&lt;h2 id=&quot;functionscore-query&quot;&gt;function_score query&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;function_score&lt;/code&gt;查询是处理分值计算过程的终极工具。它让你能够对所有匹配了主查询的每份文档调用一个函数来调整甚至是完全替换原来的&lt;code&gt;_score&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;实际上，你可以通过设置过滤器来将查询得到的结果分成若干个子集，然后对每个子集使用不同的函数。这样你就能够同时得益于：高效的分值计算以及可缓存的过滤器。&lt;/p&gt;
+
+&lt;p&gt;它拥有几种预先定义好了的函数：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code&gt;weight&lt;/code&gt;：对每份文档适用一个简单的提升，且该提升不会被归约：当weight为2时，结果为&lt;code&gt;2 * _score&lt;/code&gt;。&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code&gt;field_value_factor&lt;/code&gt;：使用文档中某个字段的值来改变&lt;code&gt;_score&lt;/code&gt;，比如将受欢迎程度或者投票数量考虑在内。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;random_score&lt;/code&gt;：使用一致性随机分值计算来对每个用户采用不同的结果排序方式，对相同用户仍然使用相同的排序方式。&lt;/li&gt;
+  &lt;li&gt;衰减函数(&lt;code&gt;Decay Function&lt;/code&gt;) - linear，exp，gauss：将像&lt;code&gt;publish_date&lt;/code&gt;，&lt;code&gt;geo_location&lt;/code&gt;或者&lt;code&gt;price&lt;/code&gt;这类浮动值考虑到&lt;code&gt;_score&lt;/code&gt;中，偏好最近发布的文档，邻近于某个地理位置的文档或者价格靠近某一点的文档。&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;script_score&lt;/code&gt;：使用自定义的脚本来完全控制分值计算逻辑。如果你需要以上预定义函数之外的功能，可以根据需要通过脚本进行实现。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;没有&lt;code&gt;function_score&lt;/code&gt;查询的话，我们也许就不能将全文搜索得到分值和近因进行结合了。我们将不得不根据&lt;code&gt;_score&lt;/code&gt;或者&lt;code&gt;date&lt;/code&gt;进行排序；无论采用哪一种都会抹去另一种的影响。function_score查询让我们能够将两者融合在一起：仍然通过全文相关度排序，但是给新近发布的文档，或者流行的文档，或者符合用户价格期望的文档额外的权重。&lt;/p&gt;
+
+
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/controlling-relevance/&quot;&gt;通过查询结构控制相关程度&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on December 01, 2015.&lt;/p&gt;
+  </content>
+</entry>
+
+
+<entry>
+  <title type="html"><![CDATA[Lucene的实用评分功能]]></title>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/lucene-psf/" />
+  <id>http://localhost:4000/lucene-psf</id>
+  <published>2015-12-01T10:42:33+08:00</published>
+  <updated>2015-12-01T10:42:33+08:00</updated>
+  <author>
+    <name>Qing YE</name>
+    <uri>http://localhost:4000</uri>
+    <email>youkochan233@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;p&gt;最近既然毕设是有关这个的我就先看看文档，顺便翻译翻译吧。&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;背景介绍&lt;/h2&gt;
+
+&lt;p&gt;对于仅处理结构化数据(比如日期，数值和字符枚举值)的数据库，它们只需要检查一份文档(在关系数据库中是一行)是否匹配查询即可。&lt;/p&gt;
+
+&lt;p&gt;尽管布尔类型的YESNO匹配也是全文搜索的一个必要组成，它们本身是不够的。我们还需要知道每份文档和查询之间的相关程度。全文搜索引擎不仅要找到匹配的文档，还需要根据相关度对它们进行排序。&lt;/p&gt;
+
+&lt;p&gt;全文搜索相关度的公式，或者被称为相似度算法，将多个因素综合起来为没份文档产生一个相关度_score。在本章中，我们来讨论一下其中的一些变化的部分以及如何控制它们。&lt;/p&gt;
+
+&lt;p&gt;当然相关度并不只和全文查询相关；它也许会将结构化数据考虑在内。我们可能在寻找一个拥有某些卖点(空调，海景，免费的WiFi)的度假旅店。那么当某个度假旅店拥有的卖点越多，那么它也就越相关。或者我们希望除全文搜索本身的相关度外，同时将时间的远近，价格，流行度或者距离这类因素也考虑在内。&lt;/p&gt;
+
+&lt;p&gt;以上这些设想都是可以实现的，得益于ES中强大的分值计算功能。&lt;/p&gt;
+
+&lt;p&gt;我们首先会从理论角度来看看Lucene是如何计算相关度的，然后从实际的例子出发来讨论一下如何来控制该过程。&lt;/p&gt;
+
+&lt;p&gt;Lucene（也就是ES）使用了布尔模型（Boolean Model）来寻找匹配的文档，以及一个被称为&lt;code&gt;Prarical Scoring Function&lt;/code&gt;的公式来计算相关度。该公式借用了词条频度/倒排文档频度以及向量空间模型的概念，同时也增加了一些更现代的特性比如Coordination Factor，字段长度归约，以及词条/查询子句提升。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;不要害怕！这些概念并不像它们的名字那般复杂。尽管在这一节中提到了算法，公式以及数学模型，它们的作用也只不过是方便人类理解。理解算法本身并不比理解它们对结果的影响更重要。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;boolean-model&quot;&gt;Boolean Model&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The Boolean model simply applies the AND, OR, and NOT conditions expressed in the query to find all the documents that match. A query for full AND text AND search AND (elasticsearch OR lucene) will include only documents that contain all of the terms full, text, and search, and either elasticsearch or lucene.&lt;br /&gt;
+This process is simple and fast. It is used to exclude any documents that cannot possibly match the query.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;布尔模型简单地应用查询中的AND，OR以及NOT条件来寻找所有匹配的文档。下面的查询：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;full AND text AND search AND (elasticsearch OR lucene)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;会只包括含有所有full，text，search词条，以及词条elasticsearch或者lucene之一的文档。&lt;/p&gt;
+
+&lt;p&gt;这个过程是简单且迅速的。它用来排除那些不会匹配查询的文档。&lt;/p&gt;
+
+&lt;h2 id=&quot;term-frequencyinverse-document-frequency-tfidf&quot;&gt;Term Frequency/Inverse Document Frequency (TF/IDF)&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Once we have a list of matching documents, they need to be ranked by relevance. Not all documents will contain all the terms, and some terms are more important than others. The relevance score of the whole document depends (in part) on the weight of each query term that appears in that document.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;当我们获得一系列的匹配上查询的文档之后，需要对这些文档根据这些文档与查询的相关性进行打分。不是所有的文档都会包含所有的查询词条，并且某一些词条可能比其他的词条更重要一些。因此，文档的整体相关性得分取决于每一个出现在这篇文档中的查询词条的&lt;strong&gt;权重&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;h3 id=&quot;term-frequency&quot;&gt;Term frequency&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;How often does the term appear in this document? The more often, the higher the weight. A field containing five mentions of the same term is more likely to be relevant than a field containing just one mention. The term frequency is calculated as follows:&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;一个词条出现在某篇文档中的频繁程度是多少呢？出现越频繁，权重越高。一个包含五次对于同一个词条的提及的字段会比一个仅仅提及这个词条一次的字段更佳相关。词条频率按照下列公式进行计算：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;tf(t in d) = √frequency&lt;br /&gt;
+The term frequency (tf) for term t in document d is the square root of the number of times the term appears in the document.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;意思就是词条频率就是一个词条t在文档d中出现的次数的平方根。&lt;/p&gt;
+
+&lt;p&gt;如果你根本不关心一个词条在一个字段中出现了多少次，你只是关心这个词条是否出现了，那么你可以通过使用下面这种&lt;code&gt;mapping&lt;/code&gt;禁用词条频率：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;PUT /my_index
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;mappings&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;doc&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&amp;quot;properties&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;s2&quot;&gt;&amp;quot;type&amp;quot;&lt;/span&gt;:          &lt;span class=&quot;s2&quot;&gt;&amp;quot;string&amp;quot;&lt;/span&gt;,
+          &lt;span class=&quot;s2&quot;&gt;&amp;quot;index_options&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;docs&amp;quot;&lt;/span&gt; 
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;把某个字段的&lt;code&gt;index_options&lt;/code&gt;设置为&lt;code&gt;docs&lt;/code&gt;将会禁用词条频率以及词条位置（即词条在这段文本中出现的位置）。这么设置之后这个字段将无法统计一个词条出现了多少次，并且将不能使用&lt;em&gt;phrase or proximity queries&lt;/em&gt;。把某个字段设置为&lt;code&gt;not_analyzed&lt;/code&gt;后，将会默认使用这种配置。&lt;/p&gt;
+
+&lt;h3 id=&quot;inverse-document-frequency&quot;&gt;Inverse document frequency&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;How often does the term appear in all documents in the collection? The more often, the lower the weight. Common terms like &lt;code&gt;and&lt;/code&gt; or &lt;code&gt;the&lt;/code&gt; contribute little to relevance, as they appear in most documents, while uncommon terms like &lt;code&gt;elastic&lt;/code&gt; or &lt;code&gt;hippopotamus&lt;/code&gt; help us zoom in on the most interesting documents. The inverse document frequency is calculated as follows:&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;一个词条出现在所有收集到的文档中的频繁程度是多少呢？出现越频繁，权重则应该越低。一些常用词条比如&lt;code&gt;and&lt;/code&gt;或者&lt;code&gt;the&lt;/code&gt;应该对于相关性得分的贡献很低，因为它们出现在大多数的文档中，然而一些不常见的词条比如&lt;code&gt;elastic&lt;/code&gt;或者&lt;code&gt;hippopotamus&lt;/code&gt;可以帮助我们放大那些有兴趣的文档的特征。因此，倒排索引频度按照下列公式计算：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;idf(t) = 1 + log ( numDocs / (docFreq + 1))&lt;br /&gt;
+The inverse document frequency (idf) of term t is the logarithm of the number of documents in the index, divided by the number of documents that contain the term.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;某个词条t的倒排索引频率（idf）是（（该索引中的文档数目）除以（包含词条t的文档数目加一））求对数的结果（底数是多少？e）。&lt;/p&gt;
+
+&lt;h3 id=&quot;field-length-norm&quot;&gt;Field-length norm&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;How long is the field? The shorter the field, the higher the weight. If a term appears in a short field, such as a title field, it is more likely that the content of that field is about the term than if the same term appears in a much bigger body field. The field length norm is calculated as follows:&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;字段长度有多长呢？字段长度越短，权重应该越高。如果一个词条出现在一个短字段中，例如一个标题字段，那我们可以认为，这个字段中的文本相对于一个更大的主体字段来说，对于这个词条更相关。字段长度归约按照下列公式进行计算：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;norm(d) = 1 / √numTerms&lt;br /&gt;
+The field-length norm (norm) is the inverse square root of the number of terms in the field.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;字段长度归约是这个字段中的词条数目的平方根的倒数。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;While the field-length norm is important for full-text search, many other fields don’t need norms. Norms consume approximately 1 byte per string field per document in the index, whether or not a document contains the field. Exact-value not_analyzed string fields have norms disabled by default, but you can use the field mapping to disable norms on analyzed fields as well:&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;尽管字段长度归约对于全文搜索是很重要的，然而依然有一些字段不需要进行规约。归约对于每一个索引下的每一篇文档中的每一个字符串字段大约消耗一个字节，而不管这个文档是否包含这个字段。使用&lt;code&gt;not_analyzed&lt;/code&gt;也默认地禁用了归约，不过你也可以使用&lt;code&gt;mapping&lt;/code&gt;来禁用某个&lt;code&gt;analyzed&lt;/code&gt;字段的归约操作。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;PUT /my_index
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;mappings&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;doc&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&amp;quot;properties&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;s2&quot;&gt;&amp;quot;type&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;string&amp;quot;&lt;/span&gt;,
+          &lt;span class=&quot;s2&quot;&gt;&amp;quot;norms&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;enabled&amp;quot;&lt;/span&gt;: &lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; 
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;This field will not take the field-length norm into account. A long field and a short field will be scored as if they were the same length.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;这样进行mapping操作之后呢，这个字段将不会计算字段长度归约。一个长字段和一个短字段打分时会被认为是同样长度。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;For use cases such as logging, norms are not useful. All you care about is whether a field contains a particular error code or a particular browser identifier. The length of the field does not affect the outcome. Disabling norms can save a significant amount of memory.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;对于用例中的一些，比如日志记录，归约并不是有用的。你所关注的仅仅是一个字段是否包含特定的错误码或者特定的浏览器标识符。字段的长度并不会影响这个输出。禁用归约可以节约大量内存。&lt;/p&gt;
+
+&lt;h3 id=&quot;putting-it-together&quot;&gt;Putting it together&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;These three factors—term frequency, inverse document frequency, and field-length norm—are calculated and stored at index time. Together, they are used to calculate the weight of a single term in a particular document.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;这三个影响因素，词条频率，倒排索引频率，字段长度归约，在索引时就被计算以及储存。他们被一起用于一个单个的词条在一个特定文档中的权重。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;[tips] When we refer to documents in the preceding formulae, we are actually talking about a field within a document. Each field has its own inverted index and thus, for TF/IDF purposes, the value of the field is the value of the document.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;「这段很关键」: 当我们在上述公式中提及文档（&lt;em&gt;documents&lt;/em&gt;）时，我们实际在说的是文档中的一个字段（&lt;em&gt;field&lt;/em&gt;）。每一个字段都会有它自己倒排索引因此，对于TF/IDF假设，这个字段的值即为这个文档的值。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;When we run a simple term query with explain set to true (&lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/guide/current/relevance-intro.html#explain&quot;&gt;see Understanding the Score&lt;/a&gt;), you will see that the only factors involved in calculating the score are the ones explained in the preceding sections:&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;当我们使用&lt;code&gt;explain&lt;/code&gt;来进行一个简单地词条查询时，你将会看到计算得分中相关因素的影响。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;PUT /my_index/doc/1
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt; : &lt;span class=&quot;s2&quot;&gt;&amp;quot;quick brown fox&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+POST /my_index/doc/_search?explain
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;query&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;term&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;fox&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;下面是查询返回的&lt;code&gt;explanation&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;l-Scalar-Plain&quot;&gt;weight(text:fox in 0) [PerFieldSimilarity]&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt;  &lt;span class=&quot;l-Scalar-Plain&quot;&gt;0.15342641   (1)&lt;/span&gt;
+&lt;span class=&quot;l-Scalar-Plain&quot;&gt;result of&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;l-Scalar-Plain&quot;&gt;fieldWeight in 0                         0.15342641&lt;/span&gt;
+    &lt;span class=&quot;l-Scalar-Plain&quot;&gt;product of&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;l-Scalar-Plain&quot;&gt;tf(freq=1.0), with freq of 1&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt;        &lt;span class=&quot;l-Scalar-Plain&quot;&gt;1.0          (2)&lt;/span&gt;
+        &lt;span class=&quot;l-Scalar-Plain&quot;&gt;idf(docFreq=1, maxDocs=1)&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt;           &lt;span class=&quot;l-Scalar-Plain&quot;&gt;0.30685282   (3)&lt;/span&gt;
+        &lt;span class=&quot;l-Scalar-Plain&quot;&gt;fieldNorm(doc=0)&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt;                    &lt;span class=&quot;l-Scalar-Plain&quot;&gt;0.5          (4)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;下面来解释一下这些参数的具体意义：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;词条&lt;code&gt;fox&lt;/code&gt;在Lucene内部文档ID为0的文档中的&lt;code&gt;text&lt;/code&gt;字段的最终&lt;code&gt;score&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;词条&lt;code&gt;fox&lt;/code&gt;在&lt;code&gt;text&lt;/code&gt;字段就出现了一次&lt;/li&gt;
+  &lt;li&gt;词条&lt;code&gt;fox&lt;/code&gt;在所有文档的&lt;code&gt;text&lt;/code&gt;字段的倒排索引频率（1+ln(1/2)）&lt;/li&gt;
+  &lt;li&gt;这个字段的字段长度归约因子。（为何是0.5？）&lt;/li&gt;
+  &lt;li&gt;（备注：为何我执行以上代码没有这个结果呢？妈蛋原来官方文档错了）&lt;/li&gt;
+  &lt;li&gt;（备注：实际计算字段长度归约因子时字段长度加了1，这个官网文档没写）&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;通过上面这堆东西，我们知道了一个关键词的得分，当然，一个查询通常由不止一个词条组成，因此，我们需要一个方式来组合多词条的权重。为此，我们介绍向量空间模型（&lt;em&gt;vector space model&lt;/em&gt;）&lt;/p&gt;
+
+&lt;h2 id=&quot;vector-space-model&quot;&gt;vector space model&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The vector space model provides a way of comparing a multiterm query against a document. The output is a single score that represents how well the document matches the query. In order to do this, the model represents both the document and the query as vectors.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;向量空间模型提供了一种针对一篇文档的组合多词条查询结果的方式。向量空间模型输出是一个单个的得分，代表了这篇文档与这个查询的匹配程度。为了完成这个目标，这个模型把文档以及查询都表现为向量的形式。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;A vector is really just a one-dimensional array containing numbers, for example:&lt;br /&gt;
+[1,2,5,22,3,8]&lt;br /&gt;
+In the vector space model, each number in the vector is the weight of a term, as calculated with term frequency/inverse document frequency.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;在向量空间模型中，向量种的每一个数字表示某一个词条的权重（&lt;em&gt;weight&lt;/em&gt;），就是上面介绍的词条频率/反向索引频率中计算出的结果。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;[tips] While TF/IDF is the default way of calculating term weights for the vector space model, it is not the only way. Other models like Okapi-BM25 exist and are available in Elasticsearch. TF/IDF is the default because it is a simple, efficient algorithm that produces high-quality search results and has stood the test of time.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;尽管TF/IDF是向量空间模型中默认的计算词条权重的方式，也不仅仅有这种方式。其他的模型比如Okapi-BM25在elasticsearch中也是可以直接使用的。TF/IDF之所以是默认的，是因为它是一个简单高效的算法，可以提供高质量的搜索结果并且已经经过了时间测试的。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Imagine that we have a query for “happy hippopotamus.” A common word like happy will have a low weight, while an uncommon term like hippopotamus will have a high weight. Let’s assume that happy has a weight of 2 and hippopotamus has a weight of 5. We can plot this simple two-dimensional vector—[2,5]—as a line on a graph starting at point (0,0) and ending at point (2,5), as shown in Figure 27, “A two-dimensional query vector for “happy hippopotamus” represented”.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;假设我们有一个针对“happy hippopotamus”的查询，一个常用的词条比如&lt;code&gt;happy&lt;/code&gt;将会有一个比较低的权值，然而一个不常见的词条比如&lt;code&gt;hippopotamus&lt;/code&gt;将会有一个比较高的权值。让我们假设&lt;code&gt;happy&lt;/code&gt;权重为2、&lt;code&gt;hippopotamus&lt;/code&gt;权重为5。那么，我们能够绘制出这个二维向量在一个图中，这个向量从（0，0）出发，终止于（2，5），正如下图所示。&lt;/p&gt;
+
+&lt;figure&gt;
+	&lt;a href=&quot;/images/blog/elas_17in01.png&quot;&gt;
+		&lt;img src=&quot;/images/blog/elas_17in01.png&quot; alt=&quot;&quot; /&gt;
+	&lt;/a&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;接下来，我们来看这三篇文档：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;I am &lt;em&gt;happy&lt;/em&gt; in summer.&lt;/li&gt;
+  &lt;li&gt;After Christmas I’m a &lt;em&gt;hippopotamus&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;The &lt;em&gt;happy&lt;/em&gt; &lt;em&gt;hippopotamus&lt;/em&gt; helped Harry.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;We can create a similar vector for each document, consisting of the weight of each query term—happy and hippopotamus—that appears in the document, and plot these vectors on the same graph, as shown in Figure 28, “Query and document vectors for “happy hippopotamus””:&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;我们可以为每一篇文档构造一个相似向量，由每一个在这篇文档中出现过的查询词条的权重组成，在同一个图中绘制出这些向量，如下图所示。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Document 1: (happy,             ) — [2,0]&lt;/li&gt;
+  &lt;li&gt;Document 2: (     , hippopotamus) — [0,5]&lt;/li&gt;
+  &lt;li&gt;Document 3: (happy, hippopotamus) — [2,5]&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;figure&gt;
+	&lt;a href=&quot;/images/blog/elas_17in01.png&quot;&gt;
+		&lt;img src=&quot;/images/blog/elas_17in02.png&quot; alt=&quot;&quot; /&gt;
+	&lt;/a&gt;
+&lt;/figure&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The nice thing about vectors is that they can be compared. By measuring the angle between the query vector and the document vector, it is possible to assign a relevance score to each document. The angle between document 1 and the query is large, so it is of low relevance. Document 2 is closer to the query, meaning that it is reasonably relevant, and document 3 is a perfect match.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;使用向量的好处在于向量可以进行比较。我们可以通过测量查询向量与文档向量之间的夹角来给每一篇文档确定一个相关性得分。文档1与查询向量之间的夹角过大，因此它的相关性应该比较低。文档2比较接近查询向量，意味着它有一定相关性，文档3则是一个完美的匹配。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;[tips] In practice, only two-dimensional vectors (queries with two terms) can be plotted easily on a graph. Fortunately, linear algebra—the branch of mathematics that deals with vectors—provides tools to compare the angle between multidimensional vectors, which means that we can apply the same principles explained above to queries that consist of many terms.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;实际上，只有二维向量(使用两个词条的查询)才能够被简单地表示在坐标中。幸运的是，线性代数 - 数学的一个分支，能够处理向量 - 提供了用来比较多维向量间角度的工具，这意味着我们能够使用上述原理对包含很多词条的查询进行处理。&lt;/p&gt;
+
+&lt;p&gt;讨论了向量空间模型，接下来就是看看Lucene实际是如何进行分值计算的。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;For multiterm queries, Lucene takes the Boolean model, TF/IDF, and the vector space model and combines them in a single efficient package that collects matching documents and scores them as it goes.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;对于多词条的查询，Lucene使用了布尔模型，TF/IDF模型，以及向量空间模型，并且把它们结合到了一个高效的包中，使得可以一边收集匹配上的文档一边给这些文档打分。&lt;/p&gt;
+
+&lt;p&gt;一个多词条查询如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;GET /my_index/doc/_search
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;query&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;match&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;quick fox&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;会被重写为：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;GET /my_index/doc/_search
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;query&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;bool&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&amp;quot;should&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;term&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;quick&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;,
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;term&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;fox&amp;quot;&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The bool query implements the Boolean model and, in this example, will include only documents that contain either the term quick or the term fox or both.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code&gt;bool&lt;/code&gt;查询实现了布尔模型，在本例中，只会包括含有词条quick或者词条fox的文档。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;As soon as a document matches a query, Lucene calculates its score for that query, combining the scores of each matching term. The formula used for scoring is called the practical scoring function. It looks intimidating, but don’t be put off — most of the components you already know. It introduces a few new elements that we discuss next.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;当某篇文档匹配一个查询的时候，Lucene同时就会根据这篇文档匹配的所有词条的得分，来计算这篇文档对于这整个查询的得分。这个被用于计算得分的公式被叫做&lt;em&gt;practical scoring function&lt;/em&gt;。这个公式看起来挺可怕的，但是也别退怯，大多数公式中的组件其实都已经知道是什么意思了。下面会介绍这个公式引入的新元素。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;score(q,d)  =                   (1)&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;            queryNorm(q)        (2)&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;          · coord(q,d)          (3)&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;          · ∑ (                 (4)&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;                tf(t in d)      (5)&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;              · idf(t)²         (6)&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;              · t.getBoost()    (7)&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;              · norm(t,d)       (8)&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;            ) (t in q)          (9)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;下面来一点点解释：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code&gt;score(q,d)&lt;/code&gt;: 表示文档d对于查询q的&lt;strong&gt;相关性得分&lt;/strong&gt;（&lt;em&gt;relevance score&lt;/em&gt;），也就是我们得到的最终得分&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;queryNorm(q)&lt;/code&gt;: 表示&lt;strong&gt;查询归约因子&lt;/strong&gt;（&lt;em&gt;query normalization factor&lt;/em&gt;）&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;coord(q,d)&lt;/code&gt;: 表示文档d与查询q的&lt;strong&gt;协调因子&lt;/strong&gt;（&lt;em&gt;coordination factor&lt;/em&gt;）&lt;/li&gt;
+  &lt;li&gt;(4)-&amp;gt;(9): 表示求和，对于查询q中的每一个词条t&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;tf(t in d)&lt;/code&gt;: 表示词条t在文档d中的&lt;strong&gt;词条频率&lt;/strong&gt;（&lt;em&gt;term frequency&lt;/em&gt;）&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;idf(t)&lt;/code&gt;: 表示词条t的&lt;strong&gt;倒排索引频率&lt;/strong&gt;（&lt;em&gt;inverse document frequency&lt;/em&gt;）&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;t.getBoost()&lt;/code&gt;: 表示适用于查询的&lt;strong&gt;提升&lt;/strong&gt;（&lt;em&gt;boost&lt;/em&gt;）&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;norm(t,d)&lt;/code&gt;: 表示&lt;strong&gt;字段长度归约&lt;/strong&gt;（&lt;em&gt;field-length norm&lt;/em&gt;），有可能结合了&lt;strong&gt;索引期间的字段提升&lt;/strong&gt;（&lt;em&gt;index-time field-level boost&lt;/em&gt;）&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;上述有一些已经知道定义了，现在介绍一些新的内容：&lt;/p&gt;
+
+&lt;h3 id=&quot;query-normalization-factor&quot;&gt;Query Normalization Factor&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The query normalization factor (queryNorm) is an attempt to normalize a query so that the results from one query may be compared with the results of anothe&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;查询归约因子用于归约一个查询，因此这个查询的结果可以与另外的查询的结果进行比较。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;[tips] Even though the intent of the query norm is to make results from different queries comparable, it doesn’t work very well. The only purpose of the relevance _score is to sort the results of the current query in the correct order. You should not try to compare the relevance scores from different queries.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;尽管查询归约因子的意图是确保不同的查询的结果之间可以进行比较，但是它也并没有完全工作得很好。相关度&lt;code&gt;_score&lt;/code&gt;的唯一目的是将当前查询的结果以正确的顺序被排序。你不应该尝试去比较不同查询得到的相关度分值。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;This factor is calculated at the beginning of the query. The actual calculation depends on the queries involved, but a typical implementation is as follows:&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;这个因子在查询的开始时被计算。实际的计算取决于查询本身，但是一个典型的实现如下所示：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;queryNorm = 1 / √sumOfSquaredWeights&lt;br /&gt;
+The sumOfSquaredWeights is calculated by adding together the IDF of each term in the query, squared.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;sumOfSquaredWeights通过对查询中每个词条的IDF进行累加，然后取其平方根得到的。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;[tips] The same query normalization factor is applied to every document, and you have no way of changing it. For all intents and purposes, it can be ignored.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;相同的查询归约因子会被适用在每份文档上，你也没有办法改变它。总而言之，它是可以被忽略的。&lt;/p&gt;
+
+&lt;h3 id=&quot;query-coordination&quot;&gt;Query Coordination&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The coordination factor (coord) is used to reward documents that contain a higher percentage of the query terms. The more query terms that appear in the document, the greater the chances that the document is a good match for the query.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;协调因子被用来奖励那些包含了更多查询词条的文档。文档中出现了越多的查询词条，那么该文档就越可能是该查询的一个高质量匹配。&lt;/p&gt;
+
+&lt;p&gt;假设我们有一个对于&lt;code&gt;quick brown fox&lt;/code&gt;的查询，并且每一个词条的权重都是1.5。没有协调因子时，每一篇文档的得分将会是文档中包含的词条的权重之和。举个例子就是：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Document with &lt;code&gt;fox&lt;/code&gt; → score: 1.5&lt;/li&gt;
+  &lt;li&gt;Document with &lt;code&gt;quick fox&lt;/code&gt; → score: 3.0&lt;/li&gt;
+  &lt;li&gt;Document with &lt;code&gt;quick brown fox&lt;/code&gt; → score: 4.5&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The coordination factor multiplies the score by the number of matching terms in the document, and divides it by the total number of terms in the query. With the coordination factor, the scores would be as follows:&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;而协调因子会将得分乘以文档中匹配的词条数目，然后除以查询中的总词条数。通过使用查询归约因子，最终的文档得分如下所示：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Document with &lt;code&gt;fox&lt;/code&gt; → score: 1.5 * 1 / 3 = 0.5&lt;/li&gt;
+  &lt;li&gt;Document with &lt;code&gt;quick fox&lt;/code&gt; → score: 3.0 * 2 / 3 = 2.0&lt;/li&gt;
+  &lt;li&gt;Document with &lt;code&gt;quick brown fox&lt;/code&gt; → score: 4.5 * 3 / 3 = 4.5&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;协调因子使得包含了所有的三个词条的文档比其他的两个文档变得与这个查询更佳相关。&lt;/p&gt;
+
+&lt;p&gt;记得一个对于&lt;code&gt;quick brown fox&lt;/code&gt;的查询将会被重写为一个布尔查询：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;GET /_search
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;query&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;bool&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&amp;quot;should&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;term&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;quick&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;,
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;term&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;brown&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;,
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;term&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;fox&amp;quot;&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;布尔查询默认地为所有&lt;code&gt;should&lt;/code&gt;查询子句使用了协调因子，但是它也允许你禁用协调因子。为什么你会想禁用它呢？好吧，通常情况下，答案是你不想禁用它。协调因子通常都起了一个积极作用。当你使用布尔查询来将多个像&lt;code&gt;match&lt;/code&gt;这样的高级查询(High-level Query)包装在一起时，启用协调因子也是有意义的。匹配的查询子句越多，你的搜索请求和返回的文档之间的匹配程度就越高。&lt;/p&gt;
+
+&lt;p&gt;然而，在一些高级场合下，禁用协调因子也是有意义的。假设你正在查找同义词（synonyms）比如&lt;code&gt;jump&lt;/code&gt;，&lt;code&gt;leap&lt;/code&gt;以及&lt;code&gt;hop&lt;/code&gt;，你不需要关心这个同义词出现了多少次，因为它们都表示了相同的概念。事实上，可能只有其中的一个会出现。此时，禁用协调因子是一个不错的选择：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;GET /_search
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;query&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;bool&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&amp;quot;disable_coord&amp;quot;&lt;/span&gt;: &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;,
+      &lt;span class=&quot;s2&quot;&gt;&amp;quot;should&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;term&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;jump&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;,
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;term&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;hop&amp;quot;&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;,
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;term&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;leap&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}}&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;When you use synonyms (see &lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/guide/current/synonyms.html&quot;&gt;Synonyms&lt;/a&gt;), this is exactly what happens internally: the rewritten query disables coordination for the synonyms. Most use cases for disabling coordination are handled automatically; you don’t need to worry about it.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;当你使用&lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/guide/current/synonyms.html&quot;&gt;同义词&lt;/a&gt;的时候，这正是在内部发生的：重写的查询会为同义词禁用协调因子。多数禁用协调因子的用例都会被自动地处理；你根本无需担心它。&lt;/p&gt;
+
+&lt;h3 id=&quot;index-time-field-level-boosting&quot;&gt;Index-Time Field-Level Boosting&lt;/h3&gt;
+
+&lt;p&gt;接下来我们讨论一下&lt;strong&gt;提升&lt;/strong&gt;（&lt;em&gt;boosting&lt;/em&gt;）一个字段，即使得一个字段比其他字段更重要，在一个&lt;strong&gt;查询时的提升&lt;/strong&gt;（&lt;em&gt;Query-Time Boosting&lt;/em&gt;）中。当然，在建立索引时，也可以运用提升。事实上，提升是适用于字段中的每一个词条，而不是这一个字段它本身。&lt;/p&gt;
+
+&lt;p&gt;为了在尽可能少占用空间的前提下，将提升值存储到索引中，索引期间字段级别提升会和字段长度归约一起以一个字节被保存在索引中。它是之前公式中norm(t,d)返回的值。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;[warning] We strongly recommend against using field-level index-time boosts for a few reasons:
+* Combining the boost with the field-length norm and storing it in a single byte means that the field-length norm loses precision. The result is that Elasticsearch is unable to distinguish between a field containing three words and a field containing five words.
+* To change an index-time boost, you have to reindex all your documents. A query-time boost, on the other hand, can be changed with every query.
+* If a field with an index-time boost has multiple values, the boost is multiplied by itself for every value, dramatically increasing the weight for that field.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;警告！我们强烈不推荐使用索引期间的字段提升，理由如下：
+* 将此提升和字段长度归约存储在一个字节中意味着字段长度归约会损失精度。结果是ES不能区分一个含有三个单词的字段和一个含有五个单词的字段。
+* 为了修改索引期间提升，你不得不对所有文档重索引。而查询期间的提升则可以因查询而异。
+* 如果一个使用了索引期间提升的字段是多值字段（&lt;em&gt;Multivalue Field&lt;/em&gt;），那么提升值会为每一个值进行乘法操作，导致该字段的权重飙升。&lt;/p&gt;
+
+&lt;p&gt;查询时的提升则是一种更简单更干净以及更灵活的选择。&lt;/p&gt;
+
+&lt;h3 id=&quot;query-time-boosting&quot;&gt;Query-Time Boosting&lt;/h3&gt;
+
+&lt;p&gt;在调整查询子句优先级（&lt;em&gt;Prioritizing Clauses&lt;/em&gt;）一节中，我们已经介绍过如何在搜索期间使用&lt;code&gt;boost&lt;/code&gt;参数为一个查询子句增加权重。比如：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;GET /_search
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;query&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;bool&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&amp;quot;should&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;s2&quot;&gt;&amp;quot;match&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;s2&quot;&gt;&amp;quot;title&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+              &lt;span class=&quot;s2&quot;&gt;&amp;quot;query&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;quick brown fox&amp;quot;&lt;/span&gt;,
+              &lt;span class=&quot;s2&quot;&gt;&amp;quot;boost&amp;quot;&lt;/span&gt;: &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt; 
+            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;,
+        &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;s2&quot;&gt;&amp;quot;match&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
+            &lt;span class=&quot;s2&quot;&gt;&amp;quot;content&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;quick brown fox&amp;quot;&lt;/span&gt;
+          &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;可知&lt;code&gt;title&lt;/code&gt;字段的查询子句是&lt;code&gt;content&lt;/code&gt;字段查询子句的重要性的两倍，因为它被一个系数2提升了。&lt;/li&gt;
+  &lt;li&gt;一个不包含&lt;code&gt;boost&lt;/code&gt;值的查询子句将会有一个中性的提升值1。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Query-time boosting is the main tool that you can use to tune relevance. Any type of query accepts a boost parameter. Setting a boost of 2 doesn’t simply double the final _score; the actual boost value that is applied goes through normalization and some internal optimization. However, it does imply that a clause with a boost of 2 is twice as important as a clause with a boost of 1.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;查询期间的提升是你可以用来调整相关性的一个主要工具。任何的查询类型都可以接受一个&lt;code&gt;boost&lt;/code&gt;参数，但把一个查询的&lt;code&gt;boost&lt;/code&gt;参数设置为2并不会简单地把最终的&lt;code&gt;_score&lt;/code&gt;加倍。实际的提升值将会经过归约以及一些其他的内部操作。然而它确实意味着包含一个2的提升的查询子句的重要性是一个包含1的提升的子句的重要性的两倍。&lt;/p&gt;
+
+&lt;p&gt;实际上，没有任何公式能够决定对某个特定的查询子句，”正确的”提升值应该是多少。它是通过尝试来得到的。记住&lt;code&gt;boost&lt;/code&gt;仅仅是相关度分值中的一个因素；它需要和其它因素竞争。比如在上面的例子中，title字段相对于content字段，大概已经有一个”自然的”提升了，该提升来自字段长度归约(&lt;em&gt;Field-length Norm&lt;/em&gt;)(因为标题通常会比相关内容要短一些)，因此不要因为你认为某个字段应该被提升而盲目地对它进行提升。适用一个提升值然后检查得到的结果，再进行修正。&lt;/p&gt;
+
+&lt;h4 id=&quot;section-1&quot;&gt;提升一个索引&lt;/h4&gt;
+
+&lt;p&gt;当跨索引进行搜索时，你可以通过&lt;code&gt;indices_boost&lt;/code&gt;参数提升整个索引，如下面的例子所示，给近期的索引中的文档一个更高的权重。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;GET /docs_2014_*/_search 
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;indices_boost&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; 
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;docs_2014_10&amp;quot;&lt;/span&gt;: 3,
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;docs_2014_09&amp;quot;&lt;/span&gt;: 2
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;,
+  &lt;span class=&quot;s2&quot;&gt;&amp;quot;query&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;match&amp;quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;quick brown fox&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;tgetboost&quot;&gt;t.getBoost()&lt;/h4&gt;
+
+&lt;p&gt;这些提升值在&lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/guide/current/practical-scoring-function.html&quot;&gt;Lucene’s Practical Scoring Function&lt;/a&gt;中用&lt;code&gt;t.getBoost()&lt;/code&gt;来表示。提升并不是其在查询DSL出现的地方被适用的。相反，任何的提升值都会被合并然后传递到每个词条上。&lt;code&gt;t.getBoost()&lt;/code&gt;方法返回的是适用于词条本身上的提升值，或者是适用于上层查询的提升值。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;[tips] In fact, reading the explain output is a little more complex than that. You won’t see the boost value or t.getBoost() mentioned in the explanatio
+n at all. Instead, the boost is rolled into the queryNorm that is applied to a particular term. Although we said that the queryNorm is the same for every term, you will see that the queryNorm for a boosted term is higher than the queryNorm for an unboosted term.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;实际上，阅读&lt;code&gt;explain&lt;/code&gt;的输出本身比上述的说明更复杂。你在解释中根本看不到&lt;code&gt;boost&lt;/code&gt;值或者&lt;code&gt;t.getBoost()&lt;/code&gt;。提升被融合到了适用于特定词条上的&lt;code&gt;queryNorm&lt;/code&gt;中。尽管我们说过&lt;code&gt;queryNorm&lt;/code&gt;对任何词条都是相同的，但是对于提升过的词条而言，&lt;code&gt;queryNorm&lt;/code&gt;会更高一些。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;相关链接：
+* &lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/guide/current/practical-scoring-function.html&quot;&gt;practical-scoring-function&lt;/a&gt;&lt;br /&gt;
+* &lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/guide/current/scoring-theory.html&quot;&gt;scoring-theory&lt;/a&gt;&lt;br /&gt;
+* &lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/guide/current/query-time-boosting.html&quot;&gt;Query-time boosting&lt;/a&gt;&lt;/p&gt;
+
+
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/lucene-psf/&quot;&gt;Lucene的实用评分功能&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on December 01, 2015.&lt;/p&gt;
+  </content>
+</entry>
+
+
+<entry>
   <title type="html"><![CDATA[shadowsocks源码分析]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/shadowsocks-sourcecode/" />
-  <id>http://qingye.me/shadowsocks-sourcecode</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/shadowsocks-sourcecode/" />
+  <id>http://localhost:4000/shadowsocks-sourcecode</id>
   <published>2015-08-14T15:25:09+08:00</published>
   <updated>2015-08-14T15:25:09+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -359,20 +1168,20 @@ record
 &lt;/ul&gt;
 
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/shadowsocks-sourcecode/&quot;&gt;shadowsocks源码分析&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on August 14, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/shadowsocks-sourcecode/&quot;&gt;shadowsocks源码分析&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on August 14, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Tree Regression Note]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/tree-regression-note/" />
-  <id>http://qingye.me/tree-regression-note</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/tree-regression-note/" />
+  <id>http://localhost:4000/tree-regression-note</id>
   <published>2015-07-11T22:59:25+08:00</published>
   <updated>2015-07-11T22:59:25+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -556,20 +1365,20 @@ record
 
 &lt;p&gt;至于之前的GUI界面代码我也就没怎么研究了，直接用了机器学习实战中的代码。&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/tree-regression-note/&quot;&gt;Tree Regression Note&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on July 11, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/tree-regression-note/&quot;&gt;Tree Regression Note&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on July 11, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Regression Note]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/regression-note/" />
-  <id>http://qingye.me/regression-note</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/regression-note/" />
+  <id>http://localhost:4000/regression-note</id>
   <published>2015-07-09T10:18:15+08:00</published>
   <updated>2015-07-09T10:18:15+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -849,20 +1658,20 @@ record
 &lt;p&gt;因此，需要权衡好偏差与方差，选取最适合的模型。&lt;/p&gt;
 
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/regression-note/&quot;&gt;Regression Note&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on July 09, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/regression-note/&quot;&gt;Regression Note&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on July 09, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[shadowsocks/proxifier]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/shadowsocks-proxifier/" />
-  <id>http://qingye.me/shadowsocks-proxifier</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/shadowsocks-proxifier/" />
+  <id>http://localhost:4000/shadowsocks-proxifier</id>
   <published>2015-07-07T15:42:08+08:00</published>
   <updated>2015-07-07T15:42:08+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -997,7 +1806,7 @@ With Proxifier you can easily tunnel all TCP connections on the system or the se
 &lt;p&gt;转载注明出处。&lt;/p&gt;
 
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/shadowsocks-proxifier/&quot;&gt;shadowsocks/proxifier&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on July 07, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/shadowsocks-proxifier/&quot;&gt;shadowsocks/proxifier&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on July 07, 2015.&lt;/p&gt;
   </content>
 </entry>
 
@@ -1005,12 +1814,12 @@ With Proxifier you can easily tunnel all TCP connections on the system or the se
 <entry>
   <title type="html"><![CDATA[introduction-to-mathjax-and-latex-expression]]></title>
  <link rel="alternate" type="text/html" href="http://mlworks.cn/posts/introduction-to-mathjax-and-latex-expression/" />
-  <id>http://qingye.me/introduction-to-mathjax-and-latex-expression</id>
+  <id>http://localhost:4000/introduction-to-mathjax-and-latex-expression</id>
   <published>2015-07-01T23:29:28+08:00</published>
   <updated>2015-07-01T23:29:28+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -1018,20 +1827,20 @@ With Proxifier you can easily tunnel all TCP connections on the system or the se
 
 &lt;!--more--&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/introduction-to-mathjax-and-latex-expression/&quot;&gt;introduction-to-mathjax-and-latex-expression&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on July 01, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/introduction-to-mathjax-and-latex-expression/&quot;&gt;introduction-to-mathjax-and-latex-expression&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on July 01, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[Decision Tree Note]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/decision-tree-note/" />
-  <id>http://qingye.me/decision-tree-note</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/decision-tree-note/" />
+  <id>http://localhost:4000/decision-tree-note</id>
   <published>2015-06-30T15:25:44+08:00</published>
   <updated>2015-06-30T15:25:44+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -1452,20 +2261,20 @@ With Proxifier you can easily tunnel all TCP connections on the system or the se
 
 &lt;p&gt;ID3算法的缺点是：只对比较小的数据集有效，且对噪声比较敏感，当训练数据集加大时，决策树可能会随之改变。&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/decision-tree-note/&quot;&gt;Decision Tree Note&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on June 30, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/decision-tree-note/&quot;&gt;Decision Tree Note&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on June 30, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[linux命令行技巧]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/linux-cmd-skill/" />
-  <id>http://qingye.me/linux-cmd-skill</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/linux-cmd-skill/" />
+  <id>http://localhost:4000/linux-cmd-skill</id>
   <published>2015-06-30T11:34:53+08:00</published>
   <updated>2015-06-30T11:34:53+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -1695,20 +2504,20 @@ With Proxifier you can easily tunnel all TCP connections on the system or the se
 &lt;p&gt;注，其实不太推荐Bang命令，因为指令执行之前没有清楚了解即将执行的指令具体是什么样的，容易导致一些错误。&lt;/p&gt;
 
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/linux-cmd-skill/&quot;&gt;linux命令行技巧&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on June 30, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/linux-cmd-skill/&quot;&gt;linux命令行技巧&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on June 30, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[leetcode-note-4]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/leetcode-note-4/" />
-  <id>http://qingye.me/leetcode-note-4</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/leetcode-note-4/" />
+  <id>http://localhost:4000/leetcode-note-4</id>
   <published>2015-05-08T23:26:07+08:00</published>
   <updated>2015-05-08T23:26:07+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -2075,20 +2884,20 @@ Merge k sorted linked lists and return it as one sorted list. Analyze and descri
 &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/leetcode-note-4/&quot;&gt;leetcode-note-4&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on May 08, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/leetcode-note-4/&quot;&gt;leetcode-note-4&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on May 08, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[缩小MySQL中ibdata1文件的大小]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/ibdata1/" />
-  <id>http://qingye.me/ibdata1</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/ibdata1/" />
+  <id>http://localhost:4000/ibdata1</id>
   <published>2015-05-04T11:24:29+08:00</published>
   <updated>2015-05-04T11:24:29+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -2236,20 +3045,20 @@ mysql&amp;gt; FLUSH PRIVILEGES;
 
 &lt;p&gt;单表增加过大，如超过100个G。&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/ibdata1/&quot;&gt;缩小MySQL中ibdata1文件的大小&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on May 04, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/ibdata1/&quot;&gt;缩小MySQL中ibdata1文件的大小&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on May 04, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[在mac上安装Python模块MySQLdb]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/intsall-mysql-python-in-mac/" />
-  <id>http://qingye.me/intsall-mysql-python-in-mac</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/intsall-mysql-python-in-mac/" />
+  <id>http://localhost:4000/intsall-mysql-python-in-mac</id>
   <published>2015-04-08T11:13:51+08:00</published>
   <updated>2015-04-08T11:13:51+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -2273,20 +3082,20 @@ mysql&amp;gt; FLUSH PRIVILEGES;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;sudo ln -s /usr/local/mysql/lib/libmysqlclient.18.dylib /usr/lib/libmysqlclient.18.dylib&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/intsall-mysql-python-in-mac/&quot;&gt;在mac上安装Python模块MySQLdb&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on April 08, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/intsall-mysql-python-in-mac/&quot;&gt;在mac上安装Python模块MySQLdb&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on April 08, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[leetcode-note-3]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/leetcode-note-3/" />
-  <id>http://qingye.me/leetcode-note-3</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/leetcode-note-3/" />
+  <id>http://localhost:4000/leetcode-note-3</id>
   <published>2015-04-07T22:55:11+08:00</published>
   <updated>2015-04-07T22:55:11+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -2539,20 +3348,20 @@ Given input array A = [1,1,2],&lt;/p&gt;
 &lt;h2 id=&quot;house-robber&quot;&gt;198 House Robber&lt;/h2&gt;
 &lt;p&gt;待写。&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/leetcode-note-3/&quot;&gt;leetcode-note-3&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on April 07, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/leetcode-note-3/&quot;&gt;leetcode-note-3&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on April 07, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[leetcode-note-2]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/leetcode-note-2/" />
-  <id>http://qingye.me/leetcode-note-2</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/leetcode-note-2/" />
+  <id>http://localhost:4000/leetcode-note-2</id>
   <published>2015-03-30T11:03:49+08:00</published>
   <updated>2015-03-30T11:03:49+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -2824,20 +3633,20 @@ Design a stack that supports push, pop, top, and retrieving the minimum element 
 
 &lt;!--more--&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/leetcode-note-2/&quot;&gt;leetcode-note-2&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on March 30, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/leetcode-note-2/&quot;&gt;leetcode-note-2&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on March 30, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[leetcode-note]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/leetcode-note/" />
-  <id>http://qingye.me/leetcode-note</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/leetcode-note/" />
+  <id>http://localhost:4000/leetcode-note</id>
   <published>2015-03-25T17:17:13+08:00</published>
   <updated>2015-03-25T17:17:13+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -3058,20 +3867,20 @@ local[i][j] = max( global[i-1][j-1] + max( diff, 0 ), local[i-1][j] + diff )&lt;
 &lt;p&gt;PS：写完之后提交了两次，都是&lt;code&gt;Runtime Error&lt;/code&gt;，然后发现是自己写的释放内存的操作导致的，所以既然是OJ嘛，申请的内存也没必要替别人free了。是吧。&lt;/p&gt;
 
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/leetcode-note/&quot;&gt;leetcode-note&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on March 25, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/leetcode-note/&quot;&gt;leetcode-note&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on March 25, 2015.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[js网站结构分析-后续]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/site-analyse-v5/" />
-  <id>http://qingye.me/site-analyse-v5</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/site-analyse-v5/" />
+  <id>http://localhost:4000/site-analyse-v5</id>
   <published>2014-12-12T12:39:59+08:00</published>
   <updated>2014-12-12T12:39:59+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -3113,20 +3922,20 @@ local[i][j] = max( global[i-1][j-1] + max( diff, 0 ), local[i-1][j] + diff )&lt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;nx&quot;&gt;javascript&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xhr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=%&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;XMLHttpRequest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xhr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;get&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;http://youkochan.daohe.org/tools/siteAnalyse.v5.php&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xhr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;eval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xhr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;responseText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);})();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/site-analyse-v5/&quot;&gt;js网站结构分析-后续&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on December 12, 2014.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/site-analyse-v5/&quot;&gt;js网站结构分析-后续&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on December 12, 2014.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[js网站结构分析]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/site-analyse-v1/" />
-  <id>http://qingye.me/site-analyse-v1</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/site-analyse-v1/" />
+  <id>http://localhost:4000/site-analyse-v1</id>
   <published>2014-12-10T18:40:09+08:00</published>
   <updated>2014-12-10T18:40:09+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -3224,20 +4033,20 @@ local[i][j] = max( global[i-1][j-1] + max( diff, 0 ), local[i-1][j] + diff )&lt;
 
 &lt;p&gt;了解了以上一些后觉得没必要花时间纠结在使用bookmarklet方式来获取网页结构了。这一些折腾后对于之前不太理解的东西有了更深入的了解吧。&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/site-analyse-v1/&quot;&gt;js网站结构分析&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on December 10, 2014.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/site-analyse-v1/&quot;&gt;js网站结构分析&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on December 10, 2014.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[骑行－国庆]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/qi-xing-%5Bnil%5Dguo-qing/" />
-  <id>http://qingye.me/qi-xing-[nil]guo-qing</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/qi-xing-%5Bnil%5Dguo-qing/" />
+  <id>http://localhost:4000/qi-xing-[nil]guo-qing</id>
   <published>2014-10-07T22:27:16+08:00</published>
   <updated>2014-10-07T22:27:16+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -3393,20 +4202,20 @@ local[i][j] = max( global[i-1][j-1] + max( diff, 0 ), local[i-1][j] + diff )&lt;
 
 &lt;p&gt;总的来说今天的收获就是：以后出门骑车一定要带发票。还有，在崇山峻岭中放坡，虽然很刺激，不过确实还是挺危险的，安全一定要放在第一位。今天的旅程也算给这几天的折腾画下了一个句号。&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/qi-xing-%5Bnil%5Dguo-qing/&quot;&gt;骑行－国庆&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on October 07, 2014.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/qi-xing-%5Bnil%5Dguo-qing/&quot;&gt;骑行－国庆&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on October 07, 2014.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[骑行－妙峰山]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/qi-xing-miao-feng-shan/" />
-  <id>http://qingye.me/qi-xing-miao-feng-shan</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/qi-xing-miao-feng-shan/" />
+  <id>http://localhost:4000/qi-xing-miao-feng-shan</id>
   <published>2014-09-21T20:39:02+08:00</published>
   <updated>2014-09-21T20:39:02+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
@@ -3503,94 +4312,27 @@ local[i][j] = max( global[i-1][j-1] + max( diff, 0 ), local[i-1][j] + diff )&lt;
 &lt;p&gt;return 0;&lt;/p&gt;
 
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/qi-xing-miao-feng-shan/&quot;&gt;骑行－妙峰山&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on September 21, 2014.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/qi-xing-miao-feng-shan/&quot;&gt;骑行－妙峰山&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on September 21, 2014.&lt;/p&gt;
   </content>
 </entry>
 
 
 <entry>
   <title type="html"><![CDATA[科目二顺利一把通过~]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/ke-mu-er-shun-li-yi-ba-tong-guo/" />
-  <id>http://qingye.me/ke-mu-er-shun-li-yi-ba-tong-guo</id>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/ke-mu-er-shun-li-yi-ba-tong-guo/" />
+  <id>http://localhost:4000/ke-mu-er-shun-li-yi-ba-tong-guo</id>
   <published>2014-08-21T19:33:34+08:00</published>
   <updated>2014-08-21T19:33:34+08:00</updated>
   <author>
     <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
+    <uri>http://localhost:4000</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
     &lt;p&gt;今儿个顺利通过科目二考试，一个假期耽误了好多，还好考完了科目二。剩下的寒假弄完吧，之后的几天可以准备准备开学咯～😄
 &lt;!--more--&gt;&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/ke-mu-er-shun-li-yi-ba-tong-guo/&quot;&gt;科目二顺利一把通过~&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on August 21, 2014.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[解决博客加载过慢的问题]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/jie-jue-bo-ke-jia-zai-guo-man-de-wen-ti/" />
-  <id>http://qingye.me/jie-jue-bo-ke-jia-zai-guo-man-de-wen-ti</id>
-  <published>2014-08-18T12:02:21+08:00</published>
-  <updated>2014-08-18T12:02:21+08:00</updated>
-  <author>
-    <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
-    <email>youkochan233@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;p&gt;最近几天继续捣鼓博客的时候发现一个问题，就是“博客打开速度太慢了”。平时我在电脑上网是挂着翻墙软件的，于是打开速度还可以。后来给easy同学测试的时候怎么打都打不开，并且手机端排版也有点问题。于是就尝试解决了一下这些问题。&lt;/p&gt;
-
-&lt;!--more--&gt;
-&lt;p&gt;打开浏览器，审查元素，盒模型，调整margin以及padding等，将修改后的代码加入&lt;code&gt;source/index.html&lt;/code&gt;。虽然这种办法比较傻，没有去修改本质的css文件，但是还是很简单粗暴的。（其实就是懒是吧2333）&lt;/p&gt;
-
-&lt;p&gt;打开浏览器，审查元素，时间线，刷新，观察。发现有一些请求css资源以及一些js一直加载不出来。&lt;/p&gt;
-
-&lt;p&gt;js主要是&lt;code&gt;/javascripts/jquery.tweet.js&lt;/code&gt;以及&lt;code&gt;/javascripts/jquery.instagram.js&lt;/code&gt;。一看都是用不上的就果断把&lt;code&gt;source/_include/&lt;/code&gt;里面有关的代码注释掉了。&lt;/p&gt;
-
-&lt;p&gt;剩下的css资源，看了一下是请求的&lt;code&gt;fonts.google.com&lt;/code&gt;的资源。在中国你懂的。这个请求主要是请求网页需要的字体，由于一直请求一直超时于是网页一直难以加载完。通过将这个网址改为&lt;code&gt;fonts.useso.com&lt;/code&gt;就可以使用使用360网站卫士的最新服务：前端公共库、Google公共库以及Google字体库来加载所需要的资源。（不得不说这方面360还是不错哈）&lt;/p&gt;
-
-&lt;p&gt;至此，博客打开的速度就有了一个质的提升。&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/jie-jue-bo-ke-jia-zai-guo-man-de-wen-ti/&quot;&gt;解决博客加载过慢的问题&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on August 18, 2014.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[解决Yousemite下搜狗BUG]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/sougou-bug/" />
-  <id>http://qingye.me/sougou-bug</id>
-  <published>2014-08-17T10:43:46+08:00</published>
-  <updated>2014-08-17T10:43:46+08:00</updated>
-  <author>
-    <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
-    <email>youkochan233@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;p&gt;今天学完车回来忽然发现电脑开机后就会卡死在选择用户的界面，一开始以为是磁盘问题，于是按&lt;code&gt;command＋R&lt;/code&gt;开机用磁盘工具捣鼓了一番，结果没有用。后来百度了几分钟发现是Yousemite与搜狗输入法之间不太兼容的原因（毕竟测试版），于是按照网上的教程进行了一些修改。&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;步骤：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;强制关机重启，开机时按住 command+s 进入单用户模式；&lt;/li&gt;
-  &lt;li&gt;输入/sbin/mount空格-uaw，回车；&lt;/li&gt;
-  &lt;li&gt;输入rm空格/var/db/.AppleSetupDone，回车；&lt;/li&gt;
-  &lt;li&gt;输入reboot，回车；&lt;/li&gt;
-  &lt;li&gt;系统重启后会进入创建新用户向导，简单配置即可，因为是临时用户，无需apple ID，无需同步；&lt;/li&gt;
-  &lt;li&gt;进入系统后，下载搜狗输入法dmg安装包，然后打开dmg，卸载输入法；&lt;/li&gt;
-  &lt;li&gt;注销，重新进入原先的那个用户，删除刚临时创建的用户。完成。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;由于我在装搜狗输入法时很机智地留下了dmg包中的卸载app，于是只要登录新用户接着运行之即可。&lt;/p&gt;
-
-&lt;p&gt;via：&lt;a href=&quot;http://www.v2ex.com/t/116066&quot;&gt;http://www.v2ex.com/t/116066&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/sougou-bug/&quot;&gt;解决Yousemite下搜狗BUG&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on August 17, 2014.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/ke-mu-er-shun-li-yi-ba-tong-guo/&quot;&gt;科目二顺利一把通过~&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://localhost:4000&quot;&gt;Simple Blog&lt;/a&gt; on August 21, 2014.&lt;/p&gt;
   </content>
 </entry>
 

@@ -1,0 +1,453 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>通过查询结构控制相关程度 &#8211; Simple Blog</title>
+<meta name="description" content="On the way.">
+<meta name="keywords" content="elasticsearch, lucene">
+
+
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通过查询结构控制相关程度">
+<meta property="og:description" content="On the way.">
+<meta property="og:url" content="http://localhost:4000/controlling-relevance/">
+<meta property="og:site_name" content="Simple Blog">
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/controlling-relevance/">
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Simple Blog Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<!-- Webfonts -->
+<!-- <link href="//fonts.useso.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.useso.com/css?family=monospace:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load MathJax -->
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<!-- Load Modernizr -->
+<script src="http://localhost:4000/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://localhost:4000/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144-precomposed.png">
+
+
+
+</head>
+
+<body id="post" >
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+	<button class="dl-trigger">Open Menu</button>
+	<ul class="dl-menu">
+		<li><a href="http://localhost:4000/">Home</a></li>
+		<li>
+			<a href="#">About</a>
+			<ul class="dl-submenu">
+				<li>
+					<img src="http://localhost:4000/images/avatar2.jpg" alt="Qing YE photo" class="author-photo">
+					<h4>Qing YE</h4>
+					<p>You can code, they can not, that is pretty damn cool.</p>
+				</li>
+				<li><a href="http://localhost:4000/about/"><span class="btn btn-inverse">Learn More</span></a></li>
+				<li>
+					<a href="mailto:youkochan233@gmail.com"><i class="fa fa-fw fa-envelope"></i> Email</a>
+				</li>
+				
+				
+				
+				
+				<li>
+					<a href="http://github.com/youkochan"><i class="fa fa-fw fa-github"></i> GitHub</a>
+				</li>
+				
+				
+				
+				
+			</ul><!-- /.dl-submenu -->
+		</li>
+		<li>
+			<a href="#">Posts</a>
+			<ul class="dl-submenu">
+				<li><a href="http://localhost:4000/posts/">All Posts</a></li>
+				<li><a href="http://localhost:4000/tags/">All Tags</a></li>
+			</ul>
+		</li>
+		
+	    
+	        
+	        
+	    <li><a href="http://geekfan.me" target="_blank">GeekFan.me</a></li>
+	  
+	</ul><!-- /.dl-menu -->
+</nav><!-- /.dl-menuwrapper -->
+
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <header class="header-title">
+      <div class="header-title-wrap">
+        
+          <h1 class="entry-title"><a href="http://localhost:4000/controlling-relevance/" rel="bookmark" title="通过查询结构控制相关程度">通过查询结构控制相关程度</a></h1>
+        
+        <h2><span class="entry-date date published"><time datetime="2015-12-01T11:37:03+08:00">December 01, 2015</time></span></h2>
+        
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          
+          Reading time ~4 minutes
+        </p><!-- /.entry-reading-time -->
+        
+      </div><!-- /.header-title-wrap -->
+    </header>
+    <div class="entry-content">
+      <p>根据上一篇文章，我们可以通过选取不同的模型，或者在创立索引时加入一些提升，或者禁用某些查询因子来实现对查询的控制。这一篇中，会介绍一些通过不同的查询结构来对文档相似度进行控制的方式。</p>
+
+<!--more-->
+
+<p>ES的查询DSL是非常灵活的。你可以通过将单独的查询子句在查询层次中上下移动来让它更重要/更不重要。比如，下面的查询：</p>
+
+<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">quick OR brown OR red OR fox</span></code></pre></div>
+
+<p>那我们就可以把这个查询写作成一个布尔查询使得对于所有的词条在同一个层次：</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">GET /_search
+<span class="o">{</span>
+  <span class="s2">&quot;query&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;bool&quot;</span>: <span class="o">{</span>
+      <span class="s2">&quot;should&quot;</span>: <span class="o">[</span>
+        <span class="o">{</span> <span class="s2">&quot;term&quot;</span>: <span class="o">{</span> <span class="s2">&quot;text&quot;</span>: <span class="s2">&quot;quick&quot;</span> <span class="o">}}</span>,
+        <span class="o">{</span> <span class="s2">&quot;term&quot;</span>: <span class="o">{</span> <span class="s2">&quot;text&quot;</span>: <span class="s2">&quot;brown&quot;</span> <span class="o">}}</span>,
+        <span class="o">{</span> <span class="s2">&quot;term&quot;</span>: <span class="o">{</span> <span class="s2">&quot;text&quot;</span>: <span class="s2">&quot;red&quot;</span>   <span class="o">}}</span>,
+        <span class="o">{</span> <span class="s2">&quot;term&quot;</span>: <span class="o">{</span> <span class="s2">&quot;text&quot;</span>: <span class="s2">&quot;fox&quot;</span>   <span class="o">}}</span>
+      <span class="o">]</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<p>但是这种查询有可能会对一篇包含<code>quick</code>、<code>red</code>以及<code>brown</code>的文章与另一篇包含<code>quick</code>、<code>red</code>以及<code>fox</code>的文章得出相同的分数。<code>red</code>以及<code>brown</code>是近义词于是我们有可能仅仅只需要他们中有一个出现就可以了。或许我们实际上所期望的查询应该是下面这样：</p>
+
+<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">quick OR (brown OR red) OR fox</span></code></pre></div>
+
+<p>根据标准布尔逻辑，这一条查询和最初的查询是完全一致的，但是根据组合查询，一个布尔查询并不止关心一个文档是否与自身匹配，还关心这篇文档匹配得有多好。</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">GET /_search
+<span class="o">{</span>
+  <span class="s2">&quot;query&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;bool&quot;</span>: <span class="o">{</span>
+      <span class="s2">&quot;should&quot;</span>: <span class="o">[</span>
+        <span class="o">{</span> <span class="s2">&quot;term&quot;</span>: <span class="o">{</span> <span class="s2">&quot;text&quot;</span>: <span class="s2">&quot;quick&quot;</span> <span class="o">}}</span>,
+        <span class="o">{</span> <span class="s2">&quot;term&quot;</span>: <span class="o">{</span> <span class="s2">&quot;text&quot;</span>: <span class="s2">&quot;fox&quot;</span>   <span class="o">}}</span>,
+        <span class="o">{</span>
+          <span class="s2">&quot;bool&quot;</span>: <span class="o">{</span>
+            <span class="s2">&quot;should&quot;</span>: <span class="o">[</span>
+              <span class="o">{</span> <span class="s2">&quot;term&quot;</span>: <span class="o">{</span> <span class="s2">&quot;text&quot;</span>: <span class="s2">&quot;brown&quot;</span> <span class="o">}}</span>,
+              <span class="o">{</span> <span class="s2">&quot;term&quot;</span>: <span class="o">{</span> <span class="s2">&quot;text&quot;</span>: <span class="s2">&quot;red&quot;</span>   <span class="o">}}</span>
+            <span class="o">]</span>
+          <span class="o">}</span>
+        <span class="o">}</span>
+      <span class="o">]</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<p>现在，<code>red</code>以及<code>brown</code>在同一层上竞争，<code>quick</code>、<code>fox</code>以及<code>red OR brown</code>为顶层的竞争词条。</p>
+
+<p>我们之前也讨论过了<a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/match-query.html">match</a>、<a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/multi-match-query.html">multi_match</a>、<a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/term-vs-full-text.html">term</a>、<a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/bool-query.html">bool</a>以及<a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/_best_fields.html#dis-max-query">dis_max</a>这些查询，都可以用来控制相关度得分。剩下的部分介绍三种打分相关的查询：<code>the boosting query</code>、<code>the constant_score query</code>以及<code>the function_score query</code>。</p>
+
+<h2 id="the-boosting-query">the boosting query</h2>
+
+<p>如果你想在互联网上搜索<code>Apple</code>，那么搜出的结果有可能是公司、水果或者是菜谱。我们有可能会想去缩小搜索出的结果的范围，从而能仅仅搜索出有关公司的结果。于是我们可以通过十一年<code>must_not</code>子句排除一些词语比如<code>pie</code>、<code>tart</code>等。</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">GET /_search
+<span class="o">{</span>
+  <span class="s2">&quot;query&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;bool&quot;</span>: <span class="o">{</span>
+      <span class="s2">&quot;must&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;match&quot;</span>: <span class="o">{</span>
+          <span class="s2">&quot;text&quot;</span>: <span class="s2">&quot;apple&quot;</span>
+        <span class="o">}</span>
+      <span class="o">}</span>,
+      <span class="s2">&quot;must_not&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;match&quot;</span>: <span class="o">{</span>
+          <span class="s2">&quot;text&quot;</span>: <span class="s2">&quot;pie tart fruit crumble tree&quot;</span>
+        <span class="o">}</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<p>但是谁能说我们使用这种方式排除一些词条后不会错过一些实际上非常相关的文档呢？某些时候<code>must_not</code>子句却是太严格了。</p>
+
+<p>为了解决这种问题，我们可以使用<code>boosting query</code>。这种查询语句使得我们得到的结果也有可能是关于水果或者是点心，但是我们降低了这些文档的得分，如：</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">GET /_search
+<span class="o">{</span>
+  <span class="s2">&quot;query&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;boosting&quot;</span>: <span class="o">{</span>
+      <span class="s2">&quot;positive&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;match&quot;</span>: <span class="o">{</span>
+          <span class="s2">&quot;text&quot;</span>: <span class="s2">&quot;apple&quot;</span>
+        <span class="o">}</span>
+      <span class="o">}</span>,
+      <span class="s2">&quot;negative&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;match&quot;</span>: <span class="o">{</span>
+          <span class="s2">&quot;text&quot;</span>: <span class="s2">&quot;pie tart fruit crumble tree&quot;</span>
+        <span class="o">}</span>
+      <span class="o">}</span>,
+      <span class="s2">&quot;negative_boost&quot;</span>: 0.5
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<p>它接受了一个<code>postive</code>查询以及一个<code>negative</code>查询，只有匹配<code>positive</code>查询的文档会被包括到结果列表中，但是也匹配了<code>negative</code>查询的的文档的原始<code>_score</code>则会乘上<code>negative_boost</code>从而使得文档的相关性得分被降低。</p>
+
+<p>因此，<code>negative_boost</code>应该是小于1.0的。在这个例子中，包含了消极词条的所有文档的<code>_score</code>都会被减半。</p>
+
+<h2 id="constantscore-query">constant_score query</h2>
+
+<p>有些时候我们根本不想考虑TF/IDF。我们考虑的仅仅只是一个特定的词有没有出现在一个字段中。或许我们正在搜索一个度假村，我们想尽可能地找出具有以下特征的房子：</p>
+
+<ul>
+  <li>WiFi</li>
+  <li>Garden</li>
+  <li>Pool</li>
+</ul>
+
+<p>度假村文档有可能是下面这种形式的：</p>
+
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span> <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A delightful four-bedroomed house with ... &quot;</span> <span class="p">}</span></code></pre></div>
+
+<p>我们可以使用一个简单地<code>match</code>查询：</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">GET /_search
+<span class="o">{</span>
+  <span class="s2">&quot;query&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;match&quot;</span>: <span class="o">{</span>
+      <span class="s2">&quot;description&quot;</span>: <span class="s2">&quot;wifi garden pool&quot;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<p>然而，我们需要的并不是真正的全文搜索。此时TF/IDF只会碍手碍脚。我们不在意wifi是否是一个常见的词条，也不在意它在文档中出现的是否频繁。我们在意的只是它是否出现了。实际上，我们只是想通过卖点来对这些度假酒店进行排序，卖点越多越好。如果拥有一个卖点，那么它的分值就是1，如果没有它的分值就是0。</p>
+
+<p>因此，我们可以使用<code>constant_score query</code>。这个查询可以包含一个查询或者一个过滤器，并且对多有满足匹配的文档赋值为1，不考虑TF/IDF。</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">GET /_search
+<span class="o">{</span>
+  <span class="s2">&quot;query&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;bool&quot;</span>: <span class="o">{</span>
+      <span class="s2">&quot;should&quot;</span>: <span class="o">[</span>
+        <span class="o">{</span> <span class="s2">&quot;constant_score&quot;</span>: <span class="o">{</span>
+          <span class="s2">&quot;query&quot;</span>: <span class="o">{</span> <span class="s2">&quot;match&quot;</span>: <span class="o">{</span> <span class="s2">&quot;description&quot;</span>: <span class="s2">&quot;wifi&quot;</span> <span class="o">}}</span>
+        <span class="o">}}</span>,
+        <span class="o">{</span> <span class="s2">&quot;constant_score&quot;</span>: <span class="o">{</span>
+          <span class="s2">&quot;query&quot;</span>: <span class="o">{</span> <span class="s2">&quot;match&quot;</span>: <span class="o">{</span> <span class="s2">&quot;description&quot;</span>: <span class="s2">&quot;garden&quot;</span> <span class="o">}}</span>
+        <span class="o">}}</span>,
+        <span class="o">{</span> <span class="s2">&quot;constant_score&quot;</span>: <span class="o">{</span>
+          <span class="s2">&quot;query&quot;</span>: <span class="o">{</span> <span class="s2">&quot;match&quot;</span>: <span class="o">{</span> <span class="s2">&quot;description&quot;</span>: <span class="s2">&quot;pool&quot;</span> <span class="o">}}</span>
+        <span class="o">}}</span>
+      <span class="o">]</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<p>或许不是所有的特点都是同样重要的，有一些可能对于用户来说有更高的价值。假设最重要的特征是<code>pool</code>，那么我们可以提升这个查询子句使得它计算时占更多比重。</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">GET /_search
+<span class="o">{</span>
+  <span class="s2">&quot;query&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;bool&quot;</span>: <span class="o">{</span>
+      <span class="s2">&quot;should&quot;</span>: <span class="o">[</span>
+        <span class="o">{</span> <span class="s2">&quot;constant_score&quot;</span>: <span class="o">{</span>
+          <span class="s2">&quot;query&quot;</span>: <span class="o">{</span> <span class="s2">&quot;match&quot;</span>: <span class="o">{</span> <span class="s2">&quot;description&quot;</span>: <span class="s2">&quot;wifi&quot;</span> <span class="o">}}</span>
+        <span class="o">}}</span>,
+        <span class="o">{</span> <span class="s2">&quot;constant_score&quot;</span>: <span class="o">{</span>
+          <span class="s2">&quot;query&quot;</span>: <span class="o">{</span> <span class="s2">&quot;match&quot;</span>: <span class="o">{</span> <span class="s2">&quot;description&quot;</span>: <span class="s2">&quot;garden&quot;</span> <span class="o">}}</span>
+        <span class="o">}}</span>,
+        <span class="o">{</span> <span class="s2">&quot;constant_score&quot;</span>: <span class="o">{</span>
+          <span class="s2">&quot;boost&quot;</span>:   <span class="m">2</span> 
+          <span class="s2">&quot;query&quot;</span>: <span class="o">{</span> <span class="s2">&quot;match&quot;</span>: <span class="o">{</span> <span class="s2">&quot;description&quot;</span>: <span class="s2">&quot;pool&quot;</span> <span class="o">}}</span>
+        <span class="o">}}</span>
+      <span class="o">]</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<p>一个匹配<code>pool</code>的文档会使文档最终得分加二，而其他的查询子句只会使总得分加一。</p>
+
+<blockquote>
+  <p>[tips] The final score for each result is not simply the sum of the scores of all matching clauses. The coordination factor and query normalization factor are still taken into account.</p>
+</blockquote>
+
+<p>最终得分不会是简单地把这些匹配子句的得分相加。协调因子以及查询归约因子也最终被加入了计算中。</p>
+
+<p>我们可以优化我们的度假村文档，通过添加一个<code>not_analyzed</code>的<code>features</code>字段：</p>
+
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span> <span class="nt">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;wifi&quot;</span><span class="p">,</span> <span class="s2">&quot;pool&quot;</span><span class="p">,</span> <span class="s2">&quot;garden&quot;</span> <span class="p">]</span> <span class="p">}</span></code></pre></div>
+
+<blockquote>
+  <p>By default, a <code>not_analyzed</code> field has <code>field-length norms</code> disabled and has <code>index_options</code> set to <code>docs</code>, disabling <code>term frequencies</code>, but the problem remains: <code>the inverse document frequency</code> of each term is still taken into account.</p>
+</blockquote>
+
+<p>默认地，一个<code>not_analyzed</code>字段禁用了<code>field-length norms</code>，并且把<code>index_options</code>设置为了<code>docs</code>，禁用了<code>term frequencies</code>。但是问题在于每一个词条的<code>the inverse document frequency</code>依然被用于进行了计算。</p>
+
+<p>我们可以使用之前的方式，通过使用<code>constant_score query</code>来解决这个问题。</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">GET /_search
+<span class="o">{</span>
+  <span class="s2">&quot;query&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;bool&quot;</span>: <span class="o">{</span>
+      <span class="s2">&quot;should&quot;</span>: <span class="o">[</span>
+        <span class="o">{</span> <span class="s2">&quot;constant_score&quot;</span>: <span class="o">{</span>
+          <span class="s2">&quot;query&quot;</span>: <span class="o">{</span> <span class="s2">&quot;match&quot;</span>: <span class="o">{</span> <span class="s2">&quot;features&quot;</span>: <span class="s2">&quot;wifi&quot;</span> <span class="o">}}</span>
+        <span class="o">}}</span>,
+        <span class="o">{</span> <span class="s2">&quot;constant_score&quot;</span>: <span class="o">{</span>
+          <span class="s2">&quot;query&quot;</span>: <span class="o">{</span> <span class="s2">&quot;match&quot;</span>: <span class="o">{</span> <span class="s2">&quot;features&quot;</span>: <span class="s2">&quot;garden&quot;</span> <span class="o">}}</span>
+        <span class="o">}}</span>,
+        <span class="o">{</span> <span class="s2">&quot;constant_score&quot;</span>: <span class="o">{</span>
+          <span class="s2">&quot;boost&quot;</span>:   2
+          <span class="s2">&quot;query&quot;</span>: <span class="o">{</span> <span class="s2">&quot;match&quot;</span>: <span class="o">{</span> <span class="s2">&quot;features&quot;</span>: <span class="s2">&quot;pool&quot;</span> <span class="o">}}</span>
+        <span class="o">}}</span>
+      <span class="o">]</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<p>实际上，每个卖点都应该被视为一个过滤器。度假酒店要么有该卖点，要么没有。使用过滤器似乎是更自然的选择。并且如果我们使用了过滤器，还可以得益于过滤器缓存这一功能。</p>
+
+<p>不使用过滤器的根源在于：过滤器不会计算相关度分值。我们需要的是一座用来连接过滤器和查询的桥梁。而<code>function_score</code>查询就能够做到这一点，并且它也提供了更多的功能。</p>
+
+<h2 id="functionscore-query">function_score query</h2>
+
+<p><code>function_score</code>查询是处理分值计算过程的终极工具。它让你能够对所有匹配了主查询的每份文档调用一个函数来调整甚至是完全替换原来的<code>_score</code>。</p>
+
+<p>实际上，你可以通过设置过滤器来将查询得到的结果分成若干个子集，然后对每个子集使用不同的函数。这样你就能够同时得益于：高效的分值计算以及可缓存的过滤器。</p>
+
+<p>它拥有几种预先定义好了的函数：</p>
+
+<ul>
+  <li><code>weight</code>：对每份文档适用一个简单的提升，且该提升不会被归约：当weight为2时，结果为<code>2 * _score</code>。</li>
+  <li>
+    <p><code>field_value_factor</code>：使用文档中某个字段的值来改变<code>_score</code>，比如将受欢迎程度或者投票数量考虑在内。</p>
+  </li>
+  <li><code>random_score</code>：使用一致性随机分值计算来对每个用户采用不同的结果排序方式，对相同用户仍然使用相同的排序方式。</li>
+  <li>衰减函数(<code>Decay Function</code>) - linear，exp，gauss：将像<code>publish_date</code>，<code>geo_location</code>或者<code>price</code>这类浮动值考虑到<code>_score</code>中，偏好最近发布的文档，邻近于某个地理位置的文档或者价格靠近某一点的文档。</li>
+  <li><code>script_score</code>：使用自定义的脚本来完全控制分值计算逻辑。如果你需要以上预定义函数之外的功能，可以根据需要通过脚本进行实现。</li>
+</ul>
+
+<p>没有<code>function_score</code>查询的话，我们也许就不能将全文搜索得到分值和近因进行结合了。我们将不得不根据<code>_score</code>或者<code>date</code>进行排序；无论采用哪一种都会抹去另一种的影响。function_score查询让我们能够将两者融合在一起：仍然通过全文相关度排序，但是给新近发布的文档，或者流行的文档，或者符合用户价格期望的文档额外的权重。</p>
+
+
+      <footer class="entry-meta">
+        <span class="entry-tags"><a href="http://localhost:4000/tags/#elasticsearch" title="Pages tagged elasticsearch" class="tag"><span class="term">elasticsearch</span></a><a href="http://localhost:4000/tags/#lucene" title="Pages tagged lucene" class="tag"><span class="term">lucene</span></a></span>
+        
+        <div class="social-share">
+  <ul class="socialcount socialcount-small inline-list">
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/controlling-relevance/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/controlling-relevance/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/controlling-relevance/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+  </ul>
+</div><!-- /.social-share -->
+      </footer>
+    </div><!-- /.entry-content -->
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+    <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="http://localhost:4000/lucene-psf/" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="http://localhost:4000/lucene-psf/" title="Lucene的实用评分功能">Lucene的实用评分功能</a></h3>
+      <p>本文介绍了Lucene背后的打分相关理论，然后就Lucene中的`Prarical Scoring Function`的每一项进行了分析。 <a href="http://localhost:4000/lucene-psf/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/shadowsocks-sourcecode/" title="shadowsocks源码分析">shadowsocks源码分析</a></h4>
+        <span>Published on August 14, 2015</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/tree-regression-note/" title="Tree Regression Note">Tree Regression Note</a></h4>
+        <span>Published on July 11, 2015</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    <span>&copy; 2015 Qing YE. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="https://mademistakes.com/work/hpstr-jekyll-theme/" rel="nofollow">HPSTR Theme</a>.</span>
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+<script src="http://localhost:4000/assets/js/vendor/jquery-1.9.1.min.js"></script>
+<!-- <script>window.jQuery || document.write('<script src="http://localhost:4000/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script> -->
+<script src="http://localhost:4000/assets/js/scripts.min.js"></script>
+
+
+
+
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'qingye'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script'); s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	        
+
+</body>
+</html>
