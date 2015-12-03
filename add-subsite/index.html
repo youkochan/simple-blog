@@ -5,25 +5,25 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>解决Yousemite下搜狗BUG &#8211; Simple Blog</title>
+<title>Ubuntu下apache2添加二级域名 &#8211; Simple Blog</title>
 <meta name="description" content="On the way.">
-<meta name="keywords" content="mac">
+<meta name="keywords" content="apache">
 
 
 
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="解决Yousemite下搜狗BUG">
+<meta property="og:title" content="Ubuntu下apache2添加二级域名">
 <meta property="og:description" content="On the way.">
-<meta property="og:url" content="http://qingye.me/sougou-bug/">
+<meta property="og:url" content="http://qingye.me/add-subsite/">
 <meta property="og:site_name" content="Simple Blog">
 
 
 
 
 
-<link rel="canonical" href="http://qingye.me/sougou-bug/">
+<link rel="canonical" href="http://qingye.me/add-subsite/">
 <link href="http://qingye.me/feed.xml" type="application/atom+xml" rel="alternate" title="Simple Blog Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -121,9 +121,9 @@
     <header class="header-title">
       <div class="header-title-wrap">
         
-          <h1 class="entry-title"><a href="http://qingye.me/sougou-bug/" rel="bookmark" title="解决Yousemite下搜狗BUG">解决Yousemite下搜狗BUG</a></h1>
+          <h1 class="entry-title"><a href="http://qingye.me/add-subsite/" rel="bookmark" title="Ubuntu下apache2添加二级域名">Ubuntu下apache2添加二级域名</a></h1>
         
-        <h2><span class="entry-date date published"><time datetime="2014-08-17T10:43:46+08:00">August 17, 2014</time></span></h2>
+        <h2><span class="entry-date date published"><time datetime="2015-12-03T15:14:00+08:00">December 03, 2015</time></span></h2>
         
         <p class="entry-reading-time">
           <i class="fa fa-clock-o"></i>
@@ -134,34 +134,72 @@
       </div><!-- /.header-title-wrap -->
     </header>
     <div class="entry-content">
-      <p>今天学完车回来忽然发现电脑开机后就会卡死在选择用户的界面，一开始以为是磁盘问题，于是按<code>command＋R</code>开机用磁盘工具捣鼓了一番，结果没有用。后来百度了几分钟发现是Yousemite与搜狗输入法之间不太兼容的原因（毕竟测试版），于是按照网上的教程进行了一些修改。</p>
+      <p>最近忽然想到可以给网站加一个二级域名，这样就可以挂一点别的东西在上面了。于是折腾了一下。</p>
 
 <!--more-->
 
-<p>步骤：</p>
+<h2 id="section">步骤</h2>
 
-<ol>
-  <li>强制关机重启，开机时按住 command+s 进入单用户模式；</li>
-  <li>输入/sbin/mount空格-uaw，回车；</li>
-  <li>输入rm空格/var/db/.AppleSetupDone，回车；</li>
-  <li>输入reboot，回车；</li>
-  <li>系统重启后会进入创建新用户向导，简单配置即可，因为是临时用户，无需apple ID，无需同步；</li>
-  <li>进入系统后，下载搜狗输入法dmg安装包，然后打开dmg，卸载输入法；</li>
-  <li>注销，重新进入原先的那个用户，删除刚临时创建的用户。完成。</li>
-</ol>
+<p>首先去注册域名的网站添加一条A类记录，把所有的<code>*.yoursite.me</code>这样的请求都解析到服务器的IP上；</p>
 
-<p>由于我在装搜狗输入法时很机智地留下了dmg包中的卸载app，于是只要登录新用户接着运行之即可。</p>
+<p>然后再Ubuntu的Apache2目录下新建一个site文件。</p>
 
-<p>via：<a href="http://www.v2ex.com/t/116066">http://www.v2ex.com/t/116066</a></p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">cd</span> /etc/apache2/sites-available
+cp 000-default.conf test.yoursite.me.conf
+vim test.yoursite.me.conf</code></pre></div>
+
+<p>其中<code>000-default.conf</code>是默认的site文件，相当于一个模板。<code>test.yoursite.me.conf</code>为新site文件，最好与你需要使用的二级域名一致。（上述步骤可能需要root权限）</p>
+
+<p>编辑新site文件：</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">&lt;VirtualHost *:80&gt;
+	<span class="c"># The ServerName directive sets the request scheme, hostname and port that</span>
+	<span class="c"># the server uses to identify itself. This is used when creating</span>
+	<span class="c"># redirection URLs. In the context of virtual hosts, the ServerName</span>
+	<span class="c"># specifies what hostname must appear in the request&#39;s Host: header to</span>
+	<span class="c"># match this virtual host. For the default virtual host (this file) this</span>
+	<span class="c"># value is not decisive as it is used as a last resort host regardless.</span>
+	<span class="c"># However, you must set it for any further virtual host explicitly.</span>
+	
+	ServerName test.yoursite.me
+	ServerAdmin webmaster@localhost
+	DocumentRoot /your/path/
+
+	<span class="c"># Available loglevels: trace8, ..., trace1, debug, info, notice, warn,</span>
+	<span class="c"># error, crit, alert, emerg.</span>
+	<span class="c"># It is also possible to configure the loglevel for particular</span>
+	<span class="c"># modules, e.g.</span>
+	<span class="c">#LogLevel info ssl:warn</span>
+
+	ErrorLog <span class="k">${</span><span class="nv">APACHE_LOG_DIR</span><span class="k">}</span>/error.log
+	CustomLog <span class="k">${</span><span class="nv">APACHE_LOG_DIR</span><span class="k">}</span>/access.log combined
+
+	<span class="c"># For most configuration files from conf-available/, which are</span>
+	<span class="c"># enabled or disabled at a global level, it is possible to</span>
+	<span class="c"># include a line for only one particular virtual host. For example the</span>
+	<span class="c"># following line enables the CGI configuration for this host only</span>
+	<span class="c"># after it has been globally disabled with &quot;a2disconf&quot;.</span>
+	<span class="c">#Include conf-available/serve-cgi-bin.conf</span>
+&lt;/VirtualHost&gt;</code></pre></div>
+
+<p><code>ServerName</code>：修改成你需要使用的二级域名
+<code>DocumentRoot</code>：修改成网页文件的路径</p>
+
+<p>然后保存后，执行：</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">a2ensite test.yoursite.me
+service apache2 reload</code></pre></div>
+
+<p>完成。</p>
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="http://qingye.me/tags/#mac" title="Pages tagged mac" class="tag"><span class="term">mac</span></a></span>
+        <span class="entry-tags"><a href="http://qingye.me/tags/#apache" title="Pages tagged apache" class="tag"><span class="term">apache</span></a></span>
         
         <div class="social-share">
   <ul class="socialcount socialcount-small inline-list">
-    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://qingye.me/sougou-bug/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
-    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://qingye.me/sougou-bug/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
-    <li class="googleplus"><a href="https://plus.google.com/share?url=http://qingye.me/sougou-bug/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://qingye.me/add-subsite/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://qingye.me/add-subsite/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://qingye.me/add-subsite/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
   </ul>
 </div><!-- /.social-share -->
       </footer>
@@ -170,23 +208,23 @@
     <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://qingye.me/githubda-jian-jing-tai-bo-ke/" class="read-more-btn">Read More</a>
+      <a href="http://qingye.me/controlling-relevance/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://qingye.me/add-subsite/" title="Ubuntu下apache2添加二级域名">Ubuntu下apache2添加二级域名</a></h3>
-      <p>最近忽然想到可以给网站加一个二级域名，这样就可以挂一点别的东西在上面了。于是折腾了一下。## 步骤首先去注册域名的网站添加一条A类记录，把所有的`*.yoursite.me`这样的请求都解析到服务器的IP上；然后再Ubuntu的Apache2目录下新建一个site文件。 {...&hellip; <a href="http://qingye.me/add-subsite/">Continue reading</a></p>
+      <h3><a href="http://qingye.me/controlling-relevance/" title="通过查询结构控制相关程度">通过查询结构控制相关程度</a></h3>
+      <p>根据上一篇文章，我们可以通过选取不同的模型，或者在创立索引时加入一些提升，或者禁用某些查询因子来实现对查询的控制。这一篇中，会介绍一些通过不同的查询结构来对文档相似度进行控制的方式。ES的查询DSL是非常灵活的。你可以通过将单独的查询子句在查询层次中上下移动来让它更重要/更...&hellip; <a href="http://qingye.me/controlling-relevance/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://qingye.me/controlling-relevance/" title="通过查询结构控制相关程度">通过查询结构控制相关程度</a></h4>
+        <h4><a href="http://qingye.me/lucene-psf/" title="Lucene的实用评分功能">Lucene的实用评分功能</a></h4>
         <span>Published on December 01, 2015</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://qingye.me/lucene-psf/" title="Lucene的实用评分功能">Lucene的实用评分功能</a></h4>
-        <span>Published on December 01, 2015</span>
+        <h4><a href="http://qingye.me/shadowsocks-sourcecode/" title="shadowsocks源码分析">shadowsocks源码分析</a></h4>
+        <span>Published on August 14, 2015</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

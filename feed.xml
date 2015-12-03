@@ -4,13 +4,88 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://qingye.me/feed.xml" />
 <link rel="alternate" type="text/html" href="http://qingye.me" />
-<updated>2015-12-01T11:56:15+08:00</updated>
+<updated>2015-12-03T23:41:45+08:00</updated>
 <id>http://qingye.me/</id>
 <author>
   <name>Qing YE</name>
   <uri>http://qingye.me/</uri>
   <email>youkochan233@gmail.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[Ubuntu下apache2添加二级域名]]></title>
+ <link rel="alternate" type="text/html" href="http://qingye.me/add-subsite/" />
+  <id>http://qingye.me/add-subsite</id>
+  <published>2015-12-03T15:14:00+08:00</published>
+  <updated>2015-12-03T15:14:00+08:00</updated>
+  <author>
+    <name>Qing YE</name>
+    <uri>http://qingye.me</uri>
+    <email>youkochan233@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;p&gt;最近忽然想到可以给网站加一个二级域名，这样就可以挂一点别的东西在上面了。于是折腾了一下。&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;步骤&lt;/h2&gt;
+
+&lt;p&gt;首先去注册域名的网站添加一条A类记录，把所有的&lt;code&gt;*.yoursite.me&lt;/code&gt;这样的请求都解析到服务器的IP上；&lt;/p&gt;
+
+&lt;p&gt;然后再Ubuntu的Apache2目录下新建一个site文件。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /etc/apache2/sites-available
+cp 000-default.conf test.yoursite.me.conf
+vim test.yoursite.me.conf&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;其中&lt;code&gt;000-default.conf&lt;/code&gt;是默认的site文件，相当于一个模板。&lt;code&gt;test.yoursite.me.conf&lt;/code&gt;为新site文件，最好与你需要使用的二级域名一致。（上述步骤可能需要root权限）&lt;/p&gt;
+
+&lt;p&gt;编辑新site文件：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;lt;VirtualHost *:80&amp;gt;
+	&lt;span class=&quot;c&quot;&gt;# The ServerName directive sets the request scheme, hostname and port that&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;# the server uses to identify itself. This is used when creating&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;# redirection URLs. In the context of virtual hosts, the ServerName&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;# specifies what hostname must appear in the request&amp;#39;s Host: header to&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;# match this virtual host. For the default virtual host (this file) this&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;# value is not decisive as it is used as a last resort host regardless.&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;# However, you must set it for any further virtual host explicitly.&lt;/span&gt;
+	
+	ServerName test.yoursite.me
+	ServerAdmin webmaster@localhost
+	DocumentRoot /your/path/
+
+	&lt;span class=&quot;c&quot;&gt;# Available loglevels: trace8, ..., trace1, debug, info, notice, warn,&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;# error, crit, alert, emerg.&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;# It is also possible to configure the loglevel for particular&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;# modules, e.g.&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;#LogLevel info ssl:warn&lt;/span&gt;
+
+	ErrorLog &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;APACHE_LOG_DIR&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;/error.log
+	CustomLog &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;APACHE_LOG_DIR&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;/access.log combined
+
+	&lt;span class=&quot;c&quot;&gt;# For most configuration files from conf-available/, which are&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;# enabled or disabled at a global level, it is possible to&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;# include a line for only one particular virtual host. For example the&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;# following line enables the CGI configuration for this host only&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;# after it has been globally disabled with &amp;quot;a2disconf&amp;quot;.&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;#Include conf-available/serve-cgi-bin.conf&lt;/span&gt;
+&amp;lt;/VirtualHost&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code&gt;ServerName&lt;/code&gt;：修改成你需要使用的二级域名
+&lt;code&gt;DocumentRoot&lt;/code&gt;：修改成网页文件的路径&lt;/p&gt;
+
+&lt;p&gt;然后保存后，执行：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;a2ensite test.yoursite.me
+service apache2 reload&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;完成。&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;http://qingye.me/add-subsite/&quot;&gt;Ubuntu下apache2添加二级域名&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on December 03, 2015.&lt;/p&gt;
+  </content>
+</entry>
 
 
 <entry>
@@ -4313,26 +4388,6 @@ local[i][j] = max( global[i-1][j-1] + max( diff, 0 ), local[i-1][j] + diff )&lt;
 
 
     &lt;p&gt;&lt;a href=&quot;http://qingye.me/qi-xing-miao-feng-shan/&quot;&gt;骑行－妙峰山&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on September 21, 2014.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[科目二顺利一把通过~]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/ke-mu-er-shun-li-yi-ba-tong-guo/" />
-  <id>http://qingye.me/ke-mu-er-shun-li-yi-ba-tong-guo</id>
-  <published>2014-08-21T19:33:34+08:00</published>
-  <updated>2014-08-21T19:33:34+08:00</updated>
-  <author>
-    <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
-    <email>youkochan233@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;p&gt;今儿个顺利通过科目二考试，一个假期耽误了好多，还好考完了科目二。剩下的寒假弄完吧，之后的几天可以准备准备开学咯～😄
-&lt;!--more--&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/ke-mu-er-shun-li-yi-ba-tong-guo/&quot;&gt;科目二顺利一把通过~&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on August 21, 2014.&lt;/p&gt;
   </content>
 </entry>
 
