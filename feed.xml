@@ -4,13 +4,152 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://qingye.me/feed.xml" />
 <link rel="alternate" type="text/html" href="http://qingye.me" />
-<updated>2015-12-04T00:22:41+08:00</updated>
+<updated>2015-12-05T00:09:44+08:00</updated>
 <id>http://qingye.me/</id>
 <author>
   <name>Qing YE</name>
   <uri>http://qingye.me/</uri>
   <email>youkochan233@gmail.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[linux学习笔记（三）—信号量]]></title>
+ <link rel="alternate" type="text/html" href="http://qingye.me/linux-note-3/" />
+  <id>http://qingye.me/linux-note-3</id>
+  <published>2015-12-04T23:56:00+08:00</published>
+  <updated>2015-12-04T23:56:00+08:00</updated>
+  <author>
+    <name>Qing YE</name>
+    <uri>http://qingye.me</uri>
+    <email>youkochan233@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;p&gt;于是我准备开始从比较简单的信号量开始看了。看的过程中当然会有很多不理解的，所以还是做一个记录吧，把能理解的或者不能理解的都记下来。&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;信号量&lt;/h2&gt;
+
+&lt;p&gt;信号量的头文件为&lt;em&gt;Semaphore.c (linux-2.6.32.68/kernel)&lt;/em&gt;，源文件为&lt;em&gt;Semaphore.h (linux-2.6.32.68/include/linux)&lt;/em&gt;。&lt;/p&gt;
+
+&lt;p&gt;头文件中声明了信号量结构体&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/* Please don&amp;#39;t access any members of this structure directly */&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;semaphore&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;kt&quot;&gt;spinlock_t&lt;/span&gt;		&lt;span class=&quot;n&quot;&gt;lock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;		&lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list_head&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;wait_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;以及对信号量的初始化操作以及增减操作的一些函数或宏定义。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;inline&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sema_init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;semaphore&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lock_class_key&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;semaphore&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__SEMAPHORE_INITIALIZER&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;lockdep_init_map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dep_map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;semaphore-&amp;gt;lock&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;cp&quot;&gt;#define init_MUTEX(sem)		sema_init(sem, 1)&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#define init_MUTEX_LOCKED(sem)	sema_init(sem, 0)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;extern&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;down&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;semaphore&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;extern&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__must_check&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;down_interruptible&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;semaphore&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;extern&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__must_check&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;down_killable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;semaphore&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;extern&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__must_check&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;down_trylock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;semaphore&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;extern&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__must_check&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;down_timeout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;semaphore&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jiffies&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;extern&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;up&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;semaphore&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;其中，&lt;code&gt;init_MUTEX&lt;/code&gt;以及&lt;code&gt;init_MUTEX_LOCKED&lt;/code&gt;，分别将信号量初始化为1和0。其中有一个很让人在意的&lt;code&gt;__must_check&lt;/code&gt;关键字，查了一下意思是&lt;em&gt;__must_check函数是指调用函数一定要处理该函数的返回值，否则编译器会给出警告&lt;/em&gt;。&lt;/p&gt;
+
+&lt;p&gt;然后具体函数定义都是大同小异，举一个例子&lt;code&gt;down&lt;/code&gt;来进行说明。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;down&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;semaphore&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+	&lt;span class=&quot;n&quot;&gt;spin_lock_irqsave&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;likely&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;count&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;__down&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;spin_unlock_irqrestore&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;EXPORT_SYMBOL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;down&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code&gt;down&lt;/code&gt;的作用就是获取这个信号量（也就是占用某种资源）。58行处表示如果信号量获取成功，则把信号量的值减一；如果获取不成功，则调用&lt;code&gt;__down&lt;/code&gt;。而&lt;code&gt;__down&lt;/code&gt;最终会调用&lt;code&gt;__down_common&lt;/code&gt;函数，这个函数根据不同的处理状态，把未成功获取信号量的进程插入等待队列末尾。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;inline&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__sched&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__down_common&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;semaphore&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+								&lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timeout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;task_struct&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;task&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;current&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;semaphore_waiter&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;waiter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+	&lt;span class=&quot;n&quot;&gt;list_add_tail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;waiter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wait_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;waiter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;task&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;waiter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;up&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+	&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(;;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;signal_pending_state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;goto&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;interrupted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;timeout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;goto&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timed_out&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;__set_task_state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;spin_unlock_irq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;timeout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;schedule_timeout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;timeout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;spin_lock_irq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;waiter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;up&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+ &lt;span class=&quot;nl&quot;&gt;timed_out&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;list_del&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;waiter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ETIME&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+ &lt;span class=&quot;nl&quot;&gt;interrupted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;list_del&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;waiter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;EINTR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code&gt;__down_common&lt;/code&gt;函数接受三个输入参数，分别是信号量结构体指针，代表状态的变量，以及超时时长。&lt;/p&gt;
+
+&lt;p&gt;其中 state 的值可能为 &lt;code&gt;TASK_UNINTERRUPTIBLE&lt;/code&gt;， &lt;code&gt;TASK_INTERRUPTIBLE&lt;/code&gt;， &lt;code&gt;TASK_KILLABLE&lt;/code&gt;， &lt;code&gt;TASK_UNINTERRUPTIBLE&lt;/code&gt;， 分别代表不同情况下的获取信号量操作。&lt;/p&gt;
+
+&lt;p&gt;除了&lt;code&gt;down_timeout&lt;/code&gt;操作外，其余down操作默认的超时时长为&lt;code&gt;MAX_SCHEDULE_TIMEOUT&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;接下来是&lt;code&gt;up&lt;/code&gt;操作。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;up&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;semaphore&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+	&lt;span class=&quot;n&quot;&gt;spin_lock_irqsave&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;likely&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list_empty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wait_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;__up&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;spin_unlock_irqrestore&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;EXPORT_SYMBOL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;up&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;与&lt;code&gt;down&lt;/code&gt;对应的即为&lt;code&gt;up&lt;/code&gt;操作。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;noinline&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__sched&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__up&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;semaphore&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;semaphore_waiter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;waiter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list_first_entry&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sem&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wait_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+						&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;semaphore_waiter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;list_del&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;waiter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;waiter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;up&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;wake_up_process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;waiter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;首先查看该信号量的等待列表是否为空，若为空，则把信号量的值加一；否则调用&lt;code&gt;__up&lt;/code&gt;操作，从该信号量的等待列表中找出第一个等待的进程，将其从等待列表中删除，然后将&lt;code&gt;waiter-&amp;gt;up&lt;/code&gt;置为1，从而结束&lt;code&gt;__down_common&lt;/code&gt;中的循环。再调用&lt;code&gt;wake_up_process&lt;/code&gt;方法来唤醒等待中的进程。&lt;/p&gt;
+
+
+    &lt;p&gt;&lt;a href=&quot;http://qingye.me/linux-note-3/&quot;&gt;linux学习笔记（三）—信号量&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on December 04, 2015.&lt;/p&gt;
+  </content>
+</entry>
 
 
 <entry>
@@ -89,6 +228,171 @@ service apache2 reload&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 <entry>
+  <title type="html"><![CDATA[linux内核学习笔记（二）]]></title>
+ <link rel="alternate" type="text/html" href="http://qingye.me/linux-note-2/" />
+  <id>http://qingye.me/linux-note-2</id>
+  <published>2015-12-02T14:55:00+08:00</published>
+  <updated>2015-12-02T14:55:00+08:00</updated>
+  <author>
+    <name>Qing YE</name>
+    <uri>http://qingye.me</uri>
+    <email>youkochan233@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;p&gt;主要介绍一下Linux源码的一些结构（2.6）&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;进入内核源代码树的根目录并列出它的子目录。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;arch。该目录包含了与体系结构相关的文件。可以在arch/目录下看到针对ARM、Motorola 68K、s390、MIPS、Alpha、SPARC和IA64等处理器的子目录。&lt;/li&gt;
+  &lt;li&gt;block。该目录主要包含块存储设备I/O调度算法的实现。&lt;/li&gt;
+  &lt;li&gt;crypto。该目录实现了密码操作以及与加密相关的API，它们可被应用于WiFi设备驱动的加密算法等场合。&lt;/li&gt;
+  &lt;li&gt;Documentation。该目录包含了内核中各个子系统的简要描述，它是你探究内核方面问题的第一站。&lt;/li&gt;
+  &lt;li&gt;drivers。这个目录包含了大量设备类和外设控制器的驱动，包括字符、串口、内置集成电路（I2C）、个人计算机存储卡国际联盟（PCMCIA）、外 围组件互连（PCI）、通用串行总线（USB）、视频、音频、块、集成驱动电子设备（IDE）、小型计算机系统接口（SCSI）、CD-ROM、网络适配 器、异步传输模式（ATM）、蓝牙和内存技术设备（MTD）等。每一类设备对应drivers/下面的一个子目录，譬如PCMCIA驱动程序的源代码位于 drivers/pcmcia/目录，MTD驱动程序位于drivers/mtd/目录。drivers/下的这些子目录是本书的主要议题。&lt;/li&gt;
+  &lt;li&gt;fs。这个目录包含了EXT3、EXT4、reiserfs、FAT、VFAT、sysfs、procfs、isofs、JFFS2、XFS、NTFS和NFS等文件系统的实现。&lt;/li&gt;
+  &lt;li&gt;include。内核头文件位于此目录。该目录下以asm开头的子目录包含了与体系结构相关的头文件，比如include/asm-x86/子目录包含了x86体系架构的头文件，include/asm-arm/包含了ARM体系架构的头文件。&lt;/li&gt;
+  &lt;li&gt;init。这个目录包含了高级别初始化和启动代码。&lt;/li&gt;
+  &lt;li&gt;ipc。这个目录包含了对消息队列、信号、共享内存等进程间通信（IPC）机制的支持。&lt;/li&gt;
+  &lt;li&gt;kernel。基本内核中与体系架构无关的部分。&lt;/li&gt;
+  &lt;li&gt;lib。通用内核对象（kobject）处理程序、循环冗余码校验（CRC）计算函数等库函数例程位于此目录。&lt;/li&gt;
+  &lt;li&gt;mm。这个目录包含了内存管理的实现。&lt;/li&gt;
+  &lt;li&gt;net。该目录实现了网络协议，包括Internet协议第4版（IPv4）、IPv6、网际互联交换协议（IPX）、蓝牙、ATM、红外、链路访问过程平衡（LAPB）以及逻辑链路控制（LLC）。&lt;/li&gt;
+  &lt;li&gt;scripts。内核编译过程中要使用的脚本位于此目录。&lt;/li&gt;
+  &lt;li&gt;security。这个目录包含了针对安全的框架。&lt;/li&gt;
+  &lt;li&gt;sound。Linux音频子系统位于此目录。&lt;/li&gt;
+  &lt;li&gt;usr。此目录包含了initramfs 的实现。&lt;/li&gt;
+&lt;/ol&gt;
+
+
+    &lt;p&gt;&lt;a href=&quot;http://qingye.me/linux-note-2/&quot;&gt;linux内核学习笔记（二）&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on December 02, 2015.&lt;/p&gt;
+  </content>
+</entry>
+
+
+<entry>
+  <title type="html"><![CDATA[linux内核学习笔记（一）]]></title>
+ <link rel="alternate" type="text/html" href="http://qingye.me/linux-note-1/" />
+  <id>http://qingye.me/linux-note-1</id>
+  <published>2015-12-02T14:55:00+08:00</published>
+  <updated>2015-12-02T14:55:00+08:00</updated>
+  <author>
+    <name>Qing YE</name>
+    <uri>http://qingye.me</uri>
+    <email>youkochan233@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;p&gt;记录一些入门知识点&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;基本概念&lt;/h2&gt;
+
+&lt;h3 id=&quot;section-1&quot;&gt;模块&lt;/h3&gt;
+
+&lt;p&gt;模块是Linux内核的一个特点，在不影响性能的情况下，能够有效地实现许多微内核理论上的优点。模块是一个目标文件，代码可以在运行时链接到内核或从内核中取下。这种目标代码通常由一组函数组成，用来实现一种文件系统、一个驱动程序或者其他内核上层的功能。与微内核操作系统的外层不同，模块不是作为一个特殊的进程执行的。相反，与任何其他静态链接的内核函数一样，它在内核态代表当前进程执行。&lt;/p&gt;
+
+&lt;p&gt;主要优点有下面这些：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;模块化方法：因为可以在运行时链接或者卸载，因此，系统程序设计员必须引入定义明确的软件接口来访问由模块处理的数据结构。&lt;/li&gt;
+  &lt;li&gt;平台无关性：即使模块依赖于某些特殊的硬件特点，但是它不依赖于某个固定的硬件平台。&lt;/li&gt;
+  &lt;li&gt;节省内存的使用：当需要模块的功能时，把它连接到正在运行的内核中，否则卸载。这种机制对用户是透明的，因为链接和卸载是内核自动完成的。&lt;/li&gt;
+  &lt;li&gt;没有性能损失：模块的目标代码一旦被链接到内核，其作用与静态链接的内核代码完全等价。【其实呢，当模块被连接或者被卸载时，性能是稍有影响的，但是呢，在微内核操作系统中，系统进程的创建和删除同样也是这样的】&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;硬连接&lt;/h3&gt;
+
+&lt;p&gt;包含在一个目录中的文件名就是一个文件的硬链接，或者简称链接。&lt;/p&gt;
+
+&lt;p&gt;硬链接有两方的限制：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;不允许给目录创建硬链接。因为这可能把目录树变成环形图，从而不能通过名字定位一个文件&lt;/li&gt;
+  &lt;li&gt;只有在同一文件系统中的文件之间才能创建链接。现代Unix可能包含了几种文件系统，这些文件系统位于不同的磁盘/分区，用户也许没有注意到他们的物理划分。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;section-3&quot;&gt;文件描述符与索引节点&lt;/h3&gt;
+
+&lt;p&gt;Unix除了设备文件或者一些特殊的文件以外，每一个文件都由一系列字符组成。这个文件不包含任何控制信息，比如文件长度、文件结束符（EOF）等。&lt;/p&gt;
+
+&lt;p&gt;文件系统中用来管理文件的所有信息包含在索引节点（inode）的数据结构中。每一个文件都有自己的inode。文件系统中用inode识别一个文件。&lt;/p&gt;
+
+&lt;p&gt;inode至少应该包含的最基本属性：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;文件类型&lt;/li&gt;
+  &lt;li&gt;与文件相关的硬链接个数&lt;/li&gt;
+  &lt;li&gt;以字节为单位的文件长度&lt;/li&gt;
+  &lt;li&gt;设备标识符（即包含这个文件的设备的标识符）&lt;/li&gt;
+  &lt;li&gt;用来在文件系统中标识文件的索引节点号&lt;/li&gt;
+  &lt;li&gt;文件拥有着的UID&lt;/li&gt;
+  &lt;li&gt;文件的GID&lt;/li&gt;
+  &lt;li&gt;几个时间标记，说明inode状态改变的时间、最后访问时间、最后修改时间&lt;/li&gt;
+  &lt;li&gt;访问权限和文件模式（mode）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;section-4&quot;&gt;进程描述符&lt;/h3&gt;
+
+&lt;p&gt;为了让内核管理进程，每一个进程由一个进程描述符来表示。当内核暂停一个进程的执行时，在进程描述符中保存几个处理寄存器的内容。这些寄存器包括：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;程序计数器（PC）和栈指针（SP）寄存器&lt;/li&gt;
+  &lt;li&gt;通用寄存器&lt;/li&gt;
+  &lt;li&gt;浮点寄存器&lt;/li&gt;
+  &lt;li&gt;包含CPU状态信息的处理器控制寄存器（PSW）&lt;/li&gt;
+  &lt;li&gt;用来跟踪进程对RAM访问的内存管理寄存器&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;当内核决定恢复一个进程时，它用进程描述符中合适的域来装载CPU的寄存器。从而恢复执行。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-5&quot;&gt;进程地址空间&lt;/h3&gt;
+
+&lt;p&gt;每一个进程都运行在它私有的地址空间，在用户态下运行的进程涉及到私有栈、数据和代码区。挡在内核态运行时，进程访问内核的数据和代码区，但使用另外的栈。&lt;/p&gt;
+
+&lt;p&gt;因为内核是可充入的，所以几个内核控制路径（每一个都与不同的进程相关）可以轮流执行。在这种情况下每一个内核控制路径都有它自己的私有内核态堆栈。&lt;/p&gt;
+
+&lt;p&gt;尽管每一个进程看起来是在访问一个似有地址空间，但有时候进程之间也共享部分地址空间，在一个情况下，进程明确要求这种共享；在另外一些情况下、由内核自动完成共享，以节约内存。&lt;/p&gt;
+
+&lt;p&gt;同一个程序被多个用户使用时，仅仅装入内存一次，指令被所有需求的用户共享。数据不被共享，这都是内核自动完成的以节约内存。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-6&quot;&gt;临界区&lt;/h3&gt;
+
+&lt;p&gt;一般来说，对全局变量的安全访问通过原子操作保证。然而很多操作不可能用单一的操作完成。所以有临界区概念，临界区是这样一段代码，进入这段代码的进程必须完成以后另一个进程才可以进入。&lt;/p&gt;
+
+&lt;p&gt;这些问题不仅出现在内核控制路径中，也出现在共享公共数据的进程之间。以下有几种同步内核控制路径的方式：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;非抢占式内核：当进程在内核态执行时，不能被任意挂起，也不能被另一个进程替代。因此，在单处理系统上，所有的中断或者异常处理程序不能更新的内核数据结构，内核对他们的访问都是安全的。但是这种非抢占能力在多处理器系统上是低效的，因为运行在不同的CPU上的两个内核控制路径本可以并发地访问相同的数据结构&lt;/li&gt;
+  &lt;li&gt;关中断：单处理器系统上的另一种同步机制是在进入一个临界区之前禁止产生所有的硬件中断，在离开临界区时再允许中断。临界区较大时，有可能使得所有的硬件活动处于冻结状态。因此，在多处理系统上，这种机制根本不起作用。&lt;/li&gt;
+  &lt;li&gt;信号量：一种广泛使用的机制是信号量（semaphore）。信号量仅仅是与一个数据结构相关的一个计数器，当所有内核线程访问这个数据结构前，都要检查这个信号量。可以把每一个信号量当作一个对象，其组成如下：一个整数变量、一个等待进程的链表、两个原子方法：down() 以及 up()。&lt;/li&gt;
+  &lt;li&gt;自旋锁：某些情况下若是更新数据结构所需的时间较短，信号量可能是很低效的。因为需要把进程插入到信号量链表中，然后挂起。这些操作都比较费时，完成这些操作时，其他的内核控制路径可能已经释放了这个信号量。因此有&lt;strong&gt;多处理器系统&lt;/strong&gt;使用了自旋锁（spin lock）机制，用来不断执行一个指令的循环直到锁打开。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;section-7&quot;&gt;虚拟内存&lt;/h3&gt;
+
+&lt;p&gt;虚拟内存作为一种逻辑层，处于应用程度对内存的申请与硬件内存管理单元之间。虚拟内存有很多用途和优点：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;几个进程可以并发地执行&lt;/li&gt;
+  &lt;li&gt;应用程序所需的内存大于可用物理内存时、也可以运行&lt;/li&gt;
+  &lt;li&gt;进程可以执行只有部分代码装入到内存的程序&lt;/li&gt;
+  &lt;li&gt;允许每一个进程访问可用物理内存的一个子集&lt;/li&gt;
+  &lt;li&gt;进程可以共享库函数或程序的单一的内存映像&lt;/li&gt;
+  &lt;li&gt;程序是可重定位的，可以把程序放在物理内存的任何地方&lt;/li&gt;
+  &lt;li&gt;编程者可以编写与机器无关的代码，因为它们不必关心有物理内存的组织结构&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;进程使用虚拟地址，内核和MMU协作定位其在内存中的实际物理位置。&lt;/p&gt;
+
+
+    &lt;p&gt;&lt;a href=&quot;http://qingye.me/linux-note-1/&quot;&gt;linux内核学习笔记（一）&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on December 02, 2015.&lt;/p&gt;
+  </content>
+</entry>
+
+
+<entry>
   <title type="html"><![CDATA[通过查询结构控制相关程度]]></title>
  <link rel="alternate" type="text/html" href="http://qingye.me/controlling-relevance/" />
   <id>http://qingye.me/controlling-relevance</id>
@@ -152,7 +456,7 @@ service apache2 reload&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;现在，&lt;code&gt;red&lt;/code&gt;以及&lt;code&gt;brown&lt;/code&gt;在同一层上竞争，&lt;code&gt;quick&lt;/code&gt;、&lt;code&gt;fox&lt;/code&gt;以及&lt;code&gt;red OR brown&lt;/code&gt;为顶层的竞争词条。&lt;/p&gt;
 
-&lt;p&gt;我们之前也讨论过了&lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/guide/current/match-query.html&quot;&gt;match&lt;/a&gt;、&lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/guide/current/multi-match-query.html&quot;&gt;multi_match&lt;/a&gt;、&lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/guide/current/term-vs-full-text.html&quot;&gt;term&lt;/a&gt;、&lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/guide/current/bool-query.html&quot;&gt;bool&lt;/a&gt;以及&lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/guide/current/_best_fields.html#dis-max-query&quot;&gt;dis_max&lt;/a&gt;这些查询，都可以用来控制相关度得分。剩下的部分介绍三种打分相关的查询：&lt;code&gt;the boosting query&lt;/code&gt;、&lt;code&gt;the constant_score query&lt;/code&gt;以及&lt;code&gt;the function_score query&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;我们之前也讨论过了&lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/guide/current/match-query.html&quot;&gt;match&lt;/a&gt;、&lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/guide/current/multi-match-query.html&quot;&gt;multi_match&lt;/a&gt;、&lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/guide/current/term-vs-full-text.html&quot;&gt;term&lt;/a&gt;、&lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/guide/current/bool-query.html&quot;&gt;bool&lt;/a&gt;以及&lt;a href=&quot;https://www.elastic.co/guide/en/elasticsearch/guide/current/_best_fields.html#dis-max-query&quot;&gt;dis_max&lt;/a&gt;这些查询，都可以用来控制相关度得分。剩下的部分介绍三种打分相关的查询：&lt;code&gt;the boosting query&lt;/code&gt; 、 &lt;code&gt;the constant_score query&lt;/code&gt; 以及 &lt;code&gt;the function_score query&lt;/code&gt;。&lt;/p&gt;
 
 &lt;h2 id=&quot;the-boosting-query&quot;&gt;the boosting query&lt;/h2&gt;
 
@@ -3998,396 +4302,6 @@ local[i][j] = max( global[i-1][j-1] + max( diff, 0 ), local[i-1][j] + diff )&lt;
 
 
     &lt;p&gt;&lt;a href=&quot;http://qingye.me/site-analyse-v5/&quot;&gt;js网站结构分析-后续&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on December 12, 2014.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[js网站结构分析]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/site-analyse-v1/" />
-  <id>http://qingye.me/site-analyse-v1</id>
-  <published>2014-12-10T18:40:09+08:00</published>
-  <updated>2014-12-10T18:40:09+08:00</updated>
-  <author>
-    <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
-    <email>youkochan233@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;p&gt;在宿舍学习javascript的时候有了一个想法，既然最近不是得探索探索可视化之类的东西，平日浏览的网页结构不应该也可以可视化出来么？&lt;/p&gt;
-
-&lt;p&gt;抱着这个想法，就琢磨了一下。(注：需要浏览器支持SVG，仅在safari以及chrome测试成功)&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;nx&quot;&gt;javascript&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
-	&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;script&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-	&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setAttribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;src&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.vx.js&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementsByTagName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;head&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;appendChild&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;代码采用javascript实现，具体使用方式为，打开浏览器，输入以上代码（有的浏览器不支持自动将空格转化为％20需手动替换一下，vx替换成v1或者v2）&lt;/p&gt;
-
-&lt;p&gt;或者复制以下代码在浏览器运行（版本 v1，v2，v3 … vn）&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;nx&quot;&gt;javascript&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;script&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setAttribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;src&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v1.js&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementsByTagName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;head&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;appendChild&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);})();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;nx&quot;&gt;javascript&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;script&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setAttribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;src&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v2.js&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementsByTagName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;head&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;appendChild&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);})();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;nx&quot;&gt;javascript&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;script&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setAttribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;src&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v3.js&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementsByTagName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;head&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;appendChild&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);})();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;nx&quot;&gt;javascript&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;script&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setAttribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;src&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v4.js&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementsByTagName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;head&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;appendChild&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);})();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;nx&quot;&gt;javascript&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;script&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setAttribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;src&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;http://youkochan.github.io/assets/bookmarklet/siteAnalyse.v4.js&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementsByTagName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;head&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;appendChild&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);}&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;ERROR&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)}})();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;section&quot;&gt;第一次更新&lt;/h3&gt;
-
-&lt;p&gt;待解决&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;现在还太丑&lt;/li&gt;
-  &lt;li&gt;借鉴了d3某图，有需要的话可以自己设计。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;section-1&quot;&gt;12-11 00:07 更新&lt;/h3&gt;
-
-&lt;p&gt;完成v3版本后兴奋地到处去试，结果试到知乎时出了点小问题，加载脚本时报错&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;[Error] Refused to load the script ‘http://127.0.0.1:4000/assets/bookmarklet/siteAnalyse.v3.js’ because it violates the following Content Security Policy directive: “script-src *.zhihu.com *.google-analytics.com ‘unsafe-eval’”.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;查询了一下后，发现报这个错是因为知乎在响应头中设置了ContentSecurityPolicy字段，参数之外的js文件都会被禁止，好像暂时没找到什么好的解决方式。&lt;/p&gt;
-
-&lt;p&gt;待解决&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;可以写一个loading来缓解枯燥的等待时间。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;section-2&quot;&gt;12-11 11:05 更新&lt;/h3&gt;
-
-&lt;p&gt;网上了解了一下CSP后发现上述问题比较无解，没有一个好的方法能让所有人都能在有CSP的网页上执行js代码，于是暂时先不管这些了，准备更新LOADING等。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.zhihu.com/question/23640710/&quot;&gt;如何绕过知乎对Bookmarklet跨域添加的script的限制&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;section-3&quot;&gt;12-11 12:54 更新&lt;/h3&gt;
-
-&lt;p&gt;完成了v4版本，增加了loading画面&lt;/p&gt;
-
-&lt;p&gt;待解决&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;css文件等可以从外部加载&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;section-4&quot;&gt;12-11 22:35 更新&lt;/h3&gt;
-
-&lt;p&gt;自从完成v4版本后，还是在纠结CSP的问题。重新看了一下知乎上提及的ajax + eval方式，即：&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;使用XMLHttpRequest加载js文件，再使用eval执行文件内容。不过这样需要修改你的responseHeader以支持跨域：{‘Access-Control-Allow-Origin’: ‘*’}。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;即，自己搭建服务器，通过ajax请求自己的服务器中的js文件，然后手动将响应头的Access-Control-Allow-Origin替换为*，即为所有网站都能访问。通过以上方式，绕过了CSP的限制。&lt;/p&gt;
-
-&lt;p&gt;如果不设置响应头就会报以下错误（以知乎上使用为例）&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;No ‘Access-Control-Allow-Origin’ header is present on the requested resource. Origin ‘http://www.zhihu.com is therefore not allowed access.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;HTTP 头的设置方法有很多，http://enable-cors.org/这篇文章里对各种服务器和语言的设置都有详细的介绍，下面我们主要介绍Apache和PHP里的设置方法。&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;php
-&amp;lt;?php
-	header(&quot;Access-Control-Allow-Origin:*&quot;);
-?&amp;gt;
-&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;以上的配置的含义是允许任何域发起的请求都可以获取当前服务器的数据。当然，这样有很大的危险性，恶意站点可能通过XSS攻击我们的服务器。所以我们应该尽量有针对性的对限制安全的来源。&lt;/p&gt;
-
-&lt;p&gt;了解了以上一些后觉得没必要花时间纠结在使用bookmarklet方式来获取网页结构了。这一些折腾后对于之前不太理解的东西有了更深入的了解吧。&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/site-analyse-v1/&quot;&gt;js网站结构分析&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on December 10, 2014.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[骑行－国庆]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/qi-xing-%5Bnil%5Dguo-qing/" />
-  <id>http://qingye.me/qi-xing-[nil]guo-qing</id>
-  <published>2014-10-07T22:27:16+08:00</published>
-  <updated>2014-10-07T22:27:16+08:00</updated>
-  <author>
-    <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
-    <email>youkochan233@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;p&gt;这几天趁着国庆闲着无事，又不想在宿舍浪费时间，于是和文兄以及崔神跑了趟河北。&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;h3 id=&quot;section&quot;&gt;基本情况&lt;/h3&gt;
-
-&lt;p&gt;时间：2014-10-3～2014－10-7&lt;br /&gt;
-地点：北京－延庆－赤城－延庆－怀柔&lt;br /&gt;
-人物：我，文兄，崔神&lt;br /&gt;
-距离：382km&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6111_zpsf5c9493c.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;section-1&quot;&gt;行程&lt;/h3&gt;
-
-&lt;h4 id=&quot;section-2&quot;&gt;第一天&lt;/h4&gt;
-
-&lt;p&gt;早饭肯德基。天气预报说是要下雨、结果就下了几点零星小雨。出了北邮一直向北、走G6辅路。一路上看到高速公路上各种堵车、辅路也不例外。 &lt;br /&gt;
-不过穿梭在各种堵的车辆之中感觉巨爽。我们首先到了居庸关（好吧其实这是我第一次到长城）、居庸关后就是连续的爬坡、最纠结的是辅路上也依旧堵满了车、有时候自行车都难以跻身过去。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6132_zps712611fb.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;一段山路后终于到达了八达岭、感受到了国庆人流的恶意。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6163_zpsca2513ca.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;以及车流的恶意。（好吧这些车其实都是堵着不动的）&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6157_zps59aa21d3.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;到达八达岭镇后换了S216来到了延庆城区、第一晚就在这里过夜了。到了之后找了一个便宜住宿地方、休整了一下以后出门去延庆的沃尔玛买了明儿需要的东西。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6166_zpsad245d16.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;第一天基本没有什么特别的地方、总行程81km。作为出行的第一天不算很累、还是挺轻松的。明天的路程很是艰险、距离大概95km、爬升将近900米。&lt;/p&gt;
-
-&lt;h4 id=&quot;section-3&quot;&gt;第二天&lt;/h4&gt;
-&lt;p&gt;从住地出发、沿途买了火烧加豆浆作为早点、以及栗子作为储备食物。不得不说火烧性价比比肯德基高多了、还好吃。三个人加起来也就20多。接着沿着X011一直走、途经一个小公园以及世界葡萄博览会。 &lt;br /&gt;
-然后沿着S217一直走到了G110路口，然后便开始沿着X012开始爬坡、在山脚买了水之后就开始了苦逼爬坡之行。 &lt;br /&gt;
-这次爬坡苦逼之处就在于空气湿度特别大、没事就下一阵雨、而每次我们穿好雨衣后几分钟雨又停了。整段路骑得特别艰难。 &lt;br /&gt;
-爬坡过程中没走几步就发现了一个果园、看上去特别好吃。可惜栅栏太高且有恶犬、最终还是无奈放弃。然后还看到了一只小松鼠、可惜被我们吓跑了。骑行过程中还经过了松山水库、路边的峭壁上也贴满了红色的叶子、看起来感觉不错。可能是山里气温的原因、很多树木都开始变黄变红了、而越往上这种秋意越浓。要是再过一段时间来看肯定会是更加美的一幅画卷。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6198_zpsacbc1266.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;沿着X012继续往上、就到了松山国家自然保护区、我们在景区门口休整了一段时间、补充好了能量再继续爬坡。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6208_zps1a5c272e.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;往上的过程中、岩壁越来越陡峭、山体也越来越高、骑车行走在这种环境中有一种说不出的感受、山势的陡峭让人望而生畏、而身边流淌的小溪又给人一种轻松愉悦的感受。总之虽然肢体上很累、但心情却是愉悦的。 &lt;br /&gt;
-继续往上、云层越来越近，偶尔能看到云隙后湛蓝的天空、而水汽也越来越厚、手套都被水汽浸湿了。而这时又开始了一阵一阵的阵雨。于是我们找了个拐角、披上雨衣、继续蹬。 &lt;br /&gt;
-再往上伴着阵阵雷声以及稀疏的雨点拐过几个山头、忽然看到了云层后的蓝天、瞬间有种得到救赎的感觉、觉得终于快到了。于是每个人都加快了步伐。虽然后来才发现、还早。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6236_zps5e7fd923.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;再拐过很多个山头后、发现了一块空地、有几辆车停着、空地边缘有条小道、小道末端是个观景亭。这时、乌云散去、阳光直射、山涧中升起雾气、云层中投射出阳光、简直仙境一般。同行小伙伴皆呼“值了！”。而此时此刻的感受、难以用语言描述、仿佛这是天公给予我们的褒奖。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6245_zpsc9806dc6.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;再往上大约半小时爬坡、便到了此行的最高海拔处，闫家坪村、完成了大概900m的爬升、爬坡公里数为30km。而峪口前后完全是两幅画面：前方阳光明媚、村庄错落有致、道路平坦缓下坡；而后方云雾袅绕、烟雨朦胧、山路凶险。真给人一种柳暗花明之感。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6263_zps40e5941a.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;峪口后是一段1km左右的急下坡、接下来都是缓下坡。骑下坡路的感觉轻松愉快、加上阳光明媚风景优美、一路上感觉特别好。我们在路过的村子买了点水后、找了一块能晒太阳的草地，开始吃东西、也就是午餐肉。在这种空气好的地方晒着太阳吃着东西、瞬间感觉来之前的疲劳一扫而空。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6266_zps449413db.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;后来沿着S241以及S353、在骑行大概60km后，大约在晚上七点左右到达了下一站：后城。然后在后城镇唯一（？）的旅店落脚。之所以我认为是唯一呢、主要还是因为好像所有来后城的骑行者都是来的这一家。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6282_zps22e148b6.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;不过不得不说、住宿条件特别便宜：15一个人。我们直接三个人每人20包了一个五人间，被子什么的还算暖和、并且一个房间给你放了很多床被子、我就自己盖了两床。再说说吃的、吃的东西性价比也很赞！点了四个菜、就一个羊肉25、其他的都是10块左右、还不要钱似的给的分量超级足、还有茄子特别好吃、饭也给了超级多！一大碗！大概有北京四小碗那么多。然后我们几个就感慨这离北京也没多远怎么性价比差这么多！然后吃晚饭我们找老板结账、老板说忙不过来、先不结账了、等下去你们房间结账。结果到我们睡觉也没来。不过！老板娘真是眼神太不好使、竟然把我认成了妹纸。 &lt;br /&gt;
-总之今天这一段路程能说是最难的一段了、后面基本没有这么长的爬坡。熬过了这一段，感觉整个人都是动都不想动的状态。不过一路上领略到的风景、真的让我们这段苦逼旅程值了。&lt;/p&gt;
-
-&lt;h4 id=&quot;section-4&quot;&gt;第三天&lt;/h4&gt;
-&lt;p&gt;今天大家睡了个懒觉、睡到了9点才起床。一翻刷牙洗漱后、吃了个馒头咸菜、再在旅店老板处买了几个肉夹馍带身上、大概10点、就开始了今天的爬石头之旅。&lt;br /&gt;
-虽然住的地方一眼就能看到大石头，但实际要骑车上去的话、需要走山路绕到石头的另一边，才能登上石头顶。于是我们在一边问路一边走的过程中开始了摸索上山。这段时间崔神的逮人就问的技能发挥出了巨大作用。不过沿途的人都还挺热情、都在认真指路、有个大哥还亲自带我们到了路口。&lt;br /&gt;
-一开始我们是沿着大石头的东边山路前进。一路上有石头的岩壁、以及岩壁下的溪水相伴，感觉十分惬意。不过随着路程的增加，大石头渐渐消失在我们的视野中。此时此刻我们有点迷茫了、想找个人问路也是半天遇不到一个人、也有点不敢往前走的感觉，怕走错。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6303_zpsc6f219ae.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;后来还是硬着头皮继续沿着水泥路向前。而随着路程的增加坡路变得越来越陡。有些路段实在难以骑车爬上、推着自行车都觉得累。不过路上景色很不错。山上的树叶都透出了浓浓的秋意、一块儿红，一块儿黄，天空伴着朵朵白云，空气清新，非常之使人心旷神怡。&lt;br /&gt;
-大约几个小时的爬坡后、我们来到了一个晒满高粱的大平地、这就是水泥路的终点、由此开始到登顶就已经完全是泥土路面了。而且由于雨水以及车辆的原因，路面坑坑洼洼，非常难走，还混着各种碎石块。经过某泥潭时还不小心踩了一脚泥。&lt;br /&gt;
-一路骑骑走走，大概1.7km的泥土坡后、我们来到了一个路口，由此左拐就是一段下坡路，而这段下坡路也是泥泞伴有大量碎石，而坡道旁基本就是山崖（现在想想这段路真是特别危险）。通过这一大段下坡后，就到了一片开阔的斜坡。而这个斜坡、就是我们的目的地—后城赤壁顶。此时此刻、我们就已经到达了这块大石头的顶部。而由巨石往下看到的起伏的山脉、整齐的农田、错落的梯田、小镇整齐的一两层小房，尽收眼底。此时此刻的景色兼职不能用文字语言描述，特别是我们在大约五个多小时艰苦爬坡后终于登顶了，激动之情真是无以言表。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6361_zpsd5372b46.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;在斜坡附近拍照休息了一些时间后、我们把自行车放在下面，徒步走上最后的顶点。因为后面的坡路都快超过45度了，推车都无法上。一路上路也越来越窄后来只能一边拨开灌木丛一边往前走。登顶后，我们在顶部又拍了一些照片。说实话，站在顶端大风吹着，总有一种随时会把人吹下悬崖的感觉。作为今天被崔神确诊的恐高症患者、药不能停、在顶端停留了大概20分钟后我们就开始了返程之旅。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6393_zps644f70d5.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;我们还是原路返回，所以首先经过那个路况奇差的坡道。这时其实出现了一个情况、想想都觉得特别后怕。我的后轮可能在之前的小放坡过程中受到了一些强烈颠簸导致了后轮快拆松开了、我在骑的过程中感觉到不对劲就下车检查了一下。要是再继续骑下去可能骑着骑着车子后轮就直接脱离车子了。后果想想都觉得可怕。&lt;br /&gt;
-经过了这段上坡、我们到达了岔路口。由此开始土路放坡。一路上死捏着刹车、因为路实在是太颠簸、坡度也大，一不小心速度就飙上去了。但风在耳边的呼啸、手感受到的震感、以及曲曲折折的急下坡、让人感觉非常非常刺激。接近2km的土路下坡没几分钟就骑完了，小伙伴们纷纷呼过瘾。后来的水泥路放坡一路也很赞，伴着浅浅落下的夕阳，树木、花草、自行车，都被拉出了长长的影子。一路上最高速度大概达到了46km/s、文兄比较猛，达到了50km/s。&lt;br /&gt;
-回到住处、休整、晚饭。饭后天已经黑了，回房间的过程中看到了后城赤壁上空闪烁的北斗七星以及正北方的北极星，可惜手机没发照、单反也没有三脚架，只能把此景映入脑海。&lt;br /&gt;
-今天一天的行程总共才大约30km，但强度真的不小。土路和碎石增加了艰难，却给了克服了这些艰难的我们更大的喜悦。一路上收获的美景也数不胜数，千言万语汇成两个字：“值了”。&lt;/p&gt;
-
-&lt;h4 id=&quot;section-5&quot;&gt;第四天&lt;/h4&gt;
-&lt;p&gt;早上从后城出发，临行前老板娘还给了我们一些火烧和馒头当干粮还硬是不收钱。我们在旅店门口合了个影后就开始了漫漫赶路之旅。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6435_zps4df55b8a.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;向东沿着S353一路缓下坡，一路上由于比较早，刚刚开始还有点冷，后来动起来就没那么冷了。向东没走多久就到了北京界，到了北京界瞬间道路就变好了，不得不说还是大帝都有钱。再继续走，就到了白河堡水库，又称为燕山天池。水库是北京水源之一，来水库边野营的人也不少，有人还在湖边垂钓。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6449_zps3b9d4aa9.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;继续东行，在岔路口沿着S309，朝着千家店镇进发。这时我们便进入了白河峡谷。峡谷两边都是高耸的山峦，河谷地水流不大，毕竟北方缺水，有的地方甚至看不到水的迹象。河谷中生长着大量整齐的杨树，整齐的玉米地，还有零星的几件农房。&lt;br /&gt;
-而我们在经过百合峡谷某个弯道时也发生了一件小插曲：崔神的自行车链条在骑车时断掉了，拐弯时直接被甩出了车身。不过我们几个反而特别兴奋，因为这么逗比的事儿真是少见是吧诶嘿嘿嘿嘿。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6452_zps1fd8e6be.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;休整好车子，继续前进。河谷风非常大，因此虽然是缓下坡，常常也会因为风力太大而蹬得十分吃力。在山的阴影时也能感受到刺骨的寒风。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6461_zpsdf14351a.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;在河谷经过若干桥后、来到了延庆国家地质公园，从这里开始就是被称为百里画廊的一段路。这边主要是各种各样的石头，岩层，一路走来风景都不错。可惜没有时间静下来仔细了解其中的内容。我们于是走马观花地欣赏着公路两旁的景色。&lt;br /&gt;
-继续前进时，由于道路施工，走错了一小段路，后来绕道了正道上。&lt;br /&gt;
-再走了没多久来到了千家店镇。在镇上吃了午饭，饭后离开时饭店大妈对我们一顿吐槽对面餐馆，我们听了半天总结出来的就是：对面饭店生意好抢了大妈生意，大妈很不开心。不过还是有收获的，至少学到了“勺”这个新姿势。&lt;br /&gt;
-从千家店离开的时候，发现了一片花海，感觉很不错。驻足观看的游人也很多，不过令人惋惜的是有的花被破坏地挺严重。要是人人都爱护的话会更美。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6484_zps11a55601.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;接下来又是一段时间的赶路。路上看了夕阳、风车，过了隧道、大桥。由于我们想最后一天少走点路早点回学校，于是原计划今天只需要走到汤河口，最后多走了15km到达了琉璃庙镇。在镇上找到了一家便宜又实惠的住宿、三人间一晚80，床也干净也软，还能放下自行车。感觉是这几天住的最好的一次了。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6498_zps4a2b4462.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6502_zpsb7e8ecbb.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;总的来说、今天主要任务就是赶路，景色都是走马观花。不过在峡谷以及百里画廊中骑车也有种独特的韵味。110km+的起伏下坡路，加上风势猛烈，也不是一段轻松的旅途。想想明儿就能回学校还有点小激动呢哈哈。&lt;/p&gt;
-
-&lt;h4 id=&quot;section-6&quot;&gt;第五天&lt;/h4&gt;
-&lt;p&gt;今天是返程的一天。在住地啃完包子喝完豆浆，就踏上了返程之旅。&lt;br /&gt;
-从琉璃庙出发，沿着G111亿只走到S310，便开始了爬坡。山脚下大妈告诉我们有5km，实际只过了3km的上坡后就开始了长时间的下坡。&lt;br /&gt;
-下坡下到一个叫云梦仙境的景点时又开始了上坡。这一段路的特点就是起起伏伏几段上坡和下坡，幸好上坡路不是特别长。云梦仙境这里还有很多老大爷在用毛笔作画，还有个叫鬼谷庐的牌坊，后面是上山的阶梯。不过我们没有上去，继续埋头爬坡。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6517_zps9014f2db.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;爬坡一路上也遇到了不少景色，我们走走停停大概下午一点多左右到达了石城镇，在这里吃了一顿农家饭。饭菜味道相当不错，大娘大爷也很热情。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6521_zps6b4632fc.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;饭后，沿着S205，又是一大段起伏路后开始了放坡，放坡一段时间后就经过了密云水库。&lt;br /&gt;
-密云水库之后没多久就到了密云城区。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6543_zpsc387a848.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;不过此时我们几个都比较累，并且赶时间回去忙事情，回去的路上也再也没有什么非常值得一看的东西，继续骑车当人肉净化机也对身体不好（这么多理由！），于是我们想着坐980公交直接回北京。&lt;br /&gt;
-结果到了公交始发站才发现这里排满了长龙，并且公交的侧行李箱不让放车（有的说让，但是必须出示自己车子的发票证明是自己的车子， 否则不让）。于是我们陷入了两难。&lt;br /&gt;
-这时候周边的一些黑车司机开始和我们商量，经过一番权衡车子的安全以及费用，最后我们3人包下了一个小面包车回京，350大洋。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/2014-10/IMG_6545_zps4762c6a5.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;总的来说今天的收获就是：以后出门骑车一定要带发票。还有，在崇山峻岭中放坡，虽然很刺激，不过确实还是挺危险的，安全一定要放在第一位。今天的旅程也算给这几天的折腾画下了一个句号。&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/qi-xing-%5Bnil%5Dguo-qing/&quot;&gt;骑行－国庆&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on October 07, 2014.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[骑行－妙峰山]]></title>
- <link rel="alternate" type="text/html" href="http://qingye.me/qi-xing-miao-feng-shan/" />
-  <id>http://qingye.me/qi-xing-miao-feng-shan</id>
-  <published>2014-09-21T20:39:02+08:00</published>
-  <updated>2014-09-21T20:39:02+08:00</updated>
-  <author>
-    <name>Qing YE</name>
-    <uri>http://qingye.me</uri>
-    <email>youkochan233@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;p&gt;首先盗图一张，作者崔神。毕竟川藏大神，照个照片都这么有水准。
-接下来简要说说今儿骑行。&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/IMG_0053_zpsd72d7c7e.jpg&quot; alt=&quot;pic1&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;section&quot;&gt;基本信息&lt;/h3&gt;
-&lt;p&gt;时间：2014-9-21&lt;br /&gt;
-地点：妙峰山&lt;br /&gt;
-人物：我，文兄，崔神&lt;br /&gt;
-距离：128km（21km上坡）&lt;br /&gt;
-升降：1030m（软件是这么说的，我也没百度）&lt;br /&gt;
-食物：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;早餐：小笼包，虾皮汤&lt;/li&gt;
-  &lt;li&gt;午餐：农家饭（差评）&lt;/li&gt;
-  &lt;li&gt;晚饭：黄焖鸡&lt;/li&gt;
-  &lt;li&gt;零食：士力架两条，皮蛋一只，卤蛋一只，榨菜一包，海带丝一包，德福巧克力若干块，巧乐滋一枚，龙须牛肉一包，梨一只，肉松饼两枚。（。。。。这么一看还挺多的）&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;section-1&quot;&gt;经历&lt;/h3&gt;
-&lt;p&gt;早上6点50准时起床，洗个漱吃个饭就到了8点。崔神在北邮西门拍下了上图之后，我们便开始了这次的妙峰山（人肉空气净化）之行。&lt;/p&gt;
-
-&lt;p&gt;北邮至山脚的这段路木有什么亮点，唯一的亮点就是我们还走错路了。本来准备直接走阜成门往西走，结果还走过头一大截，最后结果就是我们多走了大概3km的路程。如下图：&lt;/p&gt;
-
-&lt;figure&gt;
-	&lt;a href=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/IMG_0053_zpsd72d7c7e.jpg&quot;&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/IMG_0053_zpsd72d7c7e.jpg&quot; alt=&quot;&quot; /&gt;&lt;/a&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;一路上经过了石景山区，门头沟区，一路上走走停停，一路基本都是缓坡上升，路上还在小店买了各种乱七八糟的食物。11:12分，到达金顶妙峰山牌坊。由此开始基本都是上坡路，一共21km。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/IMG_0010_zps6fa85e3e.jpg&quot; alt=&quot;pic3&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;牌坊这儿经常聚集着各种骑行的人，还经常有比较大型的车队，大部分都是在此休整一下，接下来就开始了累成狗的爬坡过程。&lt;/p&gt;
-
-&lt;p&gt;刚开始几公里都是特别缓的缓坡，比较无压力。
-&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/IMG_6023_zpsfcb2f62c.jpg&quot; alt=&quot;pic4&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;不过崔神说这里的坡是越来越陡，并且没有下坡全是上坡（后来发现后半段真的太累了。。。）。中途文兄的车子还出了点小问题。没事！我们有万能的崔神。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/IMG_0016_zps4edcd7b6.jpg&quot; alt=&quot;pic5&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;不知道走了几公里后坡路变的越来越陡（崔神说这还算好的），大盘再也蹬不动二档了，只能换小轮一点一点往上蹭，走了一大截都觉得快到终点时看到这么一块牌子，累觉不爱。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/IMG_6027_zpsc14c2463.jpg&quot; alt=&quot;pic6&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;毕竟太久没运动，加上体力消耗太快，带的食物基本都已经吃完，而肚子也不争气地饿了起来。而这荒郊前不着村后不着店，连个吃饭的地儿都没有。这个时候文兄早已经把骑行换成了徒步推车，而我在坚持了大约2公里后终于也加入了文兄的阵营。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/IMG_0056_zps6a53a74f.jpg&quot; alt=&quot;pic6.5&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;而崔神在这段路一直用崔深名言激励我们：&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;前面大约1km就有村子就可以吃饭了！
-前面500米就有地方吃东西了！&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;不得不说要是没有崔神一直给我们画饼要想上这么一段还真是难啊～&lt;/p&gt;
-
-&lt;p&gt;终于，我们到了一度被我们认为已经被拆迁（大雾）的村子，看到村子牌子真有种得到救赎的感觉。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/IMG_00161_zps6c4a895c.jpg&quot; alt=&quot;pic7&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;不过呢，对这个村子的印象在我在这里停留了30分钟后就有了质的变化。
-1. 饭菜难吃，且贵，蘑菇有种怪味（虽然老板说本来就是这个味道，但是我还真是不太信，就算是这个味儿吧。。。这个味你也敢卖这么贵啊）
-2. 坑。文兄困了不太想上想找个地方睡觉，问村民可否在家借宿一两小时，村民张口就是五十。简直不能忍。为此我们一致感慨再无淳朴村民。&lt;/p&gt;
-
-&lt;p&gt;大概就是这两点，其实主要原因还是本来出门就图个开开心心，总是被一群唯利是图的人坏了心情。&lt;/p&gt;
-
-&lt;p&gt;不说这个，饭后，继续开始了爬坡之路。村子之后距登顶还有5km，并且这5km是最陡的一段，由于海拔高（？），爬坡过程中又冷又热，相当难受。并且山涧中时不时刮过一阵阴风，真是让我后悔就穿了条短裤。下图雾（霾？）里面隐约能看到上山的路。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/IMG_0027_zpsf5c9f784.jpg&quot; alt=&quot;pic8&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;不过由于吃了饭，剩下的5公里都是骑上去的，中途大概休息了3次左右。每次累到不行的时候总能看到地上的标语“加油”，以及登顶返程人们对你的鼓励，于是感觉还是挺带劲儿的。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/IMG_0026_zpsfdb23ee6.jpg&quot; alt=&quot;pic9&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;最后的最后，终于到达了终点，激动得一比。毕竟很久没运动，毕竟新自行车，毕竟从来没爬过这么长的上坡，毕竟从来没骑自行车上升过四位数的高度，虽然在骑行高手看起来很渣，但是还是禁不住老泪纵横。附骑行成就图一发：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/IMG_00221_zps13c11fa1.jpg&quot; alt=&quot;pic10&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;下山的时候，死命捏住刹车，不然速度真是快得吓人。看山路上限速40，我们几个自行车都算超速了。下山的时候风刮得特别疼，脚直接麻木了，下次这种情况还是备好长裤护膝。放坡过程很快，不过一路上还是有种“我竟然骑了这么远的上坡”的感觉。返程一路比较轻松，比来的时候轻松多了。&lt;/p&gt;
-
-&lt;p&gt;总结，以后还是多锻炼，趁着喜欢折腾，有时间折腾，能折腾。&lt;/p&gt;
-
-&lt;p&gt;附：返程骑行数据，实际里程大于手机软件记录的历程，误差不超过5km（去的时候的数据被我误操作导致没有记录完整，不过一想反正中途还吃饭还推车啥的，是吧。。。还是用返程的吧哈哈哈哈哈哈哈哈）
-&lt;img src=&quot;http://i1378.photobucket.com/albums/ah108/youkochan1024/blog%20pic/IMG_0034_zps1b1c6dd0.jpg&quot; alt=&quot;pic11&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;return 0;&lt;/p&gt;
-
-
-    &lt;p&gt;&lt;a href=&quot;http://qingye.me/qi-xing-miao-feng-shan/&quot;&gt;骑行－妙峰山&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on September 21, 2014.&lt;/p&gt;
   </content>
 </entry>
 

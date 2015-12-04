@@ -5,25 +5,25 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>A Post with a Video &#8211; Simple Blog</title>
-<meta name="description" content="Custom written post descriptions are the way to go... if you're not lazy.">
-<meta name="keywords" content="sample post, video">
+<title>linux内核学习笔记（二） &#8211; Simple Blog</title>
+<meta name="description" content="On the way.">
+<meta name="keywords" content="kernel, linux, c">
 
 
 
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="A Post with a Video">
-<meta property="og:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
-<meta property="og:url" content="http://qingye.me/video-post/">
+<meta property="og:title" content="linux内核学习笔记（二）">
+<meta property="og:description" content="On the way.">
+<meta property="og:url" content="http://qingye.me/linux-note-2/">
 <meta property="og:site_name" content="Simple Blog">
 
 
 
 
 
-<link rel="canonical" href="http://qingye.me/video-post/">
+<link rel="canonical" href="http://qingye.me/linux-note-2/">
 <link href="http://qingye.me/feed.xml" type="application/atom+xml" rel="alternate" title="Simple Blog Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -121,9 +121,9 @@
     <header class="header-title">
       <div class="header-title-wrap">
         
-          <h1 class="entry-title"><a href="http://qingye.me/video-post/" rel="bookmark" title="A Post with a Video">A Post with a Video</a></h1>
+          <h1 class="entry-title"><a href="http://qingye.me/linux-note-2/" rel="bookmark" title="linux内核学习笔记（二）">linux内核学习笔记（二）</a></h1>
         
-        <h2><span class="entry-date date published"><time datetime="2013-06-25T00:00:00+08:00">June 25, 2013</time></span></h2>
+        <h2><span class="entry-date date published"><time datetime="2015-12-02T14:55:00+08:00">December 02, 2015</time></span></h2>
         
         <p class="entry-reading-time">
           <i class="fa fa-clock-o"></i>
@@ -134,22 +134,41 @@
       </div><!-- /.header-title-wrap -->
     </header>
     <div class="entry-content">
-      <iframe width="560" height="315" src="//www.youtube.com/embed/SU3kYxJmWuQ" frameborder="0"> </iframe>
+      <p>主要介绍一下Linux源码的一些结构（2.6）</p>
 
-<p>Video embeds are responsive and scale with the width of the main content block with the help of <a href="http://fitvidsjs.com/">FitVids</a>.</p>
+<!--more-->
 
-<p>Not sure if this only effects Kramdown or if it’s an issue with Markdown in general. But adding YouTube video embeds causes errors when building your Jekyll site. To fix add a space between the <code>&lt;iframe&gt;</code> tags and remove <code>allowfullscreen</code>. Example below:</p>
+<p>进入内核源代码树的根目录并列出它的子目录。</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;iframe</span> <span class="na">width=</span><span class="s">&quot;560&quot;</span> <span class="na">height=</span><span class="s">&quot;315&quot;</span> <span class="na">src=</span><span class="s">&quot;//www.youtube.com/embed/SU3kYxJmWuQ&quot;</span> <span class="na">frameborder=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span> <span class="nt">&lt;/iframe&gt;</span></code></pre></div>
+<ol>
+  <li>arch。该目录包含了与体系结构相关的文件。可以在arch/目录下看到针对ARM、Motorola 68K、s390、MIPS、Alpha、SPARC和IA64等处理器的子目录。</li>
+  <li>block。该目录主要包含块存储设备I/O调度算法的实现。</li>
+  <li>crypto。该目录实现了密码操作以及与加密相关的API，它们可被应用于WiFi设备驱动的加密算法等场合。</li>
+  <li>Documentation。该目录包含了内核中各个子系统的简要描述，它是你探究内核方面问题的第一站。</li>
+  <li>drivers。这个目录包含了大量设备类和外设控制器的驱动，包括字符、串口、内置集成电路（I2C）、个人计算机存储卡国际联盟（PCMCIA）、外 围组件互连（PCI）、通用串行总线（USB）、视频、音频、块、集成驱动电子设备（IDE）、小型计算机系统接口（SCSI）、CD-ROM、网络适配 器、异步传输模式（ATM）、蓝牙和内存技术设备（MTD）等。每一类设备对应drivers/下面的一个子目录，譬如PCMCIA驱动程序的源代码位于 drivers/pcmcia/目录，MTD驱动程序位于drivers/mtd/目录。drivers/下的这些子目录是本书的主要议题。</li>
+  <li>fs。这个目录包含了EXT3、EXT4、reiserfs、FAT、VFAT、sysfs、procfs、isofs、JFFS2、XFS、NTFS和NFS等文件系统的实现。</li>
+  <li>include。内核头文件位于此目录。该目录下以asm开头的子目录包含了与体系结构相关的头文件，比如include/asm-x86/子目录包含了x86体系架构的头文件，include/asm-arm/包含了ARM体系架构的头文件。</li>
+  <li>init。这个目录包含了高级别初始化和启动代码。</li>
+  <li>ipc。这个目录包含了对消息队列、信号、共享内存等进程间通信（IPC）机制的支持。</li>
+  <li>kernel。基本内核中与体系架构无关的部分。</li>
+  <li>lib。通用内核对象（kobject）处理程序、循环冗余码校验（CRC）计算函数等库函数例程位于此目录。</li>
+  <li>mm。这个目录包含了内存管理的实现。</li>
+  <li>net。该目录实现了网络协议，包括Internet协议第4版（IPv4）、IPv6、网际互联交换协议（IPX）、蓝牙、ATM、红外、链路访问过程平衡（LAPB）以及逻辑链路控制（LLC）。</li>
+  <li>scripts。内核编译过程中要使用的脚本位于此目录。</li>
+  <li>security。这个目录包含了针对安全的框架。</li>
+  <li>sound。Linux音频子系统位于此目录。</li>
+  <li>usr。此目录包含了initramfs 的实现。</li>
+</ol>
+
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="http://qingye.me/tags/#sample post" title="Pages tagged sample post" class="tag"><span class="term">sample post</span></a><a href="http://qingye.me/tags/#video" title="Pages tagged video" class="tag"><span class="term">video</span></a></span>
+        <span class="entry-tags"><a href="http://qingye.me/tags/#kernel" title="Pages tagged kernel" class="tag"><span class="term">kernel</span></a><a href="http://qingye.me/tags/#linux" title="Pages tagged linux" class="tag"><span class="term">linux</span></a><a href="http://qingye.me/tags/#c" title="Pages tagged c" class="tag"><span class="term">c</span></a></span>
         
         <div class="social-share">
   <ul class="socialcount socialcount-small inline-list">
-    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://qingye.me/video-post/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
-    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://qingye.me/video-post/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
-    <li class="googleplus"><a href="https://plus.google.com/share?url=http://qingye.me/video-post/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://qingye.me/linux-note-2/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://qingye.me/linux-note-2/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://qingye.me/linux-note-2/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
   </ul>
 </div><!-- /.social-share -->
       </footer>
@@ -158,7 +177,7 @@
     <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://qingye.me/readability-feature-post/" class="read-more-btn">Read More</a>
+      <a href="http://qingye.me/linux-note-1/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
       <h3><a href="http://qingye.me/linux-note-3/" title="linux学习笔记（三）—信号量">linux学习笔记（三）—信号量</a></h3>
@@ -173,7 +192,7 @@
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://qingye.me/linux-note-2/" title="linux内核学习笔记（二）">linux内核学习笔记（二）</a></h4>
+        <h4><a href="http://qingye.me/linux-note-1/" title="linux内核学习笔记（一）">linux内核学习笔记（一）</a></h4>
         <span>Published on December 02, 2015</span>
       </div><!-- /.list-item -->
     
