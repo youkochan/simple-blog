@@ -1,0 +1,520 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>leetcode-note-6 &#8211; Simple Blog</title>
+<meta name="description" content="On the way.">
+<meta name="keywords" content="leetcode, cpp, code">
+
+
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="leetcode-note-6">
+<meta property="og:description" content="On the way.">
+<meta property="og:url" content="http://blog.qingye.me/leetcode-note-6/">
+<meta property="og:site_name" content="Simple Blog">
+
+
+
+
+
+<link rel="canonical" href="http://blog.qingye.me/leetcode-note-6/">
+<link href="http://blog.qingye.me/feed.xml" type="application/atom+xml" rel="alternate" title="Simple Blog Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://blog.qingye.me/assets/css/main.css">
+
+<!-- Webfonts -->
+<!-- <link href="//fonts.useso.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.useso.com/css?family=monospace:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load MathJax -->
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<!-- Load Modernizr -->
+<script src="http://blog.qingye.me/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://blog.qingye.me/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://blog.qingye.me/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://blog.qingye.me/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://blog.qingye.me/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://blog.qingye.me/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://blog.qingye.me/images/apple-touch-icon-144x144-precomposed.png">
+
+
+
+</head>
+
+<body id="post" >
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+	<button class="dl-trigger">Open Menu</button>
+	<ul class="dl-menu">
+		<li><a href="http://blog.qingye.me/">Home</a></li>
+		<li>
+			<a href="#">About</a>
+			<ul class="dl-submenu">
+				<li>
+					<img src="http://blog.qingye.me/images/avatar2.jpg" alt="Qing YE photo" class="author-photo">
+					<h4>Qing YE</h4>
+					<p>You can code, they can not, that is pretty damn cool.</p>
+				</li>
+				<li><a href="http://blog.qingye.me/about/"><span class="btn btn-inverse">Learn More</span></a></li>
+				<li>
+					<a href="mailto:youkochan233@gmail.com"><i class="fa fa-fw fa-envelope"></i> Email</a>
+				</li>
+				
+				
+				
+				
+				<li>
+					<a href="http://github.com/youkochan"><i class="fa fa-fw fa-github"></i> GitHub</a>
+				</li>
+				
+				
+				
+				
+			</ul><!-- /.dl-submenu -->
+		</li>
+		<li>
+			<a href="#">Posts</a>
+			<ul class="dl-submenu">
+				<li><a href="http://blog.qingye.me/posts/">All Posts</a></li>
+				<li><a href="http://blog.qingye.me/tags/">All Tags</a></li>
+			</ul>
+		</li>
+		
+	    
+	        
+	        
+	    <li><a href="http://geekfan.me" target="_blank">GeekFan.me</a></li>
+	  
+	</ul><!-- /.dl-menu -->
+</nav><!-- /.dl-menuwrapper -->
+
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <header class="header-title">
+      <div class="header-title-wrap">
+        
+          <h1 class="entry-title"><a href="http://blog.qingye.me/leetcode-note-6/" rel="bookmark" title="leetcode-note-6">leetcode-note-6</a></h1>
+        
+        <h2><span class="entry-date date published"><time datetime="2015-12-10T14:39:32+08:00">December 10, 2015</time></span></h2>
+        
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          
+          Reading time ~11 minutes
+        </p><!-- /.entry-reading-time -->
+        
+      </div><!-- /.header-title-wrap -->
+    </header>
+    <div class="entry-content">
+      <p>leetcode的又一些记录。</p>
+
+<!--more-->
+
+<h2 id="best-time-to-buy-and-sell-stock-with-cooldown">309 Best Time to Buy and Sell Stock with Cooldown</h2>
+
+<p><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/">309 Best Time to Buy and Sell Stock with Cooldown</a></p>
+
+<blockquote>
+  <p>Say you have an array for which the ith element is the price of a given stock on day i.<br />
+Design an algorithm to find the maximum profit. You may complete as many transactions as you like (ie, buy one and sell one share of the stock multiple times) with the following restrictions:<br />
+You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+After you sell your stock, you cannot buy stock on next day. (ie, cooldown 1 day)</p>
+</blockquote>
+
+<p>解题思路：用s0[i] s1[i] s2[i] 分别表示第 i 天处于 “未买入” “已买入” “已卖出” 状态时能获得的最大收益。可知：<br />
+s0[i] 为 s0[i-1] 与 s2[i-1] 中的最大值<br />
+s1[i] 为 s1[i-1] 与 s0[i-1] - prices[i] 中的最大值。因为第 i 天进行了买入操作。<br />
+s2[i] 为 s1[i-1] + prices[i]，因为需要第 i 天达到 s2 状态，则必须从 s1 状态执行卖出操作，不能由 s2 状态到达 s2 状态。</p>
+
+<p>代码如下：</p>
+
+<div class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">maxProfit</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">prices</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">prices</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+
+        <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">s0</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">s1</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">s2</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+
+        <span class="n">s0</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">s1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span> <span class="n">prices</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+        <span class="n">s2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">INT_MIN</span><span class="p">;</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span> <span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">s0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">s0</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">s2</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]);</span>
+            <span class="n">s1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">s1</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">s0</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+            <span class="n">s2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">s1</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">max</span><span class="p">(</span><span class="n">s0</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">max</span><span class="p">(</span><span class="n">s1</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">s2</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]));</span>
+    <span class="p">}</span>
+<span class="p">};</span></code></pre></div>
+
+<h2 id="additive-number">306 Additive Number</h2>
+
+<p><a href="https://leetcode.com/problems/additive-number/">Additive Number</a></p>
+
+<blockquote>
+  <p>Additive number is a string whose digits can form additive sequence.<br />
+A valid additive sequence should contain at least three numbers. Except for the first two numbers, each subsequent number in the sequence must be the sum of the preceding two.<br />
+For example:”112358” is an additive number because the digits can form an additive sequence: 1, 1, 2, 3, 5, 8.</p>
+</blockquote>
+
+<p>解题思路：DFS递归即可。</p>
+
+<div class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">bool</span> <span class="n">isAdditiveNumber</span><span class="p">(</span><span class="n">string</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">numbers</span><span class="p">;</span>    <span class="c1">// 已添加的数字，添加之前必须检查是否可以添加。</span>
+        <span class="kt">int</span> <span class="n">state</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>          <span class="c1">// 刚添加完数字state为0</span>
+        <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>            <span class="c1">// 待添加的数字的累加和</span>
+        <span class="kt">int</span> <span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>            <span class="c1">// 当前递归执行到的位置</span>
+        <span class="k">return</span> <span class="nf">f</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">numbers</span><span class="p">,</span> <span class="n">sum</span><span class="p">,</span> <span class="n">state</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">bool</span> <span class="n">f</span><span class="p">(</span><span class="n">string</span> <span class="n">num</span><span class="p">,</span> <span class="kt">int</span> <span class="n">pos</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">numbers</span><span class="p">,</span> <span class="kt">int</span> <span class="n">sum</span><span class="p">,</span> <span class="kt">int</span> <span class="n">state</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 终止条件</span>
+        <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">numbers</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">pos</span> <span class="o">==</span> <span class="n">num</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">state</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">)</span>
+                <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+            <span class="k">else</span>
+                <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">state</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">num</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;0&#39;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="o">||</span> <span class="n">sum</span> <span class="o">==</span> <span class="n">numbers</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">numbers</span><span class="p">[</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">])</span> <span class="p">{</span>
+                <span class="n">numbers</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">pos</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">numbers</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+                    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+                <span class="n">numbers</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>
+
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">sum</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">sum</span> <span class="o">+</span> <span class="n">num</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span> <span class="o">-</span> <span class="sc">&#39;0&#39;</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="o">||</span> <span class="n">sum</span> <span class="o">==</span> <span class="n">numbers</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">numbers</span><span class="p">[</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">])</span> <span class="p">{</span>
+            <span class="n">numbers</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">sum</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">pos</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">numbers</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+                <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+            <span class="n">numbers</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">pos</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">numbers</span><span class="p">,</span> <span class="n">sum</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span></code></pre></div>
+
+<h2 id="range-sum-query-2d---immutable">303/304 Range Sum Query (2D) - Immutable</h2>
+
+<p><a href="https://leetcode.com/problems/range-sum-query-immutable/">Range Sum Query - Immutable</a><br />
+<a href="https://leetcode.com/problems/range-sum-query-2d-immutable/">Range Sum Query 2D - Immutable</a></p>
+
+<p>这两个题的思路都是一样的，针对不变的区间的查询，用数组保存总和，再用后一段的和减去前一段的和。针对一维数组即 sum[i, j] = sum[0, j] - sum[0, i-1]。需要考虑一些边界条件。2D代码如下：</p>
+
+<div class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="k">class</span> <span class="nc">NumMatrix</span> <span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">result</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">NumMatrix</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">matrix</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">r</span><span class="p">)</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">size</span><span class="p">();</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">c</span> <span class="o">+</span> <span class="mi">1</span><span class="p">));</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">;</span> <span class="n">i</span> <span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">c</span><span class="p">;</span> <span class="n">j</span> <span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+                    <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+                <span class="k">else</span> <span class="p">{</span>
+                    <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span>  <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> 
+                                        <span class="o">-</span> <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kt">int</span> <span class="n">sumRegion</span><span class="p">(</span><span class="kt">int</span> <span class="n">row1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">col1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">row2</span><span class="p">,</span> <span class="kt">int</span> <span class="n">col2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">row1</span> <span class="o">&gt;</span> <span class="n">row2</span> <span class="o">||</span> <span class="n">col1</span> <span class="o">&gt;</span> <span class="n">col2</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">return</span>  <span class="n">result</span><span class="p">[</span><span class="n">row2</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col2</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+                <span class="o">-</span> <span class="n">result</span><span class="p">[</span><span class="n">row1</span><span class="p">][</span><span class="n">col2</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+                <span class="o">-</span> <span class="n">result</span><span class="p">[</span><span class="n">row2</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col1</span><span class="p">]</span>
+                <span class="o">+</span> <span class="n">result</span><span class="p">[</span><span class="n">row1</span><span class="p">][</span><span class="n">col1</span><span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">};</span></code></pre></div>
+
+<h2 id="longest-increasing-subsequence">300 Longest Increasing Subsequence</h2>
+
+<p><a href="https://leetcode.com/problems/longest-increasing-subsequence/">Longest Increasing Subsequence</a><br />
+<a href="http://www.csie.ntnu.edu.tw/~u91029/LongestIncreasingSubsequence.html">相关链接</a></p>
+
+<p>给定一个数组，求里面的一个最长的递增子序列（LIS）的长度。解法思路：</p>
+
+<ol>
+  <li>暴力深度优先递归：超时；</li>
+  <li>O(n^2)：使用一个数组lens，lens[i]数组保存以第i个元素结束可以组成的最长子序列的长度是多少。初始化为1。遍历每一个元素nums[i]开始遍历，若其后有元素nums[j]比它大，则把lens[j]增一。最终，lens数组中最大的数即所求。</li>
+  <li>O(NlogL)：N为给定序列长度，L为最LIS长度。代码如下：</li>
+</ol>
+
+<div class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cm">/*解法一，深度优先递归，结果超时*/</span>
+<span class="cm">/*class Solution {</span>
+<span class="cm">public:</span>
+<span class="cm">    int lengthOfLIS(vector&lt;int&gt;&amp; nums) {</span>
+<span class="cm">        return f(nums, 0, INT_MIN, 0);</span>
+<span class="cm">    }</span>
+
+<span class="cm">    int f(vector&lt;int&gt; &amp;nums, int pos, int max_num, int len) {</span>
+<span class="cm">        if (pos == nums.size())</span>
+<span class="cm">            return len;</span>
+<span class="cm">        int result1 = 0, result2 = 0;</span>
+<span class="cm">        if (nums[pos] &gt; max_num) {</span>
+<span class="cm">            result1 = f(nums, pos+1, nums[pos], len+1);</span>
+<span class="cm">        }</span>
+<span class="cm">        result2 = f(nums, pos+1, max_num, len);</span>
+<span class="cm">        return max(result1, result2);</span>
+<span class="cm">    }</span>
+<span class="cm">};*/</span>
+
+<span class="cm">/*解法二，lens[j]记录0到j的最长LIS长度*/</span>
+<span class="cm">/*class Solution {</span>
+<span class="cm">public:</span>
+<span class="cm">    int lengthOfLIS(vector&lt;int&gt;&amp; nums) {</span>
+<span class="cm">        int n = nums.size();</span>
+<span class="cm">        if (!n)</span>
+<span class="cm">            return 0;</span>
+<span class="cm">        vector&lt;int&gt; lens(n);</span>
+<span class="cm">        for (int &amp;len : lens)</span>
+<span class="cm">            len = 1;</span>
+<span class="cm">        for (int i = 0; i &lt; n; i ++)</span>
+<span class="cm">            for (int j = i + 1; j &lt; n; j ++)</span>
+<span class="cm">                if (nums[j] &gt; nums[i])</span>
+<span class="cm">                    lens[j] = max(lens[j], lens[i]+1);</span>
+<span class="cm">        int result = 0;</span>
+<span class="cm">        for (int len : lens)</span>
+<span class="cm">            result = max(result, len);</span>
+<span class="cm">        return result;</span>
+<span class="cm">    }</span>
+<span class="cm">};*/</span>
+
+<span class="cm">/*解法三，採取 Greedy 策略，以 Binary Search 加速，達到 O(NlogL) ， N 是給定序列的長度， L 是 LIS 的長度。</span>
+<span class="cm"> *首先要明确 result 数组的长度是只增不减的，</span>
+<span class="cm"> *在替换过程中有可能找到的结果不是一个LIS</span>
+<span class="cm"> *但是结果的长度一定是最长子序列的长度*/</span>
+<span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">lengthOfLIS</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">n</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">result</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="nl">num</span> <span class="p">:</span> <span class="n">nums</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">result</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">num</span><span class="p">);</span>
+            <span class="k">else</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">num</span> <span class="o">&gt;</span> <span class="n">result</span><span class="p">.</span><span class="n">back</span><span class="p">())</span> <span class="p">{</span>
+                    <span class="n">result</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">num</span><span class="p">);</span>
+                <span class="p">}</span>
+                <span class="k">else</span> <span class="p">{</span>
+                    <span class="o">*</span><span class="n">lower_bound</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">result</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">num</span><span class="p">)</span> <span class="o">=</span> <span class="n">num</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="cm">/*for (int r : result) {</span>
+<span class="cm">                cout &lt;&lt; r &lt;&lt; &quot; &quot;;</span>
+<span class="cm">            }</span>
+<span class="cm">            cout &lt;&lt; endl;*/</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">};</span></code></pre></div>
+
+<h2 id="serialize-and-deserialize-binary-tree">297 Serialize and Deserialize Binary Tree</h2>
+
+<p><a href="https://leetcode.com/problems/serialize-and-deserialize-binary-tree/">Serialize and Deserialize Binary Tree</a></p>
+
+<p>将一个树结构序列化，然后又还原。使用递归思想，定义字符串形式为</p>
+
+<blockquote>
+  <p>val(left,right)</p>
+</blockquote>
+
+<p>其中，val表示节点的值，left以及right依旧也是一个符合上述格式的字符串。</p>
+
+<p>代码如下：</p>
+
+<div class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cm">/**</span>
+<span class="cm"> * Definition for a binary tree node.</span>
+<span class="cm"> * struct TreeNode {</span>
+<span class="cm"> *     int val;</span>
+<span class="cm"> *     TreeNode *left;</span>
+<span class="cm"> *     TreeNode *right;</span>
+<span class="cm"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}</span>
+<span class="cm"> * };</span>
+<span class="cm"> */</span>
+<span class="k">class</span> <span class="nc">Codec</span> <span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">string</span> <span class="n">_s</span><span class="p">(</span><span class="n">TreeNode</span> <span class="o">*</span><span class="n">root</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">root</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span>
+            <span class="k">return</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">to_string</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">val</span><span class="p">);</span>
+        <span class="k">else</span>
+            <span class="k">return</span> <span class="n">to_string</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">val</span><span class="p">)</span> <span class="o">+</span>
+                    <span class="s">&quot;(&quot;</span> <span class="o">+</span> <span class="n">_s</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">)</span> <span class="o">+</span>
+                    <span class="s">&quot;,&quot;</span> <span class="o">+</span> <span class="n">_s</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">)</span> <span class="o">+</span>
+                    <span class="s">&quot;)&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">TreeNode</span><span class="o">*</span> <span class="n">_d</span><span class="p">(</span><span class="n">string</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">return</span> <span class="k">nullptr</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">lidx</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">find_first_of</span><span class="p">(</span><span class="s">&quot;(&quot;</span><span class="p">);</span>
+        <span class="c1">// 寻找分割的逗号</span>
+        <span class="kt">int</span> <span class="n">midx</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">-</span><span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;,&#39;</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">midx</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;)&#39;</span><span class="p">)</span>
+                <span class="n">count</span> <span class="o">++</span><span class="p">;</span>
+            <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;(&#39;</span><span class="p">)</span>
+                <span class="n">count</span> <span class="o">--</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">lidx</span> <span class="o">==</span> <span class="n">string</span><span class="o">::</span><span class="n">npos</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="n">TreeNode</span><span class="p">(</span><span class="n">stoi</span><span class="p">(</span><span class="n">data</span><span class="p">));</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="n">TreeNode</span> <span class="o">*</span><span class="n">newnode</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeNode</span><span class="p">(</span><span class="n">stoi</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">lidx</span><span class="p">)));</span>
+            <span class="n">newnode</span><span class="o">-&gt;</span><span class="n">left</span> <span class="o">=</span> <span class="n">_d</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="n">lidx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">midx</span><span class="o">-</span><span class="n">lidx</span><span class="o">-</span><span class="mi">1</span><span class="p">));</span>
+            <span class="n">newnode</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">=</span> <span class="n">_d</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="n">midx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">-</span><span class="n">midx</span><span class="o">-</span><span class="mi">2</span><span class="p">));</span>
+            <span class="k">return</span> <span class="n">newnode</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+<span class="k">public</span><span class="o">:</span>
+    <span class="c1">// Encodes a tree to a single string.</span>
+    <span class="n">string</span> <span class="n">serialize</span><span class="p">(</span><span class="n">TreeNode</span><span class="o">*</span> <span class="n">root</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">_s</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Decodes your encoded data to tree.</span>
+    <span class="n">TreeNode</span><span class="o">*</span> <span class="n">deserialize</span><span class="p">(</span><span class="n">string</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">_d</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span></code></pre></div>
+
+
+      <footer class="entry-meta">
+        <span class="entry-tags"><a href="http://blog.qingye.me/tags/#leetcode" title="Pages tagged leetcode" class="tag"><span class="term">leetcode</span></a><a href="http://blog.qingye.me/tags/#cpp" title="Pages tagged cpp" class="tag"><span class="term">cpp</span></a><a href="http://blog.qingye.me/tags/#code" title="Pages tagged code" class="tag"><span class="term">code</span></a></span>
+        
+        <div class="social-share">
+  <ul class="socialcount socialcount-small inline-list">
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://blog.qingye.me/leetcode-note-6/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://blog.qingye.me/leetcode-note-6/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://blog.qingye.me/leetcode-note-6/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+  </ul>
+</div><!-- /.social-share -->
+      </footer>
+    </div><!-- /.entry-content -->
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+    <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="http://blog.qingye.me/leetcode-note-5/" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="http://blog.qingye.me/leetcode-find-median-from-data-stream/" title="[leetcode] - Find Median from Data Stream">[leetcode] - Find Median from Data Stream</a></h3>
+      <p>Find Median from Data Stream[Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/)> Median is the mi...&hellip; <a href="http://blog.qingye.me/leetcode-find-median-from-data-stream/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
+    
+      <div class="list-item">
+        <h4><a href="http://blog.qingye.me/leetcode-note-5/" title="leetcode-note-5">leetcode-note-5</a></h4>
+        <span>Published on December 08, 2015</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="http://blog.qingye.me/leetcode-super-ugly-number/" title="[leetcode] - Super Ugly Number">[leetcode] - Super Ugly Number</a></h4>
+        <span>Published on December 07, 2015</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    <span>&copy; 2015 Qing YE. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="https://mademistakes.com/work/hpstr-jekyll-theme/" rel="nofollow">HPSTR Theme</a>.</span>
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+<script src="http://blog.qingye.me/assets/js/vendor/jquery-1.9.1.min.js"></script>
+<!-- <script>window.jQuery || document.write('<script src="http://blog.qingye.me/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script> -->
+<script src="http://blog.qingye.me/assets/js/scripts.min.js"></script>
+
+
+
+
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'qingye'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script'); s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	        
+
+</body>
+</html>

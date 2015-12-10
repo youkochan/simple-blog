@@ -1,0 +1,327 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>[leetcode] - Find Median from Data Stream &#8211; Simple Blog</title>
+<meta name="description" content="On the way.">
+<meta name="keywords" content="leetcode, cpp, code">
+
+
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[leetcode] - Find Median from Data Stream">
+<meta property="og:description" content="On the way.">
+<meta property="og:url" content="http://blog.qingye.me/leetcode-find-median-from-data-stream/">
+<meta property="og:site_name" content="Simple Blog">
+
+
+
+
+
+<link rel="canonical" href="http://blog.qingye.me/leetcode-find-median-from-data-stream/">
+<link href="http://blog.qingye.me/feed.xml" type="application/atom+xml" rel="alternate" title="Simple Blog Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://blog.qingye.me/assets/css/main.css">
+
+<!-- Webfonts -->
+<!-- <link href="//fonts.useso.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.useso.com/css?family=monospace:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load MathJax -->
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<!-- Load Modernizr -->
+<script src="http://blog.qingye.me/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://blog.qingye.me/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://blog.qingye.me/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://blog.qingye.me/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://blog.qingye.me/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://blog.qingye.me/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://blog.qingye.me/images/apple-touch-icon-144x144-precomposed.png">
+
+
+
+</head>
+
+<body id="post" >
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+	<button class="dl-trigger">Open Menu</button>
+	<ul class="dl-menu">
+		<li><a href="http://blog.qingye.me/">Home</a></li>
+		<li>
+			<a href="#">About</a>
+			<ul class="dl-submenu">
+				<li>
+					<img src="http://blog.qingye.me/images/avatar2.jpg" alt="Qing YE photo" class="author-photo">
+					<h4>Qing YE</h4>
+					<p>You can code, they can not, that is pretty damn cool.</p>
+				</li>
+				<li><a href="http://blog.qingye.me/about/"><span class="btn btn-inverse">Learn More</span></a></li>
+				<li>
+					<a href="mailto:youkochan233@gmail.com"><i class="fa fa-fw fa-envelope"></i> Email</a>
+				</li>
+				
+				
+				
+				
+				<li>
+					<a href="http://github.com/youkochan"><i class="fa fa-fw fa-github"></i> GitHub</a>
+				</li>
+				
+				
+				
+				
+			</ul><!-- /.dl-submenu -->
+		</li>
+		<li>
+			<a href="#">Posts</a>
+			<ul class="dl-submenu">
+				<li><a href="http://blog.qingye.me/posts/">All Posts</a></li>
+				<li><a href="http://blog.qingye.me/tags/">All Tags</a></li>
+			</ul>
+		</li>
+		
+	    
+	        
+	        
+	    <li><a href="http://geekfan.me" target="_blank">GeekFan.me</a></li>
+	  
+	</ul><!-- /.dl-menu -->
+</nav><!-- /.dl-menuwrapper -->
+
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <header class="header-title">
+      <div class="header-title-wrap">
+        
+          <h1 class="entry-title"><a href="http://blog.qingye.me/leetcode-find-median-from-data-stream/" rel="bookmark" title="[leetcode] - Find Median from Data Stream">[leetcode] - Find Median from Data Stream</a></h1>
+        
+        <h2><span class="entry-date date published"><time datetime="2015-12-10T23:01:00+08:00">December 10, 2015</time></span></h2>
+        
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          
+          Reading time ~3 minutes
+        </p><!-- /.entry-reading-time -->
+        
+      </div><!-- /.header-title-wrap -->
+    </header>
+    <div class="entry-content">
+      <p>Find Median from Data Stream</p>
+
+<!--more-->
+
+<p><a href="https://leetcode.com/problems/find-median-from-data-stream/">Find Median from Data Stream</a></p>
+
+<blockquote>
+  <p>Median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value. So the median is the mean of the two middle value.<br />
+Examples: [2,3,4] , the median is 3<br />
+[2,3], the median is (2 + 3) / 2 = 2.5<br />
+Design a data structure that supports the following two operations:
+void addNum(int num) - Add a integer number from the data stream to the data structure.<br />
+double findMedian() - Return the median of all elements so far.</p>
+</blockquote>
+
+<p>设计一种数据结构，可以支持一下两种操作：</p>
+
+<ol>
+  <li>增加一个数字</li>
+  <li>求所有数字的中位数</li>
+</ol>
+
+<p>解题思路：使用一个大顶堆以及一个小顶堆来保存所有添加过的数字，大顶堆和小顶堆满足以下性质：</p>
+
+<ol>
+  <li>大顶堆中的每一个元素都小于或等于小顶堆中的任意元素；</li>
+  <li>大顶堆中元素数目大于或者等于小顶堆中元素数目</li>
+</ol>
+
+<p>满足以上条件后，所求的中位数即：</p>
+
+<ol>
+  <li>当大顶堆数目等于小顶堆数目时，所求中位数即：(maxHeapTop + minHeapTop) / 2；</li>
+  <li>当数目不等时，所求中位数即大顶堆顶：maxHeapTop；</li>
+</ol>
+
+<p>堆的构建可以使用<code>std</code>中的函数<code>pop_heap</code>以及<code>push_heap</code>，大小顶堆的区别在于比较函数的不同。代码如下：</p>
+
+<div class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="nf">cmpMinHeap</span><span class="p">(</span><span class="kt">int</span> <span class="n">n1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n2</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="n">n1</span> <span class="o">&gt;=</span> <span class="n">n2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">cmpMaxHeap</span><span class="p">(</span><span class="kt">int</span> <span class="n">n1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n2</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="n">n1</span> <span class="o">&lt;=</span> <span class="n">n2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">MedianFinder</span> <span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+	<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">maxHeap</span><span class="p">;</span>	<span class="c1">// 保证大顶堆中的元素都小于小顶堆的元素</span>
+	<span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">minHeap</span><span class="p">;</span>	<span class="c1">// 保证小顶堆种的元素都大于大顶堆的元素</span>
+							<span class="c1">// 同时保证大顶堆中元素数目大于或等于小顶堆</span>
+<span class="k">public</span><span class="o">:</span>
+
+    <span class="c1">// Adds a number into the data structure.</span>
+    <span class="kt">void</span> <span class="n">addNum</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+    	<span class="k">if</span> <span class="p">(</span><span class="n">maxHeap</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    		<span class="n">maxHeap</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">num</span><span class="p">);</span>
+    		<span class="k">return</span><span class="p">;</span>
+       	<span class="p">}</span>
+    	<span class="k">if</span> <span class="p">(</span><span class="n">maxHeap</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">minHeap</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="p">{</span>
+    		<span class="c1">// 插入大顶堆，将插入后的堆顶推出后插入小顶堆</span>
+    		<span class="k">if</span> <span class="p">(</span><span class="n">maxHeap</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+    			<span class="n">maxHeap</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">num</span><span class="p">);</span>
+    			<span class="n">push_heap</span><span class="p">(</span><span class="n">maxHeap</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">maxHeap</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">cmpMaxHeap</span><span class="p">);</span>
+    			<span class="n">pop_heap</span><span class="p">(</span><span class="n">maxHeap</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">maxHeap</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">cmpMaxHeap</span><span class="p">);</span>
+    			<span class="kt">int</span> <span class="n">maxHeapTop</span> <span class="o">=</span> <span class="n">maxHeap</span><span class="p">.</span><span class="n">back</span><span class="p">();</span>
+    			<span class="n">maxHeap</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>
+    			<span class="n">minHeap</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">maxHeapTop</span><span class="p">);</span>
+    			<span class="n">push_heap</span><span class="p">(</span><span class="n">minHeap</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">minHeap</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">cmpMinHeap</span><span class="p">);</span>
+    		<span class="p">}</span>
+    		<span class="c1">// 直接插入小顶堆</span>
+    		<span class="k">else</span> <span class="p">{</span>
+    			<span class="n">minHeap</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">num</span><span class="p">);</span>
+    			<span class="n">push_heap</span><span class="p">(</span><span class="n">minHeap</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">minHeap</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">cmpMinHeap</span><span class="p">);</span>
+    		<span class="p">}</span>
+    	<span class="p">}</span>
+    	<span class="k">else</span> <span class="p">{</span>
+    		<span class="c1">// 直接插入大顶堆</span>
+    		<span class="k">if</span> <span class="p">(</span><span class="n">maxHeap</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+    			<span class="n">maxHeap</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">num</span><span class="p">);</span>
+    			<span class="n">push_heap</span><span class="p">(</span><span class="n">maxHeap</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">maxHeap</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">cmpMaxHeap</span><span class="p">);</span>
+    		<span class="p">}</span>
+    		<span class="c1">// 插入小顶堆，将插入后的堆顶推出后插入大顶堆</span>
+    		<span class="k">else</span> <span class="p">{</span>
+    			<span class="n">minHeap</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">num</span><span class="p">);</span>
+    			<span class="n">push_heap</span><span class="p">(</span><span class="n">minHeap</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">minHeap</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">cmpMinHeap</span><span class="p">);</span>
+    			<span class="n">pop_heap</span><span class="p">(</span><span class="n">minHeap</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">minHeap</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">cmpMinHeap</span><span class="p">);</span>
+    			<span class="kt">int</span> <span class="n">minHeapTop</span> <span class="o">=</span> <span class="n">minHeap</span><span class="p">.</span><span class="n">back</span><span class="p">();</span>
+    			<span class="n">minHeap</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>
+    			<span class="n">maxHeap</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">minHeapTop</span><span class="p">);</span>
+    			<span class="n">push_heap</span><span class="p">(</span><span class="n">maxHeap</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">maxHeap</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">cmpMaxHeap</span><span class="p">);</span>
+    		<span class="p">}</span>
+    	<span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Returns the median of current data stream</span>
+    <span class="kt">double</span> <span class="n">findMedian</span><span class="p">()</span> <span class="p">{</span>
+    	<span class="c1">// cout &lt;&lt; &quot;======&quot; &lt;&lt; endl;</span>
+    	<span class="c1">// for (int i : maxHeap) cout &lt;&lt; i &lt;&lt; &quot; &quot;; cout &lt;&lt; endl;</span>
+    	<span class="c1">// for (int i : minHeap) cout &lt;&lt; i &lt;&lt; &quot; &quot;; cout &lt;&lt; endl;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">maxHeap</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">minHeap</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="p">{</span>
+        	<span class="c1">// cout &lt;&lt; maxHeap[0] &lt;&lt; endl;</span>
+        	<span class="k">return</span> <span class="n">maxHeap</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span>
+        	<span class="c1">// cout &lt;&lt; double(maxHeap[0] + minHeap[0]) / 2 &lt;&lt; endl;</span>
+        	<span class="k">return</span> <span class="kt">double</span><span class="p">(</span><span class="n">maxHeap</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">minHeap</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">};</span></code></pre></div>
+
+
+      <footer class="entry-meta">
+        <span class="entry-tags"><a href="http://blog.qingye.me/tags/#leetcode" title="Pages tagged leetcode" class="tag"><span class="term">leetcode</span></a><a href="http://blog.qingye.me/tags/#cpp" title="Pages tagged cpp" class="tag"><span class="term">cpp</span></a><a href="http://blog.qingye.me/tags/#code" title="Pages tagged code" class="tag"><span class="term">code</span></a></span>
+        
+        <div class="social-share">
+  <ul class="socialcount socialcount-small inline-list">
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://blog.qingye.me/leetcode-find-median-from-data-stream/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://blog.qingye.me/leetcode-find-median-from-data-stream/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://blog.qingye.me/leetcode-find-median-from-data-stream/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+  </ul>
+</div><!-- /.social-share -->
+      </footer>
+    </div><!-- /.entry-content -->
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+    <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="http://blog.qingye.me/leetcode-note-6/" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="http://blog.qingye.me/leetcode-note-6/" title="leetcode-note-6">leetcode-note-6</a></h3>
+      <p>leetcode的又一些记录。309 Best Time to Buy and Sell Stock with Cooldown309 Best Time to Buy and Sell Stock with Cooldown  Say you have an array ...&hellip; <a href="http://blog.qingye.me/leetcode-note-6/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
+    
+      <div class="list-item">
+        <h4><a href="http://blog.qingye.me/leetcode-note-5/" title="leetcode-note-5">leetcode-note-5</a></h4>
+        <span>Published on December 08, 2015</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="http://blog.qingye.me/leetcode-super-ugly-number/" title="[leetcode] - Super Ugly Number">[leetcode] - Super Ugly Number</a></h4>
+        <span>Published on December 07, 2015</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    <span>&copy; 2015 Qing YE. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="https://mademistakes.com/work/hpstr-jekyll-theme/" rel="nofollow">HPSTR Theme</a>.</span>
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+<script src="http://blog.qingye.me/assets/js/vendor/jquery-1.9.1.min.js"></script>
+<!-- <script>window.jQuery || document.write('<script src="http://blog.qingye.me/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script> -->
+<script src="http://blog.qingye.me/assets/js/scripts.min.js"></script>
+
+
+
+
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'qingye'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script'); s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	        
+
+</body>
+</html>
