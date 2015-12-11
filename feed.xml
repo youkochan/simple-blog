@@ -4,13 +4,119 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://blog.qingye.me/feed.xml" />
 <link rel="alternate" type="text/html" href="http://blog.qingye.me" />
-<updated>2015-12-10T23:11:04+08:00</updated>
+<updated>2015-12-11T21:11:01+08:00</updated>
 <id>http://blog.qingye.me/</id>
 <author>
   <name>Qing YE</name>
   <uri>http://blog.qingye.me/</uri>
   <email>youkochan233@gmail.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[linux学习笔记（四）— 基本数据结构]]></title>
+ <link rel="alternate" type="text/html" href="http://blog.qingye.me/linux-note-4/" />
+  <id>http://blog.qingye.me/linux-note-4</id>
+  <published>2015-12-11T14:07:00+08:00</published>
+  <updated>2015-12-11T14:07:00+08:00</updated>
+  <author>
+    <name>Qing YE</name>
+    <uri>http://blog.qingye.me</uri>
+    <email>youkochan233@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;p&gt;linux内核代码阅读过程中采用了一大堆通用数据结构或者一些通用方法，首先单独拿出来分析一下。&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;listhead&quot;&gt;链表结构（list_head）&lt;/h2&gt;
+
+&lt;p&gt;链表结构声明在文件&lt;em&gt;List.h (linux-2.6.32.68\include\linux)&lt;/em&gt;中，为：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list_head&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list_head&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prev&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;需要注意的是链表结构体中并不包含数据域，在linux内核中，不是链表结构中包含数据，而是在数据结构中包含链表节点。&lt;/p&gt;
+
+&lt;p&gt;那么，如何通过链表地址访问到包含这个链表节点的数据结构呢？linux提供了一个叫 &lt;code&gt;list_entry(ptr, type, member)&lt;/code&gt; 的宏定义。 &lt;code&gt;ptr&lt;/code&gt; 为链表指针， &lt;code&gt;type&lt;/code&gt; 为数据结构的类型， &lt;code&gt;member&lt;/code&gt; 则是数据项类型中的某一个成员。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;n&quot;&gt;list_entry&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;proto_list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;proto&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#define list_entry(ptr, type, member) \&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;	container_of(ptr, type, member)&lt;/span&gt;
+
+&lt;span class=&quot;cp&quot;&gt;#define container_of(ptr, type, member) ({			\&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;	const typeof(((type *)0)-&amp;gt;member) * __mptr = (ptr);	\&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;	(type *)((char *)__mptr - offsetof(type, member)); })&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code&gt;list_entry&lt;/code&gt; 利用了数据结构中偏移量不变的性质来根据链表地址求得数据结构地址。&lt;/p&gt;
+
+&lt;h2 id=&quot;hlist&quot;&gt;哈希链表（hlist）&lt;/h2&gt;
+
+&lt;p&gt;hlist是 &lt;strong&gt;hash list&lt;/strong&gt; 的简称，即用拉链法实现的hash数据结构。由两部分组成：hash链表以及冲突链。&lt;/p&gt;
+
+&lt;p&gt;或许Linux链表设计者认为双头（list_head）结构对于hash表来说比较浪费，因此设计了另外一套hlist结构，单指针表头以及双循环链表：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hlist_head&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hlist_node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;first&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hlist_node&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hlist_node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pprev&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;表头之所以采用单指针，因为往往哈希表的规模都是超级巨大的，这样可以节省 KEY * 4BYTES 字节的空间。&lt;/p&gt;
+
+&lt;h2 id=&quot;likely--unlikely&quot;&gt;likely 以及 unlikely&lt;/h2&gt;
+
+&lt;p&gt;linux内核中有这么两个神奇的宏定义， likely 以及 unlikely，顾名思义，“可能”以及“不太可能”，位于文件&lt;em&gt;Compiler.h (linux-2.6.32.68\include\linux)&lt;/em&gt;，定义如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cp&quot;&gt;# define likely(x)      __builtin_expect(!!(x), 1)&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;# define unlikely(x)    __builtin_expect(!!(x), 0)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;其中 &lt;code&gt;__builtin_expect&lt;/code&gt; 是GCC编译器内置的关键词，用来优化生成的汇编代码。那么具体如何优化呢？&lt;/p&gt;
+
+&lt;figure&gt;
+	&lt;a href=&quot;/images/blog/linux-note-4-1.png&quot;&gt;
+		&lt;img src=&quot;/images/blog/linux-note-4-1.png&quot; alt=&quot;&quot; /&gt;
+	&lt;/a&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;这里要简单说一下CPU流水线的概念，一般情况下汇编代码是顺序生成的，因此，不进行优化时， &lt;code&gt;do_thing2&lt;/code&gt;的代码会先装入流水线，但是它“不太可能会执行”，所以流水线必须排空之后才能把 &lt;code&gt;do_thing3&lt;/code&gt; 的代码进行装入，造成了性能损失。但是优化后，&lt;code&gt;unlikely&lt;/code&gt; 的指令被移到了后方，这样程序更有可能顺序执行 &lt;code&gt;do_thing3&lt;/code&gt; ，而 &lt;code&gt;do_thing2&lt;/code&gt; 几乎就不需要装入流水线，大大提高了性能。&lt;/p&gt;
+
+&lt;h2 id=&quot;elf&quot;&gt;ELF文件格式&lt;/h2&gt;
+
+&lt;p&gt;ELF是*nix系统上可执行文件的标准格式。ELF格式的可执行文件可有多个section。ELF有三种不同的形式：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Relocatable：由编译器和汇编器生成，由linker处理它&lt;/li&gt;
+  &lt;li&gt;Executable：所有的重定位和符号解析都完成了，也许共享库的符号要在运行时候解析&lt;/li&gt;
+  &lt;li&gt;Shared Object：包含linker需要的符号信息和运行时刻所需的代码。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;linux&quot;&gt;Linux镜像分析&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;Init.h (linux-2.6.32.68\include\linux)&lt;/em&gt;文件中定义了各初始化代码所处的位置（处于ELF文件的某个section）。&lt;br /&gt;
+&lt;em&gt;Vmlinux.lds.h (linux-2.6.32.68\include\asm-generic)&lt;/em&gt;文件为使内核成为内核的 ld script，其主要目的是对输出文件中的 section 进行排序，并定义相关的符号名。在这个文件中定义了 &lt;code&gt;__initcall_start&lt;/code&gt; 以及 &lt;code&gt;__initcall_end&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;因此，编译器在编译整个源代码的时候，会把所有定义为 &lt;code&gt;__init&lt;/code&gt; 的函数放在以 &lt;code&gt;__initcall_start&lt;/code&gt; 开始、以 &lt;code&gt;__initcall_end&lt;/code&gt; 结尾的节中，在 &lt;code&gt;basic_init&lt;/code&gt; 中会逐个调用该节里的所有的函数。&lt;/p&gt;
+
+&lt;p&gt;系统初始化各个模块有两种方式，我们一般可以在编译内核的时候进行控制，分别为：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;嵌入内核中：将设备驱动模块嵌入整个linux内核（vmlinux）中，系统启动的时候会从 &lt;strong&gt;.init&lt;/strong&gt; 代码段执行他们的初始化函数，所以我们可以在编译好的 vmlinux 文件中找到 &lt;code&gt;__initcall_xxx_drv_init&lt;/code&gt; 函数。&lt;/li&gt;
+  &lt;li&gt;以模块方式进行加载：将设备驱动模块编译成独立的可执行文件，以 &lt;code&gt;.ko&lt;/code&gt; 为后缀名，放在 &lt;strong&gt;/lib/modules/2.6.xxx/kernel/&lt;/strong&gt; 目录下。系统启动时，内核启动代码执行 &lt;strong&gt;/etc/rc.d/rc.sysinit&lt;/strong&gt; 脚本，脚本中的代码会执行 &lt;code&gt;sys_init_module&lt;/code&gt; 内核函数把他们加载到内核中。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;[tips] 网上有资料说：凡是被 __init 修饰过的函数在被调用一次后，其占用的内存区会被清除掉，以便让其他代码可以使用。不知道是真是假。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+
+    &lt;p&gt;&lt;a href=&quot;http://blog.qingye.me/linux-note-4/&quot;&gt;linux学习笔记（四）— 基本数据结构&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://blog.qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on December 11, 2015.&lt;/p&gt;
+  </content>
+</entry>
 
 
 <entry>
@@ -678,7 +784,7 @@ Super ugly numbers are positive numbers whose all prime factors are in the given
 
 
 <entry>
-  <title type="html"><![CDATA[linux学习笔记（三）—信号量]]></title>
+  <title type="html"><![CDATA[linux学习笔记（三）— 信号量]]></title>
  <link rel="alternate" type="text/html" href="http://blog.qingye.me/linux-note-3/" />
   <id>http://blog.qingye.me/linux-note-3</id>
   <published>2015-12-04T23:56:00+08:00</published>
@@ -811,7 +917,7 @@ Super ugly numbers are positive numbers whose all prime factors are in the given
 &lt;p&gt;首先查看该信号量的等待列表是否为空，若为空，则把信号量的值加一；否则调用&lt;code&gt;__up&lt;/code&gt;操作，从该信号量的等待列表中找出第一个等待的进程，将其从等待列表中删除，然后将&lt;code&gt;waiter-&amp;gt;up&lt;/code&gt;置为1，从而结束&lt;code&gt;__down_common&lt;/code&gt;中的循环。再调用&lt;code&gt;wake_up_process&lt;/code&gt;方法来唤醒等待中的进程。&lt;/p&gt;
 
 
-    &lt;p&gt;&lt;a href=&quot;http://blog.qingye.me/linux-note-3/&quot;&gt;linux学习笔记（三）—信号量&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://blog.qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on December 04, 2015.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://blog.qingye.me/linux-note-3/&quot;&gt;linux学习笔记（三）— 信号量&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://blog.qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on December 04, 2015.&lt;/p&gt;
   </content>
 </entry>
 
@@ -4089,43 +4195,6 @@ mysql&amp;gt; FLUSH PRIVILEGES;
 &lt;p&gt;单表增加过大，如超过100个G。&lt;/p&gt;
 
     &lt;p&gt;&lt;a href=&quot;http://blog.qingye.me/ibdata1/&quot;&gt;缩小MySQL中ibdata1文件的大小&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://blog.qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on May 04, 2015.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[在mac上安装Python模块MySQLdb]]></title>
- <link rel="alternate" type="text/html" href="http://blog.qingye.me/intsall-mysql-python-in-mac/" />
-  <id>http://blog.qingye.me/intsall-mysql-python-in-mac</id>
-  <published>2015-04-08T11:13:51+08:00</published>
-  <updated>2015-04-08T11:13:51+08:00</updated>
-  <author>
-    <name>Qing YE</name>
-    <uri>http://blog.qingye.me</uri>
-    <email>youkochan233@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;p&gt;最近由于有必要使用MySQLdb，而使用pycharm自带的包管理界面进行安装时发现无论如何都安装失败，于是采用了手动安装的方式。具体步骤如下：&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;1 下载 MySQL for Python。&lt;a href=&quot;http://sourceforge.net/projects/mysql-python/files/mysql-python/&quot;&gt;链接&lt;/a&gt;，或者采用以下代码&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;wget http://sourceforge.net/projects/mysql-python/files/mysql-python/1.2.3/MySQL-python-1.2.3.tar.gz&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;2 解压执行&lt;code&gt;python setup.py build&lt;/code&gt;若出现&lt;code&gt;EnvironmentError: mysql_config not found&lt;/code&gt;问题则应该首先修改&lt;code&gt;setup_posix.py&lt;/code&gt;文件。将&lt;code&gt;mysql_config.path = &quot;mysql_config&quot;&lt;/code&gt;修改为：&lt;code&gt;mysql_config.path = &quot;/usr/local/mysql/bin/mysql_config&quot;&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;3 执行（可能需要sudo）：&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;python setup.py build&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;python setup.py install&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;4 在执行完上述步骤后仍然可能出现&lt;code&gt;import MySQLdb&lt;/code&gt;时的错误，此时需要执行以下指令：&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;sudo ln -s /usr/local/mysql/lib/libmysqlclient.18.dylib /usr/lib/libmysqlclient.18.dylib&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-    &lt;p&gt;&lt;a href=&quot;http://blog.qingye.me/intsall-mysql-python-in-mac/&quot;&gt;在mac上安装Python模块MySQLdb&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://blog.qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on April 08, 2015.&lt;/p&gt;
   </content>
 </entry>
 
