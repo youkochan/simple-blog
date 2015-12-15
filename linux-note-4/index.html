@@ -222,6 +222,21 @@
   <p>[tips] 网上有资料说：凡是被 __init 修饰过的函数在被调用一次后，其占用的内存区会被清除掉，以便让其他代码可以使用。不知道是真是假。</p>
 </blockquote>
 
+<h2 id="section">中断简单基础知识</h2>
+
+<p>不管是内部中断还是外部中断，系统都会根据接受到的中断信息，查询 <code>idt_table</code> ，表中按照中断源的位置排序组成，并对应中断服务程序（以及中断异常处理程序）的入口地址。Linux系统在初始化页式虚拟内存管理后，便调用 <code>trap_init</code> 和 <code>init_IRQ</code> 两个函数进行ing中断机制的初始化。</p>
+
+<h2 id="section-1">中断相关的锁</h2>
+
+<ul>
+  <li><code>local_irq_disable</code> / <code>local_irq_enable</code> ，表示只是对当前执行上下文的CPU进行开/关中断操作。</li>
+  <li><code>spin_lock</code> / <code>spin_inlock</code> ，采用的方式是让一个进程运行，其他进程进行忙等待。目前大多数计算机都是单CPU系统（多核并不是多CPU），而在单CPU系统上微观来说任意时刻仅仅只有一个进程在运行，因此在单处理器系统中这两函数被定义为空。</li>
+</ul>
+
+<h2 id="semaphore--spinlock">semaphore 与 spin_lock</h2>
+
+<p>这两个机制解决的问题都是进程之间的互斥问题，都是让一个进程退出临界区后再让另一个进程进入的方法。sempahore机制实行的是让进程暂时让出CPU，进入等待队列等待的策略。而spin_lock实行的却是让一个进程在原地空转，等待另一个进程结束的策略。</p>
+
 
       <footer class="entry-meta">
         <span class="entry-tags"><a href="http://blog.qingye.me/tags/#kernel" title="Pages tagged kernel" class="tag"><span class="term">kernel</span></a><a href="http://blog.qingye.me/tags/#linux" title="Pages tagged linux" class="tag"><span class="term">linux</span></a><a href="http://blog.qingye.me/tags/#c" title="Pages tagged c" class="tag"><span class="term">c</span></a></span>
@@ -242,20 +257,20 @@
       <a href="http://blog.qingye.me/leetcode-find-median-from-data-stream/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://blog.qingye.me/leetcode-find-median-from-data-stream/" title="[leetcode] - Find Median from Data Stream">[leetcode] - Find Median from Data Stream</a></h3>
-      <p>Find Median from Data StreamFind Median from Data Stream  Median is the middle value in an ordered integer list. If the size of the list ...&hellip; <a href="http://blog.qingye.me/leetcode-find-median-from-data-stream/">Continue reading</a></p>
+      <h3><a href="http://blog.qingye.me/linux-note-7/" title="linux学习笔记（七）— 配置网络系统">linux学习笔记（七）— 配置网络系统</a></h3>
+      <p>配置网络系统一章的杂七杂八的记录。## 有关socket系统调用进程每次调用socket返回的fd值即用户空间的fd数组的下标。0到3分别是标准输入，标准输出，标准错误。常规文件系统中常用的open系统操作并不能创建socket，只能使用socketAPI创建，一旦创建，I...&hellip; <a href="http://blog.qingye.me/linux-note-7/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://blog.qingye.me/leetcode-note-6/" title="leetcode-note-6">leetcode-note-6</a></h4>
-        <span>Published on December 10, 2015</span>
+        <h4><a href="http://blog.qingye.me/linux-note-6/" title="linux学习笔记（六）">linux学习笔记（六）</a></h4>
+        <span>Published on December 14, 2015</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://blog.qingye.me/leetcode-note-5/" title="leetcode-note-5">leetcode-note-5</a></h4>
-        <span>Published on December 08, 2015</span>
+        <h4><a href="http://blog.qingye.me/linux-note-5/" title="linux学习笔记（五）— VFS">linux学习笔记（五）— VFS</a></h4>
+        <span>Published on December 14, 2015</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

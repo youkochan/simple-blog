@@ -5,7 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>linux内核学习笔记（二） &#8211; Simple Blog</title>
+<title>linux学习笔记（七）— 配置网络系统 &#8211; Simple Blog</title>
 <meta name="description" content="On the way.">
 <meta name="keywords" content="kernel, linux, c">
 
@@ -14,16 +14,16 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="linux内核学习笔记（二）">
+<meta property="og:title" content="linux学习笔记（七）— 配置网络系统">
 <meta property="og:description" content="On the way.">
-<meta property="og:url" content="http://blog.qingye.me/linux-note-2/">
+<meta property="og:url" content="http://blog.qingye.me/linux-note-7/">
 <meta property="og:site_name" content="Simple Blog">
 
 
 
 
 
-<link rel="canonical" href="http://blog.qingye.me/linux-note-2/">
+<link rel="canonical" href="http://blog.qingye.me/linux-note-7/">
 <link href="http://blog.qingye.me/feed.xml" type="application/atom+xml" rel="alternate" title="Simple Blog Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -121,9 +121,9 @@
     <header class="header-title">
       <div class="header-title-wrap">
         
-          <h1 class="entry-title"><a href="http://blog.qingye.me/linux-note-2/" rel="bookmark" title="linux内核学习笔记（二）">linux内核学习笔记（二）</a></h1>
+          <h1 class="entry-title"><a href="http://blog.qingye.me/linux-note-7/" rel="bookmark" title="linux学习笔记（七）— 配置网络系统">linux学习笔记（七）— 配置网络系统</a></h1>
         
-        <h2><span class="entry-date date published"><time datetime="2015-12-02T14:55:00+08:00">December 02, 2015</time></span></h2>
+        <h2><span class="entry-date date published"><time datetime="2015-12-14T11:05:00+08:00">December 14, 2015</time></span></h2>
         
         <p class="entry-reading-time">
           <i class="fa fa-clock-o"></i>
@@ -134,31 +134,52 @@
       </div><!-- /.header-title-wrap -->
     </header>
     <div class="entry-content">
-      <p>主要介绍一下Linux源码的一些结构（2.6）</p>
+      <p>配置网络系统一章的杂七杂八的记录。</p>
 
 <!--more-->
 
-<p>进入内核源代码树的根目录并列出它的子目录。</p>
+<h2 id="socket">有关socket系统调用</h2>
 
-<ol>
-  <li>arch。该目录包含了与体系结构相关的文件。可以在arch/目录下看到针对ARM、Motorola 68K、s390、MIPS、Alpha、SPARC和IA64等处理器的子目录。</li>
-  <li>block。该目录主要包含块存储设备I/O调度算法的实现。</li>
-  <li>crypto。该目录实现了密码操作以及与加密相关的API，它们可被应用于WiFi设备驱动的加密算法等场合。</li>
-  <li>Documentation。该目录包含了内核中各个子系统的简要描述，它是你探究内核方面问题的第一站。</li>
-  <li>drivers。这个目录包含了大量设备类和外设控制器的驱动，包括字符、串口、内置集成电路（I2C）、个人计算机存储卡国际联盟（PCMCIA）、外 围组件互连（PCI）、通用串行总线（USB）、视频、音频、块、集成驱动电子设备（IDE）、小型计算机系统接口（SCSI）、CD-ROM、网络适配 器、异步传输模式（ATM）、蓝牙和内存技术设备（MTD）等。每一类设备对应drivers/下面的一个子目录，譬如PCMCIA驱动程序的源代码位于 drivers/pcmcia/目录，MTD驱动程序位于drivers/mtd/目录。drivers/下的这些子目录是本书的主要议题。</li>
-  <li>fs。这个目录包含了EXT3、EXT4、reiserfs、FAT、VFAT、sysfs、procfs、isofs、JFFS2、XFS、NTFS和NFS等文件系统的实现。</li>
-  <li>include。内核头文件位于此目录。该目录下以asm开头的子目录包含了与体系结构相关的头文件，比如include/asm-x86/子目录包含了x86体系架构的头文件，include/asm-arm/包含了ARM体系架构的头文件。</li>
-  <li>init。这个目录包含了高级别初始化和启动代码。</li>
-  <li>ipc。这个目录包含了对消息队列、信号、共享内存等进程间通信（IPC）机制的支持。</li>
-  <li>kernel。基本内核中与体系架构无关的部分。</li>
-  <li>lib。通用内核对象（kobject）处理程序、循环冗余码校验（CRC）计算函数等库函数例程位于此目录。</li>
-  <li>mm。这个目录包含了内存管理的实现。</li>
-  <li>net。该目录实现了网络协议，包括Internet协议第4版（IPv4）、IPv6、网际互联交换协议（IPX）、蓝牙、ATM、红外、链路访问过程平衡（LAPB）以及逻辑链路控制（LLC）。</li>
-  <li>scripts。内核编译过程中要使用的脚本位于此目录。</li>
-  <li>security。这个目录包含了针对安全的框架。</li>
-  <li>sound。Linux音频子系统位于此目录。</li>
-  <li>usr。此目录包含了initramfs 的实现。</li>
-</ol>
+<p>进程每次调用socket返回的fd值即用户空间的fd数组的下标。0到3分别是标准输入，标准输出，标准错误。</p>
+
+<p>常规文件系统中常用的open系统操作并不能创建socket，只能使用socketAPI创建，一旦创建，IO操作就和普通文件或者设备一样了。</p>
+
+<p>VFS为了使socket系统工作，socket提供了两个数据结构（位于 <em>Socket.c (linux-2.6.32.68\net)</em>）：</p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="k">const</span> <span class="k">struct</span> <span class="n">super_operations</span> <span class="n">sockfs_ops</span> <span class="o">=</span> <span class="p">{</span>
+	<span class="p">.</span><span class="n">alloc_inode</span> <span class="o">=</span>	<span class="n">sock_alloc_inode</span><span class="p">,</span>
+	<span class="p">.</span><span class="n">destroy_inode</span> <span class="o">=</span><span class="n">sock_destroy_inode</span><span class="p">,</span>
+	<span class="p">.</span><span class="n">statfs</span> <span class="o">=</span>	<span class="n">simple_statfs</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="k">static</span> <span class="k">const</span> <span class="k">struct</span> <span class="n">file_operations</span> <span class="n">socket_file_ops</span> <span class="o">=</span> <span class="p">{</span>
+	<span class="p">.</span><span class="n">owner</span> <span class="o">=</span>	<span class="n">THIS_MODULE</span><span class="p">,</span>
+	<span class="p">.</span><span class="n">llseek</span> <span class="o">=</span>	<span class="n">no_llseek</span><span class="p">,</span>
+	<span class="p">.</span><span class="n">aio_read</span> <span class="o">=</span>	<span class="n">sock_aio_read</span><span class="p">,</span>
+	<span class="p">.</span><span class="n">aio_write</span> <span class="o">=</span>	<span class="n">sock_aio_write</span><span class="p">,</span>
+	<span class="p">.</span><span class="n">poll</span> <span class="o">=</span>		<span class="n">sock_poll</span><span class="p">,</span>
+	<span class="p">.</span><span class="n">unlocked_ioctl</span> <span class="o">=</span> <span class="n">sock_ioctl</span><span class="p">,</span>
+<span class="cp">#ifdef CONFIG_COMPAT</span>
+	<span class="p">.</span><span class="n">compat_ioctl</span> <span class="o">=</span> <span class="n">compat_sock_ioctl</span><span class="p">,</span>
+<span class="cp">#endif</span>
+	<span class="p">.</span><span class="n">mmap</span> <span class="o">=</span>		<span class="n">sock_mmap</span><span class="p">,</span>
+	<span class="p">.</span><span class="n">open</span> <span class="o">=</span>		<span class="n">sock_no_open</span><span class="p">,</span>	<span class="cm">/* special open code to disallow open via /proc */</span>
+	<span class="p">.</span><span class="n">release</span> <span class="o">=</span>	<span class="n">sock_close</span><span class="p">,</span>
+	<span class="p">.</span><span class="n">fasync</span> <span class="o">=</span>	<span class="n">sock_fasync</span><span class="p">,</span>
+	<span class="p">.</span><span class="n">sendpage</span> <span class="o">=</span>	<span class="n">sock_sendpage</span><span class="p">,</span>
+	<span class="p">.</span><span class="n">splice_write</span> <span class="o">=</span> <span class="n">generic_splice_sendpage</span><span class="p">,</span>
+	<span class="p">.</span><span class="n">splice_read</span> <span class="o">=</span>	<span class="n">sock_splice_read</span><span class="p">,</span>
+<span class="p">};</span></code></pre></div>
+
+<p>前者是必须的用于创建VFS所必须的inode，使得VFS可以对其进行文件级别的管理；后者是可选的，用户层可以使用标准文件系统的操作如 <code>read()</code> <code>write()</code> 对socket文件进行操作，也可以采用系统提供的 <code>send()</code> <code>recv()</code> 接口对socket对象进行处理，但是二者都归一到网络内部实现的代码中。</p>
+
+<p>通过 <code>sock_map_fd</code> 只想了一个file指针，这个文件指针用来维护与该socket相关联的伪文件的状态。内核会在INET层和Network层分别创建一个实体来对应你打开的那个文件描述符，而后你对该文件描述符的操作都是通过这两个数据结构实体来完成的。因为系统为每次socket系统调用都创建了一个三元组 (file, socket, sock)，所以也不会出现文件的互斥操作，避免了锁的开销。应用程序要访问内核模块时，都通过fd去操作，内核会在fd对应的数组单元内查找到相应的socket，然后继续操作。</p>
+
+<figure>
+	<a href="/images/blog/linux-note-7-1.png">
+		<img src="/images/blog/linux-note-7-1.png" alt="" />
+	</a>
+</figure>
 
 
       <footer class="entry-meta">
@@ -166,9 +187,9 @@
         
         <div class="social-share">
   <ul class="socialcount socialcount-small inline-list">
-    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://blog.qingye.me/linux-note-2/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
-    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://blog.qingye.me/linux-note-2/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
-    <li class="googleplus"><a href="https://plus.google.com/share?url=http://blog.qingye.me/linux-note-2/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://blog.qingye.me/linux-note-7/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://blog.qingye.me/linux-note-7/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://blog.qingye.me/linux-note-7/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
   </ul>
 </div><!-- /.social-share -->
       </footer>
@@ -177,23 +198,23 @@
     <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://blog.qingye.me/linux-note-1/" class="read-more-btn">Read More</a>
+      <a href="http://blog.qingye.me/linux-note-6/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://blog.qingye.me/linux-note-7/" title="linux学习笔记（七）— 配置网络系统">linux学习笔记（七）— 配置网络系统</a></h3>
-      <p>配置网络系统一章的杂七杂八的记录。## 有关socket系统调用进程每次调用socket返回的fd值即用户空间的fd数组的下标。0到3分别是标准输入，标准输出，标准错误。常规文件系统中常用的open系统操作并不能创建socket，只能使用socketAPI创建，一旦创建，I...&hellip; <a href="http://blog.qingye.me/linux-note-7/">Continue reading</a></p>
+      <h3><a href="http://blog.qingye.me/linux-note-6/" title="linux学习笔记（六）">linux学习笔记（六）</a></h3>
+      <p>网络协议栈各部分内容初始化。网络基础设施初始化sock_init 函数完成了协议栈运行所需的一些基本面环境的初始化，位于 Socket.c (linux-2.6.32.68\net) 文件中，如网络内存管理（sk_init 中完成）、和上下层之间的联系（在创建socket文...&hellip; <a href="http://blog.qingye.me/linux-note-6/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://blog.qingye.me/linux-note-6/" title="linux学习笔记（六）">linux学习笔记（六）</a></h4>
+        <h4><a href="http://blog.qingye.me/linux-note-5/" title="linux学习笔记（五）— VFS">linux学习笔记（五）— VFS</a></h4>
         <span>Published on December 14, 2015</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://blog.qingye.me/linux-note-5/" title="linux学习笔记（五）— VFS">linux学习笔记（五）— VFS</a></h4>
-        <span>Published on December 14, 2015</span>
+        <h4><a href="http://blog.qingye.me/linux-note-4/" title="linux学习笔记（四）— 基本数据结构">linux学习笔记（四）— 基本数据结构</a></h4>
+        <span>Published on December 11, 2015</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->
