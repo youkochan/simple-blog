@@ -128,13 +128,15 @@
         <p class="entry-reading-time">
           <i class="fa fa-clock-o"></i>
           
-          Reading time ~1 minute
+          Reading time ~3 minutes
         </p><!-- /.entry-reading-time -->
         
       </div><!-- /.header-title-wrap -->
     </header>
     <div class="entry-content">
       <p>配置网络系统一章的杂七杂八的记录。</p>
+
+<p>aaa</p>
 
 <!--more-->
 
@@ -181,6 +183,137 @@
 	</a>
 </figure>
 
+<p>创建sock{}是调用 <code>sk_alloc</code> 接口，根据协议的不用创建不同的sock结构，但是返回的指针都是 <code>sock{}</code> 指针，返回后通过强制类型转换，转换为相应的数据结构。</p>
+
+<h2 id="fib">FIB系统</h2>
+
+<p>Linux系统中主要保存了三种与路由相关的数据：</p>
+
+<ul>
+  <li>物理上和本机相连接的主机地址信息表，相邻表（neigh_table{}）</li>
+  <li>保存了在网络访问中判断一个网络地址应该走什么路由的数据表，路由规则表（fib_table{}）</li>
+  <li>最新使用过的查询路由地址的缓存地址数据表，路由缓存（rtcache），由rtable{}节点组成</li>
+</ul>
+
+<p>FIB主要与用户层交互，RT Cahce主要跟协议栈交互。<code>ip_init</code> 函数就调用 <code>ip_rt_init</code> 为FIB搭好空架子。</p>
+
+<p>为了支持多种路由算法和多个路由表，linux内核创造了一个名词：FIB规则（FIB rules）。</p>
+
+<p>（2.6.14之前）查找路由规则是查找路由表的第一步，先搜索 fib_rules 以找到最匹配的报文规则，满足以下条件：</p>
+
+<ul>
+  <li>报文源地址与规则涵盖的源地址属于同一子网</li>
+  <li>报文目的地址与规则涵盖的目的地址属于同一子网</li>
+  <li>报文头设置的TOS与规则设置的一致</li>
+  <li>报文始终的网络接口设备（如果指定了接口的话）与规则设置的一致</li>
+</ul>
+
+<p>找到 fib_rule 之后，可以得到正确的FIB表，进而调用FIB表自身的 <code>lookup</code> 函数。 FIB内部数据结构声明于 <em>Ip_fib.h (linux-2.6.32.68\include\net)</em></p>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">struct</span> <span class="n">fib_table</span> <span class="p">{</span>
+	<span class="k">struct</span> <span class="n">hlist_node</span> <span class="n">tb_hlist</span><span class="p">;</span>
+	<span class="n">u32</span>		<span class="n">tb_id</span><span class="p">;</span>
+	<span class="kt">int</span>		<span class="n">tb_default</span><span class="p">;</span>
+	<span class="kt">int</span>		<span class="p">(</span><span class="o">*</span><span class="n">tb_lookup</span><span class="p">)(</span><span class="k">struct</span> <span class="n">fib_table</span> <span class="o">*</span><span class="n">tb</span><span class="p">,</span> <span class="k">const</span> <span class="k">struct</span> <span class="n">flowi</span> <span class="o">*</span><span class="n">flp</span><span class="p">,</span> <span class="k">struct</span> <span class="n">fib_result</span> <span class="o">*</span><span class="n">res</span><span class="p">);</span>
+	<span class="kt">int</span>		<span class="p">(</span><span class="o">*</span><span class="n">tb_insert</span><span class="p">)(</span><span class="k">struct</span> <span class="n">fib_table</span> <span class="o">*</span><span class="p">,</span> <span class="k">struct</span> <span class="n">fib_config</span> <span class="o">*</span><span class="p">);</span>
+	<span class="kt">int</span>		<span class="p">(</span><span class="o">*</span><span class="n">tb_delete</span><span class="p">)(</span><span class="k">struct</span> <span class="n">fib_table</span> <span class="o">*</span><span class="p">,</span> <span class="k">struct</span> <span class="n">fib_config</span> <span class="o">*</span><span class="p">);</span>
+	<span class="kt">int</span>		<span class="p">(</span><span class="o">*</span><span class="n">tb_dump</span><span class="p">)(</span><span class="k">struct</span> <span class="n">fib_table</span> <span class="o">*</span><span class="n">table</span><span class="p">,</span> <span class="k">struct</span> <span class="n">sk_buff</span> <span class="o">*</span><span class="n">skb</span><span class="p">,</span>
+				     <span class="k">struct</span> <span class="n">netlink_callback</span> <span class="o">*</span><span class="n">cb</span><span class="p">);</span>
+	<span class="kt">int</span>		<span class="p">(</span><span class="o">*</span><span class="n">tb_flush</span><span class="p">)(</span><span class="k">struct</span> <span class="n">fib_table</span> <span class="o">*</span><span class="n">table</span><span class="p">);</span>
+	<span class="kt">void</span>		<span class="p">(</span><span class="o">*</span><span class="n">tb_select_default</span><span class="p">)(</span><span class="k">struct</span> <span class="n">fib_table</span> <span class="o">*</span><span class="n">table</span><span class="p">,</span>
+					     <span class="k">const</span> <span class="k">struct</span> <span class="n">flowi</span> <span class="o">*</span><span class="n">flp</span><span class="p">,</span> <span class="k">struct</span> <span class="n">fib_result</span> <span class="o">*</span><span class="n">res</span><span class="p">);</span>
+
+	<span class="kt">unsigned</span> <span class="kt">char</span>	<span class="n">tb_data</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="p">};</span></code></pre></div>
+
+<ul>
+  <li><code>tb_id</code>：表的ID</li>
+  <li><code>tb_lookup</code>：表的查找操作</li>
+  <li><code>tb_insert</code>：表的插入操作</li>
+  <li><code>tb_delete</code>：表的删除操作</li>
+  <li><code>tb_dump</code>：从表中获取所有的路由（？）</li>
+  <li><code>tb_flash</code>：删除表中所有表项</li>
+  <li><code>tb_select_default</code>：选择缺省的路由</li>
+  <li><code>tb_data</code>：指向hash表的一个不透明指针，此表中的其他函数操作此字段，不能被直接访问。利用了编译器的一些特点，来专门存放未知大小的数据。使用不同的内核路由查找算法时结构不同；使用hash算法时，为 fn_hash{} 结构；使用LC-trie算法时，为 trie{} 结构。</li>
+</ul>
+
+<p>FIB是分层的，逻辑上分为五层：</p>
+
+<ol>
+  <li>根据本地路由与否，分为 local FIB 以及 main FIB</li>
+  <li>FIB 表中的 fn_hash 数组由33个 fn_zone{} 结构的指针组成，将所有的路由由子网掩码的长度（0~32）分为33个部分，每一个 zone 代表了一个唯一确定的子网掩码。 fn_hash 最后一个成员指向掩码最长的 zone 区。</li>
+  <li>fz_zone{} 结构有一个hash表，凡是掩码长度的路由都放在这个hash表中，hash表节点为 fin_node{}</li>
+  <li>同一子网中，有可能由于 TOS 等属性的不同而使用不同的路由，那么每一个 fib_node{} 节点有一个链表以存放 fib_alias{} 结构为节点的路由表项，用来保存路由的 TOS、类型、范围等属性。</li>
+  <li>fib_alias{} 只包含一个 fib_info{} 结构，此结构包含一些相应的参数，如协议、下一跳主机地址、外出的接口设备等。</li>
+</ol>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">struct</span> <span class="n">fn_zone</span> <span class="p">{</span>
+	<span class="k">struct</span> <span class="n">fn_zone</span>		<span class="o">*</span><span class="n">fz_next</span><span class="p">;</span>	<span class="cm">/* Next not empty zone	*/</span>
+	<span class="k">struct</span> <span class="n">hlist_head</span>	<span class="o">*</span><span class="n">fz_hash</span><span class="p">;</span>	<span class="cm">/* Hash table pointer	*/</span>
+	<span class="kt">int</span>			<span class="n">fz_nent</span><span class="p">;</span>	<span class="cm">/* Number of entries	*/</span>
+
+	<span class="kt">int</span>			<span class="n">fz_divisor</span><span class="p">;</span>	<span class="cm">/* Hash divisor		*/</span>
+	<span class="n">u32</span>			<span class="n">fz_hashmask</span><span class="p">;</span>	<span class="cm">/* (fz_divisor - 1)	*/</span>
+<span class="cp">#define FZ_HASHMASK(fz)		((fz)-&gt;fz_hashmask)</span>
+
+	<span class="kt">int</span>			<span class="n">fz_order</span><span class="p">;</span>	<span class="cm">/* Zone order		*/</span>
+	<span class="n">__be32</span>			<span class="n">fz_mask</span><span class="p">;</span>
+<span class="cp">#define FZ_MASK(fz)		((fz)-&gt;fz_mask)</span>
+<span class="p">};</span></code></pre></div>
+
+<ul>
+  <li><code>fz_next</code>：指向下一个非空的 fn_zone{} 结构</li>
+  <li><code>fz_hash</code>：哈希表指针</li>
+  <li><code>fz_nent</code>：实际就是 fib_node{} 的个数</li>
+  <li><code>fz_divisor</code>：和此 zone 相关的哈希表桶数</li>
+  <li><code>fz_hashmask</code>：一般为 fz_divisor-1</li>
+  <li><code>fz_order</code>：此 zone 位于 fn_hash 数组的位置</li>
+  <li><code>fz_mask</code>：子网掩码，如 “0xFFFF” 为16位子网。</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">struct</span> <span class="n">fib_node</span> <span class="p">{</span>
+	<span class="k">struct</span> <span class="n">hlist_node</span>	<span class="n">fn_hash</span><span class="p">;</span>
+	<span class="k">struct</span> <span class="n">list_head</span>	<span class="n">fn_alias</span><span class="p">;</span>
+	<span class="n">__be32</span>			<span class="n">fn_key</span><span class="p">;</span>
+	<span class="k">struct</span> <span class="n">fib_alias</span>        <span class="n">fn_embedded_alias</span><span class="p">;</span>
+<span class="p">};</span></code></pre></div>
+
+<ul>
+  <li><code>fn_hash</code>：链接到 <code>fz_hash</code> 的节点</li>
+  <li><code>fn_alias</code>：挂接 <code>fn_alias{}</code> 的链表</li>
+  <li><code>fn_key</code>：路由查找的某个关键值</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">struct</span> <span class="n">fib_alias</span> <span class="p">{</span>
+	<span class="k">struct</span> <span class="n">list_head</span>	<span class="n">fa_list</span><span class="p">;</span>
+	<span class="k">struct</span> <span class="n">fib_info</span>		<span class="o">*</span><span class="n">fa_info</span><span class="p">;</span>
+	<span class="n">u8</span>			<span class="n">fa_tos</span><span class="p">;</span>
+	<span class="n">u8</span>			<span class="n">fa_type</span><span class="p">;</span>
+	<span class="n">u8</span>			<span class="n">fa_scope</span><span class="p">;</span>
+	<span class="n">u8</span>			<span class="n">fa_state</span><span class="p">;</span>
+<span class="cp">#ifdef CONFIG_IP_FIB_TRIE</span>
+	<span class="k">struct</span> <span class="n">rcu_head</span>		<span class="n">rcu</span><span class="p">;</span>
+<span class="cp">#endif</span>
+<span class="p">};</span></code></pre></div>
+
+<ul>
+  <li><code>fa_list</code>：链接到 fn_alias 的节点</li>
+  <li><code>fa_info</code>：关于此节点的更多信息</li>
+  <li><code>fa_tos</code>：TOS</li>
+  <li><code>fa_type</code>：路由类型 TYPE</li>
+  <li><code>fa_scope</code>：路由范围 SCOPE</li>
+  <li><code>fa_state</code>：母鸡啊</li>
+  <li><code>rcu</code>：母鸡啊</li>
+</ul>
+
+<figure>
+	<a href="/images/blog/linux-note-7-2.png">
+		<img src="/images/blog/linux-note-7-2.png" alt="" />
+	</a>
+</figure>
+
+<p>以上各种数据结构之间的关系大致如上图。</p>
+
 
       <footer class="entry-meta">
         <span class="entry-tags"><a href="http://blog.qingye.me/tags/#kernel" title="Pages tagged kernel" class="tag"><span class="term">kernel</span></a><a href="http://blog.qingye.me/tags/#linux" title="Pages tagged linux" class="tag"><span class="term">linux</span></a><a href="http://blog.qingye.me/tags/#c" title="Pages tagged c" class="tag"><span class="term">c</span></a></span>
@@ -201,20 +334,20 @@
       <a href="http://blog.qingye.me/linux-note-6/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://blog.qingye.me/linux-note-6/" title="linux学习笔记（六）">linux学习笔记（六）</a></h3>
-      <p>网络协议栈各部分内容初始化。网络基础设施初始化sock_init 函数完成了协议栈运行所需的一些基本面环境的初始化，位于 Socket.c (linux-2.6.32.68\net) 文件中，如网络内存管理（sk_init 中完成）、和上下层之间的联系（在创建socket文...&hellip; <a href="http://blog.qingye.me/linux-note-6/">Continue reading</a></p>
+      <h3><a href="http://blog.qingye.me/sublime-plugins/" title="sublime 常用插件记录">sublime 常用插件记录</a></h3>
+      <p>（首先声明，这里的常用当然是指对于我来说的常用### YocDown链接：[YocDown](https://github.com/youkochan/yocdown)排第一的当然是自己写的插件，虽然还是很简单很弱比。主要作用是解析一些特定格式的 markdown 语法，仍...&hellip; <a href="http://blog.qingye.me/sublime-plugins/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://blog.qingye.me/linux-note-5/" title="linux学习笔记（五）— VFS">linux学习笔记（五）— VFS</a></h4>
-        <span>Published on December 14, 2015</span>
+        <h4><a href="http://blog.qingye.me/write-a-sublime-plugin/" title="编写一个sublime语法插件">编写一个sublime语法插件</a></h4>
+        <span>Published on January 03, 2016</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://blog.qingye.me/linux-note-4/" title="linux学习笔记（四）— 基本数据结构">linux学习笔记（四）— 基本数据结构</a></h4>
-        <span>Published on December 11, 2015</span>
+        <h4><a href="http://blog.qingye.me/2016/" title="2015总结">2015总结</a></h4>
+        <span>Published on January 02, 2016</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->
@@ -224,7 +357,7 @@
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2015 Qing YE. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="https://mademistakes.com/work/hpstr-jekyll-theme/" rel="nofollow">HPSTR Theme</a>.</span>
+    <span>&copy; 2016 Qing YE. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="https://mademistakes.com/work/hpstr-jekyll-theme/" rel="nofollow">HPSTR Theme</a>.</span>
   </footer>
 </div><!-- /.footer-wrapper -->
 

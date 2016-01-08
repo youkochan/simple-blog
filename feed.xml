@@ -4,13 +4,286 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://blog.qingye.me/feed.xml" />
 <link rel="alternate" type="text/html" href="http://blog.qingye.me" />
-<updated>2015-12-16T00:07:22+08:00</updated>
+<updated>2016-01-08T17:42:13+08:00</updated>
 <id>http://blog.qingye.me/</id>
 <author>
   <name>Qing YE</name>
   <uri>http://blog.qingye.me/</uri>
   <email>youkochan233@gmail.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[sublime 常用插件记录]]></title>
+ <link rel="alternate" type="text/html" href="http://blog.qingye.me/sublime-plugins/" />
+  <id>http://blog.qingye.me/sublime-plugins</id>
+  <published>2016-01-07T15:00:00+08:00</published>
+  <updated>2016-01-07T15:00:00+08:00</updated>
+  <author>
+    <name>Qing YE</name>
+    <uri>http://blog.qingye.me</uri>
+    <email>youkochan233@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;p&gt;（首先声明，这里的常用当然是指对于我来说的常用&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;yocdown&quot;&gt;YocDown&lt;/h3&gt;
+
+&lt;p&gt;链接：&lt;a href=&quot;https://github.com/youkochan/yocdown&quot;&gt;YocDown&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;排第一的当然是自己写的插件，虽然还是很简单很弱比。主要作用是解析一些特定格式的 markdown 语法，仍在不断完善中。&lt;/p&gt;
+
+&lt;h3 id=&quot;package-control&quot;&gt;Package Control&lt;/h3&gt;
+
+&lt;p&gt;不必多说&lt;/p&gt;
+
+&lt;h3 id=&quot;imesupport&quot;&gt;IMESupport&lt;/h3&gt;
+
+&lt;p&gt;用来解决中文输入法不跟随的问题。&lt;/p&gt;
+
+&lt;h3 id=&quot;terminal&quot;&gt;Terminal&lt;/h3&gt;
+
+&lt;p&gt;当你想要打开在当前文件所在的目录的终端，这个插件可以帮助你。不过，在默认情况下，它设置按 Ctrl / Cmd + Shift + T 键的快捷方式打开终端。不过这也是打开上次关闭的文件的快捷方式，你需要修改一个快捷键来兼容两个功能。&lt;/p&gt;
+
+&lt;h3 id=&quot;sublimerepl&quot;&gt;SublimeREPL&lt;/h3&gt;
+
+&lt;p&gt;这可能是对程序员最有用的插件。SublimeREPL 允许你在 Sublime Texxt 中运行各种语言（NodeJS ， Python，Ruby， Scala 和 Haskell 等等）。&lt;/p&gt;
+
+&lt;figure&gt;
+	&lt;a href=&quot;/images/blog/sublime-plugins-1.jpg&quot;&gt;
+		&lt;img src=&quot;/images/blog/sublime-plugins-1.jpg&quot; alt=&quot;&quot; /&gt;
+	&lt;/a&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&quot;allautocomplete&quot;&gt;AllAutocomplete&lt;/h3&gt;
+
+&lt;p&gt;Sublime Text 默认的 Autocomplete 功能只考虑当前的文件，而 AllAutocomplete 插件会搜索所有打开的文件来寻找匹配的提示词。&lt;/p&gt;
+
+&lt;figure&gt;
+	&lt;a href=&quot;/images/blog/sublime-plugins-2.jpg&quot;&gt;
+		&lt;img src=&quot;/images/blog/sublime-plugins-2.jpg&quot; alt=&quot;&quot; /&gt;
+	&lt;/a&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&quot;markdown-preview&quot;&gt;Markdown Preview&lt;/h3&gt;
+
+&lt;p&gt;用于预览 Markdown&lt;/p&gt;
+
+&lt;h3 id=&quot;docblockr&quot;&gt;DocBlockr&lt;/h3&gt;
+
+&lt;p&gt;如果你遵循的编码的风格很严格，这款插件能够使你的任务更容易。DocBlokr 帮助你创造你的代码注释，通过解析功能，参数，变量，并且自动添加基本项目。&lt;/p&gt;
+
+&lt;h3 id=&quot;section&quot;&gt;主题以及配色&lt;/h3&gt;
+
+&lt;p&gt;主要使用的是以下的几种&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Theme - Centurion&lt;/li&gt;
+  &lt;li&gt;Theme - Flatland&lt;/li&gt;
+  &lt;li&gt;Color Scheme - Monokai Extended&lt;/li&gt;
+&lt;/ul&gt;
+
+    &lt;p&gt;&lt;a href=&quot;http://blog.qingye.me/sublime-plugins/&quot;&gt;sublime 常用插件记录&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://blog.qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on January 07, 2016.&lt;/p&gt;
+  </content>
+</entry>
+
+
+<entry>
+  <title type="html"><![CDATA[编写一个sublime语法插件]]></title>
+ <link rel="alternate" type="text/html" href="http://blog.qingye.me/write-a-sublime-plugin/" />
+  <id>http://blog.qingye.me/write-a-sublime-plugin</id>
+  <published>2016-01-03T23:44:06+08:00</published>
+  <updated>2016-01-03T23:44:06+08:00</updated>
+  <author>
+    <name>Qing YE</name>
+    <uri>http://blog.qingye.me</uri>
+    <email>youkochan233@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;p&gt;这个坑先开在这里。鉴于网上插件太多，然而能实际符合平时sublime使用习惯的markdown插件却比较少，因此尝试写一下。&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;简介&lt;/h2&gt;
+
+&lt;p&gt;最近几天折腾了一下 &lt;code&gt;sublime text 2&lt;/code&gt;的语法插件，简而言之呢，就是通过正则表达式提取出符合一定格式的字符串，赋予相应的 &lt;code&gt;scopeName&lt;/code&gt;，而不同的 &lt;code&gt;scopeName&lt;/code&gt; 对应着不同的颜色，颜色则定义在 &lt;code&gt;Color Scheme&lt;/code&gt; 中。因此，使用不同的 &lt;code&gt;Color Scheme&lt;/code&gt; 不会影响语法解析的进行。&lt;/p&gt;
+
+&lt;p&gt;sublime text 插件开发使用到的文件有以下几种：&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;file or extensions&lt;/th&gt;
+      &lt;th&gt;introduce&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;*.py&lt;/td&gt;
+      &lt;td&gt;用于开发各类Python插件&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;package-metadata.json&lt;/td&gt;
+      &lt;td&gt;保存包的各种信息&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Main.sublime-menu&lt;/td&gt;
+      &lt;td&gt;插件主菜单的按钮&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Context.sublime-menu&lt;/td&gt;
+      &lt;td&gt;插件右键菜单按钮&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Default (Linux).sublime-keymap&lt;/td&gt;
+      &lt;td&gt;Linux下默认快捷键&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Default (OSX).sublime-keymap&lt;/td&gt;
+      &lt;td&gt;OS X下默认快捷键&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Default (Windows).sublime-keymap&lt;/td&gt;
+      &lt;td&gt;Windows下默认快捷键&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;*.sublime-commands&lt;/td&gt;
+      &lt;td&gt;插件的各种指令&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;*.sublime-completions&lt;/td&gt;
+      &lt;td&gt;插件的自动补全&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;*.sublime-settings&lt;/td&gt;
+      &lt;td&gt;一些其他设置&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;*.sublime-snippet&lt;/td&gt;
+      &lt;td&gt;快速完成的代码片段&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;*.JSON-tmLanguage&lt;/td&gt;
+      &lt;td&gt;AAAPackageDev支持的JSON格式的tmLanguage&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;*.YAML-tmLanguage&lt;/td&gt;
+      &lt;td&gt;AAAPackageDev支持的YAML格式的tmLanguage&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;.tmLanguage&lt;/td&gt;
+      &lt;td&gt;语法解析文件&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;.tmLanguage.cache&lt;/td&gt;
+      &lt;td&gt;语法解析文件的缓存&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;.tmTheme&lt;/td&gt;
+      &lt;td&gt;配色文件&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;最开始想写一个插件主要是因为使用 &lt;code&gt;Markdown Jekyll&lt;/code&gt; 时有配色会显示错误，就想自己研究一下 sublime 的机智来写一下。后来写的时候发现 sublime 插件开发其实也是挺简单的一件事情，因为 sublime 已经把各种可能会进行开发的地方都做好了相应的接口，比如开发语法文件只需要编写 &lt;code&gt;.tmLanguage&lt;/code&gt;，开发配色文件只需要编写 &lt;code&gt;tmTheme&lt;/code&gt; 文件即可。因此插件的开发难度不是很大。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Note that the regular expressions are matched against only a single line of the document at a time. That means it is not possible to use a pattern that matches multiple lines. The reason for this is technical: being able to restart the parser at an arbitrary line and having to re-parse only the minimal number of lines affected by an edit. In most situations it is possible to use the begin/end model to overcome this limitation.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;唯一暂时无法解决的问题是，sublime 采用的 textmate 编辑器，而这个编辑器匹配语法时是 &lt;a href=&quot;http://manual.macromates.com/en/language_grammars#language_rules&quot;&gt;按行匹配&lt;/a&gt; 的。因此如果需要进行跨行的正则匹配，就会出现很麻烦的情况。&lt;/p&gt;
+
+&lt;p&gt;比如对于代码块，如果需要前后两行都是空行，则无法进行处理。（其实 &lt;code&gt;Markdown Extended&lt;/code&gt; 在一定程度上用一些很复杂难懂的正则表达式解决了这个问题，而我比较希望自己写的东西尽可能简单，这样以后可以在此基础上增加新的需求，因此就没有往这方面更深入地研究）&lt;/p&gt;
+
+&lt;h3 id=&quot;tmlanguage&quot;&gt;tmLanguage&lt;/h3&gt;
+
+&lt;p&gt;这个文件定义了语法解析的方式。参考 &lt;a href=&quot;http://manual.macromates.com/en/language_grammars#language_rules&quot;&gt;Language Grammars&lt;/a&gt; 。主要关键字如下&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;key&lt;/th&gt;
+      &lt;th&gt;function&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;name&lt;/td&gt;
+      &lt;td&gt;给匹配的字符串分配的名字&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;match&lt;/td&gt;
+      &lt;td&gt;正则表达式（不能与begin以及end一起使用）&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;begin, end&lt;/td&gt;
+      &lt;td&gt;为了解决不能跨行的问题，采用的机制，对应多行的开始和结束&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;contentName&lt;/td&gt;
+      &lt;td&gt;给 begin/end 之间的内容分配名字&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;captures, beginCaptures, endCaptures&lt;/td&gt;
+      &lt;td&gt;给 &lt;code&gt;match&lt;/code&gt; 中的特定位置的匹配分配名字&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;include&lt;/td&gt;
+      &lt;td&gt;适用于嵌入式语法&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;tmtheme&quot;&gt;tmTheme&lt;/h3&gt;
+
+&lt;p&gt;这个文件定义了解析出的名字对应的颜色，可以通过 &lt;a href=&quot;http://tmtheme-editor.herokuapp.com/#!/editor/theme/Monokai%20Extended%20Mod&quot;&gt;这个在线应用&lt;/a&gt; 进行快速编辑。其中的 &lt;code&gt;scopeName&lt;/code&gt; 对应的就是 &lt;code&gt;tmLanguage&lt;/code&gt; 中的 &lt;code&gt;name&lt;/code&gt;。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-1&quot;&gt;一些比较蛋疼的在这里的正则文法&lt;/h3&gt;
+
+&lt;p&gt;以下写法为 &lt;code&gt;tmLanguage&lt;/code&gt; 中的写法。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;有时候需要将整行进行匹配（比如代码块的背景等），需要使用 &lt;code&gt;^.*\\n&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;(?=)&lt;/code&gt; 执行正向预测先行搜索的子表达式，即预测符合即可，但不匹配&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;(?!)&lt;/code&gt; 执行反向预测先行搜索的子表达式，即预测不符合，也不进行匹配&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;参考资料&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://manual.macromates.com/en/&quot;&gt;textmate manual&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+    &lt;p&gt;&lt;a href=&quot;http://blog.qingye.me/write-a-sublime-plugin/&quot;&gt;编写一个sublime语法插件&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://blog.qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on January 03, 2016.&lt;/p&gt;
+  </content>
+</entry>
+
+
+<entry>
+  <title type="html"><![CDATA[2015总结]]></title>
+ <link rel="alternate" type="text/html" href="http://blog.qingye.me/2016/" />
+  <id>http://blog.qingye.me/2016</id>
+  <published>2016-01-02T23:09:15+08:00</published>
+  <updated>2016-01-02T23:09:15+08:00</updated>
+  <author>
+    <name>Qing YE</name>
+    <uri>http://blog.qingye.me</uri>
+    <email>youkochan233@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;p&gt;总结一下2015，展望一下2016。&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;好像也没啥要总结的。回家了有闲心就写一个吧。&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;http://blog.qingye.me/2016/&quot;&gt;2015总结&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://blog.qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on January 02, 2016.&lt;/p&gt;
+  </content>
+</entry>
 
 
 <entry>
@@ -26,6 +299,8 @@
   </author>
   <content type="html">
     &lt;p&gt;配置网络系统一章的杂七杂八的记录。&lt;/p&gt;
+
+&lt;p&gt;aaa&lt;/p&gt;
 
 &lt;!--more--&gt;
 
@@ -71,6 +346,137 @@
 		&lt;img src=&quot;/images/blog/linux-note-7-1.png&quot; alt=&quot;&quot; /&gt;
 	&lt;/a&gt;
 &lt;/figure&gt;
+
+&lt;p&gt;创建sock{}是调用 &lt;code&gt;sk_alloc&lt;/code&gt; 接口，根据协议的不用创建不同的sock结构，但是返回的指针都是 &lt;code&gt;sock{}&lt;/code&gt; 指针，返回后通过强制类型转换，转换为相应的数据结构。&lt;/p&gt;
+
+&lt;h2 id=&quot;fib&quot;&gt;FIB系统&lt;/h2&gt;
+
+&lt;p&gt;Linux系统中主要保存了三种与路由相关的数据：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;物理上和本机相连接的主机地址信息表，相邻表（neigh_table{}）&lt;/li&gt;
+  &lt;li&gt;保存了在网络访问中判断一个网络地址应该走什么路由的数据表，路由规则表（fib_table{}）&lt;/li&gt;
+  &lt;li&gt;最新使用过的查询路由地址的缓存地址数据表，路由缓存（rtcache），由rtable{}节点组成&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;FIB主要与用户层交互，RT Cahce主要跟协议栈交互。&lt;code&gt;ip_init&lt;/code&gt; 函数就调用 &lt;code&gt;ip_rt_init&lt;/code&gt; 为FIB搭好空架子。&lt;/p&gt;
+
+&lt;p&gt;为了支持多种路由算法和多个路由表，linux内核创造了一个名词：FIB规则（FIB rules）。&lt;/p&gt;
+
+&lt;p&gt;（2.6.14之前）查找路由规则是查找路由表的第一步，先搜索 fib_rules 以找到最匹配的报文规则，满足以下条件：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;报文源地址与规则涵盖的源地址属于同一子网&lt;/li&gt;
+  &lt;li&gt;报文目的地址与规则涵盖的目的地址属于同一子网&lt;/li&gt;
+  &lt;li&gt;报文头设置的TOS与规则设置的一致&lt;/li&gt;
+  &lt;li&gt;报文始终的网络接口设备（如果指定了接口的话）与规则设置的一致&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;找到 fib_rule 之后，可以得到正确的FIB表，进而调用FIB表自身的 &lt;code&gt;lookup&lt;/code&gt; 函数。 FIB内部数据结构声明于 &lt;em&gt;Ip_fib.h (linux-2.6.32.68\include\net)&lt;/em&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fib_table&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hlist_node&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tb_hlist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;u32&lt;/span&gt;		&lt;span class=&quot;n&quot;&gt;tb_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;		&lt;span class=&quot;n&quot;&gt;tb_default&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;		&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tb_lookup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fib_table&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flowi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fib_result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;		&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tb_insert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fib_table&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fib_config&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;		&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tb_delete&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fib_table&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fib_config&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;		&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tb_dump&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fib_table&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;table&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sk_buff&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;skb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+				     &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;netlink_callback&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;		&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tb_flush&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fib_table&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;table&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;		&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tb_select_default&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fib_table&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;table&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+					     &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flowi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fib_result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+	&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;tb_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code&gt;tb_id&lt;/code&gt;：表的ID&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;tb_lookup&lt;/code&gt;：表的查找操作&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;tb_insert&lt;/code&gt;：表的插入操作&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;tb_delete&lt;/code&gt;：表的删除操作&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;tb_dump&lt;/code&gt;：从表中获取所有的路由（？）&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;tb_flash&lt;/code&gt;：删除表中所有表项&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;tb_select_default&lt;/code&gt;：选择缺省的路由&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;tb_data&lt;/code&gt;：指向hash表的一个不透明指针，此表中的其他函数操作此字段，不能被直接访问。利用了编译器的一些特点，来专门存放未知大小的数据。使用不同的内核路由查找算法时结构不同；使用hash算法时，为 fn_hash{} 结构；使用LC-trie算法时，为 trie{} 结构。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;FIB是分层的，逻辑上分为五层：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;根据本地路由与否，分为 local FIB 以及 main FIB&lt;/li&gt;
+  &lt;li&gt;FIB 表中的 fn_hash 数组由33个 fn_zone{} 结构的指针组成，将所有的路由由子网掩码的长度（0~32）分为33个部分，每一个 zone 代表了一个唯一确定的子网掩码。 fn_hash 最后一个成员指向掩码最长的 zone 区。&lt;/li&gt;
+  &lt;li&gt;fz_zone{} 结构有一个hash表，凡是掩码长度的路由都放在这个hash表中，hash表节点为 fin_node{}&lt;/li&gt;
+  &lt;li&gt;同一子网中，有可能由于 TOS 等属性的不同而使用不同的路由，那么每一个 fib_node{} 节点有一个链表以存放 fib_alias{} 结构为节点的路由表项，用来保存路由的 TOS、类型、范围等属性。&lt;/li&gt;
+  &lt;li&gt;fib_alias{} 只包含一个 fib_info{} 结构，此结构包含一些相应的参数，如协议、下一跳主机地址、外出的接口设备等。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fn_zone&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fn_zone&lt;/span&gt;		&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fz_next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;	&lt;span class=&quot;cm&quot;&gt;/* Next not empty zone	*/&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hlist_head&lt;/span&gt;	&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fz_hash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;	&lt;span class=&quot;cm&quot;&gt;/* Hash table pointer	*/&lt;/span&gt;
+	&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;			&lt;span class=&quot;n&quot;&gt;fz_nent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;	&lt;span class=&quot;cm&quot;&gt;/* Number of entries	*/&lt;/span&gt;
+
+	&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;			&lt;span class=&quot;n&quot;&gt;fz_divisor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;	&lt;span class=&quot;cm&quot;&gt;/* Hash divisor		*/&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;u32&lt;/span&gt;			&lt;span class=&quot;n&quot;&gt;fz_hashmask&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;	&lt;span class=&quot;cm&quot;&gt;/* (fz_divisor - 1)	*/&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#define FZ_HASHMASK(fz)		((fz)-&amp;gt;fz_hashmask)&lt;/span&gt;
+
+	&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;			&lt;span class=&quot;n&quot;&gt;fz_order&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;	&lt;span class=&quot;cm&quot;&gt;/* Zone order		*/&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;__be32&lt;/span&gt;			&lt;span class=&quot;n&quot;&gt;fz_mask&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#define FZ_MASK(fz)		((fz)-&amp;gt;fz_mask)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code&gt;fz_next&lt;/code&gt;：指向下一个非空的 fn_zone{} 结构&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;fz_hash&lt;/code&gt;：哈希表指针&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;fz_nent&lt;/code&gt;：实际就是 fib_node{} 的个数&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;fz_divisor&lt;/code&gt;：和此 zone 相关的哈希表桶数&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;fz_hashmask&lt;/code&gt;：一般为 fz_divisor-1&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;fz_order&lt;/code&gt;：此 zone 位于 fn_hash 数组的位置&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;fz_mask&lt;/code&gt;：子网掩码，如 “0xFFFF” 为16位子网。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fib_node&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hlist_node&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;fn_hash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list_head&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;fn_alias&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;__be32&lt;/span&gt;			&lt;span class=&quot;n&quot;&gt;fn_key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fib_alias&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;fn_embedded_alias&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code&gt;fn_hash&lt;/code&gt;：链接到 &lt;code&gt;fz_hash&lt;/code&gt; 的节点&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;fn_alias&lt;/code&gt;：挂接 &lt;code&gt;fn_alias{}&lt;/code&gt; 的链表&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;fn_key&lt;/code&gt;：路由查找的某个关键值&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fib_alias&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list_head&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;fa_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fib_info&lt;/span&gt;		&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fa_info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;u8&lt;/span&gt;			&lt;span class=&quot;n&quot;&gt;fa_tos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;u8&lt;/span&gt;			&lt;span class=&quot;n&quot;&gt;fa_type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;u8&lt;/span&gt;			&lt;span class=&quot;n&quot;&gt;fa_scope&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;u8&lt;/span&gt;			&lt;span class=&quot;n&quot;&gt;fa_state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#ifdef CONFIG_IP_FIB_TRIE&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rcu_head&lt;/span&gt;		&lt;span class=&quot;n&quot;&gt;rcu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#endif&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code&gt;fa_list&lt;/code&gt;：链接到 fn_alias 的节点&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;fa_info&lt;/code&gt;：关于此节点的更多信息&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;fa_tos&lt;/code&gt;：TOS&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;fa_type&lt;/code&gt;：路由类型 TYPE&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;fa_scope&lt;/code&gt;：路由范围 SCOPE&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;fa_state&lt;/code&gt;：母鸡啊&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;rcu&lt;/code&gt;：母鸡啊&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;figure&gt;
+	&lt;a href=&quot;/images/blog/linux-note-7-2.png&quot;&gt;
+		&lt;img src=&quot;/images/blog/linux-note-7-2.png&quot; alt=&quot;&quot; /&gt;
+	&lt;/a&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;以上各种数据结构之间的关系大致如上图。&lt;/p&gt;
 
 
     &lt;p&gt;&lt;a href=&quot;http://blog.qingye.me/linux-note-7/&quot;&gt;linux学习笔记（七）— 配置网络系统&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://blog.qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on December 14, 2015.&lt;/p&gt;
@@ -1637,7 +2043,7 @@ service apache2 reload&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;尽管布尔类型的YESNO匹配也是全文搜索的一个必要组成，它们本身是不够的。我们还需要知道每份文档和查询之间的相关程度。全文搜索引擎不仅要找到匹配的文档，还需要根据相关度对它们进行排序。&lt;/p&gt;
 
-&lt;p&gt;全文搜索相关度的公式，或者被称为相似度算法，将多个因素综合起来为没份文档产生一个相关度_score。在本章中，我们来讨论一下其中的一些变化的部分以及如何控制它们。&lt;/p&gt;
+&lt;p&gt;全文搜索相关度的公式，或者被称为相似度算法，将多个因素综合起来为每份文档产生一个相关度_score。在本章中，我们来讨论一下其中的一些变化的部分以及如何控制它们。&lt;/p&gt;
 
 &lt;p&gt;当然相关度并不只和全文查询相关；它也许会将结构化数据考虑在内。我们可能在寻找一个拥有某些卖点(空调，海景，免费的WiFi)的度假旅店。那么当某个度假旅店拥有的卖点越多，那么它也就越相关。或者我们希望除全文搜索本身的相关度外，同时将时间的远近，价格，流行度或者距离这类因素也考虑在内。&lt;/p&gt;
 
@@ -3006,609 +3412,6 @@ record
 
 
     &lt;p&gt;&lt;a href=&quot;http://blog.qingye.me/regression-note/&quot;&gt;Regression Note&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://blog.qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on July 09, 2015.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[shadowsocks/proxifier]]></title>
- <link rel="alternate" type="text/html" href="http://blog.qingye.me/shadowsocks-proxifier/" />
-  <id>http://blog.qingye.me/shadowsocks-proxifier</id>
-  <published>2015-07-07T15:42:08+08:00</published>
-  <updated>2015-07-07T15:42:08+08:00</updated>
-  <author>
-    <name>Qing YE</name>
-    <uri>http://blog.qingye.me</uri>
-    <email>youkochan233@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;h2 id=&quot;section&quot;&gt;介绍&lt;/h2&gt;
-
-&lt;p&gt;自从学校校园网改革一下就怨声载道，民不聊生，毕竟作为计算机+互联网方向的北邮，能让大多数人都不敢安心点开网页也是蛮拼的。因此催生出了各种省流量的方式，其中主要就是使用IPv6流量来代替IPv4流量，因为学校网关是不计IPv6流量的。然而现阶段IPv6并没有那么普及，大多数网站仍然是IPv4，因此，就需要两个工具即，shadowsocks以及proxifier。&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;h2 id=&quot;section-1&quot;&gt;本机环境&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;系统：OS X Yosemite 10.10.4 MacBook Pro (Retina, 13-inch, Late 2013)&lt;/li&gt;
-  &lt;li&gt;网络：IPv6（不计流量，不需网关登录）, IPv4（记流量，且需要网关登录）&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;shadowsocks&quot;&gt;shadowsocks&lt;/h2&gt;
-
-&lt;p&gt;我们可以使用 &lt;a href=&quot;https://github.com/shadowsocks/shadowsocks/&quot;&gt;shadowsocks&lt;/a&gt; 这个轻量级的代理，来将原本IPv4网页的访问请求，通过IPv6发送到shadowsocks服务器，转化为服务器对IPv4网页的访问，然后通过IPv6将访问网页获取的数据从服务器发送到本机。通过上述过程就可以绕开IPv4计费的机制（顺便还能科学上网，因为服务器在外国），从而达到了省钱的目的。&lt;/p&gt;
-
-&lt;p&gt;服务器端，按照上述链接简单安装shadowsocks即可，客户端的选择比较多，我选择的是 &lt;a href=&quot;https://github.com/ohdarling/GoAgentX&quot;&gt;GoAgentX&lt;/a&gt;。&lt;/p&gt;
-
-&lt;p&gt;安装GoAgentX后，新建一个服务类型，选择shadowsocks，配置界面如下：&lt;/p&gt;
-
-&lt;figure&gt;
-	&lt;a href=&quot;/images/blog/shadowsocks-1.png&quot;&gt;
-		&lt;img src=&quot;/images/blog/shadowsocks-1.png&quot; alt=&quot;&quot; /&gt;
-	&lt;/a&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;其中，主要如下：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;本地端口：客户端实际是通过在本地建立一个SOCKS5代理服务器，用这个代理服务器来实现代理。因此，本地端口即为你设定的本地代理服务器的端口。使用前需要判断一下这个端口是否被占用，否则无法建立代理服务器。&lt;/li&gt;
-  &lt;li&gt;服务器列表 / 服务器地址：在该栏填写提供服务的shadowsocks服务器的地址（IP）。在本文的上下文环境中这个地址需要是一个IPv6地址。&lt;/li&gt;
-  &lt;li&gt;服务器端口：提供服务的端口号，在服务器的配置文件中设定。&lt;/li&gt;
-  &lt;li&gt;连接超时：连接超时的时间（秒）&lt;/li&gt;
-  &lt;li&gt;加密方式：也需要和服务器配置文件中的加密方式一致。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;完成了上述配置后，就可以简单地使用shadowsocks的服务了。&lt;/p&gt;
-
-&lt;p&gt;GoAgentX有三种模式：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;独立模式：该模式下，GoAgentX仅仅建立一个本地的SOCKS5代理服务器，然后什么也不干。你可以根据自己的需要对于特定的程序进行单独配置。使用该模式即可与proxifier配合进行比较复杂的代理控制。&lt;/li&gt;
-  &lt;li&gt;全局模式：该模式下，GoAgentX在本地建立好SOCKS5代理后，将系统的全局代理（系统偏好设置–&amp;gt;网络–&amp;gt;高级–&amp;gt;代理）中的SOCKS代理设置为了该SOCKS5代理。注意，这时，系统中所有可以走SOCKS5代理的程序都会自动使用该代理，如Safari，iTunes，AppStore，网易云音乐等，然而别的不能走的程序就会使用直接连接的方式。&lt;/li&gt;
-  &lt;li&gt;自动代理配置（PAC）模式：该模式下，程序通过PAC文件判断该目标地址是否应该使用代理。PAC文件可以自己编辑，也可以使用Github上广大码农们维护的PAC文件，文件中记录了最新的哪些网址被GFW屏蔽。该模式下，既可以保证不被屏蔽的网站的访问速度（因为一般情况下直接连接国内网站的速度远大于代理），又可以保证可以访问被屏蔽网站。然而在本文的上下文环境中，这种模式基本没有用，因为我的目标是绝大多数使用代理，以达到省流量的目的。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;于是，通过上述总结可知，如果只是简单地使用shadowsocks服务，使用全局代理即可。GoAgentX还有贴心的规则功能，如下图，对于某些特殊的网站比如内网网关登录（10.3.8.211，也可以查询剩余流量）就可以使用直接连接方式。在这种环境下配置好之后基本只有Mac QQ，微信，steam等不支持SOCKS5连接的程序需要继续消耗流量。&lt;/p&gt;
-
-&lt;figure&gt;
-	&lt;a href=&quot;/images/blog/shadowsocks-2.png&quot;&gt;
-		&lt;img src=&quot;/images/blog/shadowsocks-2.png&quot; alt=&quot;&quot; /&gt;
-	&lt;/a&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;以上只是一些简单的GoAgentX功能，还有更复杂的我就没有深究了。通过以上配置发现steam不支持SOCK5，然而steam中的dota2隔三差五就是几百兆的更新，完全不够用，于是采用了新的方式使用proxifier来省钱。&lt;/p&gt;
-
-&lt;h2 id=&quot;proxifier&quot;&gt;proxifier&lt;/h2&gt;
-&lt;p&gt;先看一下官网这货的简介：&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Proxifier is a program that allows network applications that do not support working through proxy servers to operate through a SOCKS or HTTPS proxy or a chain of proxy servers.
-With Proxifier you can easily tunnel all TCP connections on the system or the selected ones only.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Proxifier allows you to:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Run any network applications through a proxy server. No special configuration is required for the software; the entire process is completely transparent.&lt;/li&gt;
-  &lt;li&gt;Access the Internet from a restricted network through a proxy server gateway.&lt;/li&gt;
-  &lt;li&gt;Bypass firewall restrictions.&lt;/li&gt;
-  &lt;li&gt;“Tunnel” the entire system (force all network connections including system connections to work through a proxy server).&lt;/li&gt;
-  &lt;li&gt;Resolve DNS names through a proxy server.&lt;/li&gt;
-  &lt;li&gt;Use flexible Proxification Rules with hostname and application name wildcards.&lt;/li&gt;
-  &lt;li&gt;Secure privacy by hiding your IP address.&lt;/li&gt;
-  &lt;li&gt;Work through a chain of proxy servers using different protocols.&lt;/li&gt;
-  &lt;li&gt;View information on current network activities (connections, hosts, times, bandwidth usage, etc.) in real-time.&lt;/li&gt;
-  &lt;li&gt;Maintain log files and traffic dumps.&lt;/li&gt;
-  &lt;li&gt;Get detailed reports on network errors.&lt;/li&gt;
-  &lt;li&gt;… and much more.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;说白了就是可以将原本不支持代理服务器的程序给强行用代理给代理了。简单的使用方式也是相当简单，下载，安装，配置服务器，DONE。一切都是透明的，配置好且运行proxifier后，完全察觉不出你已经被代理了。&lt;/p&gt;
-
-&lt;p&gt;操作步骤如下：&lt;/p&gt;
-
-&lt;figure&gt;
-	&lt;a href=&quot;/images/blog/shadowsocks-3.png&quot;&gt;
-		&lt;img src=&quot;/images/blog/shadowsocks-3.png&quot; alt=&quot;&quot; /&gt;
-	&lt;/a&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;首先，新建一个服务器，如上图，点ADD，填写好你的shadowsocks建立好的服务器就成。&lt;/p&gt;
-
-&lt;figure&gt;
-	&lt;a href=&quot;/images/blog/shadowsocks-4.png&quot;&gt;
-		&lt;img src=&quot;/images/blog/shadowsocks-4.png&quot; alt=&quot;&quot; /&gt;
-	&lt;/a&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;接着，配置你所需要的规则，如上图，proxifier从上往下检测你的规则，如果有冲突则选择后面的规则。default不可删除，没有匹配到规则时，默认使用default的规则，将default设置为上一个步骤新建的服务器则使得系统的所有连接都将使用这个代理；localhost规则也是自带的，防止本地连接也使用代理，最好不要禁用这条规则除非你明确知道你想要干嘛（笑）；ss-local规则貌似是配置好服务器后自动添加的，貌似是为了shadowsocks正常工作吧，我也没有仔细管（笑）；我自己加了两条记录，分别是为了正常使用ssh以及查看学校网关我的帐号的余额。&lt;/p&gt;
-
-&lt;p&gt;规则配置的一些指标如下（每一项都可以填多个值，用分号;分隔）：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Name：一些对你有意义的字符串&lt;/li&gt;
-  &lt;li&gt;Enable：是否启用这条规则，如果不启动，仅仅只是简单忽略它而已&lt;/li&gt;
-  &lt;li&gt;Applications：某些特定应用程序，可以使用正则匹配，比如”?”，”+”，”*”&lt;/li&gt;
-  &lt;li&gt;Targrt hosts：目的地址，可以使用域名，IPv4以及IPv6，也可以使用正则匹配&lt;/li&gt;
-  &lt;li&gt;Targrt ports：目的端口，可以用来针对某些特定的服务来制定规则，范围从1到65535（2^16-1）&lt;/li&gt;
-  &lt;li&gt;Action：决定Proxifier如何处理满足上述规则的请求。可以选择direct，直接连接；block，禁用；或者一个你之前配置好的服务器。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;至此，已经可以用配置好的代理来更新dota这个流量大户了。&lt;/p&gt;
-
-&lt;h2 id=&quot;section-2&quot;&gt;最后的问题&lt;/h2&gt;
-&lt;p&gt;1，为啥我这么配置了，登录steam的时候还是需要登录网关呢？&lt;/p&gt;
-
-&lt;p&gt;可能steam服务器采取了某些特殊机制，代理记录确实是有记录的，然而可能服务器端检测出代理还是可能别的什么问题，总是登录不上。不过不影响省流量的大目的，游戏更新依然走代理。&lt;/p&gt;
-
-&lt;p&gt;2，如果我手机需要使用代理怎么办呢？&lt;/p&gt;
-
-&lt;p&gt;安卓不清楚。越狱iOS手机不清楚。未越狱iOS现在电脑上的shadowsocks或者GoAgentX选择共享到局域网，然后手机进入「无线局域网」，选择和电脑在同一局域网的wifi，点击wifi信息，在下方代理服务器处填写你电脑的IP以及端口即可。亲测表示不越狱的iPhone仅仅可以代理Safari，AppStore等，和上述GoAgentX全局代理效果类似。无法使用QQ，微信等。然而可以使用这种方式来下载/更新APP。&lt;/p&gt;
-
-&lt;p&gt;3，这么折腾好像并没有什么卵用啊？&lt;/p&gt;
-
-&lt;p&gt;好像也是。不过这几天以来我的服务器走了25G流量，算上上下行，实际也就等于为我省了大约12G流量。这个数字对于学校的总共10G的流量来说还是挺值得的。（虽然也有原因是因为有了代理后用流量更肆无忌惮了。23333。&lt;/p&gt;
-
-&lt;p&gt;转载注明出处。&lt;/p&gt;
-
-
-    &lt;p&gt;&lt;a href=&quot;http://blog.qingye.me/shadowsocks-proxifier/&quot;&gt;shadowsocks/proxifier&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://blog.qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on July 07, 2015.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[introduction-to-mathjax-and-latex-expression]]></title>
- <link rel="alternate" type="text/html" href="http://mlworks.cn/posts/introduction-to-mathjax-and-latex-expression/" />
-  <id>http://blog.qingye.me/introduction-to-mathjax-and-latex-expression</id>
-  <published>2015-07-01T23:29:28+08:00</published>
-  <updated>2015-07-01T23:29:28+08:00</updated>
-  <author>
-    <name>Qing YE</name>
-    <uri>http://blog.qingye.me</uri>
-    <email>youkochan233@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;p&gt;网上找到了一篇比较好的通过MathJax以及LaTex在博客生成公式的博文，比较详细。&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-    &lt;p&gt;&lt;a href=&quot;http://blog.qingye.me/introduction-to-mathjax-and-latex-expression/&quot;&gt;introduction-to-mathjax-and-latex-expression&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://blog.qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on July 01, 2015.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[Decision Tree Note]]></title>
- <link rel="alternate" type="text/html" href="http://blog.qingye.me/decision-tree-note/" />
-  <id>http://blog.qingye.me/decision-tree-note</id>
-  <published>2015-06-30T15:25:44+08:00</published>
-  <updated>2015-06-30T15:25:44+08:00</updated>
-  <author>
-    <name>Qing YE</name>
-    <uri>http://blog.qingye.me</uri>
-    <email>youkochan233@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;p&gt;有关于决策树的笔记。&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;h1 id=&quot;section&quot;&gt;前言&lt;/h1&gt;
-&lt;p&gt;决策树是一种很容易让人理解的数学模型，通过模拟人的决策过程，来对给定的记录进行分类。可以理解为决策树就是一个流程图，根据记录的各项特征选择不同的分支，根据分支往下不断走直到走到叶子节点。如下图所示：&lt;/p&gt;
-
-&lt;figure&gt;
-	&lt;a href=&quot;/images/blog/descision-tree-1.png&quot;&gt;
-		&lt;img src=&quot;/images/blog/descision-tree-1.png&quot; alt=&quot;&quot; /&gt;
-	&lt;/a&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;上图是使用了ID3算法生成的一棵决策树，使用的数据集是机器学习实战中提供的隐形眼镜数据集。由此可见决策树生成后的决策过程是很清晰易懂的，因此，主要难点就在于如何去构建这一棵决策树。&lt;/p&gt;
-
-&lt;h1 id=&quot;section-1&quot;&gt;决策树构建过程&lt;/h1&gt;
-
-&lt;h2 id=&quot;section-2&quot;&gt;信息熵&lt;/h2&gt;
-&lt;p&gt;首先明确一下信息熵的概念。1948年，香农提出了“信息熵”的概念，解决了对信息的量化度量问题。通俗的说，信息熵代表了数据中的信息的多少，也反应了数据中的混乱程度。&lt;/p&gt;
-
-&lt;p&gt;假如事件A的全概率划分是（A1,A2,…,An），每部分发生的概率是 (p1,p2,…,pn)，那信息熵定义为：&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;H(x)=-\sum_{1}^{n}p_{i}\log_{2}p_{i}&lt;/script&gt;
-
-&lt;h2 id=&quot;id3&quot;&gt;ID3算法&lt;/h2&gt;
-&lt;p&gt;ID3算法的核心思想就是，使得决策树在搜索过程中，信息熵降低得越快，这样理论上就能最快地得出决策结果。我们使用隐形眼镜数据集来对该算法的过程进行一个简单描述。&lt;/p&gt;
-
-&lt;p&gt;数据集如下：&lt;/p&gt;
-
-&lt;table rules=&quot;groups&quot;&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;age&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;prescript&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;astigmatic&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;tearRate&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;lens&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;young&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;myope&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;reduced&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no lenses&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;young&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;myope&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;normal&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;soft&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;young&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;myope&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;yes&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;reduced&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no lenses&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;young&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;myope&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;yes&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;normal&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;hard&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;young&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;hyper&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;reduced&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no lenses&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;young&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;hyper&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;normal&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;soft&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;young&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;hyper&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;yes&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;reduced&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no lenses&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;young&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;hyper&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;yes&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;normal&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;hard&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;pre&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;myope&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;reduced&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no lenses&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;pre&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;myope&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;normal&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;soft&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;pre&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;myope&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;yes&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;reduced&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no lenses&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;pre&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;myope&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;yes&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;normal&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;hard&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;pre&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;hyper&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;reduced&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no lenses&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;pre&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;hyper&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;normal&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;soft&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;pre&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;hyper&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;yes&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;reduced&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no lenses&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;pre&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;hyper&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;yes&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;normal&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no lenses&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;presbyopic&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;myope&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;reduced&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no lenses&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;presbyopic&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;myope&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;normal&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no lenses&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;presbyopic&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;myope&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;yes&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;reduced&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no lenses&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;presbyopic&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;myope&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;yes&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;normal&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;hard&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;presbyopic&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;hyper&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;reduced&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no lenses&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;presbyopic&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;hyper&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;normal&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;soft&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;presbyopic&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;hyper&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;yes&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;reduced&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no lenses&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;presbyopic&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;hyper&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;yes&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;normal&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;no lenses&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;上述数据集有四个属性，属性集合 lensesLabels = [‘age’, ‘prescript’, ‘astigmatic’, ‘tearRate’]；标签集合 [‘no lenses’, ‘soft’, ‘hard’]，有三类。&lt;/p&gt;
-
-&lt;p&gt;数据集 lenses 包含24个训练样本，其中属于类别 &lt;code&gt;no lenses&lt;/code&gt; 15个，属于类别 &lt;code&gt;soft&lt;/code&gt; 5个，属于类别 &lt;code&gt;hard&lt;/code&gt; 4个&lt;/p&gt;
-
-&lt;p&gt;首先，计算整个训练样本的信息熵。有&lt;/p&gt;
-
-&lt;p&gt;$H(D)=-\frac{15}{24}\log_2{\frac{15}{24}}-\frac{5}{24}\log_2{\frac{4}{24}}-\frac{4}{24}\log_2{\frac{4}{24}}=1.3260$&lt;/p&gt;
-
-&lt;p&gt;接下来针对属性集合中的每一个属性来计算按该属性划分后得出的数据集的信息熵。&lt;/p&gt;
-
-&lt;h3 id=&quot;age&quot;&gt;age&lt;/h3&gt;
-&lt;p&gt;age 有三个取值，&lt;code&gt;young&lt;/code&gt;，&lt;code&gt;pre&lt;/code&gt;，&lt;code&gt;presbyopic&lt;/code&gt;。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;属于&lt;code&gt;young&lt;/code&gt;的样本共8个，其中：属于类别 &lt;code&gt;no lenses&lt;/code&gt; 4个，属于类别 &lt;code&gt;soft&lt;/code&gt; 2个，属于类别 &lt;code&gt;hard&lt;/code&gt; 2个&lt;/li&gt;
-  &lt;li&gt;属于&lt;code&gt;pre&lt;/code&gt;的样本共8个，其中：属于类别 &lt;code&gt;no lenses&lt;/code&gt; 5个，属于类别 &lt;code&gt;soft&lt;/code&gt; 2个，属于类别 &lt;code&gt;hard&lt;/code&gt; 1个&lt;/li&gt;
-  &lt;li&gt;属于&lt;code&gt;presbyopic&lt;/code&gt;的样本共8个，其中：属于类别 &lt;code&gt;no lenses&lt;/code&gt; 6个，属于类别 &lt;code&gt;soft&lt;/code&gt; 1个，属于类别 &lt;code&gt;hard&lt;/code&gt; 1个&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;则可知&lt;/p&gt;
-
-&lt;p&gt;$H(age, young)=-\frac{4}{8}\log_2{\frac{4}{8}}-\frac{2}{8}\log_2{\frac{2}{8}}-\frac{2}{8}\log_2{\frac{2}{8}}=1.500$&lt;/p&gt;
-
-&lt;p&gt;$H(age, pre)=-\frac{5}{8}\log_2{\frac{5}{8}}-\frac{2}{8}\log_2{\frac{2}{8}}-\frac{1}{8}\log_2{\frac{1}{8}}=1.2987$&lt;/p&gt;
-
-&lt;p&gt;$H(age, presbyopic)=-\frac{6}{8}\log_2{\frac{6}{8}}-\frac{1}{8}\log_2{\frac{1}{8}}-\frac{1}{8}\log_2{\frac{1}{8}}=1.0612$&lt;/p&gt;
-
-&lt;p&gt;$H(age)=\frac8{24}H(age, young)+\frac8{24}H(age, pre)+\frac8{24}H(age, presbyopic)=1.2866$&lt;/p&gt;
-
-&lt;h3 id=&quot;prescript&quot;&gt;prescript&lt;/h3&gt;
-&lt;p&gt;prescript，有两个取值，&lt;code&gt;myope&lt;/code&gt;以及&lt;code&gt;hyper&lt;/code&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;属于&lt;code&gt;myope&lt;/code&gt;的样本共12个，其中：属于类别 &lt;code&gt;no lenses&lt;/code&gt; 7个，属于类别 &lt;code&gt;soft&lt;/code&gt; 2个，属于类别 &lt;code&gt;hard&lt;/code&gt; 3个&lt;/li&gt;
-  &lt;li&gt;属于&lt;code&gt;hyper&lt;/code&gt;的样本共12个，其中：属于类别 &lt;code&gt;no lenses&lt;/code&gt; 8个，属于类别 &lt;code&gt;soft&lt;/code&gt; 3个，属于类别 &lt;code&gt;hard&lt;/code&gt; 1个&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;$H(prescript, myope)=-\frac{7}{12}\log_2{\frac{7}{12}}-\frac{2}{12}\log_2{\frac{2}{12}}-\frac{3}{12}\log_2{\frac{3}{12}}=1.3844$&lt;/p&gt;
-
-&lt;p&gt;$H(prescript, hyper)=-\frac{8}{12}\log_2{\frac{8}{12}}-\frac{3}{12}\log_2{\frac{3}{12}}-\frac{1}{12}\log_2{\frac{1}{12}}=1.1887$&lt;/p&gt;
-
-&lt;p&gt;$H(prescript)=\frac{12}{24}H(prescript, myope)+\frac{12}{24}H(prescript, hyper)=1.2865$&lt;/p&gt;
-
-&lt;h3 id=&quot;astigmatic&quot;&gt;astigmatic&lt;/h3&gt;
-&lt;p&gt;astigmatic有两个取值，&lt;code&gt;yes&lt;/code&gt;以及&lt;code&gt;no&lt;/code&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;属于&lt;code&gt;yes&lt;/code&gt;的样本共12个，其中：属于类别 &lt;code&gt;no lenses&lt;/code&gt; 8个，属于类别 &lt;code&gt;soft&lt;/code&gt; 0个，属于类别 &lt;code&gt;hard&lt;/code&gt; 4个&lt;/li&gt;
-  &lt;li&gt;属于&lt;code&gt;no&lt;/code&gt;的样本共12个，其中：属于类别 &lt;code&gt;no lenses&lt;/code&gt; 3个，属于类别 &lt;code&gt;soft&lt;/code&gt; 5个，属于类别 &lt;code&gt;hard&lt;/code&gt; 4个&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;$H(astigmatic, yes)=-\frac{8}{12}\log_2{\frac{8}{12}}-\frac{4}{12}\log_2{\frac{4}{12}}=0.9182$&lt;/p&gt;
-
-&lt;p&gt;$H(astigmatic, no)=-\frac{3}{12}\log_2{\frac{3}{12}}-\frac{5}{12}\log_2{\frac{5}{12}}-\frac{4}{12}\log_2{\frac{4}{12}}=1.5545$&lt;/p&gt;
-
-&lt;p&gt;$H(astigmatic)=\frac{12}{24}H(astigmatic, yes)+\frac{12}{24}H(astigmatic, no)=1.2363$&lt;/p&gt;
-
-&lt;h3 id=&quot;tearrate&quot;&gt;tearRate&lt;/h3&gt;
-&lt;p&gt;tearRate有两个取值，&lt;code&gt;reduced&lt;/code&gt;以及&lt;code&gt;normal&lt;/code&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;属于&lt;code&gt;reduced&lt;/code&gt;的样本共12个，其中：属于类别 &lt;code&gt;no lenses&lt;/code&gt; 3个，属于类别 &lt;code&gt;soft&lt;/code&gt; 5个，属于类别 &lt;code&gt;hard&lt;/code&gt; 4个&lt;/li&gt;
-  &lt;li&gt;属于&lt;code&gt;normal&lt;/code&gt;的样本共12个，其中：属于类别 &lt;code&gt;no lenses&lt;/code&gt; 12个，属于类别 &lt;code&gt;soft&lt;/code&gt; 0个，属于类别 &lt;code&gt;hard&lt;/code&gt; 0个&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;$H(tearRate, reduced)=-\frac{3}{12}\log_2{\frac{3}{12}}-\frac{5}{12}\log_2{\frac{5}{12}}-\frac{4}{12}\log_2{\frac{4}{12}}=1.5545$&lt;/p&gt;
-
-&lt;p&gt;$H(tearRate, normal)=0$&lt;/p&gt;
-
-&lt;p&gt;$H(tearRate)=\frac{12}{24}H(tearRate, reduced)+\frac{12}{24}H(tearRate, normal)=0.7772$&lt;/p&gt;
-
-&lt;h3 id=&quot;section-3&quot;&gt;计算&lt;/h3&gt;
-&lt;p&gt;根据上面的数据，我们可以计算选择第一个根结点所依赖的信息增益值，计算如下所示：&lt;/p&gt;
-
-&lt;p&gt;$Gain(age)=H(D)-H(age)=1.3260-1.2866=0.0394$&lt;/p&gt;
-
-&lt;p&gt;$Gain(prescript)=H(D)-H(prescript)=1.3260-1.2865=0.0395$&lt;/p&gt;
-
-&lt;p&gt;$Gain(astigmatic)=H(D)-H(astigmatic)=1.32600-1.2363=0.0897$&lt;/p&gt;
-
-&lt;p&gt;$Gain(tearRate)=H(D)-H(tearRate)=1.3260-0.7772=0.5488$&lt;/p&gt;
-
-&lt;p&gt;因此可知Gain(tearRate)最大，因此，我们选择tearRate作为决策树的第一个节点。&lt;/p&gt;
-
-&lt;p&gt;继续执行上述信息熵和信息增益的计算，最终能够选出其他的决策结点，从而建立一棵决策树，这就是我们训练出来的分类模型。基于此模型，可以使用一组测试数据及进行模型的验证，最后能够对新数据进行预测。&lt;/p&gt;
-
-&lt;h2 id=&quot;section-4&quot;&gt;代码分析&lt;/h2&gt;
-&lt;p&gt;这里使用&lt;code&gt;Machine Learning in Action&lt;/code&gt;中的决策树代码。&lt;/p&gt;
-
-&lt;h3 id=&quot;createtree&quot;&gt;createTree&lt;/h3&gt;
-&lt;p&gt;该函数主要用于递归地构造决策树。&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-py&quot; data-lang=&quot;py&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;createTree&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;# 获得每一条样本数据集的标签，在本例中为`no lenses`，`soft`，`hard`&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;classList&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;example&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;example&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dataSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-
-    &lt;span class=&quot;c&quot;&gt;# 当所有样本的标签都一样时，无需再进行构建树的操作，直接将该标签返回，作为决策树的叶子节点&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;classList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;classList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;classList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt; 
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;classList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;# 当没有特征可以使用时，直接返回数目最多的样本标签&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;majorityCnt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;classList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    
-    &lt;span class=&quot;c&quot;&gt;# 根据香农熵，来选择最佳的划分特征&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;bestFeat&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;chooseBestFeatureToSplit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;bestFeatLabel&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bestFeat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-    
-    &lt;span class=&quot;n&quot;&gt;myTree&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bestFeatLabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:{}}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;del&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bestFeat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-    
-    &lt;span class=&quot;c&quot;&gt;# 获得该最佳特征的不同的值&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;featValues&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;example&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bestFeat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;example&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dataSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;uniqueVals&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;featValues&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    
-    &lt;span class=&quot;c&quot;&gt;# 对于最佳特征的每一个值，作为不同的分支，递归构建决策树。&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uniqueVals&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;c&quot;&gt;# 复制所有的特征&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;subLabels&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:]&lt;/span&gt;
-
-        &lt;span class=&quot;c&quot;&gt;# 根据value划分数据集，递归构建决策树&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;myTree&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bestFeatLabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;createTree&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;splitDataSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bestFeat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subLabels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;myTree&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;choosebestfeaturetosplit&quot;&gt;chooseBestFeatureToSplit&lt;/h3&gt;
-&lt;p&gt;该函数主要用来选择本次划分所使用的特征。&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-py&quot; data-lang=&quot;py&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;chooseBestFeatureToSplit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;# 该样本集合的特征个数，最后一项作为样本标签。&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;numFeatures&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;# 样本香农熵&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;baseEntropy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;calcShannonEnt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-    &lt;span class=&quot;c&quot;&gt;# 最佳增益以及最佳特征&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;bestInfoGain&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bestFeature&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;numFeatures&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;featList&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;example&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;example&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dataSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-        &lt;span class=&quot;c&quot;&gt;# 第i个特征的所有不同值的集合&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;uniqueVals&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;featList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        
-        &lt;span class=&quot;n&quot;&gt;newEntropy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uniqueVals&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;c&quot;&gt;# 选出第i个特征为值value的样本&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;subDataSet&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;splitDataSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;prob&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subDataSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;newEntropy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;prob&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;calcShannonEnt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subDataSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-        &lt;span class=&quot;c&quot;&gt;# 计算信息增益，若信息增益大于最佳增益，则记录信息增益与特征下标&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;infoGain&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;baseEntropy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newEntropy&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;infoGain&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bestInfoGain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;bestInfoGain&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;infoGain&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;bestFeature&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;
-    
-    &lt;span class=&quot;c&quot;&gt;# 返回最佳特征的下标&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bestFeature&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;splitdataset&quot;&gt;splitDataSet&lt;/h3&gt;
-&lt;p&gt;该函数主要用来划分数据集&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-py&quot; data-lang=&quot;py&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;splitDataSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;retDataSet&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;featVec&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dataSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;featVec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;c&quot;&gt;# 划分时丢弃特征axis&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;reducedFeatVec&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;featVec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;reducedFeatVec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;extend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;featVec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:])&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;retDataSet&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reducedFeatVec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;retDataSet&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;calcshannonent&quot;&gt;calcShannonEnt&lt;/h3&gt;
-&lt;p&gt;该函数用来计算香农熵&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-py&quot; data-lang=&quot;py&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;calcShannonEnt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;numEntries&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;labelCounts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;featVec&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dataSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;currentLabel&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;featVec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;currentLabel&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;labelCounts&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;labelCounts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;currentLabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;labelCounts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;currentLabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;shannonEnt&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;labelCounts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;c&quot;&gt;# prob为值为key的标签出现的概率&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;prob&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;labelCounts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;numEntries&lt;/span&gt;
-        &lt;span class=&quot;c&quot;&gt;# log是math包中包含的函数&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;shannonEnt&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;prob&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prob&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;shannonEnt&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;majoritycnt&quot;&gt;majorityCnt&lt;/h3&gt;
-&lt;p&gt;直接选择出现最多的标签&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-py&quot; data-lang=&quot;py&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;majorityCnt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;classList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;# 直接选择出现最多的标签&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;classCount&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vote&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;classList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vote&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;classCount&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;classCount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vote&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;classCount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vote&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;sortedClassCount&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sorted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;classCount&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iteritems&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;operator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;itemgetter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reverse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sortedClassCount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;section-5&quot;&gt;总结&lt;/h2&gt;
-&lt;p&gt;决策树算法的优点在于直观，容易理解，容易实现；缺点在于业界对于决策树的理论支持比较少。通俗意义来说就是“人们觉得这么做是有道理的，至于为什么有道理，就不太清楚了”。并且决策树算法的变种比较多，很多变种都是作者的一些小HACK，而效果也不错。&lt;/p&gt;
-
-&lt;p&gt;ID3算法的优点是：算法的理论清晰，方法简单，学习能力较强。&lt;/p&gt;
-
-&lt;p&gt;ID3算法的缺点是：只对比较小的数据集有效，且对噪声比较敏感，当训练数据集加大时，决策树可能会随之改变。&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;http://blog.qingye.me/decision-tree-note/&quot;&gt;Decision Tree Note&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://blog.qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on June 30, 2015.&lt;/p&gt;
   </content>
 </entry>
 

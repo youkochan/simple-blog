@@ -5,25 +5,25 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>在mac上安装Python模块MySQLdb &#8211; Simple Blog</title>
+<title>2015总结 &#8211; Simple Blog</title>
 <meta name="description" content="On the way.">
-<meta name="keywords" content="mac, note">
+<meta name="keywords" content="blog">
 
 
 
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="在mac上安装Python模块MySQLdb">
+<meta property="og:title" content="2015总结">
 <meta property="og:description" content="On the way.">
-<meta property="og:url" content="http://blog.qingye.me/intsall-mysql-python-in-mac/">
+<meta property="og:url" content="http://blog.qingye.me/2016/">
 <meta property="og:site_name" content="Simple Blog">
 
 
 
 
 
-<link rel="canonical" href="http://blog.qingye.me/intsall-mysql-python-in-mac/">
+<link rel="canonical" href="http://blog.qingye.me/2016/">
 <link href="http://blog.qingye.me/feed.xml" type="application/atom+xml" rel="alternate" title="Simple Blog Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -121,9 +121,9 @@
     <header class="header-title">
       <div class="header-title-wrap">
         
-          <h1 class="entry-title"><a href="http://blog.qingye.me/intsall-mysql-python-in-mac/" rel="bookmark" title="在mac上安装Python模块MySQLdb">在mac上安装Python模块MySQLdb</a></h1>
+          <h1 class="entry-title"><a href="http://blog.qingye.me/2016/" rel="bookmark" title="2015总结">2015总结</a></h1>
         
-        <h2><span class="entry-date date published"><time datetime="2015-04-08T11:13:51+08:00">April 08, 2015</time></span></h2>
+        <h2><span class="entry-date date published"><time datetime="2016-01-02T23:09:15+08:00">January 02, 2016</time></span></h2>
         
         <p class="entry-reading-time">
           <i class="fa fa-clock-o"></i>
@@ -134,34 +134,20 @@
       </div><!-- /.header-title-wrap -->
     </header>
     <div class="entry-content">
-      <p>最近由于有必要使用MySQLdb，而使用pycharm自带的包管理界面进行安装时发现无论如何都安装失败，于是采用了手动安装的方式。具体步骤如下：</p>
+      <p>总结一下2015，展望一下2016。</p>
 
 <!--more-->
 
-<p>1 下载 MySQL for Python。<a href="http://sourceforge.net/projects/mysql-python/files/mysql-python/">链接</a>，或者采用以下代码</p>
-
-<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">wget http://sourceforge.net/projects/mysql-python/files/mysql-python/1.2.3/MySQL-python-1.2.3.tar.gz</span></code></pre></div>
-
-<p>2 解压执行<code>python setup.py build</code>若出现<code>EnvironmentError: mysql_config not found</code>问题则应该首先修改<code>setup_posix.py</code>文件。将<code>mysql_config.path = "mysql_config"</code>修改为：<code>mysql_config.path = "/usr/local/mysql/bin/mysql_config"</code></p>
-
-<p>3 执行（可能需要sudo）：</p>
-
-<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">python setup.py build</span>
-<span class="go">python setup.py install</span></code></pre></div>
-
-<p>4 在执行完上述步骤后仍然可能出现<code>import MySQLdb</code>时的错误，此时需要执行以下指令：</p>
-
-<div class="highlight"><pre><code class="language-console" data-lang="console"><span class="go">sudo ln -s /usr/local/mysql/lib/libmysqlclient.18.dylib /usr/lib/libmysqlclient.18.dylib</span></code></pre></div>
-
+<p>好像也没啥要总结的。回家了有闲心就写一个吧。</p>
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="http://blog.qingye.me/tags/#mac" title="Pages tagged mac" class="tag"><span class="term">mac</span></a><a href="http://blog.qingye.me/tags/#note" title="Pages tagged note" class="tag"><span class="term">note</span></a></span>
+        <span class="entry-tags"><a href="http://blog.qingye.me/tags/#blog" title="Pages tagged blog" class="tag"><span class="term">blog</span></a></span>
         
         <div class="social-share">
   <ul class="socialcount socialcount-small inline-list">
-    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://blog.qingye.me/intsall-mysql-python-in-mac/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
-    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://blog.qingye.me/intsall-mysql-python-in-mac/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
-    <li class="googleplus"><a href="https://plus.google.com/share?url=http://blog.qingye.me/intsall-mysql-python-in-mac/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://blog.qingye.me/2016/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://blog.qingye.me/2016/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://blog.qingye.me/2016/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
   </ul>
 </div><!-- /.social-share -->
       </footer>
@@ -170,7 +156,7 @@
     <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://blog.qingye.me/leetcode-note-3/" class="read-more-btn">Read More</a>
+      <a href="http://blog.qingye.me/linux-note-7/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
       <h3><a href="http://blog.qingye.me/sublime-plugins/" title="sublime 常用插件记录">sublime 常用插件记录</a></h3>
@@ -185,8 +171,8 @@
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://blog.qingye.me/2016/" title="2015总结">2015总结</a></h4>
-        <span>Published on January 02, 2016</span>
+        <h4><a href="http://blog.qingye.me/linux-note-7/" title="linux学习笔记（七）— 配置网络系统">linux学习笔记（七）— 配置网络系统</a></h4>
+        <span>Published on December 14, 2015</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->
