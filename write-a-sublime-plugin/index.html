@@ -5,7 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>编写一个sublime语法插件 &#8211; Simple Blog</title>
+<title>编写一个sublime插件 &#8211; Simple Blog</title>
 <meta name="description" content="On the way.">
 <meta name="keywords" content="sublime">
 
@@ -14,7 +14,7 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="编写一个sublime语法插件">
+<meta property="og:title" content="编写一个sublime插件">
 <meta property="og:description" content="On the way.">
 <meta property="og:url" content="http://blog.qingye.me/write-a-sublime-plugin/">
 <meta property="og:site_name" content="Simple Blog">
@@ -121,9 +121,9 @@
     <header class="header-title">
       <div class="header-title-wrap">
         
-          <h1 class="entry-title"><a href="http://blog.qingye.me/write-a-sublime-plugin/" rel="bookmark" title="编写一个sublime语法插件">编写一个sublime语法插件</a></h1>
+          <h1 class="entry-title"><a href="http://blog.qingye.me/write-a-sublime-plugin/" rel="bookmark" title="编写一个sublime插件">编写一个sublime插件</a></h1>
         
-        <h2><span class="entry-date date published"><time datetime="2016-01-03T23:44:06+08:00">January 03, 2016</time></span></h2>
+        <h2><span class="entry-date date published"><time datetime="2016-01-12T21:01:39+08:00">January 12, 2016</time></span></h2>
         
         <p class="entry-reading-time">
           <i class="fa fa-clock-o"></i>
@@ -134,13 +134,11 @@
       </div><!-- /.header-title-wrap -->
     </header>
     <div class="entry-content">
-      <p>这个坑先开在这里。鉴于网上插件太多，然而能实际符合平时sublime使用习惯的markdown插件却比较少，因此尝试写一下。</p>
-
-<!--more-->
+      <!--more-->
 
 <h2 id="section">简介</h2>
 
-<p>最近几天折腾了一下 <code>sublime text 2</code>的语法插件，简而言之呢，就是通过正则表达式提取出符合一定格式的字符串，赋予相应的 <code>scopeName</code>，而不同的 <code>scopeName</code> 对应着不同的颜色，颜色则定义在 <code>Color Scheme</code> 中。因此，使用不同的 <code>Color Scheme</code> 不会影响语法解析的进行。</p>
+<p>最近几天折腾了一下 <code>sublime text 2</code> 的语法插件，简而言之呢，就是通过正则表达式提取出符合一定格式的字符串，赋予相应的 <code>scopeName</code>，而不同的 <code>scopeName</code> 对应着不同的颜色，颜色则定义在 <code>Color Scheme</code> 中。因此，使用不同的 <code>Color Scheme</code> 不会影响语法解析的进行。</p>
 
 <p>sublime text 插件开发使用到的文件有以下几种：</p>
 
@@ -209,7 +207,7 @@
       <td>语法解析文件</td>
     </tr>
     <tr>
-      <td>.tmLanguage.cache</td>
+      <td>.tmLanguage.caiche</td>
       <td>语法解析文件的缓存</td>
     </tr>
     <tr>
@@ -219,7 +217,7 @@
   </tbody>
 </table>
 
-<p>最开始想写一个插件主要是因为使用 <code>Markdown Jekyll</code> 时有配色会显示错误，就想自己研究一下 sublime 的机智来写一下。后来写的时候发现 sublime 插件开发其实也是挺简单的一件事情，因为 sublime 已经把各种可能会进行开发的地方都做好了相应的接口，比如开发语法文件只需要编写 <code>.tmLanguage</code>，开发配色文件只需要编写 <code>tmTheme</code> 文件即可。因此插件的开发难度不是很大。</p>
+<p>最开始想写一个插件主要是因为使用 <code>Markdown Jekyll</code> 时有配色会显示错误，就想自己研究一下 sublime 的机智来写一下。后来写的时候发现 sublime 插件开发其实也是挺简单的一件事情，因为 sublime 已经把各种可能会进行开发的地方都做好了相应的接口，比如开发语法文件只需要编写 .tmLanguage，开发配色文件只需要编写 tmTheme 文件即可。因此插件的开发难度不是很大。</p>
 
 <blockquote>
   <p>Note that the regular expressions are matched against only a single line of the document at a time. That means it is not possible to use a pattern that matches multiple lines. The reason for this is technical: being able to restart the parser at an arbitrary line and having to re-parse only the minimal number of lines affected by an edit. In most situations it is possible to use the begin/end model to overcome this limitation.</p>
@@ -229,9 +227,9 @@
 
 <p>比如对于代码块，如果需要前后两行都是空行，则无法进行处理。（其实 <code>Markdown Extended</code> 在一定程度上用一些很复杂难懂的正则表达式解决了这个问题，而我比较希望自己写的东西尽可能简单，这样以后可以在此基础上增加新的需求，因此就没有往这方面更深入地研究）</p>
 
-<h3 id="tmlanguage">tmLanguage</h3>
+<h2 id="tmlanguage">tmLanguage</h2>
 
-<p>这个文件定义了语法解析的方式。参考 <a href="http://manual.macromates.com/en/language_grammars#language_rules">Language Grammars</a> 。主要关键字如下</p>
+<p>这个文件定义了语法解析的方式。参考 <a href="http://manual.macromates.com/en/language_grammars#language_rules">Language Grammars</a> 。主要关键字如下：</p>
 
 <table>
   <thead>
@@ -259,7 +257,7 @@
     </tr>
     <tr>
       <td>captures, beginCaptures, endCaptures</td>
-      <td>给 <code>match</code> 中的特定位置的匹配分配名字</td>
+      <td>给 match 中的特定位置的匹配分配名字</td>
     </tr>
     <tr>
       <td>include</td>
@@ -268,11 +266,11 @@
   </tbody>
 </table>
 
-<h3 id="tmtheme">tmTheme</h3>
+<h2 id="tmtheme">tmTheme</h2>
 
-<p>这个文件定义了解析出的名字对应的颜色，可以通过 <a href="http://tmtheme-editor.herokuapp.com/#!/editor/theme/Monokai%20Extended%20Mod">这个在线应用</a> 进行快速编辑。其中的 <code>scopeName</code> 对应的就是 <code>tmLanguage</code> 中的 <code>name</code>。</p>
+<p>这个文件定义了解析出的名字对应的颜色，可以通过 <a href="http://tmtheme-editor.herokuapp.com/#!/editor/theme/Monokai%20Extended%20Mod">这个在线应用</a> 进行快速编辑。其中的 <code>scopeName</code> 对应的就是 <code>tmLanguage</code> 中的 name。</p>
 
-<h3 id="section-1">一些比较蛋疼的在这里的正则文法</h3>
+<h2 id="section-1">一些比较蛋疼的在这里的正则文法</h2>
 
 <p>以下写法为 <code>tmLanguage</code> 中的写法。</p>
 
@@ -284,7 +282,7 @@
 
 <hr />
 
-<h3 id="section-2">参考资料</h3>
+<h2 id="section-2">参考资料</h2>
 
 <ul>
   <li><a href="http://manual.macromates.com/en/">textmate manual</a></li>
@@ -306,11 +304,11 @@
     <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://blog.qingye.me/2016/" class="read-more-btn">Read More</a>
+      <a href="http://blog.qingye.me/sublime-plugins/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
       <h3><a href="http://blog.qingye.me/sublime-plugins/" title="sublime 常用插件记录">sublime 常用插件记录</a></h3>
-      <p>（首先声明，这里的常用当然是指对于我来说的常用### YocDown链接：[YocDown](https://github.com/youkochan/yocdown)排第一的当然是自己写的插件，虽然还是很简单很弱比。主要作用是解析一些特定格式的 markdown 语法，仍...&hellip; <a href="http://blog.qingye.me/sublime-plugins/">Continue reading</a></p>
+      <p>（首先声明，这里的常用当然是指对于我来说的常用YocDown链接：YocDown排第一的当然是自己写的插件，虽然还是很简单很弱比。主要作用是解析一些特定格式的 markdown 语法，仍在不断完善中。Package Control不必多说IMESupport用来解决中文输入...&hellip; <a href="http://blog.qingye.me/sublime-plugins/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">

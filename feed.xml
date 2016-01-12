@@ -4,7 +4,7 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://blog.qingye.me/feed.xml" />
 <link rel="alternate" type="text/html" href="http://blog.qingye.me" />
-<updated>2016-01-08T17:42:13+08:00</updated>
+<updated>2016-01-12T21:13:29+08:00</updated>
 <id>http://blog.qingye.me/</id>
 <author>
   <name>Qing YE</name>
@@ -14,101 +14,22 @@
 
 
 <entry>
-  <title type="html"><![CDATA[sublime 常用插件记录]]></title>
- <link rel="alternate" type="text/html" href="http://blog.qingye.me/sublime-plugins/" />
-  <id>http://blog.qingye.me/sublime-plugins</id>
-  <published>2016-01-07T15:00:00+08:00</published>
-  <updated>2016-01-07T15:00:00+08:00</updated>
-  <author>
-    <name>Qing YE</name>
-    <uri>http://blog.qingye.me</uri>
-    <email>youkochan233@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;p&gt;（首先声明，这里的常用当然是指对于我来说的常用&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;h3 id=&quot;yocdown&quot;&gt;YocDown&lt;/h3&gt;
-
-&lt;p&gt;链接：&lt;a href=&quot;https://github.com/youkochan/yocdown&quot;&gt;YocDown&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;排第一的当然是自己写的插件，虽然还是很简单很弱比。主要作用是解析一些特定格式的 markdown 语法，仍在不断完善中。&lt;/p&gt;
-
-&lt;h3 id=&quot;package-control&quot;&gt;Package Control&lt;/h3&gt;
-
-&lt;p&gt;不必多说&lt;/p&gt;
-
-&lt;h3 id=&quot;imesupport&quot;&gt;IMESupport&lt;/h3&gt;
-
-&lt;p&gt;用来解决中文输入法不跟随的问题。&lt;/p&gt;
-
-&lt;h3 id=&quot;terminal&quot;&gt;Terminal&lt;/h3&gt;
-
-&lt;p&gt;当你想要打开在当前文件所在的目录的终端，这个插件可以帮助你。不过，在默认情况下，它设置按 Ctrl / Cmd + Shift + T 键的快捷方式打开终端。不过这也是打开上次关闭的文件的快捷方式，你需要修改一个快捷键来兼容两个功能。&lt;/p&gt;
-
-&lt;h3 id=&quot;sublimerepl&quot;&gt;SublimeREPL&lt;/h3&gt;
-
-&lt;p&gt;这可能是对程序员最有用的插件。SublimeREPL 允许你在 Sublime Texxt 中运行各种语言（NodeJS ， Python，Ruby， Scala 和 Haskell 等等）。&lt;/p&gt;
-
-&lt;figure&gt;
-	&lt;a href=&quot;/images/blog/sublime-plugins-1.jpg&quot;&gt;
-		&lt;img src=&quot;/images/blog/sublime-plugins-1.jpg&quot; alt=&quot;&quot; /&gt;
-	&lt;/a&gt;
-&lt;/figure&gt;
-
-&lt;h3 id=&quot;allautocomplete&quot;&gt;AllAutocomplete&lt;/h3&gt;
-
-&lt;p&gt;Sublime Text 默认的 Autocomplete 功能只考虑当前的文件，而 AllAutocomplete 插件会搜索所有打开的文件来寻找匹配的提示词。&lt;/p&gt;
-
-&lt;figure&gt;
-	&lt;a href=&quot;/images/blog/sublime-plugins-2.jpg&quot;&gt;
-		&lt;img src=&quot;/images/blog/sublime-plugins-2.jpg&quot; alt=&quot;&quot; /&gt;
-	&lt;/a&gt;
-&lt;/figure&gt;
-
-&lt;h3 id=&quot;markdown-preview&quot;&gt;Markdown Preview&lt;/h3&gt;
-
-&lt;p&gt;用于预览 Markdown&lt;/p&gt;
-
-&lt;h3 id=&quot;docblockr&quot;&gt;DocBlockr&lt;/h3&gt;
-
-&lt;p&gt;如果你遵循的编码的风格很严格，这款插件能够使你的任务更容易。DocBlokr 帮助你创造你的代码注释，通过解析功能，参数，变量，并且自动添加基本项目。&lt;/p&gt;
-
-&lt;h3 id=&quot;section&quot;&gt;主题以及配色&lt;/h3&gt;
-
-&lt;p&gt;主要使用的是以下的几种&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Theme - Centurion&lt;/li&gt;
-  &lt;li&gt;Theme - Flatland&lt;/li&gt;
-  &lt;li&gt;Color Scheme - Monokai Extended&lt;/li&gt;
-&lt;/ul&gt;
-
-    &lt;p&gt;&lt;a href=&quot;http://blog.qingye.me/sublime-plugins/&quot;&gt;sublime 常用插件记录&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://blog.qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on January 07, 2016.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[编写一个sublime语法插件]]></title>
+  <title type="html"><![CDATA[编写一个sublime插件]]></title>
  <link rel="alternate" type="text/html" href="http://blog.qingye.me/write-a-sublime-plugin/" />
   <id>http://blog.qingye.me/write-a-sublime-plugin</id>
-  <published>2016-01-03T23:44:06+08:00</published>
-  <updated>2016-01-03T23:44:06+08:00</updated>
+  <published>2016-01-12T21:01:39+08:00</published>
+  <updated>2016-01-12T21:01:39+08:00</updated>
   <author>
     <name>Qing YE</name>
     <uri>http://blog.qingye.me</uri>
     <email>youkochan233@gmail.com</email>
   </author>
   <content type="html">
-    &lt;p&gt;这个坑先开在这里。鉴于网上插件太多，然而能实际符合平时sublime使用习惯的markdown插件却比较少，因此尝试写一下。&lt;/p&gt;
-
-&lt;!--more--&gt;
+    &lt;!--more--&gt;
 
 &lt;h2 id=&quot;section&quot;&gt;简介&lt;/h2&gt;
 
-&lt;p&gt;最近几天折腾了一下 &lt;code&gt;sublime text 2&lt;/code&gt;的语法插件，简而言之呢，就是通过正则表达式提取出符合一定格式的字符串，赋予相应的 &lt;code&gt;scopeName&lt;/code&gt;，而不同的 &lt;code&gt;scopeName&lt;/code&gt; 对应着不同的颜色，颜色则定义在 &lt;code&gt;Color Scheme&lt;/code&gt; 中。因此，使用不同的 &lt;code&gt;Color Scheme&lt;/code&gt; 不会影响语法解析的进行。&lt;/p&gt;
+&lt;p&gt;最近几天折腾了一下 &lt;code&gt;sublime text 2&lt;/code&gt; 的语法插件，简而言之呢，就是通过正则表达式提取出符合一定格式的字符串，赋予相应的 &lt;code&gt;scopeName&lt;/code&gt;，而不同的 &lt;code&gt;scopeName&lt;/code&gt; 对应着不同的颜色，颜色则定义在 &lt;code&gt;Color Scheme&lt;/code&gt; 中。因此，使用不同的 &lt;code&gt;Color Scheme&lt;/code&gt; 不会影响语法解析的进行。&lt;/p&gt;
 
 &lt;p&gt;sublime text 插件开发使用到的文件有以下几种：&lt;/p&gt;
 
@@ -177,7 +98,7 @@
       &lt;td&gt;语法解析文件&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td&gt;.tmLanguage.cache&lt;/td&gt;
+      &lt;td&gt;.tmLanguage.caiche&lt;/td&gt;
       &lt;td&gt;语法解析文件的缓存&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
@@ -187,7 +108,7 @@
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;最开始想写一个插件主要是因为使用 &lt;code&gt;Markdown Jekyll&lt;/code&gt; 时有配色会显示错误，就想自己研究一下 sublime 的机智来写一下。后来写的时候发现 sublime 插件开发其实也是挺简单的一件事情，因为 sublime 已经把各种可能会进行开发的地方都做好了相应的接口，比如开发语法文件只需要编写 &lt;code&gt;.tmLanguage&lt;/code&gt;，开发配色文件只需要编写 &lt;code&gt;tmTheme&lt;/code&gt; 文件即可。因此插件的开发难度不是很大。&lt;/p&gt;
+&lt;p&gt;最开始想写一个插件主要是因为使用 &lt;code&gt;Markdown Jekyll&lt;/code&gt; 时有配色会显示错误，就想自己研究一下 sublime 的机智来写一下。后来写的时候发现 sublime 插件开发其实也是挺简单的一件事情，因为 sublime 已经把各种可能会进行开发的地方都做好了相应的接口，比如开发语法文件只需要编写 .tmLanguage，开发配色文件只需要编写 tmTheme 文件即可。因此插件的开发难度不是很大。&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;Note that the regular expressions are matched against only a single line of the document at a time. That means it is not possible to use a pattern that matches multiple lines. The reason for this is technical: being able to restart the parser at an arbitrary line and having to re-parse only the minimal number of lines affected by an edit. In most situations it is possible to use the begin/end model to overcome this limitation.&lt;/p&gt;
@@ -197,9 +118,9 @@
 
 &lt;p&gt;比如对于代码块，如果需要前后两行都是空行，则无法进行处理。（其实 &lt;code&gt;Markdown Extended&lt;/code&gt; 在一定程度上用一些很复杂难懂的正则表达式解决了这个问题，而我比较希望自己写的东西尽可能简单，这样以后可以在此基础上增加新的需求，因此就没有往这方面更深入地研究）&lt;/p&gt;
 
-&lt;h3 id=&quot;tmlanguage&quot;&gt;tmLanguage&lt;/h3&gt;
+&lt;h2 id=&quot;tmlanguage&quot;&gt;tmLanguage&lt;/h2&gt;
 
-&lt;p&gt;这个文件定义了语法解析的方式。参考 &lt;a href=&quot;http://manual.macromates.com/en/language_grammars#language_rules&quot;&gt;Language Grammars&lt;/a&gt; 。主要关键字如下&lt;/p&gt;
+&lt;p&gt;这个文件定义了语法解析的方式。参考 &lt;a href=&quot;http://manual.macromates.com/en/language_grammars#language_rules&quot;&gt;Language Grammars&lt;/a&gt; 。主要关键字如下：&lt;/p&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
@@ -227,7 +148,7 @@
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;captures, beginCaptures, endCaptures&lt;/td&gt;
-      &lt;td&gt;给 &lt;code&gt;match&lt;/code&gt; 中的特定位置的匹配分配名字&lt;/td&gt;
+      &lt;td&gt;给 match 中的特定位置的匹配分配名字&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;include&lt;/td&gt;
@@ -236,11 +157,11 @@
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;h3 id=&quot;tmtheme&quot;&gt;tmTheme&lt;/h3&gt;
+&lt;h2 id=&quot;tmtheme&quot;&gt;tmTheme&lt;/h2&gt;
 
-&lt;p&gt;这个文件定义了解析出的名字对应的颜色，可以通过 &lt;a href=&quot;http://tmtheme-editor.herokuapp.com/#!/editor/theme/Monokai%20Extended%20Mod&quot;&gt;这个在线应用&lt;/a&gt; 进行快速编辑。其中的 &lt;code&gt;scopeName&lt;/code&gt; 对应的就是 &lt;code&gt;tmLanguage&lt;/code&gt; 中的 &lt;code&gt;name&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;这个文件定义了解析出的名字对应的颜色，可以通过 &lt;a href=&quot;http://tmtheme-editor.herokuapp.com/#!/editor/theme/Monokai%20Extended%20Mod&quot;&gt;这个在线应用&lt;/a&gt; 进行快速编辑。其中的 &lt;code&gt;scopeName&lt;/code&gt; 对应的就是 &lt;code&gt;tmLanguage&lt;/code&gt; 中的 name。&lt;/p&gt;
 
-&lt;h3 id=&quot;section-1&quot;&gt;一些比较蛋疼的在这里的正则文法&lt;/h3&gt;
+&lt;h2 id=&quot;section-1&quot;&gt;一些比较蛋疼的在这里的正则文法&lt;/h2&gt;
 
 &lt;p&gt;以下写法为 &lt;code&gt;tmLanguage&lt;/code&gt; 中的写法。&lt;/p&gt;
 
@@ -252,13 +173,90 @@
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;section-2&quot;&gt;参考资料&lt;/h3&gt;
+&lt;h2 id=&quot;section-2&quot;&gt;参考资料&lt;/h2&gt;
 
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;http://manual.macromates.com/en/&quot;&gt;textmate manual&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-    &lt;p&gt;&lt;a href=&quot;http://blog.qingye.me/write-a-sublime-plugin/&quot;&gt;编写一个sublime语法插件&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://blog.qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on January 03, 2016.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://blog.qingye.me/write-a-sublime-plugin/&quot;&gt;编写一个sublime插件&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://blog.qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on January 12, 2016.&lt;/p&gt;
+  </content>
+</entry>
+
+
+<entry>
+  <title type="html"><![CDATA[sublime 常用插件记录]]></title>
+ <link rel="alternate" type="text/html" href="http://blog.qingye.me/sublime-plugins/" />
+  <id>http://blog.qingye.me/sublime-plugins</id>
+  <published>2016-01-07T15:00:00+08:00</published>
+  <updated>2016-01-07T15:00:00+08:00</updated>
+  <author>
+    <name>Qing YE</name>
+    <uri>http://blog.qingye.me</uri>
+    <email>youkochan233@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;p&gt;（首先声明，这里的常用当然是指对于我来说的常用&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;yocdown&quot;&gt;YocDown&lt;/h3&gt;
+
+&lt;p&gt;链接：&lt;a href=&quot;https://github.com/youkochan/yocdown&quot;&gt;YocDown&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;排第一的当然是自己写的插件，虽然还是很简单很弱比。主要作用是解析一些特定格式的 markdown 语法，仍在不断完善中。&lt;/p&gt;
+
+&lt;h3 id=&quot;package-control&quot;&gt;Package Control&lt;/h3&gt;
+
+&lt;p&gt;不必多说&lt;/p&gt;
+
+&lt;h3 id=&quot;imesupport&quot;&gt;IMESupport&lt;/h3&gt;
+
+&lt;p&gt;用来解决中文输入法不跟随的问题。&lt;/p&gt;
+
+&lt;h3 id=&quot;terminal&quot;&gt;Terminal&lt;/h3&gt;
+
+&lt;p&gt;当你想要打开在当前文件所在的目录的终端，这个插件可以帮助你。不过，在默认情况下，它设置按 Ctrl / Cmd + Shift + T 键的快捷方式打开终端。不过这也是打开上次关闭的文件的快捷方式，你需要修改一个快捷键来兼容两个功能。&lt;/p&gt;
+
+&lt;h3 id=&quot;sublimerepl&quot;&gt;SublimeREPL&lt;/h3&gt;
+
+&lt;p&gt;这可能是对程序员最有用的插件。SublimeREPL 允许你在 Sublime Texxt 中运行各种语言（NodeJS ， Python，Ruby， Scala 和 Haskell 等等）。&lt;/p&gt;
+
+&lt;figure&gt;
+	&lt;a href=&quot;/images/blog/sublime-plugins-1.jpg&quot;&gt;
+		&lt;img src=&quot;/images/blog/sublime-plugins-1.jpg&quot; alt=&quot;&quot; /&gt;
+	&lt;/a&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&quot;allautocomplete&quot;&gt;AllAutocomplete&lt;/h3&gt;
+
+&lt;p&gt;Sublime Text 默认的 Autocomplete 功能只考虑当前的文件，而 AllAutocomplete 插件会搜索所有打开的文件来寻找匹配的提示词。&lt;/p&gt;
+
+&lt;figure&gt;s
+	&lt;a href=&quot;/images/blog/sublime-plugins-2.jpg&quot;&gt;
+		&lt;img src=&quot;/images/blog/sublime-plugins-2.jpg&quot; alt=&quot;&quot; /&gt;
+	&lt;/a&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&quot;markdown-preview&quot;&gt;Markdown Preview&lt;/h3&gt;
+
+&lt;p&gt;用于预览 Markdown&lt;/p&gt;
+
+&lt;h3 id=&quot;docblockr&quot;&gt;DocBlockr&lt;/h3&gt;
+
+&lt;p&gt;如果你遵循的编码的风格很严格，这款插件能够使你的任务更容易。DocBlokr 帮助你创造你的代码注释，通过解析功能，参数，变量，并且自动添加基本项目。&lt;/p&gt;
+
+&lt;h3 id=&quot;section&quot;&gt;主题以及配色&lt;/h3&gt;
+
+&lt;p&gt;主要使用的是以下的几种&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Theme - Centurion&lt;/li&gt;
+  &lt;li&gt;Theme - Flatland&lt;/li&gt;
+  &lt;li&gt;Color Scheme - Monokai Extended&lt;/li&gt;
+&lt;/ul&gt;
+
+    &lt;p&gt;&lt;a href=&quot;http://blog.qingye.me/sublime-plugins/&quot;&gt;sublime 常用插件记录&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://blog.qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on January 07, 2016.&lt;/p&gt;
   </content>
 </entry>
 
@@ -299,8 +297,6 @@
   </author>
   <content type="html">
     &lt;p&gt;配置网络系统一章的杂七杂八的记录。&lt;/p&gt;
-
-&lt;p&gt;aaa&lt;/p&gt;
 
 &lt;!--more--&gt;
 
