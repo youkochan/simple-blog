@@ -4,7 +4,7 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://blog.qingye.me/feed.xml" />
 <link rel="alternate" type="text/html" href="http://blog.qingye.me" />
-<updated>2016-01-21T23:41:42+08:00</updated>
+<updated>2016-01-22T00:26:55+08:00</updated>
 <id>http://blog.qingye.me/</id>
 <author>
   <name>Qing YE</name>
@@ -40,18 +40,28 @@
 
 &lt;p&gt;简单观察了一下发现每一个图集的链接除了 GID（894218）以外还有一个 Token 字符串（14146a3ae7），由于不知道这个串是如何生成的（也有可能就是随机变动防爬？），因此，提供URL的时候需要提供完整URL而不只是 GID。不过 GID 应该可以唯一标识一个图集，因此爬虫采集过程中可以使用 GID 作为主键。&lt;/p&gt;
 
-&lt;p&gt;EH网站上提供的下载方式包括：&lt;br /&gt;
-- Archive Download：打包下载，需要支付 Credits （不知道什么鬼）&lt;br /&gt;
-- Torrent Download：BT下载，有的图集会有BT下载方式，不是所有的都有&lt;br /&gt;
-- H@H Downloader：Hentai@Home 下载方式，点击这个列表会生成一个 list，可以用 H@H 这个P2P 软件进行解析并下载。看了一下限制比较多，还是老老实实写爬虫扒图吧。不过每次扒图采集到的 list 可以保存下来，用于对下载下来的图片命名以及保存图集信息。&lt;/p&gt;
+&lt;p&gt;EH网站上提供的下载方式包括：&lt;/p&gt;
 
-&lt;p&gt;每一个图集下面就是每一张图片的缩略图（可能会有多页，则需要翻页操作），获得对应的链接后，保存到一个列表中，然后对于列表中的每一个链接，执行以下操作：&lt;br /&gt;
-- GET 链接对应的资源，如果没有高清图，则直接保存图片
-- 如果有高清图，则根据高清图的链接获取图片并保存（注意！这一步需要登陆！要么就不扒高清图，要么就导入COOKIES吧）&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Archive Download：打包下载，需要支付 Credits （不知道什么鬼）&lt;/li&gt;
+  &lt;li&gt;Torrent Download：BT下载，有的图集会有BT下载方式，不是所有的都有&lt;/li&gt;
+  &lt;li&gt;H@H Downloader：Hentai@Home 下载方式，点击这个列表会生成一个 list，可以用 H@H 这个P2P 软件进行解析并下载。看了一下限制比较多，还是老老实实写爬虫扒图吧。不过每次扒图采集到的 list 可以保存下来，用于对下载下来的图片命名以及保存图集信息。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;每一个图集下面就是每一张图片的缩略图（可能会有多页，则需要翻页操作），获得对应的链接后，保存到一个列表中，然后对于列表中的每一个链接，执行以下操作：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;GET 链接对应的资源，如果没有高清图，则直接保存图片&lt;/li&gt;
+  &lt;li&gt;如果有高清图，则根据高清图的链接获取图片并保存（注意！这一步需要登陆！要么就不扒高清图，要么就导入COOKIES吧）&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;h2 id=&quot;section-1&quot;&gt;总结&lt;/h2&gt;
 
-&lt;p&gt;经过几天的折腾，爬虫已经基本完成，爬虫的输入是一个图集的URL，输出为抓取过程中的信息，最终图片保存在当前路径的 &lt;code&gt;data&lt;/code&gt; 目录下。下面来总结一下爬虫过程中的收获。&lt;/p&gt;
+&lt;p&gt;经过几天的折腾，爬虫已经基本完成，爬虫的输入是一个图集的URL，输出为抓取过程中的信息，最终图片保存在当前路径的 &lt;code&gt;data&lt;/code&gt; 目录下。&lt;/p&gt;
+
+&lt;p&gt;爬虫的源码放在了github上，链接在这里 &lt;a href=&quot;https://github.com/youkochan/EHSpider&quot;&gt;E绅士爬虫&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;下面来总结一下爬虫过程中的收获。&lt;/p&gt;
 
 &lt;h3 id=&quot;section-2&quot;&gt;需求包&lt;/h3&gt;
 
@@ -68,6 +78,8 @@
 &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;Queue&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Queue&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;StringIO&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;StringIO&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
+&lt;p&gt;用到的包有以下：&lt;/p&gt;
+
 &lt;ul&gt;
   &lt;li&gt;os: 用于文件操作，路径选取等&lt;/li&gt;
   &lt;li&gt;re: 正则表达式模块，用于分析URL&lt;/li&gt;
@@ -79,26 +91,99 @@
   &lt;li&gt;Beautiful Soup：用于解析HTML&lt;/li&gt;
   &lt;li&gt;Lxml：第三方HTML的解析器&lt;/li&gt;
   &lt;li&gt;PIL: 提供图片操作，将获得的字节流写入图片文件&lt;/li&gt;
-  &lt;li&gt;Queue: 提供多线程需求下可以使用的任务队列&lt;/li&gt;
-  &lt;li&gt;StringIO: 提供字节流IOS操作&lt;/li&gt;
+  &lt;li&gt;Queue: Python的Queue模块中提供了同步的、线程安全的队列类，包括FIFO（先入先出)队列Queue，LIFO（后入先出）队列LifoQueue，和优先级队列PriorityQueue。这些队列都实现了锁原语，能够在多线程中直接使用。可以使用队列来实现线程间的同步。&lt;/li&gt;
+  &lt;li&gt;StringIO: 提供字节流IO操作&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;其中 &lt;code&gt;lxml&lt;/code&gt; 包的安装会比较麻烦，一般直接 &lt;code&gt;pip&lt;/code&gt; 安装的话会出错，自己在多个环境下测试了很多次终于都测试成功了（Mac，Ubuntu，Windows），具体安装如下：&lt;/p&gt;
 
-&lt;p&gt;Mac：安装之前运行 &lt;code&gt;xcode --selected&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Win：&lt;a href=&quot;http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml&quot;&gt;http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml&lt;/a&gt; 直接在这里下载一个二进制包再 &lt;code&gt;pip&lt;/code&gt; 安装这个二进制包就可以了。&lt;/p&gt;
-
-&lt;p&gt;Ubuntu：&lt;/p&gt;
+&lt;p&gt;Mac：安装之前运行 &lt;code&gt;xcode --selected&lt;/code&gt;&lt;br /&gt;
+Win：&lt;a href=&quot;http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml&quot;&gt;http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml&lt;/a&gt; 直接在这里下载一个二进制包再 &lt;code&gt;pip&lt;/code&gt; 安装这个二进制包就可以了。&lt;br /&gt;
+Ubuntu：&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$sudo&lt;/span&gt; apt-get install libxml2-dev libxslt-dev python2.7-dev  
 &lt;span class=&quot;nv&quot;&gt;$sudo&lt;/span&gt; pip install lxml&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;section-3&quot;&gt;记录一下通过这次折腾学到的一些东西吧&lt;/h3&gt;
 
+&lt;h4 id=&quot;requests-&quot;&gt;requests 代理&lt;/h4&gt;
+
+&lt;p&gt;requests 的代理并不支持 socks5 协议。只支持 &lt;code&gt;http&lt;/code&gt; 或者 &lt;code&gt;https&lt;/code&gt; 需要自己转换一下。&lt;/p&gt;
+
+&lt;h4 id=&quot;python-&quot;&gt;Python 多线程&lt;/h4&gt;
+
+&lt;p&gt;Python中使用线程有两种方式：函数或者用类来包装线程对象。&lt;/p&gt;
+
+&lt;p&gt;函数式：调用 &lt;code&gt;thread&lt;/code&gt; 模块中的 &lt;code&gt;start_new_thread()&lt;/code&gt; 函数来产生新线程。语法如下:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;thread&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start_new_thread&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;kwargs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;参数说明:&lt;br /&gt;
+* function - 线程函数。&lt;br /&gt;
+* args - 传递给线程函数的参数, 他必须是个tuple类型。&lt;br /&gt;
+* kwargs - 可选参数。&lt;/p&gt;
+
+&lt;p&gt;用类来包装线程的对象：主要有以下几种方式：&lt;/p&gt;
+
 &lt;ul&gt;
-  &lt;li&gt;requests 的代理并不支持 socks5 协议。只支持 &lt;code&gt;http&lt;/code&gt; 或者 &lt;code&gt;https&lt;/code&gt; 需要自己转换一下。&lt;/li&gt;
+  &lt;li&gt;第一种方式:创建一个threading.Thread()的实例对象，给它一个函数。在它的初始化函数 &lt;code&gt;__init__&lt;/code&gt; 中将可调用对象作为参数传入&lt;/li&gt;
+  &lt;li&gt;第二种方式:创建一个threading.Thread的实例，传给它一个可调用类对象，类中使用 &lt;code&gt;__call__()&lt;/code&gt;函数调用函数&lt;/li&gt;
+  &lt;li&gt;第三种方式:是通过继承Thread类，重写它的run方法&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;p&gt;第一种和第三种比较常用。我这里采用了第三种方式。&lt;/p&gt;
+
+&lt;h4 id=&quot;queue&quot;&gt;线程优先级队列（Queue）&lt;/h4&gt;
+
+&lt;p&gt;Python的Queue模块中提供了同步的、线程安全的队列类，包括FIFO（先入先出)队列Queue，LIFO（后入先出）队列LifoQueue，和优先级队列PriorityQueue。这些队列都实现了锁原语，能够在多线程中直接使用。可以使用队列来实现线程间的同步。最开始写的时候在使用了 &lt;code&gt;Queue&lt;/code&gt; 的条件下，还写了一个线程间的互斥锁，后来发现完全没有必要。&lt;/p&gt;
+
+&lt;p&gt;Queue模块中的常用方法:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Queue.qsize() 返回队列的大小（其实是近似大小因为返回后有可能队列就被改变了）&lt;/li&gt;
+  &lt;li&gt;Queue.empty() 如果队列为空，返回True, 反之False&lt;/li&gt;
+  &lt;li&gt;Queue.full() 如果队列满了，返回True, 反之False&lt;/li&gt;
+  &lt;li&gt;Queue.full 与 maxsize 大小对应&lt;/li&gt;
+  &lt;li&gt;Queue.get([block[, timeout]])获取队列元素，timeout等待时间&lt;/li&gt;
+  &lt;li&gt;Queue.get_nowait() 相当Queue.get(False)&lt;/li&gt;
+  &lt;li&gt;Queue.put(item, [block[, timeout]]) 写入队列，timeout等待时间&lt;/li&gt;
+  &lt;li&gt;Queue.put_nowait(item) 相当Queue.put(item, False)&lt;/li&gt;
+  &lt;li&gt;Queue.task_done() 在完成一项工作之后，Queue.task_done() 函数向任务已经完成的队列发送一个信号&lt;/li&gt;
+  &lt;li&gt;Queue.join() &lt;code&gt;task_done()&lt;/code&gt; 使得任务数目减一，put使得任务数加一，实际上意味着等到任务数为零，再执行别的操作&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;staticmethod-&quot;&gt;@staticmethod 修饰器&lt;/h4&gt;
+
+&lt;p&gt;修饰器的作用其实就是将被修饰的函数作为参数，返回一个新的函数，比如：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;nd&quot;&gt;@g&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@f&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;得到的结果其实就是 &lt;code&gt;g(f(x))&lt;/code&gt; 。通过 &lt;code&gt;@staticmethod&lt;/code&gt; 修饰后的函数就成为了类的一个静态函数。同时，修饰器也是一个函数，修饰器也可以携带参数。如：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;nd&quot;&gt;@g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;123&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;456&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;等价于 &lt;code&gt;g(&#39;123&#39;)(f(&#39;456&#39;)(x))&lt;/code&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;section-4&quot;&gt;类中的私有、保护、公有成员&lt;/h4&gt;
+
+&lt;p&gt;如果要让内部属性不被外部访问，可以把属性的名称前加上两个下划线 &lt;code&gt;__&lt;/code&gt; ，在Python中，实例的变量名如果以 &lt;code&gt;__&lt;/code&gt; 开头，就变成了一个私有变量（private），只有内部可以访问，外部不能访问&lt;/p&gt;
+
+&lt;p&gt;需要注意的是，在Python中，变量名类似 &lt;code&gt;__xxx__&lt;/code&gt; 的，也就是以双下划线开头，并且以双下划线结尾的，是特殊变量，特殊变量是可以直接访问的，不是private变量，所以，不能用 &lt;code&gt;__name__&lt;/code&gt; 、 &lt;code&gt;__score__&lt;/code&gt; 这样的变量名。&lt;/p&gt;
+
+&lt;p&gt;有些时候，你会看到以一个下划线开头的实例变量名，比如 &lt;code&gt;_name&lt;/code&gt; ，这样的实例变量外部是可以访问的，但是，按照约定俗成的规定，当你看到这样的变量时，意思就是，“虽然我可以被访问，但是，请把我视为私有变量，不要随意访问”。&lt;/p&gt;
+
+&lt;p&gt;双下划线开头的实例变量是不是一定不能从外部访问呢？其实也不是。不能直接访问 &lt;code&gt;__name&lt;/code&gt; 是因为Python解释器对外把 &lt;code&gt;__name&lt;/code&gt; 变量改成了 &lt;code&gt;_Student__name&lt;/code&gt;，所以，仍然可以通过 &lt;code&gt;_Student__name&lt;/code&gt; 来访问 &lt;code&gt;__name&lt;/code&gt; 变量：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bart&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_Student__name&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;&amp;#39;Bart Simpson&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;但是强烈建议你不要这么干，因为不同版本的Python解释器可能会把 &lt;code&gt;__name&lt;/code&gt; 改成不同的变量名。&lt;/p&gt;
 
 
     &lt;p&gt;&lt;a href=&quot;http://blog.qingye.me/write-a-ehentai-ghost/&quot;&gt;编写一个E绅士扒图器&lt;/a&gt; was originally published by Qing YE at &lt;a href=&quot;http://blog.qingye.me&quot;&gt;Simple Blog&lt;/a&gt; on January 15, 2016.&lt;/p&gt;

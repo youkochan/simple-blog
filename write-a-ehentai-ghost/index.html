@@ -149,18 +149,28 @@
 
 <p>简单观察了一下发现每一个图集的链接除了 GID（894218）以外还有一个 Token 字符串（14146a3ae7），由于不知道这个串是如何生成的（也有可能就是随机变动防爬？），因此，提供URL的时候需要提供完整URL而不只是 GID。不过 GID 应该可以唯一标识一个图集，因此爬虫采集过程中可以使用 GID 作为主键。</p>
 
-<p>EH网站上提供的下载方式包括：<br />
-- Archive Download：打包下载，需要支付 Credits （不知道什么鬼）<br />
-- Torrent Download：BT下载，有的图集会有BT下载方式，不是所有的都有<br />
-- H@H Downloader：Hentai@Home 下载方式，点击这个列表会生成一个 list，可以用 H@H 这个P2P 软件进行解析并下载。看了一下限制比较多，还是老老实实写爬虫扒图吧。不过每次扒图采集到的 list 可以保存下来，用于对下载下来的图片命名以及保存图集信息。</p>
+<p>EH网站上提供的下载方式包括：</p>
 
-<p>每一个图集下面就是每一张图片的缩略图（可能会有多页，则需要翻页操作），获得对应的链接后，保存到一个列表中，然后对于列表中的每一个链接，执行以下操作：<br />
-- GET 链接对应的资源，如果没有高清图，则直接保存图片
-- 如果有高清图，则根据高清图的链接获取图片并保存（注意！这一步需要登陆！要么就不扒高清图，要么就导入COOKIES吧）</p>
+<ul>
+  <li>Archive Download：打包下载，需要支付 Credits （不知道什么鬼）</li>
+  <li>Torrent Download：BT下载，有的图集会有BT下载方式，不是所有的都有</li>
+  <li>H@H Downloader：Hentai@Home 下载方式，点击这个列表会生成一个 list，可以用 H@H 这个P2P 软件进行解析并下载。看了一下限制比较多，还是老老实实写爬虫扒图吧。不过每次扒图采集到的 list 可以保存下来，用于对下载下来的图片命名以及保存图集信息。</li>
+</ul>
+
+<p>每一个图集下面就是每一张图片的缩略图（可能会有多页，则需要翻页操作），获得对应的链接后，保存到一个列表中，然后对于列表中的每一个链接，执行以下操作：</p>
+
+<ul>
+  <li>GET 链接对应的资源，如果没有高清图，则直接保存图片</li>
+  <li>如果有高清图，则根据高清图的链接获取图片并保存（注意！这一步需要登陆！要么就不扒高清图，要么就导入COOKIES吧）</li>
+</ul>
 
 <h2 id="section-1">总结</h2>
 
-<p>经过几天的折腾，爬虫已经基本完成，爬虫的输入是一个图集的URL，输出为抓取过程中的信息，最终图片保存在当前路径的 <code>data</code> 目录下。下面来总结一下爬虫过程中的收获。</p>
+<p>经过几天的折腾，爬虫已经基本完成，爬虫的输入是一个图集的URL，输出为抓取过程中的信息，最终图片保存在当前路径的 <code>data</code> 目录下。</p>
+
+<p>爬虫的源码放在了github上，链接在这里 <a href="https://github.com/youkochan/EHSpider">E绅士爬虫</a></p>
+
+<p>下面来总结一下爬虫过程中的收获。</p>
 
 <h3 id="section-2">需求包</h3>
 
@@ -177,6 +187,8 @@
 <span class="kn">from</span> <span class="nn">Queue</span> <span class="kn">import</span> <span class="n">Queue</span>
 <span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span></code></pre></div>
 
+<p>用到的包有以下：</p>
+
 <ul>
   <li>os: 用于文件操作，路径选取等</li>
   <li>re: 正则表达式模块，用于分析URL</li>
@@ -188,26 +200,99 @@
   <li>Beautiful Soup：用于解析HTML</li>
   <li>Lxml：第三方HTML的解析器</li>
   <li>PIL: 提供图片操作，将获得的字节流写入图片文件</li>
-  <li>Queue: 提供多线程需求下可以使用的任务队列</li>
-  <li>StringIO: 提供字节流IOS操作</li>
+  <li>Queue: Python的Queue模块中提供了同步的、线程安全的队列类，包括FIFO（先入先出)队列Queue，LIFO（后入先出）队列LifoQueue，和优先级队列PriorityQueue。这些队列都实现了锁原语，能够在多线程中直接使用。可以使用队列来实现线程间的同步。</li>
+  <li>StringIO: 提供字节流IO操作</li>
 </ul>
 
 <p>其中 <code>lxml</code> 包的安装会比较麻烦，一般直接 <code>pip</code> 安装的话会出错，自己在多个环境下测试了很多次终于都测试成功了（Mac，Ubuntu，Windows），具体安装如下：</p>
 
-<p>Mac：安装之前运行 <code>xcode --selected</code></p>
-
-<p>Win：<a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml">http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml</a> 直接在这里下载一个二进制包再 <code>pip</code> 安装这个二进制包就可以了。</p>
-
-<p>Ubuntu：</p>
+<p>Mac：安装之前运行 <code>xcode --selected</code><br />
+Win：<a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml">http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml</a> 直接在这里下载一个二进制包再 <code>pip</code> 安装这个二进制包就可以了。<br />
+Ubuntu：</p>
 
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$sudo</span> apt-get install libxml2-dev libxslt-dev python2.7-dev  
 <span class="nv">$sudo</span> pip install lxml</code></pre></div>
 
 <h3 id="section-3">记录一下通过这次折腾学到的一些东西吧</h3>
 
+<h4 id="requests-">requests 代理</h4>
+
+<p>requests 的代理并不支持 socks5 协议。只支持 <code>http</code> 或者 <code>https</code> 需要自己转换一下。</p>
+
+<h4 id="python-">Python 多线程</h4>
+
+<p>Python中使用线程有两种方式：函数或者用类来包装线程对象。</p>
+
+<p>函数式：调用 <code>thread</code> 模块中的 <code>start_new_thread()</code> 函数来产生新线程。语法如下:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">thread</span><span class="o">.</span><span class="n">start_new_thread</span> <span class="p">(</span> <span class="n">function</span><span class="p">,</span> <span class="n">args</span><span class="p">[,</span> <span class="n">kwargs</span><span class="p">]</span> <span class="p">)</span></code></pre></div>
+
+<p>参数说明:<br />
+* function - 线程函数。<br />
+* args - 传递给线程函数的参数, 他必须是个tuple类型。<br />
+* kwargs - 可选参数。</p>
+
+<p>用类来包装线程的对象：主要有以下几种方式：</p>
+
 <ul>
-  <li>requests 的代理并不支持 socks5 协议。只支持 <code>http</code> 或者 <code>https</code> 需要自己转换一下。</li>
+  <li>第一种方式:创建一个threading.Thread()的实例对象，给它一个函数。在它的初始化函数 <code>__init__</code> 中将可调用对象作为参数传入</li>
+  <li>第二种方式:创建一个threading.Thread的实例，传给它一个可调用类对象，类中使用 <code>__call__()</code>函数调用函数</li>
+  <li>第三种方式:是通过继承Thread类，重写它的run方法</li>
 </ul>
+
+<p>第一种和第三种比较常用。我这里采用了第三种方式。</p>
+
+<h4 id="queue">线程优先级队列（Queue）</h4>
+
+<p>Python的Queue模块中提供了同步的、线程安全的队列类，包括FIFO（先入先出)队列Queue，LIFO（后入先出）队列LifoQueue，和优先级队列PriorityQueue。这些队列都实现了锁原语，能够在多线程中直接使用。可以使用队列来实现线程间的同步。最开始写的时候在使用了 <code>Queue</code> 的条件下，还写了一个线程间的互斥锁，后来发现完全没有必要。</p>
+
+<p>Queue模块中的常用方法:</p>
+
+<ul>
+  <li>Queue.qsize() 返回队列的大小（其实是近似大小因为返回后有可能队列就被改变了）</li>
+  <li>Queue.empty() 如果队列为空，返回True, 反之False</li>
+  <li>Queue.full() 如果队列满了，返回True, 反之False</li>
+  <li>Queue.full 与 maxsize 大小对应</li>
+  <li>Queue.get([block[, timeout]])获取队列元素，timeout等待时间</li>
+  <li>Queue.get_nowait() 相当Queue.get(False)</li>
+  <li>Queue.put(item, [block[, timeout]]) 写入队列，timeout等待时间</li>
+  <li>Queue.put_nowait(item) 相当Queue.put(item, False)</li>
+  <li>Queue.task_done() 在完成一项工作之后，Queue.task_done() 函数向任务已经完成的队列发送一个信号</li>
+  <li>Queue.join() <code>task_done()</code> 使得任务数目减一，put使得任务数加一，实际上意味着等到任务数为零，再执行别的操作</li>
+</ul>
+
+<h4 id="staticmethod-">@staticmethod 修饰器</h4>
+
+<p>修饰器的作用其实就是将被修饰的函数作为参数，返回一个新的函数，比如：</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="nd">@g</span>
+<span class="nd">@f</span>
+<span class="k">def</span> <span class="nf">x</span><span class="p">():</span>
+	<span class="k">pass</span></code></pre></div>
+
+<p>得到的结果其实就是 <code>g(f(x))</code> 。通过 <code>@staticmethod</code> 修饰后的函数就成为了类的一个静态函数。同时，修饰器也是一个函数，修饰器也可以携带参数。如：</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="nd">@g</span><span class="p">(</span><span class="s">&#39;123&#39;</span><span class="p">)</span>
+<span class="nd">@f</span><span class="p">(</span><span class="s">&#39;456&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">x</span><span class="p">():</span>
+	<span class="k">pass</span></code></pre></div>
+
+<p>等价于 <code>g('123')(f('456')(x))</code></p>
+
+<h4 id="section-4">类中的私有、保护、公有成员</h4>
+
+<p>如果要让内部属性不被外部访问，可以把属性的名称前加上两个下划线 <code>__</code> ，在Python中，实例的变量名如果以 <code>__</code> 开头，就变成了一个私有变量（private），只有内部可以访问，外部不能访问</p>
+
+<p>需要注意的是，在Python中，变量名类似 <code>__xxx__</code> 的，也就是以双下划线开头，并且以双下划线结尾的，是特殊变量，特殊变量是可以直接访问的，不是private变量，所以，不能用 <code>__name__</code> 、 <code>__score__</code> 这样的变量名。</p>
+
+<p>有些时候，你会看到以一个下划线开头的实例变量名，比如 <code>_name</code> ，这样的实例变量外部是可以访问的，但是，按照约定俗成的规定，当你看到这样的变量时，意思就是，“虽然我可以被访问，但是，请把我视为私有变量，不要随意访问”。</p>
+
+<p>双下划线开头的实例变量是不是一定不能从外部访问呢？其实也不是。不能直接访问 <code>__name</code> 是因为Python解释器对外把 <code>__name</code> 变量改成了 <code>_Student__name</code>，所以，仍然可以通过 <code>_Student__name</code> 来访问 <code>__name</code> 变量：</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">print</span> <span class="n">bart</span><span class="o">.</span><span class="n">_Student__name</span>
+<span class="s">&#39;Bart Simpson&#39;</span></code></pre></div>
+
+<p>但是强烈建议你不要这么干，因为不同版本的Python解释器可能会把 <code>__name</code> 改成不同的变量名。</p>
 
 
       <footer class="entry-meta">
