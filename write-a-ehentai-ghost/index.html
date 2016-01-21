@@ -5,25 +5,25 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>sublime 常用插件记录 &#8211; Simple Blog</title>
+<title>编写一个E绅士扒图器 &#8211; Simple Blog</title>
 <meta name="description" content="On the way.">
-<meta name="keywords" content="sublime">
+<meta name="keywords" content="python">
 
 
 
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="sublime 常用插件记录">
+<meta property="og:title" content="编写一个E绅士扒图器">
 <meta property="og:description" content="On the way.">
-<meta property="og:url" content="http://blog.qingye.me/sublime-plugins/">
+<meta property="og:url" content="http://blog.qingye.me/write-a-ehentai-ghost/">
 <meta property="og:site_name" content="Simple Blog">
 
 
 
 
 
-<link rel="canonical" href="http://blog.qingye.me/sublime-plugins/">
+<link rel="canonical" href="http://blog.qingye.me/write-a-ehentai-ghost/">
 <link href="http://blog.qingye.me/feed.xml" type="application/atom+xml" rel="alternate" title="Simple Blog Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -121,9 +121,9 @@
     <header class="header-title">
       <div class="header-title-wrap">
         
-          <h1 class="entry-title"><a href="http://blog.qingye.me/sublime-plugins/" rel="bookmark" title="sublime 常用插件记录">sublime 常用插件记录</a></h1>
+          <h1 class="entry-title"><a href="http://blog.qingye.me/write-a-ehentai-ghost/" rel="bookmark" title="编写一个E绅士扒图器">编写一个E绅士扒图器</a></h1>
         
-        <h2><span class="entry-date date published"><time datetime="2016-01-07T15:00:00+08:00">January 07, 2016</time></span></h2>
+        <h2><span class="entry-date date published"><time datetime="2016-01-15T22:38:31+08:00">January 15, 2016</time></span></h2>
         
         <p class="entry-reading-time">
           <i class="fa fa-clock-o"></i>
@@ -134,74 +134,90 @@
       </div><!-- /.header-title-wrap -->
     </header>
     <div class="entry-content">
-      <p>（首先声明，这里的常用当然是指对于我来说的常用</p>
+      <p>正式开坑！考完近世代数就开工！！！！</p>
 
 <!--more-->
 
-<h3 id="yocdown">YocDown</h3>
+<h2 id="section">背景介绍</h2>
 
-<p>链接：<a href="https://github.com/youkochan/yocdown">YocDown</a></p>
+<p>E绅士是一个很久之前就已经知晓了的神站，然而由于种种原因，其实并没有对其进行深入了解。
+最近看了一下之后有一种发现了新世界的感觉，之前在很多地方难以搜寻到的 <strong>资源</strong> 在这里都可以很方便地找到。唯一缺点就是打包下载需要积分。因此就想自己实现一个扒图器。</p>
 
-<p>排第一的当然是自己写的插件，虽然还是很简单很弱比。主要作用是解析一些特定格式的 markdown 语法，仍在不断完善中。</p>
+<p>作为一个提供图片的网站，自然反爬是很重要的。每一个图集的链接如下：</p>
 
-<h3 id="package-control">Package Control</h3>
+<p>http://xxxxxxxxxxx/g/894218/14146a3ae7/</p>
 
-<p>不必多说</p>
+<p>简单观察了一下发现每一个图集的链接除了 GID（894218）以外还有一个 Token 字符串（14146a3ae7），由于不知道这个串是如何生成的（也有可能就是随机变动防爬？），因此，提供URL的时候需要提供完整URL而不只是 GID。不过 GID 应该可以唯一标识一个图集，因此爬虫采集过程中可以使用 GID 作为主键。</p>
 
-<h3 id="imesupport">IMESupport</h3>
+<p>EH网站上提供的下载方式包括：<br />
+- Archive Download：打包下载，需要支付 Credits （不知道什么鬼）<br />
+- Torrent Download：BT下载，有的图集会有BT下载方式，不是所有的都有<br />
+- H@H Downloader：Hentai@Home 下载方式，点击这个列表会生成一个 list，可以用 H@H 这个P2P 软件进行解析并下载。看了一下限制比较多，还是老老实实写爬虫扒图吧。不过每次扒图采集到的 list 可以保存下来，用于对下载下来的图片命名以及保存图集信息。</p>
 
-<p>用来解决中文输入法不跟随的问题。</p>
+<p>每一个图集下面就是每一张图片的缩略图（可能会有多页，则需要翻页操作），获得对应的链接后，保存到一个列表中，然后对于列表中的每一个链接，执行以下操作：<br />
+- GET 链接对应的资源，如果没有高清图，则直接保存图片
+- 如果有高清图，则根据高清图的链接获取图片并保存（注意！这一步需要登陆！要么就不扒高清图，要么就导入COOKIES吧）</p>
 
-<h3 id="terminal">Terminal</h3>
+<h2 id="section-1">总结</h2>
 
-<p>当你想要打开在当前文件所在的目录的终端，这个插件可以帮助你。不过，在默认情况下，它设置按 Ctrl / Cmd + Shift + T 键的快捷方式打开终端。不过这也是打开上次关闭的文件的快捷方式，你需要修改一个快捷键来兼容两个功能。</p>
+<p>经过几天的折腾，爬虫已经基本完成，爬虫的输入是一个图集的URL，输出为抓取过程中的信息，最终图片保存在当前路径的 <code>data</code> 目录下。下面来总结一下爬虫过程中的收获。</p>
 
-<h3 id="sublimerepl">SublimeREPL</h3>
+<h3 id="section-2">需求包</h3>
 
-<p>这可能是对程序员最有用的插件。SublimeREPL 允许你在 Sublime Texxt 中运行各种语言（NodeJS ， Python，Ruby， Scala 和 Haskell 等等）。</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">threading</span>
 
-<figure>
-	<a href="/images/blog/sublime-plugins-1.jpg">
-		<img src="/images/blog/sublime-plugins-1.jpg" alt="" />
-	</a>
-</figure>
-
-<h3 id="allautocomplete">AllAutocomplete</h3>
-
-<p>Sublime Text 默认的 Autocomplete 功能只考虑当前的文件，而 AllAutocomplete 插件会搜索所有打开的文件来寻找匹配的提示词。</p>
-
-<figure>s
-	<a href="/images/blog/sublime-plugins-2.jpg">
-		<img src="/images/blog/sublime-plugins-2.jpg" alt="" />
-	</a>
-</figure>
-
-<h3 id="markdown-preview">Markdown Preview</h3>
-
-<p>用于预览 Markdown</p>
-
-<h3 id="docblockr">DocBlockr</h3>
-
-<p>如果你遵循的编码的风格很严格，这款插件能够使你的任务更容易。DocBlokr 帮助你创造你的代码注释，通过解析功能，参数，变量，并且自动添加基本项目。</p>
-
-<h3 id="section">主题以及配色</h3>
-
-<p>主要使用的是以下的几种</p>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">from</span> <span class="nn">Queue</span> <span class="kn">import</span> <span class="n">Queue</span>
+<span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span></code></pre></div>
 
 <ul>
-  <li>Theme - Centurion</li>
-  <li>Theme - Flatland</li>
-  <li>Color Scheme - Monokai Extended</li>
+  <li>os: 用于文件操作，路径选取等</li>
+  <li>re: 正则表达式模块，用于分析URL</li>
+  <li>time: 通过使用 <code>sleep()</code> 使线程休眠</li>
+  <li>random: 随机库</li>
+  <li>logging: 用于输出日志</li>
+  <li>requests：用于处理网页请求</li>
+  <li>threading: 多线程库</li>
+  <li>Beautiful Soup：用于解析HTML</li>
+  <li>Lxml：第三方HTML的解析器</li>
+  <li>PIL: 提供图片操作，将获得的字节流写入图片文件</li>
+  <li>Queue: 提供多线程需求下可以使用的任务队列</li>
+  <li>StringIO: 提供字节流IOS操作</li>
 </ul>
 
+<p>其中 <code>lxml</code> 包的安装会比较麻烦，一般直接 <code>pip</code> 安装的话会出错，自己在多个环境下测试了很多次终于都测试成功了（Mac，Ubuntu，Windows），具体安装如下：</p>
+
+<p>Mac：安装之前运行 <code>xcode --selected</code></p>
+
+<p>Win：<a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml">http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml</a> 直接在这里下载一个二进制包再 <code>pip</code> 安装这个二进制包就可以了。</p>
+
+<p>Ubuntu：</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$sudo</span> apt-get install libxml2-dev libxslt-dev python2.7-dev  
+<span class="nv">$sudo</span> pip install lxml</code></pre></div>
+
+<h3 id="section-3">记录一下通过这次折腾学到的一些东西吧</h3>
+
+<ul>
+  <li>requests 的代理并不支持 socks5 协议。只支持 <code>http</code> 或者 <code>https</code> 需要自己转换一下。</li>
+</ul>
+
+
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="http://blog.qingye.me/tags/#sublime" title="Pages tagged sublime" class="tag"><span class="term">sublime</span></a></span>
+        <span class="entry-tags"><a href="http://blog.qingye.me/tags/#python" title="Pages tagged python" class="tag"><span class="term">python</span></a></span>
         
         <div class="social-share">
   <ul class="socialcount socialcount-small inline-list">
-    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://blog.qingye.me/sublime-plugins/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
-    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://blog.qingye.me/sublime-plugins/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
-    <li class="googleplus"><a href="https://plus.google.com/share?url=http://blog.qingye.me/sublime-plugins/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://blog.qingye.me/write-a-ehentai-ghost/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://blog.qingye.me/write-a-ehentai-ghost/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://blog.qingye.me/write-a-ehentai-ghost/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
   </ul>
 </div><!-- /.social-share -->
       </footer>
@@ -210,18 +226,18 @@
     <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://blog.qingye.me/2016/" class="read-more-btn">Read More</a>
+      <a href="http://blog.qingye.me/write-a-sublime-plugin/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://blog.qingye.me/write-a-ehentai-ghost/" title="编写一个E绅士扒图器">编写一个E绅士扒图器</a></h3>
-      <p>正式开坑！考完近世代数就开工！！！！## 背景介绍E绅士是一个很久之前就已经知晓了的神站，然而由于种种原因，其实并没有对其进行深入了解。最近看了一下之后有一种发现了新世界的感觉，之前在很多地方难以搜寻到的 **资源** 在这里都可以很方便地找到。唯一缺点就是打包下载需要积分...&hellip; <a href="http://blog.qingye.me/write-a-ehentai-ghost/">Continue reading</a></p>
+      <h3><a href="http://blog.qingye.me/write-a-sublime-plugin/" title="编写一个sublime插件">编写一个sublime插件</a></h3>
+      <p>简介最近几天折腾了一下 sublime text 2 的语法插件，简而言之呢，就是通过正则表达式提取出符合一定格式的字符串，赋予相应的 scopeName，而不同的 scopeName 对应着不同的颜色，颜色则定义在 Color Scheme 中。因此，使用不同的 Colo...&hellip; <a href="http://blog.qingye.me/write-a-sublime-plugin/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://blog.qingye.me/write-a-sublime-plugin/" title="编写一个sublime插件">编写一个sublime插件</a></h4>
-        <span>Published on January 12, 2016</span>
+        <h4><a href="http://blog.qingye.me/sublime-plugins/" title="sublime 常用插件记录">sublime 常用插件记录</a></h4>
+        <span>Published on January 07, 2016</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
