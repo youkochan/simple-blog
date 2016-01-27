@@ -1,0 +1,350 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>DHT网络磁力链接爬虫以及搜索网站搭建 &#8211; Simple Blog</title>
+<meta name="description" content="On the way.">
+<meta name="keywords" content="geek">
+
+
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DHT网络磁力链接爬虫以及搜索网站搭建">
+<meta property="og:description" content="On the way.">
+<meta property="og:url" content="http://blog.qingye.me/DHTSpider/">
+<meta property="og:site_name" content="Simple Blog">
+
+
+
+
+
+<link rel="canonical" href="http://blog.qingye.me/DHTSpider/">
+<link href="http://blog.qingye.me/feed.xml" type="application/atom+xml" rel="alternate" title="Simple Blog Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://blog.qingye.me/assets/css/main.css">
+
+<!-- Webfonts -->
+<!-- <link href="//fonts.useso.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.useso.com/css?family=monospace:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load MathJax -->
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<!-- Load Modernizr -->
+<script src="http://blog.qingye.me/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://blog.qingye.me/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://blog.qingye.me/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://blog.qingye.me/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://blog.qingye.me/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://blog.qingye.me/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://blog.qingye.me/images/apple-touch-icon-144x144-precomposed.png">
+
+
+
+</head>
+
+<body id="post" >
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+	<button class="dl-trigger">Open Menu</button>
+	<ul class="dl-menu">
+		<li><a href="http://blog.qingye.me/">Home</a></li>
+		<li>
+			<a href="#">About</a>
+			<ul class="dl-submenu">
+				<li>
+					<img src="http://blog.qingye.me/images/avatar2.jpg" alt="Qing YE photo" class="author-photo">
+					<h4>Qing YE</h4>
+					<p>You can code, they can not, that is pretty damn cool.</p>
+				</li>
+				<li><a href="http://blog.qingye.me/about/"><span class="btn btn-inverse">Learn More</span></a></li>
+				<li>
+					<a href="mailto:youkochan233@gmail.com"><i class="fa fa-fw fa-envelope"></i> Email</a>
+				</li>
+				
+				
+				
+				
+				<li>
+					<a href="http://github.com/youkochan"><i class="fa fa-fw fa-github"></i> GitHub</a>
+				</li>
+				
+				
+				
+				
+			</ul><!-- /.dl-submenu -->
+		</li>
+		<li>
+			<a href="#">Posts</a>
+			<ul class="dl-submenu">
+				<li><a href="http://blog.qingye.me/posts/">All Posts</a></li>
+				<li><a href="http://blog.qingye.me/tags/">All Tags</a></li>
+			</ul>
+		</li>
+		
+	    
+	        
+	        
+	    <li><a href="http://geekfan.me" target="_blank">GeekFan.me</a></li>
+	  
+	</ul><!-- /.dl-menu -->
+</nav><!-- /.dl-menuwrapper -->
+
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <header class="header-title">
+      <div class="header-title-wrap">
+        
+          <h1 class="entry-title"><a href="http://blog.qingye.me/DHTSpider/" rel="bookmark" title="DHT网络磁力链接爬虫以及搜索网站搭建">DHT网络磁力链接爬虫以及搜索网站搭建</a></h1>
+        
+        <h2><span class="entry-date date published"><time datetime="2016-01-25T22:58:24+08:00">January 25, 2016</time></span></h2>
+        
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          
+          Reading time ~2 minutes
+        </p><!-- /.entry-reading-time -->
+        
+      </div><!-- /.header-title-wrap -->
+    </header>
+    <div class="entry-content">
+      <p>回家再写。先开坑。</p>
+
+<!--more-->
+
+<h2 id="section">背景介绍</h2>
+
+<p>DHT 网络是一种去中心化的 P2P 网络，DHT 爬虫的目的是爬取 DHT 网络种的各种资源信息，整理得出一系列 P2P 资源信息，从而可以加以利用。根据得到的多种多样的资源信息，可以建立一个搜索引擎，从而可以对 P2P 网络中的资源进行有针对性的快速检索。本文介绍了 DHT 网络爬虫的相关基本概念以及需要解决的问题以及解决方案。</p>
+
+<h2 id="section-1">相关概念</h2>
+
+<h3 id="dhtmagnettorrent">DHT/Magnet/Torrent</h3>
+
+<p><code>Torrent</code> 文件即种子文件，保存了 P2P 网络中下载某个资源需要的一些特定信息，比如 <code>tracker</code> 地址，以及该资源的一些特定信息，比如文件结构、各部分的校验和等等。我们可以通过一个 <code>torrent</code> 文件从 P2P 网络中下载特定资源。</p>
+
+<p>当我们使用一个种子文件 <code>.torrent</code> 在 P2P 网络中下载某一个资源时，我们需要知道 P2P 网络中有哪些客户端有这个资源，这样我们才可以向这些客户端发出下载资源的请求。我们把这些提供特定资源的客户端（或者服务器）叫做 <code>peer</code>。</p>
+
+<p>传统的 P2P 网络中，存在一个 <code>tracker</code> 服务器，这些服务器跟踪记录了某一些特定资源的 <code>peer</code> 列表。因此我们在下载某一个特定资源时，仅仅需要向 <code>tracker</code> 服务器查询这个特定资源的 <code>peer</code> 列表即可。后来由于种种原因， <code>tracker</code> 服务器常常会面临一些法律问题。而为了解决 <code>tracker</code> 服务器不可用时的资源下载问题，应运而生的即 <code>DHT</code> 分布式哈希表协议。</p>
+
+<p><code>DHT</code> 的出现用于解决当 <code>tracker</code> 服务器不可用时，P2P 客户端依然可以取得某个资源的 <code>peer</code>。<code>DHT</code> 解决这个问题，是因为它将原来 <code>tracker</code> 上的资源 <code>peer</code> 信息分散到了整个网络中。这里将实现了 <code>DHT</code> 协议的计算机定义为 <code>node</code>。通常一个 P2P 客户端程序既是 <code>peer</code> 也是 <code>node</code>。 DHT 网络有多种实现算法，例如 <code>Kademlia</code>。由此可知，一个 P2P 网络中的节点包括：</p>
+
+<ul>
+  <li><code>peer</code> 是在一个 <code>TCP</code> 端口上监听的客户端/服务器，它实现了 <code>BitTorrent</code> 协议。</li>
+  <li><code>node</code> 是在一个 <code>UDP</code> 端口上监听的客户端/服务器，它实现了 <code>DHT</code> (分布式哈希表) 协议。</li>
+</ul>
+
+<p>当某个 P2P 客户端通过种子文件下载资源时，如果没有 <code>tracker</code> 服务器（该信息保存在种子文件中），它就会向 DHT 网络查询这个资源对应的 <code>peer</code> 列表。资源的标识在 DHT 网络中称为 <code>infohash</code> ，是一个 20 字节长的字符串，一般通过 <code>sha1</code> 算法获得。</p>
+
+<p>实际上，种子文件本身就对应着一个 <code>infohash</code>，这个 <code>infohash</code> 是通过种子文件的文件描述信息动态计算得到。一个种子文件包含了对应资源的描述信息，例如文件名、文件大小等。</p>
+
+<p><code>Magnet</code>，这里指的是磁力链接，它是一个类似 URL 的字符串地址。P2P 软件通过磁力链接，会下载到一个种子文件，然后根据该种子文件继续真实资源的下载。其实 <code>Magnet</code> 中包含的字符串即为其对应资源的 <code>infohash</code>，比如下面这个磁力链接地址：</p>
+
+<pre><code>magnet:?xt=urn:btih:95AAFCAA885AFF46CDDB8944C538383B37D4650F
+</code></pre>
+
+<p>磁力链接中包含的最重要的信息就是 <code>btih</code>。这个 <code>btih</code> 一般为40字节或32字节，它其实只是资源 <code>infohash</code> （20字节）的一种编码形式，即 bittorrent info hash 的缩写。</p>
+
+<h3 id="kademlia">Kademlia</h3>
+
+<p><code>Kademlia</code> 是 DHT 网络的一种实现。可以参考「资料6」以及「资料7」。</p>
+
+<p>每个 <code>node</code> 有一个全局唯一的标识符，作为 <code>node ID</code>。<code>node ID</code> 是一个随机选择的 160bit 空间，BitTorrent 协议中的 <code>infohash</code> 也使用这样的 160bit 空间。 <code>距离</code> 用来衡量两个 <code>node</code> 之间或者 <code>node</code> 和 <code>infohash</code> 之间的「远近」。<code>node</code> 必须维护一个路由表，路由表中含有一部分其它节点的联系信息。其它节点距离自己越近时，路由表信息越详细。因此每个节点都知道 DHT 中离自己很”近”的节点的联系信息，而离自己非常远的 ID 的联系信息却知道的很少。</p>
+
+<p>在 <code>Kademlia</code> 网络中，距离是通过异或（XOR）计算的，结果为无符号整数。 <code>distance(A, B) = |A xor B|</code> ，值越小表示越近。</p>
+
+<p>当某个节点要为 <code>torrent</code> 寻找 <code>peer</code> 时，它将自己路由表中的 <code>node ID</code> 和 <code>torrent</code> 的 <code>infohash</code> 进行 “距离对比”。然后向路由表中离 <code>infohash</code> 最近的 <code>node</code> 发送请求，问它们正在下载这个 <code>torrent</code> 的 <code>peer</code> 的联系信息。如果一个被联系的节点知道下载这个 <code>torrent</code> 的 <code>peer</code> 信息，那个 <code>peer</code> 的联系信息将被回复给当前 节点。否则，那个被联系的节点则必须回复在它的路由表中离该 <code>torrent</code> 的 <code>infohash</code> 最近的节点的联系信息。最初的节点重复地请求比目标 <code>infohash</code> 更近的节点，直到不能再找到更近的节点为止。查询完了之后，客户端把自己作为一个 <code>peer</code> 插入到所有回复节点中离种子最近的那个节点中。</p>
+
+<p>请求 <code>peer</code> 的返回值包含一个不透明的值，称之为 “令牌(token)”。如果一个节点宣布它所控制的 <code>peer</code> 正在下载一个种子，它必须在回复请求节点的同时，附加上对方向我们发送的最近的 “令牌(token)”。这样当一个节点试图 “宣布” 正在下载一个种子时，被请求的节点核对令牌和发出请求的节点的 IP 地址。这是为了防止恶意的主机登记其它主机的种子。由于令牌仅仅由请求节点返回给收到令牌的同一个节点，所以没有规定他的具体实现。但是令牌必须在一个规定的时间内被接受，超时后令牌则失效。在 BitTorrent 的实现中，token 是在 IP 地址后面连接一个 secret，这个 secret 每五分钟改变一次，其中 token 在十分钟以内是可接受的。</p>
+
+<p>有了这个路由表之后，再通过一个基于距离关系的查找算法（K桶），就可以实现不用挨个遍历就找到特定的节点。而查找资源peer这个操作，正是基于节点查找这个过程。</p>
+
+<h3 id="section-2">协议</h3>
+
+<p><code>Kademlia</code> 定义了节点之间的交互协议。这些协议支撑了整个 DHT 网络里信息分布式存储的实现。这些协议都是使用UDP来传送。其协议格式使用一种称为 <code>bencode</code> 的编码方式来编码协议数据。<code>bencode</code> 是一种文本格式的编码，它还用于种子文件内的信息编码。</p>
+
+<p><code>Kademlia</code> 协议具体格式可参考 BitTorrent的定义。这些协议包括4种请求： <code>ping</code> ，<code>find_node</code> ，<code>get_peer</code> ，<code>announce_peer</code> 。在有些文档中这些请求的名字会有不同，例如 <code>announce_peer</code> 又被称为 <code>store</code> ，<code>get_peer</code> 被称为 <code>find_value</code> 。这4种请求中，都会有对应的回应消息。其中最重要的消息是 <code>get_peer</code> ，其目的在于在网络中查找某个资源对应的 <code>peer</code> 列表。</p>
+
+<p>值得一提的是，所有这些请求，包括各种回应，都可以用于处理该消息的节点构建路由表。因为路由表本质就是存储网络中的节点信息。</p>
+
+<ul>
+  <li><code>ping</code>：用于确定某个节点是否在线。这个请求主要用于辅助路由表的更新。</li>
+  <li><code>find_node</code>：用于查找某个节点，以获得其地址信息。当某个节点接收到该请求后，如果目标节点不在自己的路由表里，那么就返回离目标节点较近的 K 个节点。这个消息可用于节点启动时构建路由表。通过 <code>find_node</code> 方式构建路由表，其实现方式为向 DHT  网络查询自己。那么，接收该查询的节点就会一直返回其他节点了列表，查询者递归查询，直到无法查询为止。</li>
+  <li><code>get_peer</code>：通过资源的 <code>infohash</code> 获得资源对应的 <code>peer</code> 列表。当查询者获得资源的 <code>peer</code> 列表后，它就可以通过这些 <code>peer</code> 进行资源下载了。收到该请求的节点会在自己的路由表中查找该 <code>infohash</code>，如果有收录，就返回对应的 <code>peer</code> 列表。如果没有，则返回离该 <code>infohash</code> 较近的若干个节点。查询者若收到的是节点列表，那么就会递归查找。这个过程同 <code>find_node</code> 一样。值得注意的是，<code>get_peer</code> 的回应消息里会携带一个 <code>token</code>，该 <code>token</code>会用于稍后的announce_peer请求。</li>
+  <li><code>announce_peer</code>：该请求主要目的在于通知，通知其他节点自己开始下载某个资源。这个消息用于构建网络中资源的 <code>peer</code> 列表。当一个已经加入 DHT 网络的 P2P 客户端通过种子文件开始下载资源时，首先在网络中查询该资源的 <code>peer</code> 列表，这个过程通过 <code>get_peer</code> 完成。当某个节点从 <code>get_peer</code> 返回 <code>peer</code> 时，查询者开始下载，然后通过 <code>announce_peer</code> 告诉返回这个 <code>peer</code> 的节点。<code>announce_peer</code> 中会携带 <code>get_peer</code> 回应消息里的 <code>token</code>。</li>
+</ul>
+
+<h2 id="section-3">爬虫部分</h2>
+
+<p>DHT 爬虫即伪装成一个 DHT 网络节点，主要功能有以下几点：</p>
+
+<ul>
+  <li>通过收发 DHT 网络中其他节点发来的的 <code>geet_peer</code> 或者 <code>announce_peer</code> 消息中的 <code>infohash</code> 确认 DHT 网络中存在某一个资源（不一定能被下载）或存在某一个资源可以被下载。</li>
+  <li>通过从网络中获取这个资源（<code>infohash</code>）的种子文件，来获得该资源的描述</li>
+</ul>
+
+<p>当爬虫程序加入 DHT 网络后，它总会收到其他节点发来的announce_peer消息。announce_peer消息与get_peer消息里都带了资源的infohash，但是get_peer里的infohash对应的资源在该网络中不一定存在，即该资源没有任何可用peer。而announce_peer则表示已经确认了该网络中有节点正在下载该资源，也即该资源的数据确实存在该网络中。</p>
+
+<p>所以，爬虫程序需要尽最大努力地获取其他节点发来的announce_peer消息。如果announce_peer消息会发送给离消息发送节点较近的节点，那么，一方面，爬虫程序应该将自己告诉网络中尽可能多的节点。这可以通过一次完整的find_node操作实现。另一方面，爬虫程序内部实现可以部署多个DHT节点，总之目的在于尽可能地让爬虫程序称为其他节点的较近者。</p>
+
+<p>通过累计收集得到的资源信息，就可以提供一个资源搜索引擎，或者构建资源统计信息。以下进一步描述实现细节。整个爬虫的实现依赖了一个很重要的信息，那就是资源的 <code>infohash</code> 实际上就是一个磁力链接（当然需要包装一下数据）。这意味着一旦我们获得了一个 <code>infohash</code>，我们就等于获得了一个种子。</p>
+
+<p>其中，通过 <code>infohash</code> 获得种子文件的过程可以采用以下几种方式：</p>
+
+<ul>
+  <li>利用BT的官方协议获取：即向 DHT 网络请求这个 <code>infohash</code> 从而得到种子文件。优点：得到的信息准确无误，稳定。缺点：慢，有时候还不一定会有结果，因为有一些节点不一定会在线。</li>
+  <li>从迅雷的种子库获取：迅雷一般会把种子信息做一个缓存，这样一般进行请求马上就会有回复。</li>
+  <li>从比特彗星的种子库获取：同上，但是比迅雷信息丰富一些。</li>
+</ul>
+
+<p>然后呢，为了写爬虫更加作死一些，选择了第一种方式。</p>
+
+<p>目前爬虫模块的主要构思是</p>
+
+<ul>
+  <li><code>MagnetSpider</code> 主要用于伪装 DHT 节点，获取 <code>magnet</code>，并做好保存。同时根据 <code>magnet</code> 的获取来源，将 <code>magnet</code> 赋予不同的优先级加入优先级队列 <code>work_queue</code></li>
+  <li><code>TorrentSpider</code> 主要用于循环从 <code>work_queue</code> 中获取 <code>magnet</code> 解析任务，解析并保存 <code>torrent</code> 文件以及种子信息（暂时可以使用资源名）</li>
+  <li><code>MainSpider</code> 主函数，主要完成初始化操作以及各种其他操作</li>
+</ul>
+
+<h2 id="section-4">检索部分</h2>
+
+<p>检索采用 ElasticSearch 作为检索引擎，待解决的问题有：</p>
+
+<ul>
+  <li>ES 的访问权限控制问题：可以通过设置 ES 的配置文件，从而保证只有本机可以访问 ES 保证了数据的安全性。</li>
+  <li>ES 的数据导入问题：可以将 ES 的数据导入操作直接写到 <code>TorrentSpider</code> 中，当 <code>TorrentSpider</code> 采集到种子信息时直接写入</li>
+  <li>ES 的数据备份问题</li>
+</ul>
+
+<h2 id="section-5">网站架构部分</h2>
+
+<p>拟采用 Python Flask 或者 Django 框架来进行网站搭建。</p>
+
+<h2 id="section-6">前端展示部分</h2>
+
+<p>拟采用 Bootstrap 进行快速开发。</p>
+
+<h2 id="section-7">需要考虑的问题</h2>
+
+<p>需要考虑的问题是，当某一个模块崩溃时，需要保证数据不丢失，自动做好备份，带模块服务恢复可用时，可以快速导入数据，以及扩展性问题。</p>
+
+<h2 id="section-8">参考资料</h2>
+
+<ol>
+  <li><a href="http://codemacro.com/2013/05/19/crawl-dht/">P2P中DHT网络爬虫</a></li>
+  <li><a href="http://maijunjin.github.io/bt/2013/10/12/磁力链接转换为bt种子方法.html">磁力链接转换为BT种子方法</a></li>
+  <li><a href="https://www.defcon.org/images/defcon-18/dc-18-presentations/Wolchok/DEFCON-18-Wolchok-Crawling-Bittorrent-DHTS.pdf">Crawling Bittorrent DHT</a></li>
+  <li><a href="http://justjavac.com/other/2015/02/01/bittorrent-dht-protocol.html">DHT Protocol：BitTorrent DHT 协议中文翻译</a></li>
+  <li><a href="http://justjavac.com/other/2015/02/01/magnet-and-torrent-search-engine-architecture-based-on-dht.html">基于 DHT 网络的磁力链接和BT种子的搜索引擎架构</a></li>
+  <li><a href="http://www.bittorrent.org/beps/bep_0005.html">BitTorrent网站上的DHT协议描述</a></li>
+  <li><a href="http://blog.csdn.net/mergerly/article/details/7989281">P2P中DHT网络介绍</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Bencode">Bencode</a></li>
+  <li><a href="http://blog.csdn.net/xxxxxx91116/article/details/7971134">【P2P网络】磁力链接转换为种子文件 magnet to torrent</a></li>
+</ol>
+
+
+      <footer class="entry-meta">
+        <span class="entry-tags"><a href="http://blog.qingye.me/tags/#geek" title="Pages tagged geek" class="tag"><span class="term">geek</span></a></span>
+        
+        <div class="social-share">
+  <ul class="socialcount socialcount-small inline-list">
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://blog.qingye.me/DHTSpider/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://blog.qingye.me/DHTSpider/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://blog.qingye.me/DHTSpider/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+  </ul>
+</div><!-- /.social-share -->
+      </footer>
+    </div><!-- /.entry-content -->
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+    <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="http://blog.qingye.me/write-a-ehentai-ghost/" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="http://blog.qingye.me/write-a-ehentai-ghost/" title="编写一个E绅士扒图器">编写一个E绅士扒图器</a></h3>
+      <p>正式开坑！考完近世代数就开工！！！！（已完成）背景介绍E绅士是一个很久之前就已经知晓了的神站，然而由于种种原因，其实并没有对其进行深入了解。最近看了一下之后有一种发现了新世界的感觉，之前在很多地方难以搜寻到的 资源 在这里都可以很方便地找到。唯一缺点就是打包下载需要积分。因...&hellip; <a href="http://blog.qingye.me/write-a-ehentai-ghost/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
+    
+      <div class="list-item">
+        <h4><a href="http://blog.qingye.me/write-a-sublime-plugin/" title="编写一个sublime插件">编写一个sublime插件</a></h4>
+        <span>Published on January 12, 2016</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="http://blog.qingye.me/sublime-plugins/" title="sublime 常用插件记录">sublime 常用插件记录</a></h4>
+        <span>Published on January 07, 2016</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    <span>&copy; 2016 Qing YE. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="https://mademistakes.com/work/hpstr-jekyll-theme/" rel="nofollow">HPSTR Theme</a>.</span>
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+<script src="http://blog.qingye.me/assets/js/vendor/jquery-1.9.1.min.js"></script>
+<!-- <script>window.jQuery || document.write('<script src="http://blog.qingye.me/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script> -->
+<script src="http://blog.qingye.me/assets/js/scripts.min.js"></script>
+
+
+
+
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'qingye'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script'); s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	        
+
+</body>
+</html>
