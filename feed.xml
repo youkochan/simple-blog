@@ -4,7 +4,7 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://blog.qingye.me/feed.xml" />
 <link rel="alternate" type="text/html" href="http://blog.qingye.me" />
-<updated>2016-01-27T21:20:49+08:00</updated>
+<updated>2016-02-11T19:22:22+08:00</updated>
 <id>http://blog.qingye.me/</id>
 <author>
   <name>Qing YE</name>
@@ -133,9 +133,43 @@
   &lt;li&gt;ES 的数据备份问题&lt;/li&gt;
 &lt;/ul&gt;
 
+&lt;p&gt;当我收集了 404353 条记录，开开心心准备去写入的时候发现了一个问题：内存不足。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;OpenJDK 64-Bit Server VM warning: INFO: os::commit_memory&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0x00000000f8090000, 26771456, 0&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; failed&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;Cannot allocate memory&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;errno&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;12&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;# &lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;# There is insufficient memory for the Java Runtime Environment to continue.&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;# Native memory allocation (malloc) failed to allocate 26771456 bytes for committing reserved memory.&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;# An error report file with more information is saved as:&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;# /home/yeqing/elasticsearch-2.1.0/bin/hs_err_pid20445.log&lt;/span&gt;
+	yeqing@myVPS:~/elasticsearch-2.1.0/bin&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;折腾了一下发现是 &lt;code&gt;cached&lt;/code&gt; 缓存占了太多的空间：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;yeqing@myVPS:~/elasticsearch-2.1.0/bin&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;free
+	             total       used       free     shared    buffers     cached
+	Mem:        &lt;span class=&quot;m&quot;&gt;501800&lt;/span&gt;     &lt;span class=&quot;m&quot;&gt;490120&lt;/span&gt;      &lt;span class=&quot;m&quot;&gt;11680&lt;/span&gt;        &lt;span class=&quot;m&quot;&gt;616&lt;/span&gt;       &lt;span class=&quot;m&quot;&gt;2484&lt;/span&gt;     365720
+	-/+ buffers/cache:     &lt;span class=&quot;m&quot;&gt;121916&lt;/span&gt;     379884
+	Swap:            &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;          &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;          0&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;而使用 bulk 方式提交数据总会出现这个问题。参考 &lt;a href=&quot;http://www.linuxatemyram.com&quot;&gt;http://www.linuxatemyram.com&lt;/a&gt;&lt;/p&gt;
+
 &lt;h2 id=&quot;section-5&quot;&gt;网站架构部分&lt;/h2&gt;
 
-&lt;p&gt;拟采用 Python Flask 或者 Django 框架来进行网站搭建。&lt;/p&gt;
+&lt;p&gt;拟采用 Python Flask 或者 Django 框架来进行网站搭建。网站架构部分通过使用 Django ，都还是比较简单。有一些需要解决的问题如下。&lt;/p&gt;
+
+&lt;p&gt;编写 Django 模板的时候有一个问题，模板编写过程中的变量名不能以下划线开头。然而 ES 查询的结果中包含一些关键字段比如 &lt;code&gt;_source&lt;/code&gt; &lt;code&gt;_id&lt;/code&gt; &lt;code&gt;_type&lt;/code&gt; 等字段不能使用 &lt;code&gt;result._source&lt;/code&gt; 这种方式调用，因此需要使用过滤器的方式从变量中提取出需要的字段。&lt;/p&gt;
+
+&lt;p&gt;首先在项目目录下新建一个 &lt;code&gt;templatetags&lt;/code&gt; 目录，然后新建一个 &lt;code&gt;__init__.py&lt;/code&gt; 空文件即可。再新建一个 &lt;code&gt;py&lt;/code&gt; 文件，用于定义自己的过滤器。下面即一个最简单的过滤器，保存为 &lt;code&gt;fliter.py&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;django&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;template&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;register&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;hits_number&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;_source&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;register&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hits_number&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;然后在模板中使用 &lt;code&gt;\{\% load fliter \%\}&lt;/code&gt; 导入自定义模板即可。&lt;/p&gt;
 
 &lt;h2 id=&quot;section-6&quot;&gt;前端展示部分&lt;/h2&gt;
 
@@ -2110,7 +2144,8 @@ service apache2 reload&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;ES的查询DSL是非常灵活的。你可以通过将单独的查询子句在查询层次中上下移动来让它更重要/更不重要。比如，下面的查询：&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;quick OR brown OR red OR fox&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;quick OR brown OR red OR fox
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;那我们就可以把这个查询写作成一个布尔查询使得对于所有的词条在同一个层次：&lt;/p&gt;
 

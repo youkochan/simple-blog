@@ -128,7 +128,7 @@
         <p class="entry-reading-time">
           <i class="fa fa-clock-o"></i>
           
-          Reading time ~2 minutes
+          Reading time ~3 minutes
         </p><!-- /.entry-reading-time -->
         
       </div><!-- /.header-title-wrap -->
@@ -242,9 +242,43 @@
   <li>ES 的数据备份问题</li>
 </ul>
 
+<p>当我收集了 404353 条记录，开开心心准备去写入的时候发现了一个问题：内存不足。</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">OpenJDK 64-Bit Server VM warning: INFO: os::commit_memory<span class="o">(</span>0x00000000f8090000, 26771456, 0<span class="o">)</span> failed<span class="p">;</span> <span class="nv">error</span><span class="o">=</span><span class="s1">&#39;Cannot allocate memory&#39;</span> <span class="o">(</span><span class="nv">errno</span><span class="o">=</span>12<span class="o">)</span>
+	<span class="c"># </span>
+	<span class="c"># There is insufficient memory for the Java Runtime Environment to continue.</span>
+	<span class="c"># Native memory allocation (malloc) failed to allocate 26771456 bytes for committing reserved memory.</span>
+	<span class="c"># An error report file with more information is saved as:</span>
+	<span class="c"># /home/yeqing/elasticsearch-2.1.0/bin/hs_err_pid20445.log</span>
+	yeqing@myVPS:~/elasticsearch-2.1.0/bin<span class="err">$</span></code></pre></div>
+
+<p>折腾了一下发现是 <code>cached</code> 缓存占了太多的空间：</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">yeqing@myVPS:~/elasticsearch-2.1.0/bin<span class="nv">$ </span>free
+	             total       used       free     shared    buffers     cached
+	Mem:        <span class="m">501800</span>     <span class="m">490120</span>      <span class="m">11680</span>        <span class="m">616</span>       <span class="m">2484</span>     365720
+	-/+ buffers/cache:     <span class="m">121916</span>     379884
+	Swap:            <span class="m">0</span>          <span class="m">0</span>          0</code></pre></div>
+
+<p>而使用 bulk 方式提交数据总会出现这个问题。参考 <a href="http://www.linuxatemyram.com">http://www.linuxatemyram.com</a></p>
+
 <h2 id="section-5">网站架构部分</h2>
 
-<p>拟采用 Python Flask 或者 Django 框架来进行网站搭建。</p>
+<p>拟采用 Python Flask 或者 Django 框架来进行网站搭建。网站架构部分通过使用 Django ，都还是比较简单。有一些需要解决的问题如下。</p>
+
+<p>编写 Django 模板的时候有一个问题，模板编写过程中的变量名不能以下划线开头。然而 ES 查询的结果中包含一些关键字段比如 <code>_source</code> <code>_id</code> <code>_type</code> 等字段不能使用 <code>result._source</code> 这种方式调用，因此需要使用过滤器的方式从变量中提取出需要的字段。</p>
+
+<p>首先在项目目录下新建一个 <code>templatetags</code> 目录，然后新建一个 <code>__init__.py</code> 空文件即可。再新建一个 <code>py</code> 文件，用于定义自己的过滤器。下面即一个最简单的过滤器，保存为 <code>fliter.py</code></p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">template</span>
+<span class="n">register</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">Library</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">hits_number</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">value</span><span class="p">[</span><span class="s">&#39;_source&#39;</span><span class="p">]</span>
+
+<span class="n">register</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">hits_number</span><span class="p">)</span></code></pre></div>
+
+<p>然后在模板中使用 <code>\{\% load fliter \%\}</code> 导入自定义模板即可。</p>
 
 <h2 id="section-6">前端展示部分</h2>
 
