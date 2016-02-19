@@ -262,6 +262,10 @@
 
 <p>而使用 bulk 方式提交数据总会出现这个问题。参考 <a href="http://www.linuxatemyram.com">http://www.linuxatemyram.com</a></p>
 
+<p>然后改成了将整理好的记录分成小文件的形式，以 1000 条记录为单位。</p>
+
+<p>后来再折腾了一下发现 ES 总是无缘无故被 kill 掉。一开始以为是占用内存的问题，设置了 <code>ES_HEAP_SIZE</code> 以及 <code>ES_DIRECT_MEMORY</code> 后还是无故被 kill。后来更改了 linux 的用户最大打开文件数后一直工作正常，无崩溃现象发生。</p>
+
 <h2 id="section-5">网站架构部分</h2>
 
 <p>拟采用 Python Flask 或者 Django 框架来进行网站搭建。网站架构部分通过使用 Django ，都还是比较简单。有一些需要解决的问题如下。</p>
@@ -284,11 +288,7 @@
 
 <p>拟采用 Bootstrap 进行快速开发。</p>
 
-<h2 id="section-7">需要考虑的问题</h2>
-
-<p>需要考虑的问题是，当某一个模块崩溃时，需要保证数据不丢失，自动做好备份，带模块服务恢复可用时，可以快速导入数据，以及扩展性问题。</p>
-
-<h2 id="section-8">参考资料</h2>
+<h2 id="section-7">参考资料</h2>
 
 <ol>
   <li><a href="http://codemacro.com/2013/05/19/crawl-dht/">P2P中DHT网络爬虫</a></li>

@@ -4,7 +4,7 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://blog.qingye.me/feed.xml" />
 <link rel="alternate" type="text/html" href="http://blog.qingye.me" />
-<updated>2016-02-11T19:22:22+08:00</updated>
+<updated>2016-02-19T19:21:09+08:00</updated>
 <id>http://blog.qingye.me/</id>
 <author>
   <name>Qing YE</name>
@@ -153,6 +153,10 @@
 
 &lt;p&gt;而使用 bulk 方式提交数据总会出现这个问题。参考 &lt;a href=&quot;http://www.linuxatemyram.com&quot;&gt;http://www.linuxatemyram.com&lt;/a&gt;&lt;/p&gt;
 
+&lt;p&gt;然后改成了将整理好的记录分成小文件的形式，以 1000 条记录为单位。&lt;/p&gt;
+
+&lt;p&gt;后来再折腾了一下发现 ES 总是无缘无故被 kill 掉。一开始以为是占用内存的问题，设置了 &lt;code&gt;ES_HEAP_SIZE&lt;/code&gt; 以及 &lt;code&gt;ES_DIRECT_MEMORY&lt;/code&gt; 后还是无故被 kill。后来更改了 linux 的用户最大打开文件数后一直工作正常，无崩溃现象发生。&lt;/p&gt;
+
 &lt;h2 id=&quot;section-5&quot;&gt;网站架构部分&lt;/h2&gt;
 
 &lt;p&gt;拟采用 Python Flask 或者 Django 框架来进行网站搭建。网站架构部分通过使用 Django ，都还是比较简单。有一些需要解决的问题如下。&lt;/p&gt;
@@ -175,11 +179,7 @@
 
 &lt;p&gt;拟采用 Bootstrap 进行快速开发。&lt;/p&gt;
 
-&lt;h2 id=&quot;section-7&quot;&gt;需要考虑的问题&lt;/h2&gt;
-
-&lt;p&gt;需要考虑的问题是，当某一个模块崩溃时，需要保证数据不丢失，自动做好备份，带模块服务恢复可用时，可以快速导入数据，以及扩展性问题。&lt;/p&gt;
-
-&lt;h2 id=&quot;section-8&quot;&gt;参考资料&lt;/h2&gt;
+&lt;h2 id=&quot;section-7&quot;&gt;参考资料&lt;/h2&gt;
 
 &lt;ol&gt;
   &lt;li&gt;&lt;a href=&quot;http://codemacro.com/2013/05/19/crawl-dht/&quot;&gt;P2P中DHT网络爬虫&lt;/a&gt;&lt;/li&gt;
