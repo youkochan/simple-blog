@@ -160,38 +160,37 @@ Given [0,1,0,2,1,0,1,3,2,1,2,1], return 6.</p>
 
 <p>由此可以写出代码如下：</p>
 
-<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
-<span class="nl">public</span><span class="p">:</span>
-    <span class="kt">int</span> <span class="n">trap</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">height</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">height</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
-        <span class="kt">int</span> <span class="n">max_height</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-        <span class="kt">int</span> <span class="n">sum_height</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span> <span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">max_height</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">max_height</span><span class="p">,</span> <span class="n">height</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-            <span class="n">sum_height</span> <span class="o">+=</span> <span class="n">height</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-        <span class="p">}</span>        
-        <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">max_height</span> <span class="o">*</span> <span class="n">n</span><span class="p">;</span>
-        <span class="c1">// count the white blocks from left</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">max_height</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">--</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">j</span> <span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">height</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">i</span><span class="p">)</span>
-                    <span class="n">result</span> <span class="o">--</span><span class="p">;</span>
-                <span class="k">else</span>
-                    <span class="k">break</span><span class="p">;</span>
-            <span class="p">}</span>
+<div class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="kt">int</span> <span class="nf">trap</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">height</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">height</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="kt">int</span> <span class="n">max_height</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">sum_height</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span> <span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">max_height</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">max_height</span><span class="p">,</span> <span class="n">height</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+        <span class="n">sum_height</span> <span class="o">+=</span> <span class="n">height</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>        
+    <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">max_height</span> <span class="o">*</span> <span class="n">n</span><span class="p">;</span>
+    
+    <span class="c1">// count the white blocks from left</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">max_height</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">j</span> <span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">height</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">i</span><span class="p">)</span>
+                <span class="n">result</span> <span class="o">--</span><span class="p">;</span>
+            <span class="k">else</span>
+                <span class="k">break</span><span class="p">;</span>
         <span class="p">}</span>
-        <span class="c1">// count the white blocks from right</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">max_height</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">--</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">--</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">height</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">i</span><span class="p">)</span>
-                    <span class="n">result</span> <span class="o">--</span><span class="p">;</span>
-                <span class="k">else</span>
-                    <span class="k">break</span><span class="p">;</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="n">result</span> <span class="o">-</span> <span class="n">sum_height</span><span class="p">;</span>
     <span class="p">}</span>
-<span class="p">};</span></code></pre></div>
+
+    <span class="c1">// count the white blocks from right</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">max_height</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">height</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">i</span><span class="p">)</span>
+                <span class="n">result</span> <span class="o">--</span><span class="p">;</span>
+            <span class="k">else</span>
+                <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">result</span> <span class="o">-</span> <span class="n">sum_height</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
 
 <h2 id="reverse-nodes-in-k-group">Reverse Nodes in k-Group</h2>
 
@@ -212,7 +211,7 @@ For k = 3, you should return: 3-&gt;2-&gt;1-&gt;4-&gt;5</p>
 
 <p>思路比较直接：判断当前需要转置的链表长度是否小于k，如果小于，不需要转置，直接返回；若大于，转置前k，然后递归调用自身来转置后面的链表。</p>
 
-<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="cm">/**</span>
+<div class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cm">/**</span>
 <span class="cm"> * Definition for singly-linked list.</span>
 <span class="cm"> * struct ListNode {</span>
 <span class="cm"> *     int val;</span>
@@ -220,53 +219,51 @@ For k = 3, you should return: 3-&gt;2-&gt;1-&gt;4-&gt;5</p>
 <span class="cm"> *     ListNode(int x) : val(x), next(NULL) {}</span>
 <span class="cm"> * };</span>
 <span class="cm"> */</span>
-<span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
-<span class="nl">public</span><span class="p">:</span>
-    <span class="n">ListNode</span><span class="o">*</span> <span class="n">reverseKGroup</span><span class="p">(</span><span class="n">ListNode</span><span class="o">*</span> <span class="n">head</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">head</span><span class="p">;</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">head</span> <span class="o">==</span> <span class="n">nullptr</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">nullptr</span><span class="p">;</span>
-        <span class="n">ListNode</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>
-        <span class="n">ListNode</span> <span class="o">*</span><span class="n">new_head</span> <span class="o">=</span> <span class="n">nullptr</span><span class="p">;</span>
-        <span class="n">ListNode</span> <span class="o">*</span><span class="n">new_tail</span> <span class="o">=</span> <span class="n">nullptr</span><span class="p">;</span>
 
-        <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-        <span class="n">ListNode</span> <span class="o">*</span><span class="n">temp</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
-        <span class="c1">// check the length of the list</span>
-        <span class="c1">// if less than k, do nothing</span>
-        <span class="k">while</span> <span class="p">(</span><span class="n">temp</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">len</span> <span class="o">++</span><span class="p">;</span>
-            <span class="n">temp</span> <span class="o">=</span> <span class="n">temp</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">len</span> <span class="o">==</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">break</span><span class="p">;</span>
-            <span class="p">}</span>
+<span class="n">ListNode</span><span class="o">*</span> <span class="nf">reverseKGroup</span><span class="p">(</span><span class="n">ListNode</span><span class="o">*</span> <span class="n">head</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">head</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">head</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">nullptr</span><span class="p">;</span>
+    <span class="n">ListNode</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>
+    <span class="n">ListNode</span> <span class="o">*</span><span class="n">new_head</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+    <span class="n">ListNode</span> <span class="o">*</span><span class="n">new_tail</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+
+    <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">ListNode</span> <span class="o">*</span><span class="n">temp</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+    <span class="c1">// check the length of the list</span>
+    <span class="c1">// if less than k, do nothing</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">temp</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">len</span> <span class="o">++</span><span class="p">;</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">temp</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">len</span> <span class="o">==</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">break</span><span class="p">;</span>
         <span class="p">}</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">len</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">head</span><span class="p">;</span>
-
-        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">k</span><span class="p">;</span>
-        <span class="c1">// reverse the list</span>
-        <span class="k">while</span> <span class="p">(</span><span class="n">head</span> <span class="o">&amp;&amp;</span> <span class="n">count</span><span class="o">--</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">next</span> <span class="o">=</span> <span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-            <span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">nullptr</span><span class="p">;</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">new_head</span> <span class="o">==</span> <span class="n">nullptr</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">new_head</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
-                <span class="n">new_tail</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
-            <span class="p">}</span>
-            <span class="k">else</span> <span class="p">{</span>
-                <span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">new_head</span><span class="p">;</span>
-                <span class="n">new_head</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
-            <span class="p">}</span>
-            <span class="n">head</span> <span class="o">=</span> <span class="n">next</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="c1">// reverse the remain list, and add its newhead in the tail.</span>
-        <span class="n">ListNode</span> <span class="o">*</span><span class="n">next_step_head</span> <span class="o">=</span> <span class="n">reverseKGroup</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="n">k</span><span class="p">);</span>
-        <span class="n">new_tail</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">next_step_head</span><span class="p">;</span>
-        <span class="k">return</span> <span class="n">new_head</span><span class="p">;</span>
     <span class="p">}</span>
-<span class="p">};</span></code></pre></div>
+    <span class="k">if</span> <span class="p">(</span><span class="n">len</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">head</span><span class="p">;</span>
+
+    <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">k</span><span class="p">;</span>
+    <span class="c1">// reverse the list</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">head</span> <span class="o">&amp;&amp;</span> <span class="n">count</span><span class="o">--</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">next</span> <span class="o">=</span> <span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+        <span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">new_head</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">new_head</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+            <span class="n">new_tail</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">new_head</span><span class="p">;</span>
+            <span class="n">new_head</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">head</span> <span class="o">=</span> <span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// reverse the remain list, and add its newhead in the tail.</span>
+    <span class="n">ListNode</span> <span class="o">*</span><span class="n">next_step_head</span> <span class="o">=</span> <span class="n">reverseKGroup</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="n">k</span><span class="p">);</span>
+    <span class="n">new_tail</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">next_step_head</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">new_head</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
 
 <h2 id="first-missing-positive">First Missing Positive</h2>
 
@@ -282,31 +279,27 @@ Your algorithm should run in O(n) time and uses constant space.</p>
 
 <p>寻找一个未排序的数组中的未出现的最小正整数。如果排序，时间复杂度肯定就超过了O(n) 。可以考虑交换数字的方式，当当前数字不在正确位置时，一直把当前位置的数字交换到正确的位置，直到不满足某一些条件。最后用一个循环寻找第一个与所在位置不对应的数字，即所求。</p>
 
-<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
-<span class="nl">private</span><span class="p">:</span>
-    <span class="kt">void</span> <span class="n">swap</span><span class="p">(</span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">n1</span><span class="p">,</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">n2</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kt">int</span> <span class="n">_t</span> <span class="o">=</span> <span class="n">n1</span><span class="p">;</span>
-        <span class="n">n1</span> <span class="o">=</span> <span class="n">n2</span><span class="p">;</span>
-        <span class="n">n2</span> <span class="o">=</span> <span class="n">_t</span><span class="p">;</span>
-    <span class="p">}</span>
+<div class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="kt">void</span> <span class="nf">swap</span><span class="p">(</span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">n1</span><span class="p">,</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">n2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">_t</span> <span class="o">=</span> <span class="n">n1</span><span class="p">;</span>
+    <span class="n">n1</span> <span class="o">=</span> <span class="n">n2</span><span class="p">;</span>
+    <span class="n">n2</span> <span class="o">=</span> <span class="n">_t</span><span class="p">;</span>
+<span class="p">}</span>
 
-<span class="nl">public</span><span class="p">:</span>
-    <span class="kt">int</span> <span class="n">firstMissingPositive</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">nums</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span> <span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">while</span> <span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="o">&amp;&amp;</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">nums</span><span class="p">[</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-                <span class="n">swap</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">]);</span>
-        <span class="p">}</span>
-        <span class="kt">int</span> <span class="n">pos</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span> <span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">break</span><span class="p">;</span>
-            <span class="p">}</span>
-            <span class="n">pos</span> <span class="o">++</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="n">pos</span><span class="p">;</span>
+<span class="kt">int</span> <span class="nf">firstMissingPositive</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">nums</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span> <span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="o">&amp;&amp;</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">nums</span><span class="p">[</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">swap</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">]);</span>
     <span class="p">}</span>
-<span class="p">};</span></code></pre></div>
+    <span class="kt">int</span> <span class="n">pos</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span> <span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">break</span><span class="p">;</span><span class="n">l</span>
+        <span class="p">}</span>
+        <span class="n">pos</span> <span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">pos</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
 
 <h2 id="regular-expression-matching">Regular Expression Matching</h2>
 
@@ -331,48 +324,44 @@ isMatch(“aab”, “c<em>a</em>b”) → true</p>
 
 <p>考虑从后往前匹配，匹配成功的标志即s的下标到了-1且p的下标也到了-1。同时由于’.’以及’*‘的存在，因此在匹配的过程中需要考虑多重情况。</p>
 
-<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
-<span class="nl">private</span><span class="p">:</span>
-    <span class="kt">bool</span> <span class="n">check</span><span class="p">(</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">sidx</span><span class="p">,</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">p</span><span class="p">,</span> <span class="kt">int</span> <span class="n">pidx</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">sidx</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">pidx</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="kt">bool</span> <span class="nf">check</span><span class="p">(</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">sidx</span><span class="p">,</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">p</span><span class="p">,</span> <span class="kt">int</span> <span class="n">pidx</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">sidx</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">pidx</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">sidx</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">pidx</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">sidx</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">pidx</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// s:</span>
+        <span class="c1">// p: c*c*c*</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">pidx</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;*&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">check</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">sidx</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">pidx</span><span class="o">-</span><span class="mi">2</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">pidx</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;*&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">pidx</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;.&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">check</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">sidx</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">pidx</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">pidx</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">[</span><span class="n">sidx</span><span class="p">])</span>
+            <span class="k">return</span> <span class="n">check</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">sidx</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">pidx</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// s: abccd</span>
+        <span class="c1">// p: abc*d</span>
+        <span class="kt">bool</span> <span class="n">tag</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">pidx</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">[</span><span class="n">sidx</span><span class="p">]</span> <span class="o">||</span> <span class="n">p</span><span class="p">[</span><span class="n">pidx</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;.&#39;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">tag</span> <span class="o">=</span> <span class="n">check</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">sidx</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">pidx</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">tag</span><span class="p">)</span>
             <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">sidx</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">pidx</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-            <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">sidx</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">pidx</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-            <span class="c1">// s:</span>
-            <span class="c1">// p: c*c*c*</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">pidx</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;*&#39;</span><span class="p">)</span>
-                <span class="k">return</span> <span class="n">check</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">sidx</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">pidx</span><span class="o">-</span><span class="mi">2</span><span class="p">);</span>
-            <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">pidx</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;*&#39;</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">pidx</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;.&#39;</span><span class="p">)</span>
-                <span class="k">return</span> <span class="n">check</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">sidx</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">pidx</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">pidx</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">[</span><span class="n">sidx</span><span class="p">])</span>
-                <span class="k">return</span> <span class="n">check</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">sidx</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">pidx</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-            <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="k">else</span> <span class="p">{</span>
-            <span class="c1">// s: abccd</span>
-            <span class="c1">// p: abc*d</span>
-            <span class="kt">bool</span> <span class="n">tag</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">pidx</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">[</span><span class="n">sidx</span><span class="p">]</span> <span class="o">||</span> <span class="n">p</span><span class="p">[</span><span class="n">pidx</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;.&#39;</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">tag</span> <span class="o">=</span> <span class="n">check</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">sidx</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">pidx</span><span class="p">);</span>
-            <span class="p">}</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">tag</span><span class="p">)</span>
-                <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-            <span class="k">return</span> <span class="nf">check</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">sidx</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">pidx</span><span class="o">-</span><span class="mi">2</span><span class="p">);</span>
-        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">check</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">sidx</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">pidx</span><span class="o">-</span><span class="mi">2</span><span class="p">);</span>
     <span class="p">}</span>
+<span class="p">}</span>
 
-<span class="nl">public</span><span class="p">:</span>
-    <span class="kt">bool</span> <span class="n">isMatch</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="n">string</span> <span class="n">p</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kt">int</span> <span class="n">slen</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
-        <span class="kt">int</span> <span class="n">plen</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
-        <span class="k">return</span> <span class="nf">check</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">slen</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">plen</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">};</span></code></pre></div>
+<span class="kt">bool</span> <span class="nf">isMatch</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="n">string</span> <span class="n">p</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">slen</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="kt">int</span> <span class="n">plen</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="k">return</span> <span class="n">check</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">slen</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">plen</span><span class="p">);</span>
+<span class="p">}</span></code></pre></div>
 
 
       <footer class="entry-meta">
@@ -394,20 +383,20 @@ isMatch(“aab”, “c<em>a</em>b”) → true</p>
       <a href="http://blog.qingye.me/DHTSpider/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://blog.qingye.me/DHTSpider/" title="DHT网络磁力链接爬虫以及搜索网站搭建">DHT网络磁力链接爬虫以及搜索网站搭建</a></h3>
-      <p>回家再写。先开坑。背景介绍DHT 网络是一种去中心化的 P2P 网络，DHT 爬虫的目的是爬取 DHT 网络种的各种资源信息，整理得出一系列 P2P 资源信息，从而可以加以利用。根据得到的多种多样的资源信息，可以建立一个搜索引擎，从而可以对 P2P 网络中的资源进行有针对性...&hellip; <a href="http://blog.qingye.me/DHTSpider/">Continue reading</a></p>
+      <h3><a href="http://blog.qingye.me/django-learning/" title="django学习记录">django学习记录</a></h3>
+      <p>真的好久没写过东西了，最近打算在入职之前找点东西做，于是扯上杨大大准备一起写点小东西。需要用到 Django，之前寒假自己折腾 Django 的时候更多时候把注意力放在了快速开发上面，对于一些比较基础的知识并没有很深入地去了解。特此记录。## 检测 Django 版本{% ...&hellip; <a href="http://blog.qingye.me/django-learning/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://blog.qingye.me/write-a-ehentai-ghost/" title="编写一个E绅士扒图器">编写一个E绅士扒图器</a></h4>
-        <span>Published on January 15, 2016</span>
+        <h4><a href="http://blog.qingye.me/DHTSpider/" title="DHT网络磁力链接爬虫以及搜索网站搭建">DHT网络磁力链接爬虫以及搜索网站搭建</a></h4>
+        <span>Published on January 25, 2016</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://blog.qingye.me/write-a-sublime-plugin/" title="编写一个sublime插件">编写一个sublime插件</a></h4>
-        <span>Published on January 12, 2016</span>
+        <h4><a href="http://blog.qingye.me/write-a-ehentai-ghost/" title="编写一个E绅士扒图器">编写一个E绅士扒图器</a></h4>
+        <span>Published on January 15, 2016</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

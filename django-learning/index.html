@@ -1,0 +1,479 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>django学习记录 &#8211; Simple Blog</title>
+<meta name="description" content="On the way.">
+<meta name="keywords" content="python, django">
+
+
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="django学习记录">
+<meta property="og:description" content="On the way.">
+<meta property="og:url" content="http://blog.qingye.me/django-learning/">
+<meta property="og:site_name" content="Simple Blog">
+
+
+
+
+
+<link rel="canonical" href="http://blog.qingye.me/django-learning/">
+<link href="http://blog.qingye.me/feed.xml" type="application/atom+xml" rel="alternate" title="Simple Blog Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://blog.qingye.me/assets/css/main.css">
+
+<!-- Webfonts -->
+<!-- <link href="//fonts.useso.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.useso.com/css?family=monospace:300,400,700,300italic,400italic" rel="stylesheet" type="text/css"> -->
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load MathJax -->
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<!-- Load Modernizr -->
+<script src="http://blog.qingye.me/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://blog.qingye.me/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://blog.qingye.me/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://blog.qingye.me/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://blog.qingye.me/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://blog.qingye.me/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://blog.qingye.me/images/apple-touch-icon-144x144-precomposed.png">
+
+
+
+</head>
+
+<body id="post" >
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+	<button class="dl-trigger">Open Menu</button>
+	<ul class="dl-menu">
+		<li><a href="http://blog.qingye.me/">Home</a></li>
+		<li>
+			<a href="#">About</a>
+			<ul class="dl-submenu">
+				<li>
+					<img src="http://blog.qingye.me/images/avatar2.jpg" alt="Qing YE photo" class="author-photo">
+					<h4>Qing YE</h4>
+					<p>You can code, they can not, that is pretty damn cool.</p>
+				</li>
+				<li><a href="http://blog.qingye.me/about/"><span class="btn btn-inverse">Learn More</span></a></li>
+				<li>
+					<a href="mailto:youkochan233@gmail.com"><i class="fa fa-fw fa-envelope"></i> Email</a>
+				</li>
+				
+				
+				
+				
+				<li>
+					<a href="http://github.com/youkochan"><i class="fa fa-fw fa-github"></i> GitHub</a>
+				</li>
+				
+				
+				
+				
+			</ul><!-- /.dl-submenu -->
+		</li>
+		<li>
+			<a href="#">Posts</a>
+			<ul class="dl-submenu">
+				<li><a href="http://blog.qingye.me/posts/">All Posts</a></li>
+				<li><a href="http://blog.qingye.me/tags/">All Tags</a></li>
+			</ul>
+		</li>
+		
+	    
+	        
+	        
+	    <li><a href="http://geekfan.me" target="_blank">GeekFan.me</a></li>
+	  
+	</ul><!-- /.dl-menu -->
+</nav><!-- /.dl-menuwrapper -->
+
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <header class="header-title">
+      <div class="header-title-wrap">
+        
+          <h1 class="entry-title"><a href="http://blog.qingye.me/django-learning/" rel="bookmark" title="django学习记录">django学习记录</a></h1>
+        
+        <h2><span class="entry-date date published"><time datetime="2016-05-10T23:20:32+08:00">May 10, 2016</time></span></h2>
+        
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          
+          Reading time ~5 minutes
+        </p><!-- /.entry-reading-time -->
+        
+      </div><!-- /.header-title-wrap -->
+    </header>
+    <div class="entry-content">
+      <p>真的好久没写过东西了，最近打算在入职之前找点东西做，于是扯上杨大大准备一起写点小东西。需要用到 Django，之前寒假自己折腾 Django 的时候更多时候把注意力放在了快速开发上面，对于一些比较基础的知识并没有很深入地去了解。特此记录。</p>
+
+<!--more-->
+
+<h2 id="django-">检测 Django 版本</h2>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>django-admin.py --version
+1.9.1</code></pre></div>
+
+<h2 id="django--1">创建一个 Django 项目</h2>
+
+<p>可以使用如下指令来创建一个 Django 项目：</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>django-admin.py startproject ss_panel</code></pre></div>
+
+<p>这个指令会在当前目录下生成一个 <code>ss_panel</code> 目录，目录结构如下：</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>tree ss_panel
+ss_panel
+├── manage.py
+└── ss_panel
+    ├── __init__.py
+    ├── settings.py
+    ├── urls.py
+    └── wsgi.py
+
+<span class="m">1</span> directory, <span class="m">5</span> files</code></pre></div>
+
+<p>下面来具体解释一下这些文件以及文件夹的意义：</p>
+
+<ul>
+  <li>外层的 <code>ss_panel</code>：这个仅仅只是一个项目的容器，你可以取任何一个你喜欢的名字，默认的名字就是生成项目时候输入的名字。</li>
+  <li><code>manager.py</code>：一个命令行工具，可以用来与 Django 项目进行交互。参考 <a href="http://python.usyiyi.cn/django/ref/django-admin.html">链接</a></li>
+  <li>内层的 <code>ss_panel</code>：内层的 <code>ss_panel/</code> 目录是你的项目的真正的Python包</li>
+  <li><code>ss_panel/__init__.py</code>：一个空文件，用于告诉 python 这个目录应该被看做一个包~</li>
+  <li><code>ss_panel/setting.py</code>：该项目的一些设置</li>
+  <li><code>ss_panel/urls.py</code>：该项目的路由 URL 声明</li>
+  <li><code>ss_panel/wsgi.py</code>：用于你的项目的与WSGI兼容的Web服务器入口。参考 <a href="http://python.usyiyi.cn/django/howto/deployment/wsgi/index.html">链接</a></li>
+</ul>
+
+<h2 id="section">数据库</h2>
+
+<p>讲道理的话，web 项目不能没有数据库啊（一般来说），而 Django 对各种数据库都会有很好的支持。默认情况下，Django 使用的是 SQLite。SQLite 是一种轻量级的数据库，不需要额外的环境配置和软件安装，SQLite 对于数据库的操作其实就是对一个数据库文件的操作，而操作方法都被封装在了对应的 python 包之中。对于 <code>ss_panel</code> 的需求来说，SQLite 就已经足够了。</p>
+
+<p>下面是 <code>setting.py</code> 文件中有关数据库文件的那一段：</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Database</span>
+<span class="c"># https://docs.djangoproject.com/en/1.9/ref/settings/#databases</span>
+
+<span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;default&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&#39;ENGINE&#39;</span><span class="p">:</span> <span class="s">&#39;django.db.backends.sqlite3&#39;</span><span class="p">,</span>
+        <span class="s">&#39;NAME&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s">&#39;db.sqlite3&#39;</span><span class="p">),</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+<ul>
+  <li><code>ENGINE</code>：默认的数据库引擎类型，django 支持 ‘django.db.backends.sqlite3’, ‘django.db.backends.postgresql_psycopg2’, ‘django.db.backends.mysql’或’django.db.backends.oracle’</li>
+  <li><code>NAME</code>：数据库的名称。如果你使用 SQLite ，数据库将是你计算机上的一个文件，如果是这样的话，NAME应该是这个文件的绝对路径，包括文件名。默认值是 os.path.join(BASE_DIR, ‘db.sqlite3’)，它将文件保存在你项目的目录中。</li>
+</ul>
+
+<h2 id="section-1">已安装的应用</h2>
+
+<p>下面是 <code>setting.py</code> 文件中有关已安装的应用的那一段：</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Application definition</span>
+
+<span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">&#39;django.contrib.admin&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.auth&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.contenttypes&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.sessions&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.messages&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.staticfiles&#39;</span><span class="p">,</span>
+<span class="p">]</span></code></pre></div>
+
+<p>它保存这个 Django 实例中激活的所有的 Django 应用的名字。 应用可以使用在多个项目中，而且你可以将这些应用打包和分发给其他人在他们的项目中使用。</p>
+
+<p>默认情况下，<code>INSTALLED_APPS</code> 包含下面的应用：</p>
+
+<ul>
+  <li>django.contrib.admin —— 管理站点。</li>
+  <li>django.contrib.auth —— 认证系统。</li>
+  <li>django.contrib.contenttypes —— 用于内容类型的框架。</li>
+  <li>django.contrib.sessions —— 会话框架。</li>
+  <li>django.contrib.messages —— 消息框架。</li>
+  <li>django.contrib.staticfiles —— 管理静态文件的框架。</li>
+</ul>
+
+<p>上面的部分应用至少需要使用一个数据库表，因此我们需要在使用它们之前先在数据库中创建相应的表。要做到这一点，请运行以下命令：</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>python manage.py migrate</code></pre></div>
+
+<p><code>migrate</code> 查看 <code>INSTALLED_APPS</code> 设置并根据 <code>mysite/settings.py</code> 文件中的数据库设置创建任何必要的数据库表，数据库的迁移还会跟踪应用的变化</p>
+
+<h2 id="section-2">开发服务器</h2>
+
+<p>通过 <code>manager.py</code> 文件可以启动服务器：</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>./manage.py runserver
+Performing system checks...
+
+System check identified no issues <span class="o">(</span><span class="m">0</span> silenced<span class="o">)</span>.
+
+You have unapplied migrations<span class="p">;</span> your app may not work properly <span class="k">until</span> they are applied.
+Run <span class="s1">&#39;python manage.py migrate&#39;</span> to apply them.
+
+May 10, <span class="m">2016</span> - 16:24:48
+Django version 1.8.3, using settings <span class="s1">&#39;ss_panel.settings&#39;</span>
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+<span class="o">[</span>10/May/2016 16:25:22<span class="o">]</span><span class="s2">&quot;GET / HTTP/1.1&quot;</span> <span class="m">200</span> 1767
+<span class="o">[</span>10/May/2016 16:25:27<span class="o">]</span><span class="s2">&quot;GET / HTTP/1.1&quot;</span> <span class="m">200</span> 1767
+<span class="o">[</span>10/May/2016 16:25:27<span class="o">]</span><span class="s2">&quot;GET /favicon.ico HTTP/1.1&quot;</span> <span class="m">404</span> 1938
+<span class="o">[</span>10/May/2016 16:25:27<span class="o">]</span><span class="s2">&quot;GET /apple-touch-icon-precomposed.png HTTP/1.1&quot;</span> <span class="m">404</span> 2001
+<span class="o">[</span>10/May/2016 16:25:27<span class="o">]</span><span class="s2">&quot;GET /apple-touch-icon.png HTTP/1.1&quot;</span> <span class="m">404</span> 1965</code></pre></div>
+
+<p>由于暂时没有执行过 <code>migrate</code> 指令，所以会有一行 warning</p>
+
+<p>或者：</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">./manager.py runserver <span class="m">8080</span>          <span class="c"># 默认8000端口，可以手动指定别的</span>
+./manager.py runserver 0.0.0.0:8000  <span class="c"># 监听所有外网 IP</span></code></pre></div>
+
+<h2 id="section-3">创建应用</h2>
+
+<ul>
+  <li>应用：应用是一个Web应用程序，它完成具体的事项 —— 比如一个博客系统、一个存储公共档案的数据库或者一个简单的投票应用</li>
+  <li>项目：项目是一个特定网站中相关配置和应用的集合。一个项目可以包含多个应用。一个应用可以运用到多个项目中</li>
+</ul>
+
+<p>创建应用：</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">./manager.py startapp _your_app_name_</code></pre></div>
+
+<p>由于 <code>ss_panel</code> 是一个小型的项目，木有那么多需要新建的应用，主要应用分为两个：1，面板部分的操作；2，定时任务，用于获取某个端口的流量。</p>
+
+<h2 id="section-4">创建模型</h2>
+
+<p>新建一个 app 后，在 <code>models.py</code> 中就可以定义自己的模型了，通过 ORM 机制，对于模型类实例的操作将会转换为对于数据库的操作，这样就可以省下了不少编码工作。</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.utils</span> <span class="kn">import</span> <span class="n">timezone</span>
+
+
+<span class="k">class</span> <span class="nc">Client</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;auth.User&#39;</span><span class="p">)</span>
+    <span class="n">port</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">()</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+    <span class="n">usage_sum</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BigIntegerField</span><span class="p">()</span>
+    <span class="n">usage_daily</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BigIntegerField</span><span class="p">()</span>
+    <span class="n">usage_monthly</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BigIntegerField</span><span class="p">()</span>
+    <span class="n">account_balance</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">()</span>
+    <span class="n">created_date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;port:</span><span class="si">%s</span><span class="s"> user:</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">)</span></code></pre></div>
+
+<p>其中，Client 可以看做一个数据表的名称，其中的每一个成员为数据表的一个字段。</p>
+
+<ul>
+  <li><code>class</code> 是一个特殊的关键字，表明我们在定义一个对象</li>
+  <li><code>Client</code> 是我们模型的一个名字</li>
+  <li><code>models.Model</code> 表明 Client 是一个Django模型，所以 Django 知道它应该被保存在数据库中</li>
+  <li><code>models.CharField</code> - 这是你如何用位数有限的字符来定义一个文本。</li>
+  <li><code>models.TextField</code> - 这是没有长度限制的长文本。</li>
+  <li><code>models.DateTimeField</code> - 这是日期和时间。</li>
+  <li><code>models.ForeignKey</code> - 这是指向另一个模型的连接。</li>
+  <li><code>models.BigIntegerField</code> - 这是大整数的类型。</li>
+  <li><code>models.IntegerField</code> - 这是整数的类型。</li>
+  <li><code>__str__</code> - 函数的定义影响着对象在 admin 中的显示效果。</li>
+</ul>
+
+<p>然后执行：</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">python manage.py makemigrations panel
+Migrations <span class="k">for</span> <span class="s1">&#39;panel&#39;</span>:
+  0001_initial.py:
+  - Create model Post</code></pre></div>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">python manage.py migrate panel
+Operations to perform:
+  Apply all migrations: panel
+Running migrations:
+  Rendering model states... DONE
+  Applying panel.0001_initial... OK</code></pre></div>
+
+<h2 id="section-5">创建一个管理员账户</h2>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">createsuperuser</span>
+<span class="n">Username</span><span class="p">:</span> <span class="n">admin</span>
+<span class="n">Email</span> <span class="n">address</span><span class="p">:</span> <span class="n">_your_email_</span>
+<span class="n">Password</span><span class="p">:</span>
+<span class="n">Password</span> <span class="p">(</span><span class="n">again</span><span class="p">):</span>
+<span class="n">Superuser</span> <span class="n">created</span> <span class="n">successfully</span><span class="o">.</span></code></pre></div>
+
+<p>然后就可以在管理界面查看相关的数据库信息</p>
+
+<h2 id="section-6">使用命令行形式进行数据库管理</h2>
+
+<p>执行 <code>./manager.py shell</code> 会自动启动带有环境变量的 python 解释器。直接使用 python 执行会报错。</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">django</span>
+<span class="n">django</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>                      <span class="c"># 不使用 ./manager.py shell 会报错</span>
+<span class="kn">from</span> <span class="nn">panel.models</span> <span class="kn">import</span> <span class="n">Client</span>     <span class="c"># 自定义的 model</span>
+
+<span class="n">Client</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="c"># [&lt;Client: port:60001 user:test_user1&gt;, &lt;Client: port:60002 user:test_user2&gt;]</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="c"># the first client</span>
+
+<span class="n">client</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="mi">9999</span>
+<span class="n">client</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="c"># &lt;Client: port:9999 user:test_user1&gt;</span></code></pre></div>
+
+<h2 id="urls">urls</h2>
+
+<p>urls 表示访问某一个网址时执行哪一个操作，可以通过一下语句把访问我们的站点的请求转到 panel 这个 app 中，看这个 app 中的 <code>urls.py</code> 有没有对所访问的路径有进一步的指示：</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># ss_panel/urls.py</span>
+<span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="kn">import</span> <span class="n">include</span><span class="p">,</span> <span class="n">url</span>
+<span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r&#39;^admin/&#39;</span><span class="p">,</span> <span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">urls</span><span class="p">),</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r&#39;&#39;</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="s">&#39;panel.urls&#39;</span><span class="p">))</span>
+<span class="p">]</span></code></pre></div>
+
+<p>然后在 panel 这个 app 中新建一个空的 <code>urls.py</code> 在里面填写需要处理的 url 即可。</p>
+
+<h2 id="settingspy--timezone">settings.py 中的 TIME_ZONE</h2>
+
+<p><code>TIME_ZONE</code> 表示本地时区，修改为 <code>TIME_ZONE = 'Asia/Shanghai'</code> 即可。</p>
+
+<h2 id="login--logout">login &amp; logout</h2>
+
+<p>Django 可以使用 login 以及 logout 函数来完成用户的登录与登出操作。在写这一块儿的代码时出现了一些小的问题。</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="nd">@login_required</span><span class="p">(</span><span class="n">redirect_field_name</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">logout_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">logout_message</span> <span class="o">=</span> <span class="s">&#39;Goodbye, </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span>
+    <span class="n">logout</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">logout_message</span><span class="p">)</span></code></pre></div>
+
+<p>上一段代码是 logout 的操作。然而我在测试的时候（直接在浏览器输出 logout 的网址），会发现无论如何也不会输出 Goodbye 消息，后来折腾了一个小时，查看了 <code>./manager.py</code> 的记录的时候发现，在浏览器输入网址的时候，浏览器会自动对这个网址进行一次访问，因此在这次访问时，用户就已经被注销掉了；而敲下回车时，会第二次对这个网址进行访问，此时用于早已经被注销，因此会被重定向到登录界面。后来直接加了一个链接，使用链接方式注销，问题解决。</p>
+
+<h2 id="django-time-zone-">Django Time Zone 问题</h2>
+
+<p>Django 在1.4版本之后存储如果设置了 <code>USE_TZ=True</code>，则存储到数据库中的时间永远是 UTC 时间。这时如果 <code>settings</code> 里面设置了 <code>USE_TZ=True</code> 与 <code>TIME_ZONE = 'UTC'</code>，用 <code>datetime.datetime.now()</code>获取的时间 django 会把这个时间当成 UTC 时间存储到数据库中去。如果修改设置为 <code>USE_TZ=True</code> 与 <code>TIME_ZONE = 'Asia/Shanghai'</code>，用 <code>datetime.datetime.now()</code> 获取的时间由于不带时区，django会把这个时间当成 <code>Asia/Shanghai</code> 时间，即东八区时间，然后 django 会把这个时间转成带时区 UTC 时间存储到数据库中去，而读的时候直接按 UTC 时间读出来，这就是网上很多人遇到的存储到数据库中的时间比本地时间会小8个小时的原因。</p>
+
+<p>在所有需要时间的地方都使用 UTC 时间即可，在调试或者需要方便识别的地方如果需要使用本地时间，则将对应模型的 <code>__str()__</code> 方法中打印时间的操作转化为打印本地时间就可以了。</p>
+
+<h2 id="django--2">Django 的分时间段统计</h2>
+
+<p>编写完 Log 模型后，我们可以得到每分钟的用户用量，然后可以使用某一种神奇的方式按小时（或者天、月）来统计每一个时段中用户的用量，具体代码如下。</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">Client</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">extra</span><span class="p">(</span><span class="n">select</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;day&#39;</span><span class="p">:</span> <span class="n">connections</span><span class="p">[</span><span class="n">Client</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">db</span><span class="p">]</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">date_trunc_sql</span><span class="p">(</span><span class="s">&#39;day&#39;</span><span class="p">,</span> <span class="s">&#39;created_date&#39;</span><span class="p">)})</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="s">&#39;day&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="nb">sum</span><span class="o">=</span><span class="n">Sum</span><span class="p">(</span><span class="s">&#39;account_balance&#39;</span><span class="p">))</span></code></pre></div>
+
+<h2 id="django--crontab">Django 定时任务 Crontab</h2>
+
+<p>(推进中)</p>
+
+
+      <footer class="entry-meta">
+        <span class="entry-tags"><a href="http://blog.qingye.me/tags/#python" title="Pages tagged python" class="tag"><span class="term">python</span></a><a href="http://blog.qingye.me/tags/#django" title="Pages tagged django" class="tag"><span class="term">django</span></a></span>
+        
+        <div class="social-share">
+  <ul class="socialcount socialcount-small inline-list">
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://blog.qingye.me/django-learning/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://blog.qingye.me/django-learning/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://blog.qingye.me/django-learning/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+  </ul>
+</div><!-- /.social-share -->
+      </footer>
+    </div><!-- /.entry-content -->
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+    <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="http://blog.qingye.me/leetcode-note-7/" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="http://blog.qingye.me/leetcode-note-7/" title="leetcode-note-7">leetcode-note-7</a></h3>
+      <p>这几天做得一些比较有意思的题目Trapping Rain Water      Given n non-negative integers representing an elevation map where the width of each bar is 1, com...&hellip; <a href="http://blog.qingye.me/leetcode-note-7/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
+    
+      <div class="list-item">
+        <h4><a href="http://blog.qingye.me/DHTSpider/" title="DHT网络磁力链接爬虫以及搜索网站搭建">DHT网络磁力链接爬虫以及搜索网站搭建</a></h4>
+        <span>Published on January 25, 2016</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="http://blog.qingye.me/write-a-ehentai-ghost/" title="编写一个E绅士扒图器">编写一个E绅士扒图器</a></h4>
+        <span>Published on January 15, 2016</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    <span>&copy; 2016 Qing YE. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="https://mademistakes.com/work/hpstr-jekyll-theme/" rel="nofollow">HPSTR Theme</a>.</span>
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+<script src="http://blog.qingye.me/assets/js/vendor/jquery-1.9.1.min.js"></script>
+<!-- <script>window.jQuery || document.write('<script src="http://blog.qingye.me/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script> -->
+<script src="http://blog.qingye.me/assets/js/scripts.min.js"></script>
+
+
+
+
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'qingye'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script'); s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	        
+
+</body>
+</html>
